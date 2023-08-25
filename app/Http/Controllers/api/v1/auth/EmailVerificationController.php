@@ -23,6 +23,16 @@ class EmailVerificationController extends Controller
     }
 
     public function send_otp(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'string']
+        ]);
 
+
+        if ($this->sendVerificationCode($request->email)) {
+            return $this->success('', 'Code send to your email or phone number', 200);
+        } else {
+
+            return $this->error('', 'Code sending error, try again', 422);
+        }
     }
 }

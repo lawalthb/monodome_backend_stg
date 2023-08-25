@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Users;
+namespace App\Traits;
 
 use App\Mail\SendCodeMail;
 use App\Models\PasswordReset;
@@ -23,7 +23,7 @@ trait Verification
         PasswordRest::where('email', $email)->delete();
 
         // Generate random code
-        $code = getNumber(4);
+        $code = getNumber(6);
 
         // Create a new code
         $codeData =  PasswordReset::create(['email' => $email, 'code' => $code]);
