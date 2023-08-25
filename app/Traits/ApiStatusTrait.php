@@ -15,7 +15,7 @@ trait ApiStatusTrait
         $response["success"] = true;
         $response["message"] = $msg ?? __("Successfully done");
         $response["data"] = $data;
-        return response()->json($response, $this->successStatus);
+        return response()->json($response, $this->successStatus)->header('Content-Type', 'application/json');;
     }
 
     public function failed($data = [], $msg = NULL)
@@ -23,7 +23,7 @@ trait ApiStatusTrait
         $response['success'] = false;
         $response['message'] = $msg ?? __("Something went wrong");
         $response['data'] = $data;
-        return response()->json($response, $this->failureStatus);
+        return response()->json($response, $this->failureStatus)->header('Content-Type', 'application/json');;
     }
 
     public function error($data = [], $msg = NULL, $code = NULL)
@@ -31,7 +31,7 @@ trait ApiStatusTrait
         $response['success'] = false;
         $response['message'] = $msg ?? __("Something went wrong");
         $response['data'] = $data;
-        return response()->json($response, $code ?? $this->failureStatus);
+        return response()->json($response, $code ?? $this->failureStatus)->header('Content-Type', 'application/json');;
     }
 
     public function validationError($data = [], $msg = NULL)
@@ -39,6 +39,6 @@ trait ApiStatusTrait
         $response['success'] = false;
         $response['message'] = $msg ?? __("Validation error");
         $response['data'] = $data;
-        return response()->json($response, $this->validationFailureStatus);
+        return response()->json($response, $this->validationFailureStatus)->header('Content-Type', 'application/json');;
     }
 }
