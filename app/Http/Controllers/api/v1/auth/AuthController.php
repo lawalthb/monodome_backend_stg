@@ -15,12 +15,12 @@ class AuthController extends Controller
 
     public function register(RegisterRequest  $request){
 
-
         $user = new User([
-            'full_name' => $request->input('full_name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'user_type' => $request->input('user_type'),
+        'full_name' => $request->full_name,
+            'email' => $request->email,
+            'address' => $request->address,
+            'password' => Hash::make($request->password),
+            'user_type' => $request->user_type,
         ]);
         $user->save();
 
