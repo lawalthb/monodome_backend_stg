@@ -24,6 +24,11 @@ class User extends Authenticatable
     protected $fillable = [
         'full_name',
         'email',
+        'address',
+        'imageUrl',
+        'provider_id',
+        'provider',
+        'user_type',
         'login_medium',
         'social_id',
         'password',
@@ -51,9 +56,9 @@ class User extends Authenticatable
 
     public function getImagePathAttribute()
     {
-        if ($this->image)
+        if ($this->imageUrl)
         {
-            return $this->image;
+            return $this->imageUrl;
         } else {
             return 'uploads/default/user.png';
         }

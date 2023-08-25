@@ -128,6 +128,37 @@ class AuthController extends Controller
         }
     }
 
+
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user(); // Assuming you are using authentication
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'full_name' => 'required|string',
+            'email' => 'required|email|unique:users,email,' . $user->id, // Ignore the current user's email
+            'address' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Example validation for image upload
+        ]);
+
+        // Update user profile data
+        $user->update([
+            'full_name' => $validatedData['full_name'],
+            'email' => $validatedData['email'],
+            'address' => $validatedData['address'],
+        ]);
+
+        // Handle image upload if provided
+        if ($request->hasFile('image')) {
+           // $imagePath = $request->file('image')->store('profile_images', 'public');
+           $imagePath =  $request->image ? $this->saveImage('profile', $request->image, 500, 500) : null;
+            $user->update(['imageUrl' => $imagePath]);
+        }
+
+        return $this->success(['user' => new UserResource($user)], "Profile updated successfully");
+        // return response()->json(['message' => 'Profile updated successfully']);
+    }
+
     protected function validateProvider($provider)
     {
         if (!in_array($provider, ['google', 'facebook', 'apple'])) {

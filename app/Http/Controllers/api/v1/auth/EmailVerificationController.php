@@ -70,10 +70,29 @@ class EmailVerificationController extends Controller
             return $this->error('', $validator->errors()->first(), 422);
         }
 
-
         $user = User::where("email", $request->email)->first();
 
         return $user ? true : false;
+    }
+
+
+    public function check_if_email_exist(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error('', $validator->errors()->first(), 422);
+        }
+
+        $user = User::where("email", $request->email)->first();
+
+        if( $user){
+            return $this->success('', 'Email Exist');
+        }else{
+            return $this->error('', "Email address doesn't Exist", 422);
+        }
     }
 
     public function otp_verification_submit(Request $request){

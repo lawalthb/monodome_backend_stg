@@ -15,12 +15,15 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
         Route::post('/forgot-password', [EmailVerificationController::class, 'reset_password_request']);
         Route::post('/send-otp', [EmailVerificationController::class, 'send_otp']);
-        Route::post('/verify-email', [EmailVerificationController::class, 'verify_email']);
-        Route::post('/check-email', [EmailVerificationController::class, 'check_email']);
         Route::post('/verify-otp', [EmailVerificationController::class, 'otp_verification_submit']);
+        Route::post('/check-email', [EmailVerificationController::class, 'check_if_email_exist']);
 
+    });
+
+    Route::group(['prefix' => 'customer', 'middleware'=>'auth:api'], function () {
+
+    Route::post('/update-profile', [AuthController::class, 'updateProfile']);
 });
-
 
 });
 
