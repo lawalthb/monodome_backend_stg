@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder
 
         // Create Super Admin user
         $superAdmin = DB::table('users')->insertGetId([
-            'username' => 'superadmin',
+            'full_name' => 'superadmin',
             'email' => 'superadmin@example.com',
             'password' => Hash::make('password'),
             'created_at' => now(),
@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
 
         // Create Admin user
         $admin = DB::table('users')->insertGetId([
-            'username' => 'admin',
+            'full_name' => 'admin',
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
             'created_at' => now(),

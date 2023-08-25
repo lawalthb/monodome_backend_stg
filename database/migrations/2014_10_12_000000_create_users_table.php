@@ -13,10 +13,25 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
+            $table->string('full_name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('address')->nullable();
+            $table->enum('user_type', [
+                'customer',
+                'broker',
+                'shipping_company_super',
+                'shipping_company_admin',
+                'agent',
+                'clearing_forwarding',
+                'driver',
+                'driver_manager',
+                'driver_manager_driver',
+                'company_transporter_super',
+                'company_transporter_admin',
+                'company_transporter_driver'
+            ])->default('customer')->change();
             $table->rememberToken();
             $table->timestamps();
         });
