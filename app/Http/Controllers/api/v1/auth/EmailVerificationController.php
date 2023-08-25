@@ -22,5 +22,7 @@ class EmailVerificationController extends Controller
         ]);
     }
 
-    public func
+    public function send_otp(Request $request){
+
+    }
 }
