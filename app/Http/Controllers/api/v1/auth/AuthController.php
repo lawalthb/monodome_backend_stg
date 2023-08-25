@@ -7,16 +7,18 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 
 class AuthController extends Controller
 {
 
-    public function register(RegisterRequest  $request){
+    public function register(RegisterRequest  $request)
+    {
 
         $user = new User([
-        'full_name' => $request->full_name,
+            'full_name' => $request->full_name,
             'email' => $request->email,
             'address' => $request->address,
             'password' => Hash::make($request->password),
@@ -30,9 +32,12 @@ class AuthController extends Controller
             $user->assignRole($role);
         }
 
-        return response()->json(['message' => 'User registered successfully'], 201);
+        $token = $user->createToken('monodomebackend' . $request->email)->plainTextToken;
 
-
+        return response()->json([
+            'message' => 'User registered successfully',
+            'user' => new UserResource($user), 'token' => $token
+        ], 201);
     }
 
     public function login(LoginRequest $request)
@@ -41,12 +46,16 @@ class AuthController extends Controller
 
         if (auth()->attempt($credentials)) {
             $user = auth()->user();
+
             $token = $user->createToken('monodomebackend' . $request->email)->plainTextToken;
 
-            return response()->json(['token' => $token], 200);
+            return response()->json([
+                'message' => 'Login Successfully',
+                'user' => new UserResource($user), 'token' => $token,
+                'token' => $token
+            ], 200);
         } else {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
     }
-
 }
