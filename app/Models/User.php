@@ -48,4 +48,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getImagePathAttribute()
+    {
+        if ($this->image)
+        {
+            return $this->image;
+        } else {
+            return 'uploads/default/instructor-default.png';
+        }
+    }
 }
