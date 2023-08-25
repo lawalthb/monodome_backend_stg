@@ -29,7 +29,8 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
-                'user_type' => $request->user_type,
+                'user_type' => 'customer',
+                'role' => $request->role,
             ]);
             $user->save();
 

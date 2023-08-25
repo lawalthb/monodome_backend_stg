@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('provider_id')->nullable();
             $table->string('provider')->nullable();
             $table->string('address')->nullable();
+            $table->string('role_id')->nullable();
             $table->string('imageUrl')->nullable();
             $table->enum('user_type', [
                 'customer',
@@ -34,7 +35,17 @@ return new class extends Migration
                 'company_transporter_super',
                 'company_transporter_admin',
                 'company_transporter_driver'
-            ])->default('customer')->change();
+            ]);
+            $table->enum('role', [
+                'customer',
+                'broker',
+                'shipping_company',
+                'agent',
+                'clearing_forwarding',
+                'driver',
+                'driver_manager',
+                'company_transporter',
+            ]);
             $table->rememberToken();
             $table->timestamps();
         });

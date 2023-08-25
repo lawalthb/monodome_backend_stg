@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\auth\AuthController;
 use App\Http\Controllers\api\v1\auth\EmailVerificationController;
 
-Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
+Route::group(['namespace' => 'api\v1', 'prefix' => 'v1','middleware'=>'return-json'], function () {
 
 
     // user registration namespace
@@ -21,10 +21,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
     });
 
     Route::group(['prefix' => 'customer', 'middleware'=>'auth:api'], function () {
-
         Route::get('/profile', [AuthController::class, 'me']);
         Route::post('/update-profile', [AuthController::class, 'updateProfile']);
-
 });
 
 });

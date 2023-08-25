@@ -25,7 +25,7 @@ class RegisterRequest extends FormRequest
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
-            'user_type' => 'required|in:customer,broker,shipping_company_super,shipping_company_admin,agent,clearing_forwarding,driver,driver_manager,driver_manager_driver,company_transporter_super,company_transporter_admin,company_transporter_driver',
+            'role' => 'required|in:customer,broker,shipping_company_super,shipping_company_admin,agent,clearing_forwarding,driver,driver_manager,driver_manager_driver,company_transporter_super,company_transporter_admin,company_transporter_driver',
         ];
     }
 }
