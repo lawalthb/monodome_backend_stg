@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\auth\AuthController;
-
+use App\Http\Controllers\api\v1\auth\EmailVerificationController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
@@ -11,8 +11,13 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
     Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
-        Route::post('/social_login', [AuthController::class, 'handleProviderCallback']);
+        Route::post('/social-login', [AuthController::class, 'handleProviderCallback']);
 
+        Route::post('/forgot-password', [EmailVerificationController::class, 'reset_password_request']);
+        Route::post('/verify-email', [EmailVerificationController::class, 'verify_email']);
+        Route::post('/check-email', [EmailVerificationController::class, 'check_email']);
+        Route::post('/send-otp', [EmailVerificationController::class, 'send_otp']);
+        Route::post('/verify-otp', [EmailVerificationController::class, 'otp_verification_submit']);
 
 });
 
