@@ -22,9 +22,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'customer', 'middleware'=>'auth:api'], function () {
 
-    Route::post('/update-profile', [AuthController::class, 'updateProfile']);
-});
+        Route::get('/profile', [AuthController::class, 'me']);
+        Route::post('/update-profile', [AuthController::class, 'updateProfile']);
 
 });
 
-?>
+});

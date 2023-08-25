@@ -28,7 +28,6 @@ class User extends Authenticatable
         'imageUrl',
         'provider_id',
         'provider',
-        'user_type',
         'login_medium',
         'social_id',
         'password',

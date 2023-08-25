@@ -165,4 +165,10 @@ class AuthController extends Controller
             return response()->json(["message" => 'You can only login via google,facebook,apple account'], 400);
         }
     }
+
+    public function me(){
+
+        $user = User::find(auth()->id());
+        return $this->success(['user' => new UserResource($user)], "Successfully");
+    }
 }
