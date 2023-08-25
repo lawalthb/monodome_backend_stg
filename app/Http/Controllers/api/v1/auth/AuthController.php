@@ -40,14 +40,14 @@ class AuthController extends Controller
                 $user->assignRole($role);
             }
 
-            $token = $user->createToken('monodomebackend' . $request->email)->plainTextToken;
+            $token = $user->createToken("monodomebackend". $request->email)->plainTextToken;
 
             return $this->success(
                 [
-                    'user' => new UserResource($user),
-                    'token' => $token
+                    "user" => new UserResource($user),
+                    "token" => $token
                 ],
-                'User registered successfully'
+                "User registered successfully"
             );
         } catch (\Throwable $th) {
             return $this->error(['error' => $th->getMessage()]);
@@ -69,10 +69,10 @@ class AuthController extends Controller
 
                 return $this->success(
                     [
-                        'user' => new UserResource($user),
-                        'token' => $token
+                        "user" => new UserResource($user),
+                        "token" => $token
                     ],
-                    'Login Successfully'
+                    "Login Successfully"
                 );
             } else {
                 return $this->error(['error' => "couldn't login please check your details"], "Invalid credentials");

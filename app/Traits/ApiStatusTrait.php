@@ -12,9 +12,9 @@ trait ApiStatusTrait
 
     public function success($data = [], $msg = NULL)
     {
-        $response['success'] = true;
-        $response['message'] = $msg ?? __("Successfully done");
-        $response['data'] = $data;
+        $response["success"] = true;
+        $response["message"] = $msg ?? __("Successfully done");
+        $response["data"] = $data;
         return response()->json($response, $this->successStatus);
     }
 
