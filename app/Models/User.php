@@ -55,7 +55,7 @@ class User extends Authenticatable
         {
             return $this->image;
         } else {
-            return 'uploads/default/instructor-default.png';
+            return 'uploads/default/user.png';
         }
     }
 }
