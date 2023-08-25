@@ -6,69 +6,53 @@ use App\Mail\SendCodeMail;
 use App\Models\PasswordReset;
 use Illuminate\Support\Facades\Mail;
 
-
 trait Verification
 {
-
-        /**
-     * sendVerificationCode
-     *
-     * @param  mixed $email
-     * @return void
-     */
     protected function sendVerificationCode($email)
     {
+        // Delete all old codes for the user's email
+        PasswordReset::where('email', $email)->delete();
 
-        // Delete all old code that user send before.
-        PasswordRest::where('email', $email)->delete();
+        // Generate a random code
+        $code = getNumber(6); // You need to define the `getNumber` function
 
-        // Generate random code
-        $code = getNumber(6);
+        // Create a new password reset record
+        $passwordReset = PasswordReset::create([
+            'email' => $email,
+            'code' => $code,
+        ]);
 
-        // Create a new code
-        $codeData =  PasswordReset::create(['email' => $email, 'code' => $code]);
-
-        $codeData['first_name'] = $codeData->user->first_name;
-
-
-        // Send email to user
-        if ($codeData) {
-            Mail::to($email)->send(new SendCodeMail($codeData));
+        // Send an email with the verification code
+        if ($passwordReset) {
+            Mail::to($email)->send(new SendCodeMail($passwordReset));
 
             return true;
         } else {
-
             return false;
         }
-
-        // dispatch(new sendEmailJob($data));
-
     }
 
-    /**
-     * verifyCode
-     *
-     * @param  mixed $code
-     * @return void
-     */
-    protected function verifyOTPCode($code)
+    protected function verifyOTPCode($email, $code)
     {
         try {
+            // Find the password reset record
+            $passwordReset = PasswordReset::where('email', $email)
+                ->where('code', trim($code))
+                ->first();
 
-        // find the code
-        $passwordReset = PasswordReset::firstWhere('code', trim($code));
+            if (!$passwordReset) {
+                return false; // Code not found or doesn't match
+            }
 
-        // check if it does not expired: the time is one hour
-        if ($passwordReset->created_at > now()->addHour()) {
-            $passwordReset->delete();
+            // Check if the code has expired (1 hour)
+            if ($passwordReset->created_at->addHour()->isPast()) {
+                $passwordReset->delete(); // Delete expired code
+                return false;
+            }
 
-            return false;
-        }
-        return true;
-
-           //code...
+            return true; // Code is valid and not expired
         } catch (\Throwable $th) {
-           return false;
+            return false; // An error occurred
         }
     }
 }

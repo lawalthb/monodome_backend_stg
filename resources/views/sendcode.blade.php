@@ -1,5 +1,5 @@
 <x-mail::message>
-# Hi {{  $content['first_name'] }},
+# Hi {{  $content['full_name'] }},
 
 Your verification code is{{  $content['message']  }} {{  $content['code']  }}
 

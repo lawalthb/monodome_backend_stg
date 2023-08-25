@@ -14,9 +14,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
         Route::post('/social-login', [AuthController::class, 'handleProviderCallback']);
 
         Route::post('/forgot-password', [EmailVerificationController::class, 'reset_password_request']);
+        Route::post('/send-otp', [EmailVerificationController::class, 'send_otp']);
         Route::post('/verify-email', [EmailVerificationController::class, 'verify_email']);
         Route::post('/check-email', [EmailVerificationController::class, 'check_email']);
-        Route::post('/send-otp', [EmailVerificationController::class, 'send_otp']);
         Route::post('/verify-otp', [EmailVerificationController::class, 'otp_verification_submit']);
 
 });
