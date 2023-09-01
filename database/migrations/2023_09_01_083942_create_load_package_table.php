@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('load_package', function (Blueprint $table) {
+        Schema::create('load_packages', function (Blueprint $table) {
             $table->integer('id', true);
             $table->unsignedBigInteger('load_type_id');
-            $table->string('load_type_type');
-            $table->bigInteger('load_board_id')->index('load_board_id');
+            $table->string('load_type_type')->default("package")->nullable();
+           // $table->bigInteger('load_board_id')->index('load_board_id');
             $table->enum('deliver_from', ['address', 'office'])->nullable();
             $table->integer('to_office_id')->nullable()->default(1);
             $table->string('sender_name', 30)->nullable();

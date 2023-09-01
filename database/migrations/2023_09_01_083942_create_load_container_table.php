@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('load_container', function (Blueprint $table) {
+        Schema::create('load_containers', function (Blueprint $table) {
             $table->bigInteger('id', true);
             $table->unsignedBigInteger('load_type_id');
             $table->string('load_type_type');

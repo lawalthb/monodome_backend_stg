@@ -36,7 +36,8 @@ use App\Models\LoadType;
     {
         $loadType=LoadType::find($request->load_type_id);
 
-        $loadPackage =  $loadType->loadType::create($request->validated());
+        $loadPackage = $loadType->loadPackages()->create($request->validated());
+
         return response()->json($loadPackage, 201);
     }
 
@@ -44,7 +45,7 @@ use App\Models\LoadType;
     {
         $loadType = LoadType::find($request->load_type_id);
 
-        $loadPackage = $loadType->loadPackage()->create($request->validated());
+        $loadPackage = $loadType->loadPackages()->create($request->validated());
         return response()->json($loadPackage, 201);
     }
 

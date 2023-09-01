@@ -29,7 +29,7 @@ class LoadType extends Model
 
     public function loadPackages()
     {
-        return $this->hasMany(LoadPackage::class, 'load_type_id', 'load_type_id');
+        return $this->hasMany(LoadPackage::class, 'load_type_id', 'id');
     }
 
     public function loadContainers()
