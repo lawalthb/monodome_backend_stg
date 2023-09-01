@@ -4,20 +4,23 @@ namespace App\Http\Controllers\api\v1\Customers;
 
 use App\Models\LoadType;
 use Illuminate\Http\Request;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadTypeRequest;
 
 class LoadTypeController extends Controller
 {
+    use FileUploadTrait, ApiStatusTrait;
+
     public function index()
     {
         $key = request()->input('search');
 
-
         $loadTypes = LoadType::where(function ($q) use ($key) {
-            $q->where('sender_name', 'like', "%{$key}%")
-            ->orWhere('business_name', 'like', "%{$key}%");
+            $q->where('name', 'like', "%{$key}%");
         })->latest()->paginate();
+
 
         return response()->json($loadTypes);
     }
