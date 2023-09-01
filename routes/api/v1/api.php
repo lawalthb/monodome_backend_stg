@@ -36,5 +36,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
 
         // load package route
+
+        Route::get('/load-package', [LoadTypeController::class, 'index']);
+        Route::post('/load-package', [LoadTypeController::class, 'store']);
+        Route::get('/load-package/{id}', [LoadTypeController::class, 'show']);
+        Route::post('/load-package/{id}', [LoadTypeController::class, 'update']);
+        Route::delete('/load-package/{id}', [LoadTypeController::class, 'destroy']);
     });
 });
