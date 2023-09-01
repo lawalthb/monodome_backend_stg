@@ -17,7 +17,7 @@ use App\Models\LoadType;
 
         $loadPackages = LoadPackage::where(function ($q) use ($key) {
             $q->where('sender_name', 'like', "%{$key}%")
-            ->orWhere('business_name', 'like', "%{$key}%");
+            ->orWhere('sender_email', 'like', "%{$key}%");
         })->latest()->paginate();
 
 

@@ -1,0 +1,52 @@
+[01-Sep-2023 19:41:40 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/channels.php on line 16
+[01-Sep-2023 19:41:40 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php on line 17
+[01-Sep-2023 19:41:40 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/web.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/web.php on line 16
+[01-Sep-2023 19:41:41 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/console.php on line 17
+[01-Sep-2023 22:01:52 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php on line 17
+[01-Sep-2023 22:01:52 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php on line 17
+[01-Sep-2023 22:01:52 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php on line 17
+[01-Sep-2023 22:01:52 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php on line 17
+[01-Sep-2023 22:02:36 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php on line 17
+[01-Sep-2023 22:25:36 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/channels.php on line 16
+[01-Sep-2023 22:25:36 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/api.php on line 17
+[01-Sep-2023 22:25:36 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/console.php on line 17
+[01-Sep-2023 22:25:36 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/web.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/routes/web.php on line 16
