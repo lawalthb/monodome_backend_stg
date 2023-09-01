@@ -11,7 +11,13 @@ class LoadTypeController extends Controller
 {
     public function index()
     {
-        $loadTypes = LoadType::all();
+        $key = request()->input('search');
+
+
+        $loadTypes = LoadType::where(function ($q) use ($key) {
+            $q->where('name', 'like', "%{$key}%");
+        })->latest()->paginate();
+
         return response()->json($loadTypes);
     }
 

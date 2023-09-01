@@ -23,6 +23,7 @@ return new class extends Migration
             $table->timestamp('load_date')->useCurrent();
 
             $table->unique(['id', 'order_no'], 'id');
+            $table->timestamps();
         });
     }
 

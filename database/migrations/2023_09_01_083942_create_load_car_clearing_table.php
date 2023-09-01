@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('street', 30)->nullable();
             $table->text('add_info')->nullable();
             $table->bigInteger('loadboard_id')->index('loadboard_id');
+            $table->timestamps();
         });
     }
 

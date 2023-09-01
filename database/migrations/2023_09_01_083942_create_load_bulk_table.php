@@ -46,6 +46,7 @@ return new class extends Migration
             $table->enum('insure_it', ['Yes', 'No'])->nullable();
             $table->decimal('insure_amount', 20)->nullable()->default(0);
             $table->enum('is_fragile', ['Yes', 'No'])->nullable();
+            $table->timestamps();
         });
     }
 
