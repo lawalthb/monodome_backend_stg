@@ -26,10 +26,15 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     });
 
     Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function () {
+
+        //load type route
         Route::get('/load-types', [LoadTypeController::class, 'index']);
         Route::post('/load-types', [LoadTypeController::class, 'store']);
         Route::get('/load-types/{id}', [LoadTypeController::class, 'show']);
-        Route::post('/load-types/update/{id}', [LoadTypeController::class, 'update']);
-        Route::delete('/load-types/delete', [LoadTypeController::class, 'destroy']);
+        Route::post('/load-types/{id}', [LoadTypeController::class, 'update']);
+        Route::delete('/load-types/{id}', [LoadTypeController::class, 'destroy']);
+
+
+        // load package route
     });
 });
