@@ -8,6 +8,7 @@ use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadTypeRequest;
+use App\Http\Resources\LoadTypeResource;
 
 class LoadTypeController extends Controller
 {
@@ -21,23 +22,33 @@ class LoadTypeController extends Controller
             $q->where('name', 'like', "%{$key}%");
         })->latest()->paginate();
 
-
-        return response()->json($loadTypes);
+        return LoadTypeResource::collection($loadTypes);
+        // return response()->json(["data"=>LoadTypeResource::collection($loadTypes)]);
     }
 
     public function show($id)
     {
         $loadType = LoadType::find($id);
         if (!$loadType) {
-            return response()->json(['message' => 'Load Type not found'], 404);
+            return $this->error(null, "Load Type not found",404 );
         }
-        return response()->json($loadType);
+        return $this->success(["loadType" => new LoadTypeResource($loadType),], "Successfully");
+
     }
 
     public function store(LoadTypeRequest $request)
     {
+
+
         $loadType = LoadType::create($request->validated());
-        return response()->json($loadType, 201);
+
+        return $this->success(
+            [
+                "loadType" => new LoadTypeResource($loadType),
+            ],
+            "Successfully"
+        );
+       // return response()->json($loadType, 201);
     }
 
     public function update(LoadTypeRequest $request, $id)
