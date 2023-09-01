@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class LoadBulk extends Model
 {
     use HasFactory;
+
+    public $guarded = [];
+    public function loadType()
+    {
+        return $this->belongsTo(LoadType::class, 'load_type_id', 'load_type_id')
+            ->where('load_type_type', 'load_car_clearing');
+    }
 }
