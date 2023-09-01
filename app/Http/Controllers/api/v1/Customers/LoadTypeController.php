@@ -15,7 +15,8 @@ class LoadTypeController extends Controller
 
 
         $loadTypes = LoadType::where(function ($q) use ($key) {
-            $q->where('name', 'like', "%{$key}%");
+            $q->where('sender_name', 'like', "%{$key}%")
+            ->orWhere('business_name', 'like', "%{$key}%");
         })->latest()->paginate();
 
         return response()->json($loadTypes);

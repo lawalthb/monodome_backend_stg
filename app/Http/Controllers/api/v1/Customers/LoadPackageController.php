@@ -11,7 +11,14 @@ use App\Http\Requests\LoadPackageRequest;
 {
     public function index()
     {
-        $loadPackages = LoadPackage::all();
+
+        $key = request()->input('search');
+
+        $loadPackages = LoadPackage::where(function ($q) use ($key) {
+            $q->where('name', 'like', "%{$key}%");
+        })->latest()->paginate();
+
+
         return response()->json($loadPackages);
     }
 
