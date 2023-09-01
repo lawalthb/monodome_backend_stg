@@ -27,6 +27,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
     Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function () {
         Route::get('/load-types', [LoadTypeController::class, 'index']);
+        Route::post('/load-types', [LoadTypeController::class, 'store']);
         Route::get('/load-types/{id}', [LoadTypeController::class, 'show']);
         Route::post('/load-types/update/{id}', [LoadTypeController::class, 'update']);
         Route::delete('/load-types/delete', [LoadTypeController::class, 'destroy']);
