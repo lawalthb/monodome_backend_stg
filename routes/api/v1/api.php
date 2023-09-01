@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\auth\AuthController;
+// use App\Http\Controllers\api\v1\Customers\LoadTypeController;
+use App\Http\Controllers\api\v1\Customers\LoadTypeController;
 use App\Http\Controllers\api\v1\auth\EmailVerificationController;
 
-Route::group(['namespace' => 'api\v1', 'prefix' => 'v1','middleware'=>'return-json'], function () {
-
+Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return-json'], function () {
 
     // user registration namespace
     Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
@@ -17,12 +18,17 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1','middleware'=>'return-js
         Route::post('/send-otp', [EmailVerificationController::class, 'send_otp']);
         Route::post('/verify-otp', [EmailVerificationController::class, 'otp_verification_submit']);
         Route::post('/check-email', [EmailVerificationController::class, 'check_if_email_exist']);
-
     });
 
-    Route::group(['prefix' => 'customer', 'middleware'=>'auth:api'], function () {
+    Route::group(['prefix' => 'auth', 'namespace' => 'auth', 'middleware' => 'auth:api'], function () {
         Route::get('/profile', [AuthController::class, 'me']);
         Route::post('/update-profile', [AuthController::class, 'updateProfile']);
-});
+    });
 
+    Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function () {
+        Route::get('/load-types', [LoadTypeController::class, 'index']);
+        Route::get('/load-types/{id}', [LoadTypeController::class, 'show']);
+        Route::post('/load-types/update/{id}', [LoadTypeController::class, 'update']);
+        Route::delete('/load-types/delete', [LoadTypeController::class, 'destroy']);
+    });
 });
