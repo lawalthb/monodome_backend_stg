@@ -22,9 +22,10 @@ class LoadPackageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'load_board_id' => 'required|integer',
+            'load_type_id' => 'required|integer',
+            'load_type_type' => 'nullable|string|max:30',
             'deliver_from' => 'nullable|in:address,office',
-            'to_office_id' => 'nullable|integer|default:1',
+            'to_office_id' => 'nullable|integer|',
             'sender_name' => 'nullable|string|max:30',
             'sender_phone' => 'nullable|string|max:30',
             'sender_zipcode' => 'nullable|string|max:20',
@@ -33,7 +34,7 @@ class LoadPackageRequest extends FormRequest
             'state_id' => 'nullable|string|max:30',
             'sender_email' => 'nullable|string|max:30|email',
             'deliver_to' => 'nullable|in:address,office',
-            'from_office_id' => 'nullable|integer|default:1',
+            'from_office_id' => 'nullable|integer',
             'receiver_name' => 'nullable|string|max:30',
             'receiver_phone' => 'nullable|string|max:30',
             'receiver_zipcode' => 'nullable|string|max:30',
@@ -48,7 +49,7 @@ class LoadPackageRequest extends FormRequest
             'length' => 'nullable|numeric',
             'height' => 'nullable|numeric',
             'insure_it' => 'nullable|in:No,Yes',
-            'insure_amount' => 'nullable|numeric|default:0',
+            'insure_amount' => 'nullable|numeric|',
             'is_fragile' => 'nullable|in:No,Yes',
         ];
     }

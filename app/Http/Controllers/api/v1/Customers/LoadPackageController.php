@@ -6,6 +6,7 @@ use App\Models\LoadPackage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadPackageRequest;
+use App\Models\LoadType;
 
     class LoadPackageController extends Controller
 {
@@ -33,18 +34,18 @@ use App\Http\Requests\LoadPackageRequest;
 
     public function store(LoadPackageRequest $request)
     {
-        $loadPackage = LoadPackage::create($request->validated());
+        $loadType=LoadType::find($request->load_type_id);
+
+        $loadPackage =  $loadType->loadType::create($request->validated());
         return response()->json($loadPackage, 201);
     }
 
     public function update(LoadPackageRequest $request, $id)
     {
-        $loadPackage = LoadPackage::find($id);
-        if (!$loadPackage) {
-            return response()->json(['message' => 'Load Package not found'], 404);
-        }
-        $loadPackage->update($request->validated());
-        return response()->json($loadPackage);
+        $loadType = LoadType::find($request->load_type_id);
+
+        $loadPackage = $loadType->loadPackage()->create($request->validated());
+        return response()->json($loadPackage, 201);
     }
 
     public function destroy($id)

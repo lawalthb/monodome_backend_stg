@@ -2,15 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\LoadType;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LoadContainer extends Model
 {
     use HasFactory;
 
-    public function loadboard()
+    public $guarded = [];
+
+    public function loadType()
     {
-        return $this->belongsTo(LoadBoard::class, 'loadboard_id');
+        return $this->belongsTo(LoadType::class, 'load_type_id', 'load_type_id')
+            ->where('load_type_type', 'load_container');
     }
 }
