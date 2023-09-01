@@ -23,6 +23,7 @@ class LoadTypeController extends Controller
         })->latest()->paginate();
 
         return LoadTypeResource::collection($loadTypes);
+        // return response()->json(["data"=>LoadTypeResource::collection($loadTypes)]);
     }
 
     public function show($id)
@@ -38,36 +39,35 @@ class LoadTypeController extends Controller
     public function store(LoadTypeRequest $request)
     {
 
+
         $loadType = LoadType::create($request->validated());
 
         return $this->success(
             [
                 "loadType" => new LoadTypeResource($loadType),
             ],
-            "Created Successfully"
+            "Successfully"
         );
+       // return response()->json($loadType, 201);
     }
 
     public function update(LoadTypeRequest $request, $id)
     {
         $loadType = LoadType::find($id);
         if (!$loadType) {
-            return $this->error(null, "Load Type not found",404 );
+            return response()->json(['message' => 'Load Type not found'], 404);
         }
         $loadType->update($request->validated());
-
-        return $this->success(["loadType" => new LoadTypeResource($loadType),], "updated Successfully");
-
-        // return response()->json($loadType);
+        return response()->json($loadType);
     }
 
     public function destroy($id)
     {
         $loadType = LoadType::find($id);
         if (!$loadType) {
-            return $this->error(null, "Load Type not found",404 );
+            return response()->json(['message' => 'Load Type not found'], 404);
         }
         $loadType->delete();
-        return $this->success(["loadType" => new LoadTypeResource($loadType),], "Load Type deleted");
+        return response()->json(['message' => 'Load Type deleted']);
     }
 }
