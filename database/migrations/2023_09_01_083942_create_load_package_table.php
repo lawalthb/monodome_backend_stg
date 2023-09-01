@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('load_package', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->bigInteger('loadoard_id')->index('loadoard_id');
+            $table->bigInteger('load_board_id')->index('load_board_id');
             $table->enum('deliver_from', ['address', 'office'])->nullable();
             $table->integer('to_office_id')->nullable()->default(1);
             $table->string('sender_name', 30)->nullable();
@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('sender_zipcode', 20)->nullable();
             $table->string('sender_city', 30)->nullable();
             $table->string('sender_street', 30)->nullable();
-            $table->string('sender_number', 30)->nullable();
-            $table->string('sender_appartment', 30)->nullable();
+            $table->string('state_id', 30)->nullable();
+            $table->string('sender_email', 30)->nullable();
             $table->enum('deliver_to', ['address', 'office'])->nullable();
             $table->integer('from_office_id')->nullable()->default(1);
             $table->string('receiver_name', 30)->nullable();
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('receiver_city', 30)->nullable();
             $table->string('receiver_street', 30)->nullable();
             $table->string('receiver_number', 30)->nullable();
-            $table->string('receiver_appartment', 30)->nullable();
+            $table->string('receiver_email', 30)->nullable();
             $table->enum('is_document', ['No', 'Yes'])->default('Yes');
             $table->text('description')->nullable();
             $table->decimal('weight', 20)->nullable();

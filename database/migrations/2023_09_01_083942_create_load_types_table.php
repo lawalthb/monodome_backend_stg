@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('load_types', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('name', 30);
+            $table->string('name', 30)->comment('package, bulk, car clearing, container shipment, specialize shipment');;
             $table->enum('is_active', ['Yes', 'No'])->default('Yes');
         });
     }
