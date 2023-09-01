@@ -6,6 +6,7 @@ use App\Models\LoadPackage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadPackageRequest;
+use App\Http\Resources\LoadPackageResource;
 use App\Models\LoadType;
 
     class LoadPackageController extends Controller
@@ -20,8 +21,9 @@ use App\Models\LoadType;
             ->orWhere('sender_email', 'like', "%{$key}%");
         })->latest()->paginate();
 
-
-        return response()->json($loadPackages);
+        
+       return LoadPackageResource::collection($loadPackages);
+       // return response()->json($loadPackages);
     }
 
     public function show($id)

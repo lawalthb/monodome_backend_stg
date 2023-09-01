@@ -29,21 +29,21 @@ class LoadType extends Model
 
     public function loadPackages()
     {
-        return $this->hasMany(LoadPackage::class, 'load_type_id', 'id');
+        return $this->hasMany(LoadPackage::class);
     }
 
     public function loadContainers()
     {
-        return $this->hasMany(LoadContainer::class, 'load_type_id', 'load_type_id');
+        return $this->hasMany(LoadContainer::class, 'load_type_id', 'id');
     }
 
     public function loadCarClearings()
     {
-        return $this->hasMany(LoadCarClearing::class, 'load_type_id', 'load_type_id');
+        return $this->hasMany(LoadCarClearing::class, 'load_type_id', 'id');
     }
 
     public function loadBulks()
     {
-        return $this->hasMany(LoadBulk::class, 'load_type_id', 'load_type_id');
+        return $this->hasMany(LoadBulk::class, 'load_type_id', 'id');
     }
 }
