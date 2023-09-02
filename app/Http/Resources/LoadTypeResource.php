@@ -16,6 +16,7 @@ class LoadTypeResource extends JsonResource
     {
         return [
             "id" =>$this->id,
+            "uuid" =>$this->uuid,
             "name" =>$this->name,
             "is_active" =>$this->is_active,
         ];

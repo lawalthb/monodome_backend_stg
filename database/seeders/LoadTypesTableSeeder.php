@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use DB;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
@@ -17,7 +18,7 @@ class LoadTypesTableSeeder extends Seeder
     {
 
 
-        \DB::table('load_types')->delete();
+        DB::table('load_types')->delete();
 
         \DB::table('load_types')->insert(array (
             0 =>

@@ -17,6 +17,7 @@ class LoadPackageResource extends JsonResource
     {
         return [
             "id" => $this->id,
+            "uuid" => $this->uuid,
             "deliver_from" => $this->deliver_from,
             "to_office_id" => $this->to_office_id,
             "sender_name" => $this->sender_name,

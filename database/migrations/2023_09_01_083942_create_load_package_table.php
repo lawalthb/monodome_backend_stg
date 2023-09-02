@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -15,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('load_packages', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('uuid');
+            $table->string('uuid')->default(Str::uuid()->toString());
             $table->unsignedBigInteger('load_type_id');
             $table->string('load_type_type')->default("package")->nullable();
            // $table->bigInteger('load_board_id')->index('load_board_id');

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\auth\AuthController;
 // use App\Http\Controllers\api\v1\Customers\LoadTypeController;
+use App\Http\Controllers\api\v1\Customers\LoadBulkController;
 use App\Http\Controllers\api\v1\Customers\LoadTypeController;
 use App\Http\Controllers\api\v1\Customers\LoadPackageController;
 use App\Http\Controllers\api\v1\auth\EmailVerificationController;
@@ -41,5 +42,13 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/load-package/{id}', [LoadPackageController::class, 'show']);
         Route::post('/load-package/{id}', [LoadPackageController::class, 'update']);
         Route::delete('/load-package/{id}', [LoadPackageController::class, 'destroy']);
+
+
+        // load Bulk route
+        Route::get('/load-bulk', [LoadBulkController::class, 'index']);
+        Route::post('/load-bulk', [LoadBulkController::class, 'store']);
+        Route::get('/load-bulk/{id}', [LoadBulkController::class, 'show']);
+        Route::post('/load-bulk/{id}', [LoadBulkController::class, 'update']);
+        Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
     });
 });
