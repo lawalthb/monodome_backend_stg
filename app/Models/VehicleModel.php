@@ -19,6 +19,11 @@ class VehicleModel extends Model
         return $this->belongsTo(VehicleMake::class, 'vehicle_make_id');
     }
 
+    // public function type()
+    // {
+    //     return $this->belongsTo(VehicleType::class);
+    // }
+
     protected static function boot()
     {
         parent::boot();

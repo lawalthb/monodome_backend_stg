@@ -7,6 +7,7 @@ use App\Http\Controllers\api\v1\Customers\LoadBulkController;
 use App\Http\Controllers\api\v1\Customers\LoadTypeController;
 use App\Http\Controllers\api\v1\Customers\LoadPackageController;
 use App\Http\Controllers\api\v1\customers\VehicleMakeController;
+use App\Http\Controllers\api\v1\customers\VehicleTypeController;
 use App\Http\Controllers\api\v1\auth\EmailVerificationController;
 use App\Http\Controllers\api\v1\customers\VehicleModelController;
 
@@ -73,11 +74,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/model/{id}', [VehicleModelController::class, 'destroy']);
 
         // route for vehicle type
-        Route::get('/type', [VehicleMakeController::class, 'index']);
-        Route::post('/type', [VehicleMakeController::class, 'store']);
-        Route::get('/type/{id}', [VehicleMakeController::class, 'show']);
-        Route::post('/type/{id}', [VehicleMakeController::class, 'update']);
-        Route::delete('/type/{id}', [VehicleMakeController::class, 'destroy']);
+        Route::get('/type', [VehicleTypeController::class, 'index']);
+        Route::post('/type', [VehicleTypeController::class, 'store']);
+        Route::get('/type/{id}', [VehicleTypeController::class, 'show']);
+        Route::post('/type/{id}', [VehicleTypeController::class, 'update']);
+        Route::delete('/type/{id}', [VehicleTypeController::class, 'destroy']);
 
     });
 

@@ -18,6 +18,10 @@ class VehicleMake extends Model
         return $this->hasMany(VehicleModel::class);
     }
 
+    // public function type()
+    // {
+    //     return $this->belongsTo(VehicleType::class);
+    // }
 
 
     public function getLogoPathAttribute()

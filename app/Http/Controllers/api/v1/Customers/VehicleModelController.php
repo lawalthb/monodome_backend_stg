@@ -73,13 +73,12 @@ class VehicleModelController extends Controller
         $model = VehicleModel::findOrFail($id);
 
         if (!$model->delete()) {
-            return $this->error(null, "Vehicle model not found",404 );
+            return $this->error(null, "Vehicle model not found", 404);
         }
 
         return $this->success(
-           null,
+            null,
             "Vehicle model deleted successfully"
         );
-
     }
 }
