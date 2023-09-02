@@ -65,11 +65,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/make/{id}', [VehicleMakeController::class, 'destroy']);
 
         // route for vehicle model
-        Route::get('/model', [VehicleMakeController::class, 'index']);
-        Route::post('/model', [VehicleMakeController::class, 'store']);
-        Route::get('/model/{id}', [VehicleMakeController::class, 'show']);
-        Route::post('/model/{id}', [VehicleMakeController::class, 'update']);
-        Route::delete('/model/{id}', [VehicleMakeController::class, 'destroy']);
+        Route::get('/model', [VehicleModelController::class, 'index']);
+        Route::post('/model', [VehicleModelController::class, 'store']);
+        Route::get('/model/{id}', [VehicleModelController::class, 'show']);
+        Route::post('/model/{id}', [VehicleModelController::class, 'update']);
+        Route::delete('/model/{id}', [VehicleModelController::class, 'destroy']);
 
         // route for vehicle type
         Route::get('/type', [VehicleMakeController::class, 'index']);

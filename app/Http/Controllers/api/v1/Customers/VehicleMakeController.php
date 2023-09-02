@@ -64,7 +64,8 @@ class VehicleMakeController extends Controller
     {
         $make = VehicleMake::find($id);
         if (!$make) {
-            return response()->json(['message' => 'Make not found'], 404);
+            return $this->error(null, "Vehicle Make not found",404 );
+
         }
 
         $make->update($request->validated());
@@ -80,10 +81,13 @@ class VehicleMakeController extends Controller
     {
         $make = VehicleMake::find($id);
         if (!$make) {
-            return response()->json(['message' => 'Make not found'], 404);
+            return $this->error(null, "Vehicle Make not found",404 );
         }
 
         $make->delete();
-        return response()->json(['message' => 'Make deleted']);
+        return $this->success(
+           null,
+            "deleted Successfully"
+        );
     }
 }
