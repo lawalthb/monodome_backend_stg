@@ -59,7 +59,13 @@ class VehicleTypeController extends Controller
     {
         $type = VehicleType::findOrFail($id);
         $type->update($request->validated());
-        return response()->json(['data' => $type]);
+
+        return $this->success(
+            [
+                "type" => new VehicleTypeResource($type),
+            ],
+            "update Successfully"
+        );
     }
 
     public function destroy($id)
