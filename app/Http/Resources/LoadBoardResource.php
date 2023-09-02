@@ -5,7 +5,9 @@ namespace App\Http\Resources;
 use App\Models\LoadBulk;
 use App\Models\LoadPackage;
 use Illuminate\Http\Request;
+use App\Models\LoadContainer;
 use App\Models\LoadSpecialized;
+use App\Http\Resources\LoadContainerResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LoadBoardResource extends JsonResource
@@ -44,8 +46,8 @@ protected function loadableResource()
     }elseif ($this->loadable instanceof LoadBulk) {
         return new LoadBulkResource($this->loadable);
 
-    } elseif ($this->loadable instanceof LoadBulk) {
-        return new LoadBulkResource($this->loadable);
+    } elseif ($this->loadable instanceof LoadContainer) {
+        return new LoadContainerResource($this->loadable);
     }
 
     return null; // Handle other cases or return null if loadable is not recognized
