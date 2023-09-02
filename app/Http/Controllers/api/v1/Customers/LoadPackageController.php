@@ -62,7 +62,7 @@ use App\Http\Resources\LoadPackageResource;
             [
                 "loadPackage" => new LoadPackageResource($loadPackage),
             ],
-            "Created Successfully"
+            "update Successfully"
         );
     }
 
