@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('receiver_number', 30)->nullable();
             $table->string('receiver_email', 30)->nullable();
             $table->enum('is_document', ['No', 'Yes'])->default('Yes');
+            $table->string('document')->nullable();
             $table->text('description')->nullable();
             $table->decimal('weight', 20)->nullable();
             $table->decimal('width', 20)->nullable();

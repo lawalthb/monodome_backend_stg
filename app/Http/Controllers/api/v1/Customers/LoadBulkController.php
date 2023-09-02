@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\api\v1\Customers;
 
 use App\Models\LoadBulk;
+use App\Models\LoadType;
+use App\Models\LoadDocument;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
@@ -41,16 +43,62 @@ class LoadBulkController extends Controller
 
     public function store(LoadBulkRequest $request)
     {
-        $loadType=LoadBulk::find($request->load_type_id);
 
-        $loadBulk = $loadType->loadBulk()->create($request->validated());
 
-        return $this->success(
-            [
-                "loadBulk" => new LoadBulkResource($loadBulk),
-            ],
-            "Created Successfully"
-        );
+   // dd($request->document);
+        // Find the LoadType based on load_type_id
+    $loadType = LoadType::find($request->load_type_id);
+
+    if (!$loadType) {
+        return response()->json(['message' => 'LoadType not found'], 404);
+    }
+
+    // Create a new LoadBulk instance with validated data
+    $loadBulk = new LoadBulk($request->validated());
+
+    // Associate the LoadType
+    $loadBulk->loadType()->associate($loadType);
+
+    // Handle document uploads (if any)
+    if ($request->hasFile('documents')) {
+        $documents = [];
+
+        foreach ($request->file('documents') as $file) {
+            $path = $file->store('load_documents'); // Adjust the storage path as needed
+
+            // Create a record in the load_documents table
+            $document = new LoadDocument([
+                'name' => $file->getClientOriginalName(),
+                'path' => $path,
+            ]);
+
+            $documents[] = $document;
+        }
+
+        // Associate the documents with the LoadBulk
+        $loadBulk->loadDocuments()->saveMany($documents);
+    }
+
+    // Save the LoadBulk instance
+    $loadBulk->save();
+
+    return $this->success(
+        [
+            "loadBulk" => new LoadBulkResource($loadBulk),
+        ],
+        "Created Successfully"
+    );
+
+        // $loadType = LoadBulk::find($request->load_type_id);
+
+        // $loadBulk = $loadType->loadBulk()->create($request->validated());
+
+        // return $this->success(
+        //     [
+        //         "loadBulk" => new LoadBulkResource($loadBulk),
+        //     ],
+        //     "Created Successfully"
+        // );
     }
 
     public function update(LoadBulkRequest $request, $id)

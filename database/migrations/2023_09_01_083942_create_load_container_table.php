@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('destination_country');
             $table->string('height', 10)->nullable();
             $table->string('carrier', 10)->nullable();
-            $table->bigInteger('document_id');
+            $table->string('document')->nullable();
             $table->string('container_value', 20)->nullable();
             $table->text('content_description')->nullable();
             $table->string('is_final', 20)->default('No');

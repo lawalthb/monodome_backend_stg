@@ -17,4 +17,9 @@ class LoadContainer extends Model
         return $this->belongsTo(LoadType::class, 'load_type_id', 'load_type_id')
             ->where('load_type_type', 'load_container');
     }
+
+    public function loadDocuments()
+{
+    return $this->morphMany(LoadDocument::class, 'loadable');
+}
 }

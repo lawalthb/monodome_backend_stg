@@ -47,13 +47,15 @@ class LoadBulkRequest extends FormRequest
             'vehicle_no' => 'nullable|string|max:30',
             'weight' => 'nullable|numeric',
             'schedule_date' => 'nullable|date',
-            'document_id' => 'nullable|integer',
+            //'document' => 'nullable|integer',
             'width' => 'nullable|numeric',
             'length' => 'nullable|numeric',
             'height' => 'nullable|numeric',
             'insure_it' => 'nullable|in:Yes,No',
             'insure_amount' => 'nullable|numeric',
             'is_fragile' => 'nullable|in:Yes,No',
+            'documents' => 'array', // An array of uploaded files
+            'documents.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ];
     }
 }
