@@ -13,12 +13,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('load_documents', function (Blueprint $table) {
-            $table->id();
+            $table->id(); // Define the primary key column
             $table->string('uuid')->default(Str::uuid()->toString());
             $table->string('name'); // Original file name
             $table->string('path'); // File path in storage
-            $table->unsignedBigInteger('load_id'); // Foreign key to the associated load
-            $table->string('load_type'); // Type of load (e.g., 'load_packages', 'load_specialized', etc.)
+            $table->unsignedBigInteger('loadable_id'); // Foreign key to the associated load
+            $table->string('loadable_type'); // Type of load (e.g., 'load_packages', 'load_specialized', etc.)
             $table->timestamps();
         });
     }

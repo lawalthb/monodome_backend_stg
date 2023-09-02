@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LoadDocument extends Model
 {
@@ -13,5 +14,26 @@ class LoadDocument extends Model
     public function loadable()
     {
         return $this->morphTo('loadable');
+    }
+
+
+    public function getFilePathAttribute()
+    {
+        if ($this->path) {
+            return $this->path;
+        } else {
+            return 'uploads/default/no-image-found.png';
+        }
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Generate a UUID for the new vehicle model when creating it
+        static::creating(function ($LoadDocument) {
+            $LoadDocument->uuid = Str::uuid()->toString();
+        });
     }
 }

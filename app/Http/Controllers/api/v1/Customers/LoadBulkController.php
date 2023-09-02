@@ -23,12 +23,12 @@ class LoadBulkController extends Controller
 
         $loadBulk = LoadBulk::where(function ($q) use ($key) {
             $q->where('sender_name', 'like', "%{$key}%")
-            ->orWhere('sender_email', 'like', "%{$key}%");
+                ->orWhere('sender_email', 'like', "%{$key}%");
         })->latest()->paginate();
 
 
-       return LoadBulkResource::collection($loadBulk);
-       // return response()->json($loadBulk);
+        return LoadBulkResource::collection($loadBulk);
+        // return response()->json($loadBulk);
     }
 
     public function show($id)
@@ -36,7 +36,7 @@ class LoadBulkController extends Controller
         $loadBulk = LoadBulk::find($id);
 
         if (!$loadBulk) {
-            return $this->error(null, "Load Bulk not found",404 );
+            return $this->error(null, "Load Bulk not found", 404);
         }
         return $this->success(["loadBulk" => new LoadBulkResource($loadBulk),], "Successfully");
     }
@@ -44,8 +44,6 @@ class LoadBulkController extends Controller
     public function store(LoadBulkRequest $request)
     {
 
-
-   // dd($request->document);
         // Find the LoadType based on load_type_id
     $loadType = LoadType::find($request->load_type_id);
 
@@ -59,70 +57,122 @@ class LoadBulkController extends Controller
     // Associate the LoadType
     $loadBulk->loadType()->associate($loadType);
 
+    // Save the LoadBulk instance
+    try {
+        $loadBulk->save();
+    } catch (\Exception $e) {
+        // Handle the error here
+        return response()->json(['message' => 'Error creating LoadBulk', 'error' => $e->getMessage()], 500);
+    }
+
+        // Handle document uploads (if any)
+        if ($request->hasFile('documents')) {
+            $documents = [];
+
+            foreach ($request->file('documents') as $file) {
+
+               $file = $this->uploadFileWithDetails('load_documents', $file);
+                $path = $file['path'];
+                $name = $file['file_name'];
+
+                // Create a record in the load_documents table
+                $document = new LoadDocument([
+                    'name' => $name,
+                    'path' => $path,
+                ]);
+
+                // Associate the document with the LoadBulk
+                $loadBulk->loadDocuments()->save($document);
+            }
+        }
+
+
+        return $this->success(
+            [
+                "loadBulk" => new LoadBulkResource($loadBulk),
+            ],
+            "Created Successfully"
+        );
+    }
+
+    public function update(LoadBulkRequest $request, LoadBulk $loadBulk)
+{
+    // Find the LoadType based on load_type_id
+    $loadType = LoadType::find($request->load_type_id);
+
+    if (!$loadType) {
+        return response()->json(['message' => 'LoadType not found'], 404);
+    }
+
+    // Update the LoadBulk instance with validated data
+    $loadBulk->fill($request->validated());
+
+    // Associate the updated LoadType
+    $loadBulk->loadType()->associate($loadType);
+
+    // Save the updated LoadBulk instance
+    try {
+        $loadBulk->save();
+    } catch (\Exception $e) {
+        // Handle the error here
+        return response()->json(['message' => 'Error updating LoadBulk', 'error' => $e->getMessage()], 500);
+    }
+    $loadDocuments = $loadBulk->loadDocuments;
     // Handle document uploads (if any)
     if ($request->hasFile('documents')) {
         $documents = [];
 
+        foreach ($loadDocuments as $loadDocument) {
+            $this->deleteFile($loadDocument->path);
+            $loadDocument->delete();
+        }
+
         foreach ($request->file('documents') as $file) {
-            $path = $file->store('load_documents'); // Adjust the storage path as needed
+            $file = $this->uploadFileWithDetails('load_documents', $file);
+            $path = $file['path'];
+            $name = $file['file_name'];
 
             // Create a record in the load_documents table
             $document = new LoadDocument([
-                'name' => $file->getClientOriginalName(),
+                'name' => $name,
                 'path' => $path,
             ]);
 
-            $documents[] = $document;
+            // Associate the document with the LoadBulk
+            $loadBulk->loadDocuments()->save($document);
         }
-
-        // Associate the documents with the LoadBulk
-        $loadBulk->loadDocuments()->saveMany($documents);
     }
-
-    // Save the LoadBulk instance
-    $loadBulk->save();
 
     return $this->success(
         [
             "loadBulk" => new LoadBulkResource($loadBulk),
         ],
-        "Created Successfully"
+        "Updated Successfully"
     );
+}
 
-        // $loadType = LoadBulk::find($request->load_type_id);
 
-        // $loadBulk = $loadType->loadBulk()->create($request->validated());
+    // public function update(LoadBulkRequest $request, $id)
+    // {
+    //     $loadType = LoadBulk::find($request->load_type_id);
 
-        // return $this->success(
-        //     [
-        //         "loadBulk" => new LoadBulkResource($loadBulk),
-        //     ],
-        //     "Created Successfully"
-        // );
-    }
-
-    public function update(LoadBulkRequest $request, $id)
-    {
-        $loadType = LoadBulk::find($request->load_type_id);
-
-        $loadBulk = $loadType->loadBulk()->create($request->validated());
-        return $this->success(
-            [
-                "loadBulk" => new LoadBulkResource($loadBulk),
-            ],
-            "update Successfully"
-        );
-    }
+    //     $loadBulk = $loadType->loadBulk()->create($request->validated());
+    //     return $this->success(
+    //         [
+    //             "loadBulk" => new LoadBulkResource($loadBulk),
+    //         ],
+    //         "update Successfully"
+    //     );
+    // }
 
     public function destroy($id)
     {
         $loadPackage = LoadBulk::find($id);
 
         if (!$loadPackage) {
-            return $this->error(null, "Load Package not found'",404 );
+            return $this->error(null, "Load Package not found'", 404);
         }
         $loadPackage->delete();
         return $this->success(["loadType" => new LoadBulkResource($loadPackage),], "Package Type deleted");
     }
-
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\LoadType;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -22,4 +23,15 @@ class LoadContainer extends Model
 {
     return $this->morphMany(LoadDocument::class, 'loadable');
 }
+
+protected static function boot()
+{
+    parent::boot();
+
+    // Generate a UUID for the new vehicle model when creating it
+    static::creating(function ($LoadContainer) {
+        $LoadContainer->uuid = Str::uuid()->toString();
+    });
+}
+
 }

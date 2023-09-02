@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('sender_email', 30)->nullable();
             $table->enum('deliver_to', ['address', 'office'])->nullable();
             $table->integer('from_office_id')->nullable()->default(1);
-            // $table->string('receiver_name', 30)->nullable();
+            $table->string('receiver_name', 30)->nullable();
             $table->string('receiver_phone', 30)->nullable();
             $table->string('receiver_zip_code', 30)->nullable();
             $table->string('receiver_city', 30)->nullable();
@@ -42,7 +42,7 @@ return new class extends Migration
             $table->string('vehicle_no', 30)->nullable();
             $table->decimal('weight', 20)->nullable();
             $table->dateTime('schedule_date')->nullable();
-            $table->string('document')->nullable();
+            // $table->string('document')->nullable();
             $table->decimal('width', 20)->nullable();
             $table->decimal('length', 20)->nullable();
             $table->decimal('height', 20)->nullable();
