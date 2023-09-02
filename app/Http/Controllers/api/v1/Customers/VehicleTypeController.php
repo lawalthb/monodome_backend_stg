@@ -4,12 +4,16 @@ namespace App\Http\Controllers\api\v1\customers;
 
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VehicleTypeRequest;
 use App\Http\Resources\VehicleTypeResource;
 
 class VehicleTypeController extends Controller
 {
+    use FileUploadTrait, ApiStatusTrait;
+
     public function index()
     {
           $key = request()->input('search');
@@ -37,7 +41,18 @@ class VehicleTypeController extends Controller
     public function show($id)
     {
         $type = VehicleType::findOrFail($id);
-        return response()->json(['data' => $type]);
+
+        if (!$type) {
+            return response()->json(['message' => 'Make not found'], 404);
+        }
+
+        return $this->success(
+            [
+                "type" => new VehicleTypeResource($type),
+            ],
+            "Successfully"
+        );
+
     }
 
     public function update(VehicleTypeRequest $request, $id)
@@ -50,7 +65,13 @@ class VehicleTypeController extends Controller
     public function destroy($id)
     {
         $type = VehicleType::findOrFail($id);
-        $type->delete();
-        return response()->json(['message' => 'Vehicle type deleted successfully']);
+        if (!$type->delete()) {
+            return $this->error(null, "Vehicle type not found", 404);
+        }
+
+        return $this->success(
+            null,
+            "Vehicle type  deleted successfully"
+        );
     }
 }
