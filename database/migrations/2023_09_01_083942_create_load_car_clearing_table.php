@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('load_car_clearing', function (Blueprint $table) {
             $table->bigInteger('id', true);
+            $table->string('uuid');
             $table->unsignedBigInteger('load_type_id');
             $table->string('load_type_type');
             $table->integer('departure_country');

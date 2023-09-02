@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('driver_details', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('uuid');
             $table->bigInteger('user_id')->index('user_id');
             $table->string('name');
             $table->string('phone_number');

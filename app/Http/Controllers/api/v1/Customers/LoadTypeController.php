@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1\Customers;
 
 use App\Models\LoadType;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
@@ -37,8 +38,17 @@ class LoadTypeController extends Controller
 
     public function store(LoadTypeRequest $request)
     {
+        $validatedData = $request->validated();
 
-        $loadType = LoadType::create($request->validated());
+        $slug = Str::slug($validatedData['name']);
+        $count = LoadType::where('slug', $slug)->count();
+        if ($count > 0) {
+            $slug .= '-' . rand(100000, 999999);
+        }
+
+        $validatedData['slug'] = $slug;
+
+        $loadType = LoadType::create($validatedData);
 
         return $this->success(
             [

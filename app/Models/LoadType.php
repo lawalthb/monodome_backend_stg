@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\LoadPackage;
+use Illuminate\Support\Str;
 use App\Models\LoadContainer;
 use App\Models\LoadCarClearing;
 use Illuminate\Database\Eloquent\Model;
@@ -45,5 +46,16 @@ class LoadType extends Model
     public function loadBulks()
     {
         return $this->hasMany(LoadBulk::class, 'load_type_id', 'id');
+    }
+
+
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function($model){
+            $model->uuid =  Str::uuid()->toString();
+           // $model->user_id =  auth()->id();
+        });
     }
 }

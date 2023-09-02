@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('vehicle_models', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('uuid');
             $table->string('name');
             $table->string('code');
             $table->unsignedBigInteger('vehicle_make_id')->index('vehicle_models_vehicle_make_id_foreign');

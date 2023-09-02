@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('loadboard', function (Blueprint $table) {
             $table->bigInteger('id', true);
+            $table->string('uuid');
             $table->bigInteger('user_id')->index('user_id');
             $table->integer('load_type_id')->index('loadtype');
             $table->string('loadtype_name', 30)->nullable()->comment('package, bulk, car clearing, container shipment, specialize shipment');
