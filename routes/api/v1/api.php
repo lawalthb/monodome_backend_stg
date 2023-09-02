@@ -53,6 +53,14 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/load-bulk/{id}', [LoadBulkController::class, 'show']);
         Route::post('/load-bulk/{loadBulk}', [LoadBulkController::class, 'update']);
         Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
+
+
+             // load Bulk route
+        Route::get('/load-board', [LoadBoardController::class, 'index']);
+        Route::post('/load-board', [LoadBoardController::class, 'store']);
+        Route::get('/load-board/{id}', [LoadBoardController::class, 'show']);
+        Route::post('/load-board/{loadBulk}', [LoadBoardController::class, 'update']);
+        Route::delete('/load-board/{id}', [LoadBoardController::class, 'destroy']);
     });
 
 

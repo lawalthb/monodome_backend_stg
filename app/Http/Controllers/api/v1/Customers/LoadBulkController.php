@@ -20,11 +20,12 @@ class LoadBulkController extends Controller
     public function index()
     {
         $key = request()->input('search');
+        $size = request()->input('size') ?? 20;
 
         $loadBulk = LoadBulk::where(function ($q) use ($key) {
             $q->where('sender_name', 'like', "%{$key}%")
                 ->orWhere('sender_email', 'like', "%{$key}%");
-        })->latest()->paginate();
+        })->latest()->paginate($size);
 
 
         return LoadBulkResource::collection($loadBulk);

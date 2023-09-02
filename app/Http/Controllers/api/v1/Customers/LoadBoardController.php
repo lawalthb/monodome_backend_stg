@@ -16,9 +16,28 @@ class LoadBoardController extends Controller
 
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $loadBoards = LoadBoard::all();
+
+        $query = LoadBoard::query();
+
+        // Filter by Cargo Type
+        if ($request->has('cargo_type')) {
+            $query->where('cargo_type', $request->input('cargo_type'));
+        }
+
+        // Filter by Country
+        if ($request->has('country')) {
+            $query->where('country', $request->input('country'));
+        }
+
+        // Filter by Pickup Distance
+        if ($request->has('pickup_distance')) {
+            $query->where('pickup_distance', $request->input('pickup_distance'));
+        }
+
+        $loadBoards = $query->get();
+
         return $this->success(['loadBoards' => $loadBoards], 'Load boards retrieved successfully');
     }
 
