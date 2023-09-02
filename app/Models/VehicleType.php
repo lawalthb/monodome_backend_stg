@@ -25,4 +25,9 @@ class VehicleType extends Model
         });
     }
 
+    public function vehicleMakes()
+    {
+        return $this->hasMany(VehicleMake::class, 'vehicle_type_id');
+    }
+
 }
