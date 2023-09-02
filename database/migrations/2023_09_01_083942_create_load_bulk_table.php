@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('id', true);
             $table->string('uuid')->default(Str::uuid()->toString());;
             $table->unsignedBigInteger('load_type_id')->default(2);
-            $table->string('load_type_type')->default('bulk');
+            $table->string('load_type_name')->default('bulk');
             $table->enum('deliver_from', ['address', 'office'])->nullable();
             $table->integer('to_office_id')->nullable()->default(1);
             $table->string('sender_name', 30)->nullable();

@@ -57,7 +57,6 @@ class LoadBulkController extends Controller
     // Associate the LoadType
     $loadBulk->loadType()->associate($loadType);
 
-    // Save the LoadBulk instance
     try {
         $loadBulk->save();
     } catch (\Exception $e) {
@@ -85,7 +84,6 @@ class LoadBulkController extends Controller
                 $loadBulk->loadDocuments()->save($document);
             }
         }
-
 
         return $this->success(
             [

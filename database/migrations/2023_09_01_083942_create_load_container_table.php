@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('id', true);
             $table->string('uuid')->default(Str::uuid()->toString());;
             $table->unsignedBigInteger('load_type_id');
-            $table->string('load_type_type');
+            $table->string('load_type_name')->default('container-shipment');
             $table->integer('department_country');
             $table->integer('destination_country');
             $table->string('height', 10)->nullable();

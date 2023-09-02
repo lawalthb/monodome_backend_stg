@@ -32,7 +32,7 @@ class CreateLoadBoardEntry
          $load_board->user_id = $userId;
          $load_board->loadable()->associate($event->loadType);
          $load_board->load_type_id = $loadTypeId;
-         $load_board->loadtype_name = $event->loadType->load_type_name; // You may need to define this method
+         $load_board->load_type_name = $event->loadType->loadType->slug; // You may need to define this method
          $load_board->order_no = getNumber();
          $load_board->status = 'Pending'; // Set the initial status
          $load_board->save();

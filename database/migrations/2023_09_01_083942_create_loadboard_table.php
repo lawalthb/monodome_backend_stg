@@ -18,8 +18,8 @@ return new class extends Migration
             $table->bigInteger('id', true);
             $table->string('uuid')->default(Str::uuid()->toString());;
             $table->bigInteger('user_id')->index('user_id');
-            $table->integer('load_type_id')->index('loadtype');
-            $table->string('loadtype_name', 30)->nullable()->comment('package, bulk, car clearing, container shipment, specialize shipment');
+            $table->integer('load_type_id')->index('load_type_name');
+            $table->string('load_type_name', 30)->nullable()->comment('package, bulk, car clearing, container shipment, specialize shipment');
             $table->enum('status', ['Pending', 'Failed', 'Completed', 'Rejected'])->default('Pending');
             $table->string('order_no');
             $table->timestamp('load_date')->useCurrent();
