@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('vehicle_makes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('uuid')->default(Str::uuid()->toString());;
+            $table->string('uuid')->default(Str::uuid()->toString());
             $table->string('name');
             $table->string('code');
             $table->text('logo')->nullable();

@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -15,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('load_specialized', function (Blueprint $table) {
             $table->bigInteger('id', true);
-            $table->string('uuid');
+            $table->string('uuid')->default(Str::uuid()->toString());;
             $table->bigInteger('loadboard_id');
             $table->integer('delivery_from_country');
             $table->integer('delivery_to_country');
