@@ -5,6 +5,7 @@ use App\Http\Controllers\api\v1\auth\AuthController;
 // use App\Http\Controllers\api\v1\Customers\LoadTypeController;
 use App\Http\Controllers\api\v1\Customers\LoadBulkController;
 use App\Http\Controllers\api\v1\Customers\LoadTypeController;
+use App\Http\Controllers\api\v1\Customers\LoadBoardController;
 use App\Http\Controllers\api\v1\Customers\LoadPackageController;
 use App\Http\Controllers\api\v1\customers\VehicleMakeController;
 use App\Http\Controllers\api\v1\customers\VehicleTypeController;
@@ -55,7 +56,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
 
 
-             // load Bulk route
+             // load board route
         Route::get('/load-board', [LoadBoardController::class, 'index']);
         Route::post('/load-board', [LoadBoardController::class, 'store']);
         Route::get('/load-board/{id}', [LoadBoardController::class, 'show']);
