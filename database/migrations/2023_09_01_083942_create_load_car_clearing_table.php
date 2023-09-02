@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('load_type_type');
             $table->integer('departure_country');
             $table->integer('destination_country');
-            $table->integer('cartype');
+            $table->integer('car_type');
             $table->string('car_model', 30)->nullable();
             $table->bigInteger('document_id');
             $table->string('car_value', 30)->nullable();
@@ -32,11 +32,11 @@ return new class extends Migration
             $table->string('deliver_to_city', 20)->nullable();
             $table->string('receiver_name', 30)->nullable();
             $table->string('phone', 30)->nullable();
-            $table->string('zipcode', 30)->nullable();
+            $table->string('zip_code', 30)->nullable();
             $table->string('city', 30)->nullable();
             $table->string('street', 30)->nullable();
             $table->text('add_info')->nullable();
-            $table->bigInteger('loadboard_id')->index('loadboard_id');
+            $table->bigInteger('load_board_id')->index('load_board_id');
             $table->timestamps();
         });
     }

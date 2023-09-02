@@ -34,7 +34,7 @@ class LoadBulkRequest extends FormRequest
             'sender_number' => 'nullable|string|max:30',
             'sender_email' => 'nullable|email|max:30',
             'deliver_to' => 'nullable|in:address,office',
-            'from_office_id' => 'nullable|integer',
+           // 'from_office_id' => 'nullable|integer',
             'receiver_name' => 'nullable|string|max:30',
             'receiver_phone' => 'nullable|string|max:30',
             'receiver_zip_code' => 'nullable|string|max:30',
