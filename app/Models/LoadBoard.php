@@ -14,6 +14,11 @@ class LoadBoard extends Model
         return $this->belongsTo(LoadType::class, 'load_type_id');
     }
 
+    public function loadable()
+    {
+        return $this->morphTo();
+    }
+
     // Define relationships with specific load types
     public function specialized()
     {

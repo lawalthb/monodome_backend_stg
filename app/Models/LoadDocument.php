@@ -16,7 +16,6 @@ class LoadDocument extends Model
         return $this->morphTo('loadable');
     }
 
-
     public function getFilePathAttribute()
     {
         if ($this->path) {

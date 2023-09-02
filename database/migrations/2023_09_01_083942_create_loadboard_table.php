@@ -14,16 +14,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('loadboard', function (Blueprint $table) {
+        Schema::create('load_boards', function (Blueprint $table) {
             $table->bigInteger('id', true);
             $table->string('uuid')->default(Str::uuid()->toString());;
             $table->bigInteger('user_id')->index('user_id');
             $table->integer('load_type_id')->index('loadtype');
             $table->string('loadtype_name', 30)->nullable()->comment('package, bulk, car clearing, container shipment, specialize shipment');
             $table->enum('status', ['Pending', 'Failed', 'Completed', 'Rejected'])->default('Pending');
-            $table->bigInteger('order_no');
+            $table->string('order_no');
             $table->timestamp('load_date')->useCurrent();
-
+            $table->unsignedBigInteger('loadable_id');
+            $table->string('loadable_type');
             $table->unique(['id', 'order_no'], 'id');
             $table->timestamps();
         });

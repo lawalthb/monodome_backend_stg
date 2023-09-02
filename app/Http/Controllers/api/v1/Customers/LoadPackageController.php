@@ -6,6 +6,7 @@ use App\Models\LoadType;
 use App\Models\LoadPackage;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
+use App\Events\LoadTypeCreated;
 use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadPackageRequest;
@@ -44,6 +45,9 @@ use App\Http\Resources\LoadPackageResource;
         $loadType=LoadType::find($request->load_type_id);
 
         $loadPackage = $loadType->loadPackages()->create($request->validated());
+
+        event(new LoadTypeCreated($loadPackage));
+
 
         return $this->success(
             [

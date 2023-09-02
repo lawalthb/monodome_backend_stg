@@ -56,8 +56,8 @@ function getNumber($length = 8)
     for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
-    //return "PF".$randomString;
-    return $randomString;
+    return "MO-".$randomString;
+   // return $randomString;
 }
 
 if (!function_exists('getSlug')) {
