@@ -25,7 +25,6 @@ class VehicleMakeController extends Controller
 
         //
         return VehicleMakeResource::collection($makes);
-        //    return response()->json(['makes' => $makes]);
     }
 
     public function show($id)

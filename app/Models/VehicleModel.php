@@ -11,6 +11,9 @@ class VehicleModel extends Model
 {
     use HasFactory,SoftDeletes;
 
+    protected $guarded = [];
+
+
     public function make()
     {
         return $this->belongsTo(VehicleMake::class, 'vehicle_make_id');
