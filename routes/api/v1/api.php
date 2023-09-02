@@ -6,6 +6,7 @@ use App\Http\Controllers\api\v1\auth\AuthController;
 use App\Http\Controllers\api\v1\Customers\LoadBulkController;
 use App\Http\Controllers\api\v1\Customers\LoadTypeController;
 use App\Http\Controllers\api\v1\Customers\LoadPackageController;
+use App\Http\Controllers\api\v1\customers\VehicleMakeController;
 use App\Http\Controllers\api\v1\auth\EmailVerificationController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return-json'], function () {
@@ -51,4 +52,32 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::post('/load-bulk/{id}', [LoadBulkController::class, 'update']);
         Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
     });
+
+
+    Route::group(['prefix' => 'vehicle', 'middleware' => 'auth:api'], function () {
+       // Route::resource('vehicle-makes', \App\Http\Controllers\api\v1\customers\VehicleMakeController::class);
+
+       // route for vehicle make
+        Route::get('/make', [VehicleMakeController::class, 'index']);
+        Route::post('/make', [VehicleMakeController::class, 'store']);
+        Route::get('/make/{id}', [VehicleMakeController::class, 'show']);
+        Route::post('/make/{id}', [VehicleMakeController::class, 'update']);
+        Route::delete('/make/{id}', [VehicleMakeController::class, 'destroy']);
+
+        // route for vehicle model
+        Route::get('/model', [VehicleMakeController::class, 'index']);
+        Route::post('/model', [VehicleMakeController::class, 'store']);
+        Route::get('/model/{id}', [VehicleMakeController::class, 'show']);
+        Route::post('/model/{id}', [VehicleMakeController::class, 'update']);
+        Route::delete('/model/{id}', [VehicleMakeController::class, 'destroy']);
+
+        // route for vehicle type
+        Route::get('/type', [VehicleMakeController::class, 'index']);
+        Route::post('/type', [VehicleMakeController::class, 'store']);
+        Route::get('/type/{id}', [VehicleMakeController::class, 'show']);
+        Route::post('/type/{id}', [VehicleMakeController::class, 'update']);
+        Route::delete('/type/{id}', [VehicleMakeController::class, 'destroy']);
+
+    });
+
 });
