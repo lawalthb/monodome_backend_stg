@@ -19,6 +19,19 @@ class VehicleMake extends Model
     }
 
 
+
+    public function getLogoPathAttribute()
+    {
+        if ($this->logo)
+        {
+            return $this->logo;
+        } else {
+            return 'uploads/default/no-image-found.png';
+        }
+    }
+
+
+
     protected static function boot()
     {
         parent::boot();

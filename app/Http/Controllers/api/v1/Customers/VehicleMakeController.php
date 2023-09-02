@@ -8,6 +8,7 @@ use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VehicleMakeRequest;
+use App\Http\Resources\VehicleMakeResource;
 
 class VehicleMakeController extends Controller
 {
@@ -19,10 +20,12 @@ class VehicleMakeController extends Controller
 
         $makes = VehicleMake::where(function ($q) use ($key) {
             $q->where('name', 'like', "%{$key}%")
-            ->orWhere('name', 'like', "%{$key}%");
+            ->orWhere('code', 'like', "%{$key}%");
         })->latest()->paginate();
 
-        return response()->json(['makes' => $makes]);
+        //
+        return VehicleMakeResource::collection($makes);
+        //    return response()->json(['makes' => $makes]);
     }
 
     public function show($id)
@@ -31,13 +34,30 @@ class VehicleMakeController extends Controller
         if (!$make) {
             return response()->json(['message' => 'Make not found'], 404);
         }
-        return response()->json(['make' => $make]);
+
+        return $this->success(
+            [
+                "make" => new VehicleMakeResource($make),
+            ],
+            "Successfully"
+        );
+
     }
 
     public function store(VehicleMakeRequest $request)
     {
-        $make = VehicleMake::create($request->validated());
-        return response()->json(['make' => $make], 201);
+
+        $validatedData = $request->validated();
+        $validatedData['logo'] = $validatedData['logo'] ? $this->saveImage('vehicle', $validatedData['logo'], 60, 60) :   null;
+
+        $make = VehicleMake::create($validatedData);
+
+        return $this->success(
+            [
+                "make" => new VehicleMakeResource($make),
+            ],
+            "Created Successfully"
+        );
     }
 
     public function update(VehicleMakeRequest $request, $id)
@@ -48,7 +68,12 @@ class VehicleMakeController extends Controller
         }
 
         $make->update($request->validated());
-        return response()->json(['make' => $make]);
+        return $this->success(
+            [
+                "make" => new VehicleMakeResource($make),
+            ],
+            "update Successfully"
+        );
     }
 
     public function destroy($id)

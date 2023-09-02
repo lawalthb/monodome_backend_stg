@@ -24,7 +24,7 @@ class VehicleMakeRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:255',
-            'logo' => 'nullable|string',
+            'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ];
     }
 }
