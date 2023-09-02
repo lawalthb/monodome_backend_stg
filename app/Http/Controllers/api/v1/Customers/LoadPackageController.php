@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\api\v1\Customers;
 
+use App\Models\LoadType;
 use App\Models\LoadPackage;
 use Illuminate\Http\Request;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadPackageRequest;
 use App\Http\Resources\LoadPackageResource;
-use App\Models\LoadType;
 
     class LoadPackageController extends Controller
 {
+    use FileUploadTrait, ApiStatusTrait;
     public function index()
     {
 
@@ -21,7 +24,7 @@ use App\Models\LoadType;
             ->orWhere('sender_email', 'like', "%{$key}%");
         })->latest()->paginate();
 
-        
+
        return LoadPackageResource::collection($loadPackages);
        // return response()->json($loadPackages);
     }
@@ -29,10 +32,11 @@ use App\Models\LoadType;
     public function show($id)
     {
         $loadPackage = LoadPackage::find($id);
+
         if (!$loadPackage) {
-            return response()->json(['message' => 'Load Package not found'], 404);
+            return $this->error(null, "Load Package not found",404 );
         }
-        return response()->json($loadPackage);
+        return $this->success(["loadPackage" => new LoadPackageResource($loadPackage),], "Successfully");
     }
 
     public function store(LoadPackageRequest $request)
@@ -41,7 +45,12 @@ use App\Models\LoadType;
 
         $loadPackage = $loadType->loadPackages()->create($request->validated());
 
-        return response()->json($loadPackage, 201);
+        return $this->success(
+            [
+                "loadPackage" => new LoadPackageResource($loadPackage),
+            ],
+            "Created Successfully"
+        );
     }
 
     public function update(LoadPackageRequest $request, $id)
@@ -49,16 +58,22 @@ use App\Models\LoadType;
         $loadType = LoadType::find($request->load_type_id);
 
         $loadPackage = $loadType->loadPackages()->create($request->validated());
-        return response()->json($loadPackage, 201);
+        return $this->success(
+            [
+                "loadPackage" => new LoadPackageResource($loadPackage),
+            ],
+            "Created Successfully"
+        );
     }
 
     public function destroy($id)
     {
         $loadPackage = LoadPackage::find($id);
+
         if (!$loadPackage) {
-            return response()->json(['message' => 'Load Package not found'], 404);
+            return $this->error(null, "Load Package not found'",404 );
         }
         $loadPackage->delete();
-        return response()->json(['message' => 'Load Package deleted']);
+        return $this->success(["loadType" => new LoadPackageResource($loadPackage),], "Package Type deleted");
     }
 }
