@@ -20,7 +20,7 @@ class VehicleModelController extends Controller
 
         $models = VehicleModel::where(function ($q) use ($key) {
             $q->where('name', 'like', "%{$key}%")
-            ->orWhere('code', 'like', "%{$key}%");
+                ->orWhere('code', 'like', "%{$key}%");
         })->latest()->paginate();
 
         //
@@ -37,7 +37,6 @@ class VehicleModelController extends Controller
             ],
             "Created Successfully"
         );
-
     }
 
     public function show($id)
@@ -54,7 +53,6 @@ class VehicleModelController extends Controller
             ],
             "Successfully"
         );
-
     }
 
     public function update(VehicleModelRequest $request, $id)
@@ -68,13 +66,20 @@ class VehicleModelController extends Controller
             ],
             "update Successfully"
         );
-
     }
 
     public function destroy($id)
     {
         $model = VehicleModel::findOrFail($id);
-        $model->delete();
-        return response()->json(['message' => 'Vehicle model deleted successfully']);
+
+        if (!$model->delete()) {
+            return $this->error(null, "Vehicle model not found",404 );
+        }
+
+        return $this->success(
+           null,
+            "Vehicle model deleted successfully"
+        );
+
     }
 }
