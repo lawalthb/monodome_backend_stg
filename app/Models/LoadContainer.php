@@ -15,8 +15,7 @@ class LoadContainer extends Model
 
     public function loadType()
     {
-        return $this->belongsTo(LoadType::class, 'load_type_id', 'load_type_id')
-            ->where('load_type_type', 'load_container');
+        return $this->belongsTo(LoadType::class);
     }
 
     public function loadDocuments()

@@ -18,6 +18,7 @@ class LoadTypeResource extends JsonResource
             "id" =>$this->id,
             "uuid" =>$this->uuid,
             "name" =>$this->name,
+            "slug" =>$this->slug,
             "is_active" =>$this->is_active,
         ];
     }

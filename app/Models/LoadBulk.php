@@ -12,22 +12,22 @@ class LoadBulk extends Model
 
     public $guarded = [];
     public function loadType()
-        {
-            return $this->belongsTo(LoadType::class);
-        }
+    {
+        return $this->belongsTo(LoadType::class);
+    }
 
     public function loadDocuments()
-{
-    return $this->morphMany(LoadDocument::class, 'loadable');
-}
+    {
+        return $this->morphMany(LoadDocument::class, 'loadable');
+    }
 
-protected static function boot()
-{
-    parent::boot();
+    protected static function boot()
+    {
+        parent::boot();
 
-    // Generate a UUID for the new vehicle model when creating it
-    static::creating(function ($LoadBulk) {
-        $LoadBulk->uuid = Str::uuid()->toString();
-    });
-}
+        // Generate a UUID for the new vehicle model when creating it
+        static::creating(function ($LoadBulk) {
+            $LoadBulk->uuid = Str::uuid()->toString();
+        });
+    }
 }
