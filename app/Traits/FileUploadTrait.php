@@ -172,6 +172,7 @@ trait FileUploadTrait
                 Storage::disk('s3')->delete($path);
             } else {
                 File::delete($path);
+                Storage::disk("public")->delete($path);
             }
         } catch (\Exception $e) {
             //

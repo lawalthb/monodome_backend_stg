@@ -8,6 +8,7 @@ use App\Models\LoadDocument;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadBulkRequest;
 use App\Http\Resources\LoadBulkResource;
@@ -18,7 +19,6 @@ class LoadBulkController extends Controller
 
     public function index()
     {
-
         $key = request()->input('search');
 
         $loadBulk = LoadBulk::where(function ($q) use ($key) {
@@ -121,8 +121,9 @@ class LoadBulkController extends Controller
     // Handle document uploads (if any)
     if ($request->hasFile('documents')) {
         $documents = [];
-
+       // Log::info( $loadDocuments);
         foreach ($loadDocuments as $loadDocument) {
+            Log::info($loadDocument->path);
             $this->deleteFile($loadDocument->path);
             $loadDocument->delete();
         }
@@ -151,28 +152,20 @@ class LoadBulkController extends Controller
     );
 }
 
-
-    // public function update(LoadBulkRequest $request, $id)
-    // {
-    //     $loadType = LoadBulk::find($request->load_type_id);
-
-    //     $loadBulk = $loadType->loadBulk()->create($request->validated());
-    //     return $this->success(
-    //         [
-    //             "loadBulk" => new LoadBulkResource($loadBulk),
-    //         ],
-    //         "update Successfully"
-    //     );
-    // }
-
     public function destroy($id)
     {
-        $loadPackage = LoadBulk::find($id);
+        $loadBulk = LoadBulk::find($id);
 
-        if (!$loadPackage) {
-            return $this->error(null, "Load Package not found'", 404);
-        }
-        $loadPackage->delete();
-        return $this->success(["loadType" => new LoadBulkResource($loadPackage),], "Package Type deleted");
+    if (!$loadBulk) {
+        return $this->error(null, "LoadBulk not found'", 404);
+    }
+
+    // Delete associated LoadDocument records
+    $loadBulk->loadDocuments()->delete();
+
+    // Delete the LoadBulk record
+    $loadBulk->delete();
+
+    return $this->success(null, "LoadBulk and associated LoadDocuments deleted");
     }
 }
