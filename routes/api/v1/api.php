@@ -102,6 +102,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
         // City Routes
         Route::get('/cities', [CountryController::class,'cities']);
+        Route::get('/cities/{state_id}', [CountryController::class,'getCitiesByState']);
         Route::get('/cities/{country_id}/{state_id}', [CountryController::class,'getCitiesByCountryAndState']);
      });
 
