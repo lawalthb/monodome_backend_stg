@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class StateResource extends JsonResource
+class CityResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,16 +17,17 @@ class StateResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'state_id' =>  new StateResource($this->state),
+            'state_code' => $this->state_code,
+            'country_id' => $this->country_id,
             'country_code' => $this->country_code,
-           // 'fips_code' => $this->fips_code,
-            'iso2' => $this->iso2,
-            // 'latitude' => $this->latitude,
-            // 'longitude' => $this->longitude,
-            // 'flag' => (bool)$this->flag,
-            // 'wikiDataId' => $this->wikiDataId,
-            'country' => new CountryResource($this->country), // You can include the country details if you have a relationship
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+            'flag' => $this->flag,
+            'wikiDataId' => $this->wikiDataId,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'deleted_at' => $this->deleted_at,
         ];
     }
 }

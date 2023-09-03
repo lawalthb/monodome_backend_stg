@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Guarantor extends Model
 {
     use HasFactory;
+
+    public $guarded = [];
+
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class);
+    }
 }

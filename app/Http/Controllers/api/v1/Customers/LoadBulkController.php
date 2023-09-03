@@ -71,7 +71,7 @@ class LoadBulkController extends Controller
 
             foreach ($request->file('documents') as $file) {
 
-               $file = $this->uploadFileWithDetails('load_documents', $file);
+                $file = $this->uploadFileWithDetails('load_documents', $file);
                 $path = $file['path'];
                 $name = $file['file_name'];
 
@@ -122,7 +122,7 @@ class LoadBulkController extends Controller
         $documents = [];
        // Log::info( $loadDocuments);
         foreach ($loadDocuments as $loadDocument) {
-            Log::info($loadDocument->path);
+           // Log::info($loadDocument->path);
             $this->deleteFile($loadDocument->path);
             $loadDocument->delete();
         }

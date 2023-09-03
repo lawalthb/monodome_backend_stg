@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\Agents\AgentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\CountryController;
 // use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
@@ -64,6 +65,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     });
 
     Route::group(['prefix' => 'agent'], function () {
+
+        Route::get('/', [AgentController::class, 'index']);
+        Route::post('/store', [AgentController::class, 'store']);
+        Route::get('/show/{id}', [AgentController::class, 'show']);
+        Route::post('/update/{id}', [AgentController::class, 'update']);
+        Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
 
     });
 
