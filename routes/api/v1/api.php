@@ -55,7 +55,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::post('/load-bulk/{loadBulk}', [LoadBulkController::class, 'update']);
         Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
 
-             // load board route
+        // load board route
         Route::get('/load-board', [LoadBoardController::class, 'index']);
         Route::post('/load-board', [LoadBoardController::class, 'store']);
         Route::get('/load-board/{id}', [LoadBoardController::class, 'show']);
@@ -67,7 +67,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     //vehicle route group here
     Route::group(['prefix' => 'vehicle', 'middleware' => 'auth:api'], function () {
 
-       // route for vehicle make
+        // route for vehicle make
         Route::get('/make', [VehicleMakeController::class, 'index']);
         Route::post('/make', [VehicleMakeController::class, 'store']);
         Route::get('/make/{id}', [VehicleMakeController::class, 'show']);
@@ -87,23 +87,21 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/type/{id}', [VehicleTypeController::class, 'show']);
         Route::post('/type/{id}', [VehicleTypeController::class, 'update']);
         Route::delete('/type/{id}', [VehicleTypeController::class, 'destroy']);
-
     });
 
 
     Route::group(['prefix' => 'place'], function () {
 
-        Route::get('/countries', [CountryController::class,'getCountry']);
-        Route::get('/countries/{id}',  [CountryController::class,'singleCountry']);
+        Route::get('/countries', [CountryController::class, 'getCountry']);
+        Route::get('/countries/{id}',  [CountryController::class, 'singleCountry']);
 
         // State Routes
-        Route::get('/states', [CountryController::class,'index']);
-        Route::get('/states/{country_id}', [CountryController::class,'getStatesByCountry']);
+        Route::get('/states', [CountryController::class, 'index']);
+        Route::get('/states/{country_id}', [CountryController::class, 'getStatesByCountry']);
 
         // City Routes
-        Route::get('/cities', [CountryController::class,'cities']);
-        Route::get('/cities/{state_id}', [CountryController::class,'getCitiesByState']);
-        Route::get('/cities/{country_id}/{state_id}', [CountryController::class,'getCitiesByCountryAndState']);
-     });
-
+        Route::get('/cities', [CountryController::class, 'cities']);
+        Route::get('/cities/{state_id}', [CountryController::class, 'getCitiesByState']);
+        Route::get('/cities/{country_id}/{state_id}', [CountryController::class, 'getCitiesByCountryAndState']);
+    });
 });

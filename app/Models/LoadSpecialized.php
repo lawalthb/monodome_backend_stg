@@ -11,6 +11,9 @@ class LoadSpecialized extends Model
 {
     use HasFactory;
 
+    public $guarded = [];
+
+
     public function loadType()
     {
         return $this->belongsTo(LoadType::class);
