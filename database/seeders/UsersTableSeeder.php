@@ -14,8 +14,8 @@ class UsersTableSeeder extends Seeder
 
        // Create Super Admin user
        $superAdmin = DB::table('users')->insertGetId([
-        'full_name' => 'superadmin',
-        'user_type' => 'superadmin',
+        'full_name' => 'super admin',
+        'user_type' => 'super_admin',
         'email' => 'superadmin@example.com',
         'password' => Hash::make('password'),
         'created_at' => now(),
@@ -37,20 +37,19 @@ class UsersTableSeeder extends Seeder
     $adminRole = Role::where('name', 'Admin')->first();
 
     // Assign roles to users
+    $superAdminRole = Role::where('name', 'Super Admin')->first();
+    $adminRole = Role::where('name', 'Admin')->first();
+
+    // Assign roles to users if they don't already have them
     if ($superAdminRole && $adminRole) {
-        DB::table('model_has_roles')->insert([
-            'role_id' => $superAdminRole->id,
-            'model_type' => 'App\Models\User',
-            'model_id' => $superAdmin,
-        ]);
+        if (!$superAdminRole->users->contains($superAdmin)) {
+            $superAdminRole->users()->attach($superAdmin);
+        }
 
-        DB::table('model_has_roles')->insert([
-            'role_id' => $adminRole->id,
-            'model_type' => 'App\Models\User',
-            'model_id' => $admin,
-        ]);
+        if (!$adminRole->users->contains($admin)) {
+            $adminRole->users()->attach($admin);
+        }
     }
-
 
         // Assign roles to users
    //     $superAdminRole = Role::create(['name' => 'super admin']);

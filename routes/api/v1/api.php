@@ -63,6 +63,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/load-board/{id}', [LoadBoardController::class, 'destroy']);
     });
 
+    Route::group(['prefix' => 'agent'], function () {
+
+    });
 
     //vehicle route group here
     Route::group(['prefix' => 'vehicle', 'middleware' => 'auth:api'], function () {
