@@ -47,6 +47,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('load_container');
+        Schema::dropIfExists('load_containers');
     }
 };

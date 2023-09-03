@@ -60,6 +60,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('load_bulk');
+        Schema::dropIfExists('load_bulks');
     }
 };

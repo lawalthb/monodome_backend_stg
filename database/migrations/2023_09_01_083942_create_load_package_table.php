@@ -59,6 +59,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('load_package');
+        Schema::dropIfExists('load_packages');
     }
 };
