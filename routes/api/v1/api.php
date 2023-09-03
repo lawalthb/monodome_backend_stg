@@ -1,17 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\v1\CountryController;
-// use App\Http\Controllers\api\v1\Customers\LoadTypeController;
-use App\Http\Controllers\api\v1\auth\AuthController;
-use App\Http\Controllers\api\v1\Customers\LoadBulkController;
-use App\Http\Controllers\api\v1\Customers\LoadTypeController;
-use App\Http\Controllers\api\v1\Customers\LoadBoardController;
-use App\Http\Controllers\api\v1\Customers\LoadPackageController;
-use App\Http\Controllers\api\v1\customers\VehicleMakeController;
-use App\Http\Controllers\api\v1\customers\VehicleTypeController;
-use App\Http\Controllers\api\v1\auth\EmailVerificationController;
-use App\Http\Controllers\api\v1\customers\VehicleModelController;
+use App\Http\Controllers\Api\v1\CountryController;
+// use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
+use App\Http\Controllers\Api\v1\auth\AuthController;
+use App\Http\Controllers\Api\v1\Customers\LoadBulkController;
+use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
+use App\Http\Controllers\Api\v1\Customers\LoadBoardController;
+use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
+use App\Http\Controllers\Api\v1\customers\VehicleMakeController;
+use App\Http\Controllers\Api\v1\customers\VehicleTypeController;
+use App\Http\Controllers\Api\v1\auth\EmailVerificationController;
+use App\Http\Controllers\Api\v1\customers\VehicleModelController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return-json'], function () {
 
