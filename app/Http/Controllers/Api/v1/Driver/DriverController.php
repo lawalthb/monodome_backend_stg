@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Agents;
 
 use App\Models\User;
 use App\Models\Agent;
+use App\Models\Driver;
 use App\Models\Guarantor;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -14,9 +15,10 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AgentResource;
+use App\Http\Resources\DriverResource;
 use App\Http\Requests\AgentFormRequest;
 
-class AgentController extends Controller
+class DriverController extends Controller
 {
     use ApiStatusTrait,FileUploadTrait;
 
@@ -25,7 +27,7 @@ class AgentController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $agents = Agent::where(function ($q) use ($key) {
+        $driver = Driver::where(function ($q) use ($key) {
             // Assuming there's a relationship between Agent and User
             $q->whereHas('user', function ($userQuery) use ($key) {
                 $userQuery->where('full_name', 'like', "%{$key}%");
@@ -34,7 +36,7 @@ class AgentController extends Controller
             ->latest()
             ->paginate($perPage);
 
-        return AgentResource::collection($agents);
+        return DriverResource::collection($driver);
     }
 
 

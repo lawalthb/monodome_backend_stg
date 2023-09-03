@@ -25,7 +25,6 @@ class GuarantorResource extends JsonResource
             'state_of_residence' => $this->state_of_residence,
             'city_of_residence' => $this->city_of_residence,
             'profile_picture' =>  getImageFile($this->profile_picture),
-            'agent_id' => $this->agent_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

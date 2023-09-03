@@ -15,4 +15,14 @@ class Guarantor extends Model
     {
         return $this->belongsTo(Agent::class);
     }
+
+    public function driver()
+    {
+        return $this->belongsTo(Driver::class);
+    }
+
+    public function loadable()
+    {
+        return $this->morphTo('loadable');
+    }
 }
