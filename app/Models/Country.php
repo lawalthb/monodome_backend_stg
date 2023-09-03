@@ -11,14 +11,8 @@ class Country extends Model
 
     protected  $table = 'countries';
     protected  $primaryKey = 'id';
-    protected $fillable = [
-        'short_name',
-        'country_name',
-        'flag',
-        'slug',
-        'phonecode',
-        'continent',
-    ];
+    public $guarded = [];
+
 
     public function states()
     {

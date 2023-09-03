@@ -11,10 +11,8 @@ class State extends Model
 
     protected $table = 'states';
     protected $primaryKey = 'id';
-    protected $fillable = [
-        'country_id',
-        'name'
-    ];
+    public $guarded = [];
+
 
     public function country()
     {
