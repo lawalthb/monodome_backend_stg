@@ -172,4 +172,19 @@ class AuthController extends Controller
         $user = User::find(auth()->id());
         return $this->success(['user' => new UserResource($user)], "Successfully");
     }
+
+        /**
+     * logout
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+        //Auth::user()->currentAccessToken()->delete();
+
+        return $this->success('', 'Logged out Successfully', 200);
+    }
+
 }

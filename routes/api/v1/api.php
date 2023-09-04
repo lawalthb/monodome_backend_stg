@@ -30,6 +30,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
     Route::group(['prefix' => 'auth', 'namespace' => 'auth', 'middleware' => 'auth:api'], function () {
         Route::get('/profile', [AuthController::class, 'me']);
+        Route::get('/logout', [AuthController::class, 'logout']);
         Route::post('/update-profile', [AuthController::class, 'updateProfile']);
     });
 
