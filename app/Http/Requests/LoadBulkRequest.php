@@ -30,7 +30,7 @@ class LoadBulkRequest extends FormRequest
             'sender_phone' => 'required|string|max:30',
             'sender_zip_code' => 'required|string|max:20',
             'sender_city' => 'required|string|max:30',
-            'sender_state_id' => 'required|string|max:30',
+            'sender_state_id' => 'required|integer|max:30',
            // 'sender_number' => 'required|string|max:30',
             'sender_email' => 'required|email|max:30',
             'deliver_to' => 'required|in:address,office',

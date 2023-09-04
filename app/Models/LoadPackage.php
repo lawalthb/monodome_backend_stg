@@ -28,6 +28,10 @@ class LoadPackage extends Model
             return $this->morphMany(LoadDocument::class, 'loadable');
         }
 
+        public function state(){
+            return $this->belongsTo(State::class);
+        }
+
         protected static function boot()
         {
             parent::boot();

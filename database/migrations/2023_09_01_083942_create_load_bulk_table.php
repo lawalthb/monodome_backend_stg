@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('sender_zip_code', 20)->nullable();
             $table->string('sender_city', 30)->nullable();
             $table->string('sender_state_id', 30)->nullable();
-            $table->string('sender_number', 30)->nullable();
+           // $table->string('sender_number', 30)->nullable();
             $table->string('sender_email', 30)->nullable();
             $table->enum('deliver_to', ['address', 'office'])->nullable();
             $table->integer('from_office_id')->nullable()->default(1);

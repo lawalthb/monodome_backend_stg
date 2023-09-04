@@ -18,7 +18,7 @@ class LoadBulkResource extends JsonResource
             'id'=>$this->id,
             'uuid'=>$this->uuid,
             'load_type_id'=>$this->load_type_id,
-            'load_type_type'=>$this->load_type_type,
+            'load_type_name'=>$this->load_type_name,
             'deliver_from'=>$this->deliver_from,
             'to_office_id'=>$this->to_office_id,
             'sender_name'=>$this->sender_name,

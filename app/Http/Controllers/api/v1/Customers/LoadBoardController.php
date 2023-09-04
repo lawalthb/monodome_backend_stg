@@ -20,10 +20,10 @@ class LoadBoardController extends Controller
 
         $query = LoadBoard::query();
 
-        // Filter by Cargo Type
-        // if ($request->has('cargo_type')) {
-        //     $query->where('cargo_type', $request->input('cargo_type'));
-        // }
+       // Filter by Cargo Type
+        if ($request->has('order_no')) {
+            $query->where('order_no', $request->input('order_no'));
+        }
 
         // // Filter by Country
         // if ($request->has('country')) {
