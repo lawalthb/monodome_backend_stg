@@ -19,6 +19,11 @@ class LoadBoard extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function agent(){
+
+        return $this->belongsTo(Agent::class);
+    }
+
     public function loadable()
     {
         return $this->morphTo();

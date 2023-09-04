@@ -7,6 +7,7 @@ use App\Models\LoadType;
 use App\Models\LoadDocument;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
+use App\Events\LoadTypeCreated;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -85,6 +86,7 @@ class LoadBulkController extends Controller
                 $loadBulk->loadDocuments()->save($document);
             }
         }
+        event(new LoadTypeCreated($loadBulk));
 
         return $this->success(
             [
