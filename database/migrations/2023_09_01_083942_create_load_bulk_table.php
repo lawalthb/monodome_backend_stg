@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('load_type_id')->default(2);
             $table->string('load_type_name')->default('bulk');
             $table->enum('deliver_from', ['address', 'office'])->nullable();
-            $table->integer('to_office_id')->nullable()->default(1);
+            $table->integer('to_office_id');
             $table->string('sender_name', 30)->nullable();
             $table->string('sender_phone', 30)->nullable();
             $table->string('sender_zip_code', 20)->nullable();
@@ -46,9 +46,9 @@ return new class extends Migration
             $table->decimal('width', 20)->nullable();
             $table->decimal('length', 20)->nullable();
             $table->decimal('height', 20)->nullable();
-            $table->enum('insure_it', ['Yes', 'No'])->nullable();
+            $table->enum('insure_it', ['Yes', 'No'])->default('No')->nullable();
             $table->decimal('insure_amount', 20)->nullable()->default(0);
-            $table->enum('is_fragile', ['Yes', 'No'])->nullable();
+            $table->enum('is_fragile', ['Yes', 'No'])->default('No')->nullable();
             $table->timestamps();
         });
     }

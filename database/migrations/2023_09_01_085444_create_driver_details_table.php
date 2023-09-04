@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('uuid');
             $table->bigInteger('user_id')->index('user_id');
             $table->unsignedBigInteger('state_id');
-            $table->unsignedBigInteger('city_id');
+            // $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('country_id');
+            $table->enum('type', ['driver', 'drives'])->default('driver');
             $table->string('street');
             $table->string('lga');
             $table->string('state_of_residence');
