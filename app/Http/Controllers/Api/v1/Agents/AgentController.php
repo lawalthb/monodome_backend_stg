@@ -29,7 +29,7 @@ class AgentController extends Controller
             // Assuming there's a relationship between Agent and User
             $q->whereHas('user', function ($userQuery) use ($key) {
                 $userQuery->where('full_name', 'like', "%{$key}%");
-            })->orWhere('address', 'like', "%{$key}%");
+            })->orWhere('street', 'like', "%{$key}%");
         })
             ->latest()
             ->paginate($perPage);
