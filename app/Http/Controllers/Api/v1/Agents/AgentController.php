@@ -7,12 +7,14 @@ use App\Models\Agent;
 use App\Models\Guarantor;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\AgentResource;
 use App\Http\Requests\AgentFormRequest;
 
@@ -50,10 +52,20 @@ class AgentController extends Controller
                 $user->full_name = $request->input('full_name');
                 $user->email = $request->input('email');
                 $user->address = $request->input('address');
+                $password  = Str::random(16);
+
                 $user->password = bcrypt(Str::random(16));
                 $user->user_type = 'agent';
                 $user->save();
 
+                $data = [
+                    "full_name" => $request->input('full_name'),
+                    "password" => $password,
+                    "message" => "",
+                ];
+                Mail::to($user->email)->send(
+                    new SendPasswordMail($data)
+                );
                 $role = Role::where('name', 'Agent')->first();
 
                 if ($role) {

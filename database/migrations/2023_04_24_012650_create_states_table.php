@@ -14,11 +14,11 @@ return new class extends Migration
     {
         Schema::create('states', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignIdFor(Country::class);
-            $table->string('country_code');
+            $table->string('name')->nullable();
+            $table->foreignIdFor(Country::class)->default(1);
+            $table->string('country_code')->nullable();
             $table->string('fips_code')->nullable();
-            $table->string('iso2');
+            $table->string('iso2')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->boolean('flag')->default(false);

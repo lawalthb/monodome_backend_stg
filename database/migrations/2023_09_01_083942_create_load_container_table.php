@@ -36,6 +36,8 @@ return new class extends Migration
             $table->string('street', 20)->nullable();
             $table->text('add_info')->nullable();
             $table->bigInteger('loadoard_id')->index('loadoard_id');
+            $table->enum('status', ['Pending', 'Approved', 'Failed'])->default('Pending');
+
             $table->timestamps();
         });
     }

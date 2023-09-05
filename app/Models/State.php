@@ -19,9 +19,9 @@ class State extends Model
         return $this->belongsTo(Country::class, 'country_id');
     }
 
-    public function cities()
+    public function lga()
     {
-        return $this->hasMany(City::class, 'state_id');
+        return $this->hasMany(LocalGovernment::class, 'state_id');
     }
 
 }

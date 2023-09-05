@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('delivery_to_country');
             $table->text('description')->nullable();
             $table->bigInteger('document_id');
+            $table->enum('status', ['Pending', 'Approved', 'Failed'])->default('Pending');
             $table->timestamps();
         });
     }

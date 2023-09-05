@@ -25,21 +25,21 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
 
 
-        //$this->call(CountriesTableSeeder::class);
-        //$this->call(StatesTableSeeder::class);
-       // $this->call(CitiesTableSeeder::class);
+        $this->call(CountriesTableSeeder::class);
+        $this->call(StatesTableSeeder::class);
+        $this->call(LocalGovernmentsTableSeeder::class);
 
-        $this->call(CountrySeeder::class);
-        $this->call(StateSeeder::class);
-        $this->call(CityOneSeeder::class);
-        sleep(5);
-        $this->call(CityTwoSeeder::class);
-        sleep(5);
-        $this->call(CityThreeSeeder::class);
-        sleep(5);
-        $this->call(CityFourSeeder::class);
-        sleep(5);
-        $this->call(CityFiveSeeder::class);
+        //  $this->call(CountrySeeder::class);
+        //  $this->call(StateSeeder::class);
+        //  $this->call(CityOneSeeder::class);
+        // sleep(5);
+        // $this->call(CityTwoSeeder::class);
+        // sleep(5);
+        // $this->call(CityThreeSeeder::class);
+        // sleep(5);
+        // $this->call(CityFourSeeder::class);
+        // sleep(5);
+        // $this->call(CityFiveSeeder::class);
 
 
         $this->call(LoadTypesTableSeeder::class);

@@ -37,6 +37,8 @@ return new class extends Migration
             $table->string('street', 30)->nullable();
             $table->text('add_info')->nullable();
             $table->bigInteger('load_board_id')->index('load_board_id');
+            $table->enum('status', ['Pending', 'Approved', 'Failed'])->default('Pending');
+
             $table->timestamps();
         });
     }
