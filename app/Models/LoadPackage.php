@@ -23,6 +23,10 @@ class LoadPackage extends Model
         return $this->morphOne(LoadBoard::class, 'loadable');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
         public function loadDocuments()
         {
             return $this->morphMany(LoadDocument::class, 'loadable');

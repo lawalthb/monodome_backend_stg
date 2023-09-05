@@ -47,7 +47,7 @@ class LoadBulkController extends Controller
     {
 
         // Find the LoadType based on load_type_id
-    $loadType = LoadType::where('user_id', auth()->id())->find($request->load_type_id);
+    $loadType = LoadType::find($request->load_type_id);
 
     if (!$loadType) {
         return response()->json(['message' => 'LoadType not found'], 404);

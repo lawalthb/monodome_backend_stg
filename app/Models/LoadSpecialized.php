@@ -19,6 +19,11 @@ class LoadSpecialized extends Model
         return $this->belongsTo(LoadType::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function loadBoard()
     {
         return $this->morphOne(LoadBoard::class, 'loadable');

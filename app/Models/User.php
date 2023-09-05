@@ -55,6 +55,26 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function loadBulk(){
+
+        return $this->hasMany(LoadBulk::class);
+    }
+
+    public function loadPackage(){
+
+        return $this->hasMany(LoadPackage::class);
+    }
+
+    public function loadCarClearing(){
+
+        return $this->hasMany(LoadCarClearing::class);
+    }
+
+    public function loadContainer(){
+
+        return $this->hasMany(LoadContainer::class);
+    }
+
     public function getImagePathAttribute()
     {
         if ($this->imageUrl)
