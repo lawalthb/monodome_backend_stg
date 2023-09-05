@@ -20,7 +20,7 @@ use App\Http\Resources\LoadPackageResource;
 
         $key = request()->input('search');
 
-        $loadPackages = LoadPackage::where(function ($q) use ($key) {
+        $loadPackages = LoadPackage::where('user_id', auth()->id())->where(function ($q) use ($key) {
             $q->where('sender_name', 'like', "%{$key}%")
             ->orWhere('sender_email', 'like', "%{$key}%");
         })->latest()->paginate();
@@ -32,7 +32,7 @@ use App\Http\Resources\LoadPackageResource;
 
     public function show($id)
     {
-        $loadPackage = LoadPackage::find($id);
+        $loadPackage = LoadPackage::where('user_id', auth()->id())->find($id);
 
         if (!$loadPackage) {
             return $this->error(null, "Load Package not found",404 );
@@ -59,7 +59,7 @@ use App\Http\Resources\LoadPackageResource;
 
     public function update(LoadPackageRequest $request, $id)
     {
-        $loadType = LoadType::find($request->load_type_id);
+        $loadType = LoadType::where('user_id', auth()->id())->find($request->load_type_id);
 
         $loadPackage = $loadType->loadPackages()->create($request->validated());
         return $this->success(
@@ -72,7 +72,7 @@ use App\Http\Resources\LoadPackageResource;
 
     public function destroy($id)
     {
-        $loadPackage = LoadPackage::find($id);
+        $loadPackage = LoadPackage::where('user_id', auth()->id())->find($id);
 
         if (!$loadPackage) {
             return $this->error(null, "Load Package not found'",404 );

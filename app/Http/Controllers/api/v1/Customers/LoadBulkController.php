@@ -23,7 +23,7 @@ class LoadBulkController extends Controller
         $key = request()->input('search');
         $size = request()->input('size') ?? 20;
 
-        $loadBulk = LoadBulk::where(function ($q) use ($key) {
+        $loadBulk = LoadBulk::where('user_id ', auth()->id())->where(function ($q) use ($key) {
             $q->where('sender_name', 'like', "%{$key}%")
                 ->orWhere('sender_email', 'like', "%{$key}%");
         })->latest()->paginate($size);
@@ -35,7 +35,7 @@ class LoadBulkController extends Controller
 
     public function show($id)
     {
-        $loadBulk = LoadBulk::find($id);
+        $loadBulk = LoadBulk::where('user_id', auth()->id())->find($id);
 
         if (!$loadBulk) {
             return $this->error(null, "Load Bulk not found", 404);
@@ -47,7 +47,7 @@ class LoadBulkController extends Controller
     {
 
         // Find the LoadType based on load_type_id
-    $loadType = LoadType::find($request->load_type_id);
+    $loadType = LoadType::where('user_id', auth()->id())->find($request->load_type_id);
 
     if (!$loadType) {
         return response()->json(['message' => 'LoadType not found'], 404);
@@ -155,7 +155,7 @@ class LoadBulkController extends Controller
 
     public function destroy($id)
     {
-        $loadBulk = LoadBulk::find($id);
+        $loadBulk = LoadBulk::where('user_id', auth()->id())->find($id);
 
     if (!$loadBulk) {
         return $this->error(null, "LoadBulk not found'", 404);
