@@ -33,7 +33,7 @@ class LoadBulk extends Model
         // Generate a UUID for the new vehicle model when creating it
         static::creating(function ($LoadBulk) {
             $LoadBulk->uuid = Str::uuid()->toString();
-            $LoadBulk->user_id = auth()->id;
+            $LoadBulk->user_id = auth()->id();
         });
     }
 }

@@ -39,7 +39,7 @@ class LoadPackage extends Model
             // Generate a UUID for the new vehicle model when creating it
             static::creating(function ($LoadPackage) {
                 $LoadPackage->uuid = Str::uuid()->toString();
-                $LoadPackage->user_id = auth()->id;
+                $LoadPackage->user_id = auth()->id();
             });
         }
 }

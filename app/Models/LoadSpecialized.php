@@ -37,7 +37,7 @@ class LoadSpecialized extends Model
         // Generate a UUID for the new vehicle model when creating it
         static::creating(function ($LoadSpecialized) {
             $LoadSpecialized->uuid = Str::uuid()->toString();
-            $LoadSpecialized->user_id = auth()->id;
+            $LoadSpecialized->user_id = auth()->id();
         });
     }
 }
