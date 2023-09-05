@@ -17,6 +17,8 @@ return new class extends Migration
         Schema::create('load_specialized', function (Blueprint $table) {
             $table->bigInteger('id', true);
             $table->string('uuid')->default(Str::uuid()->toString());;
+            $table->bigInteger('user_id')->index('user_id');
+
             $table->bigInteger('load_board_id');
             $table->string('load_type_name')->default('specialize-shipment');
             $table->integer('delivery_from_country');

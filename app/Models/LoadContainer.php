@@ -35,6 +35,7 @@ protected static function boot()
     // Generate a UUID for the new vehicle model when creating it
     static::creating(function ($LoadContainer) {
         $LoadContainer->uuid = Str::uuid()->toString();
+        $LoadContainer->user_id = auth()->id;
     });
 }
 

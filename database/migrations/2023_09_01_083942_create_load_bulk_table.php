@@ -16,7 +16,9 @@ return new class extends Migration
     {
         Schema::create('load_bulks', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('uuid')->default(Str::uuid()->toString());;
+            $table->string('uuid')->default(Str::uuid()->toString());
+            $table->bigInteger('user_id')->index('user_id');
+
             $table->unsignedBigInteger('load_type_id')->default(2);
             $table->string('load_type_name')->default('bulk');
             $table->enum('deliver_from', ['address', 'office'])->nullable();

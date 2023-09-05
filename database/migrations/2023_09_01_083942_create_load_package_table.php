@@ -17,6 +17,8 @@ return new class extends Migration
         Schema::create('load_packages', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('uuid')->default(Str::uuid()->toString());
+            $table->bigInteger('user_id')->index('user_id');
+
             $table->unsignedBigInteger('load_type_id');
             $table->string('load_type_name')->default("package")->nullable();
            // $table->bigInteger('load_board_id')->index('load_board_id');
