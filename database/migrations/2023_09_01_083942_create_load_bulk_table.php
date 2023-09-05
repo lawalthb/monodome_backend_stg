@@ -41,7 +41,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('vehicle_no', 30)->nullable();
             $table->decimal('weight', 20)->nullable();
-            $table->dateTime('schedule_date')->nullable();
+            $table->string('schedule_date')->nullable();
             // $table->string('document')->nullable();
             $table->decimal('width', 20)->nullable();
             $table->decimal('length', 20)->nullable();
