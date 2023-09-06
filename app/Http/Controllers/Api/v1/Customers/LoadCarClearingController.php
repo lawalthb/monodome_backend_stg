@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Api\v1\Customers;
 
+use App\Models\LoadType;
+use App\Models\LoadDocument;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
+use App\Events\LoadTypeCreated;
 use App\Models\LoadCarClearing;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
@@ -41,8 +44,43 @@ class LoadCarClearingController extends Controller
         try {
             DB::beginTransaction();
 
+
+                  // Find the LoadType based on load_type_id
+            $loadType = LoadType::find($request->load_type_id);
+
+            if (!$loadType) {
+                return response()->json(['message' => 'LoadType not found'], 404);
+            }
+
             // Create a new car clearing record
             $carClearing = LoadCarClearing::create($request->validated());
+
+              // Associate the LoadType
+             $carClearing->loadType()->associate($loadType);
+
+
+
+                   // Handle document uploads (if any)
+        if ($request->hasFile('documents')) {
+            $documents = [];
+
+            foreach ($request->file('documents') as $file) {
+
+                $file = $this->uploadFileWithDetails('load_documents', $file);
+                $path = $file['path'];
+                $name = $file['file_name'];
+
+                // Create a record in the load_documents table
+                $document = new LoadDocument([
+                    'name' => $name,
+                    'path' => $path,
+                ]);
+
+                // Associate the document with the LoadBulk
+                $carClearing->loadDocuments()->save($document);
+            }
+        }
+        event(new LoadTypeCreated($carClearing));
 
             DB::commit();
 

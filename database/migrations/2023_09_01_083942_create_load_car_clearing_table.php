@@ -29,11 +29,11 @@ return new class extends Migration
             $table->unsignedBigInteger('document');
             $table->text('comment')->nullable();
             $table->enum('is_final', ['Yes', 'No'])->default('No');
-            $table->string('deliver_from_city', 20)->nullable();
-            $table->string('deliver_to_city', 20)->nullable();
             $table->string('receiver_name', 30)->nullable();
             $table->string('phone', 30)->nullable();
             $table->string('zip_code', 30)->nullable();
+            $table->string('deliver_from_city', 20)->nullable();
+            $table->string('deliver_to_city', 20)->nullable();
             $table->string('city', 30)->nullable();
             $table->string('street', 30)->nullable();
             $table->text('add_info')->nullable();

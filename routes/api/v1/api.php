@@ -122,5 +122,10 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/cities', [CountryController::class, 'cities']);
         Route::get('/cities/{state_id}', [CountryController::class, 'getCitiesByState']);
         Route::get('/cities/{country_id}/{state_id}', [CountryController::class, 'getCitiesByCountryAndState']);
+
+        // for nigeria
+        Route::get('/nigeria/states', [CountryController::class, 'getNigeriaState']);
+        Route::get('/nigeria/lga/{state_id}',  [CountryController::class, 'getLgaByState']);
+
     });
 });

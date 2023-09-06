@@ -18,10 +18,4 @@ class State extends Model
     {
         return $this->belongsTo(Country::class, 'country_id');
     }
-
-    public function lga()
-    {
-        return $this->hasMany(LocalGovernment::class, 'state_id');
-    }
-
 }

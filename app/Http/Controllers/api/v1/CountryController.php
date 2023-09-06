@@ -7,6 +7,7 @@ use App\Traits\ApiStatusTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\City;
+use App\Models\LocalGovernment;
 use App\Models\State;
 use App\Traits\FileUploadTrait;
 
@@ -83,6 +84,39 @@ class CountryController extends Controller
     {
         $perPage = $request->input('per_page', 10); // Number of items per page, default is 10
         $query = City::where('state_id', $state_id)->with('state');
+
+        // Apply filters if provided in the request
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        // Execute the query and paginate the results
+        $states = $query->paginate($perPage);
+
+        return $this->success($states, "States retrieved successfully");
+    }
+
+    public function getNigeriaState(Request $request,){
+
+        $perPage = $request->input('per_page', 10); // Number of items per page, default is 10
+        $query = State::query();
+
+        // Apply filters if provided in the request
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        // Execute the query and paginate the results
+        $states = $query->paginate($perPage);
+
+        return $this->success($states, "States retrieved successfully");
+    }
+
+
+    public function getLgaByState(Request $request, $state_id)
+    {
+        $perPage = $request->input('per_page', 10); // Number of items per page, default is 10
+        $query = LocalGovernment::where('state_id', $state_id)->with('state');
 
         // Apply filters if provided in the request
         if ($request->has('name')) {

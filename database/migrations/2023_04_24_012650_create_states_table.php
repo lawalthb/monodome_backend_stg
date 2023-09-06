@@ -12,10 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('states', function (Blueprint $table) {
+        Schema::create('local_states', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->foreignIdFor(Country::class)->default(1);
+            $table->foreignIdFor(Country::class)->default(161);
             $table->string('country_code')->nullable();
             $table->string('fips_code')->nullable();
             $table->string('iso2')->nullable();
