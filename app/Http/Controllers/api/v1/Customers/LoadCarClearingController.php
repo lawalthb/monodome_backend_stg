@@ -15,6 +15,31 @@ class LoadCarClearingController extends Controller
     use FileUploadTrait, ApiStatusTrait;
 
 
+    public function index()
+{
+    try {
+        $carClearingRecords = LoadCarClearing::all();
+
+     //   return $this->success($carClearingRecords, 'Car clearing records retrieved successfully');
+
+
+        $key = request()->input('search');
+        $size = request()->input('size') ?? 20;
+
+        $loadBulk = LoadCarClearing::where('user_id', auth()->id())->where(function ($q) use ($key) {
+            $q->where('sender_name', 'like', "%{$key}%")
+                ->orWhere('sender_email', 'like', "%{$key}%");
+        })->latest()->paginate($size);
+
+
+        return LoadCarClearing::collection($loadBulk);
+
+
+    } catch (\Exception $e) {
+        return $this->error(null, 'Error fetching car clearing records', 500);
+    }
+}
+
     public function store(CarClearingRequest $request)
     {
         try {
@@ -32,6 +57,18 @@ class LoadCarClearingController extends Controller
             return $this->error(null, 'Error creating Car Clearing', 500);
         }
     }
+
+    public function show($id)
+{
+    try {
+        $carClearingRecord = LoadCarClearing::findOrFail($id);
+
+        return $this->success($carClearingRecord, 'Car clearing record retrieved successfully');
+    } catch (\Exception $e) {
+        return $this->error(null, 'Car clearing record not found', 404);
+    }
+}
+
 
 
 }

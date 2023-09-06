@@ -57,6 +57,14 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::post('/load-bulk/{loadBulk}', [LoadBulkController::class, 'update']);
         Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
 
+
+         // load Load Car Clearing  route
+         Route::get('/load-car-clearing', [LoadCarClearingController::class, 'index']);
+         Route::post('/load-car-clearing', [LoadCarClearingController::class, 'store']);
+         Route::get('/load-car-clearing/{id}', [LoadCarClearingController::class, 'show']);
+         Route::post('/load-car-clearing/{loadBulk}', [LoadCarClearingController::class, 'update']);
+         Route::delete('/load-car-clearing/{id}', [LoadCarClearingController::class, 'destroy']);
+
         // load board route
         Route::get('/load-board', [LoadBoardController::class, 'index']);
         Route::post('/load-board', [LoadBoardController::class, 'store']);
