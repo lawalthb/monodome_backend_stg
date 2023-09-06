@@ -23,7 +23,7 @@ class LoadBulkController extends Controller
         $key = request()->input('search');
         $size = request()->input('size') ?? 20;
 
-        $loadBulk = LoadBulk::where('user_id ', auth()->id())->where(function ($q) use ($key) {
+        $loadBulk = LoadBulk::where('user_id', auth()->id())->where(function ($q) use ($key) {
             $q->where('sender_name', 'like', "%{$key}%")
                 ->orWhere('sender_email', 'like', "%{$key}%");
         })->latest()->paginate($size);
