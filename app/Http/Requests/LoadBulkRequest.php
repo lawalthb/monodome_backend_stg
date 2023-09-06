@@ -25,7 +25,7 @@ class LoadBulkRequest extends FormRequest
         return [
             'load_type_id' => 'required|integer',
             'deliver_from' => 'nullable|in:address,office',
-            'to_office_id' => 'nullable|integer',
+            'to_office_id' => 'required|integer',
             'sender_name' => 'required|string|max:50',
             'sender_phone' => 'required|string|max:50',
             'sender_street' => 'required|string|max:20',
