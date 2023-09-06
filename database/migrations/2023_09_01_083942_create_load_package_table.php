@@ -15,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('load_packages', function (Blueprint $table) {
-            $table->integer('id', true);
+            $table->id();
             $table->string('uuid')->default(Str::uuid()->toString());
             $table->bigInteger('user_id')->index('user_id');
 
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('sender_phone', 30)->nullable();
             $table->string('sender_lga')->nullable();
             $table->string('sender_street', 30)->nullable();
-            $table->bigInteger('sender_state_id', 30)->nullable();
+            $table->unsignedBigInteger('sender_state')->nullable();
             $table->string('sender_apartment', 30)->nullable();
             $table->string('sender_apartment_no', 30)->nullable();
             $table->enum('deliver_to', ['address', 'office'])->nullable();
@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('receiver_email', 30)->nullable();
             $table->string('receiver_phone', 30)->nullable();
             $table->string('receiver_lga', 30)->nullable();
-            $table->bigInteger('receiver_state_id', 30)->nullable();
+            $table->unsignedBigInteger('receiver_state')->nullable();
             $table->string('receiver_street', 30)->nullable();
             $table->string('receiver_apartment', 30)->nullable();
             $table->string('receiver_apartment_no', 30)->nullable();

@@ -23,6 +23,25 @@ class LoadContainer extends Model
         return $this->belongsTo(User::class);
     }
 
+
+    public function RLga()
+        {
+            return $this->belongsTo(LocalGovernment::class,'receiver_lga');
+        }
+
+        public function SLga()
+        {
+            return $this->belongsTo(LocalGovernment::class,'sender_lga');
+        }
+
+
+        public function RState(){
+            return $this->belongsTo(State::class,'receiver_state');
+        }
+
+        public function SState(){
+            return $this->belongsTo(State::class,'sender_state');
+        }
     public function loadBoard()
     {
         return $this->morphOne(LoadBoard::class, 'loadable');

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\LoadType;
 use Illuminate\Support\Str;
+use App\Models\LocalGovernment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -22,6 +23,25 @@ class LoadSpecialized extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function RLga()
+    {
+        return $this->belongsTo(LocalGovernment::class,'receiver_lga');
+    }
+
+    public function SLga()
+    {
+        return $this->belongsTo(LocalGovernment::class,'sender_lga');
+    }
+
+
+    public function RState(){
+        return $this->belongsTo(State::class,'receiver_state');
+    }
+
+    public function SState(){
+        return $this->belongsTo(State::class,'sender_state');
     }
 
     public function loadBoard()

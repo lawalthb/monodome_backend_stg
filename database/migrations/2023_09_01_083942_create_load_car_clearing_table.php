@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('car_model', 30)->nullable();
             $table->string('car_value', 30)->nullable();
             $table->year('car_year');
-            $table->bigInteger('document');
+            $table->unsignedBigInteger('document');
             $table->text('comment')->nullable();
             $table->enum('is_final', ['Yes', 'No'])->default('No');
             $table->string('deliver_from_city', 20)->nullable();
