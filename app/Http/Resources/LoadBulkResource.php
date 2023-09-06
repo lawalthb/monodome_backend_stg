@@ -29,7 +29,7 @@ class LoadBulkResource extends JsonResource
             'sender_apartment'=>$this->sender_apartment,
             'sender_email'=>$this->sender_email,
             'deliver_to'=>$this->deliver_to,
-            'from_office_id'=>$this->from_office_id,
+            //'from_office_id'=>$this->from_office_id,
             'receiver_name'=>$this->receiver_name,
             'receiver_phone'=>$this->receiver_phone,
             'receiver_lga'=> new LocalGovernmentResource($this->RLga),
