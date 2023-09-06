@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\LocalGovernment;
+use App\Models\LocalState;
 use App\Models\State;
 use App\Traits\FileUploadTrait;
 
@@ -99,7 +100,7 @@ class CountryController extends Controller
     public function getNigeriaState(Request $request,){
 
         $perPage = $request->input('per_page', 10); // Number of items per page, default is 10
-        $query = State::query();
+        $query = LocalState::query();
 
         // Apply filters if provided in the request
         if ($request->has('name')) {
