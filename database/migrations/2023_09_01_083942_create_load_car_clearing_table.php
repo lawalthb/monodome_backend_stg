@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('load_car_clearing', function (Blueprint $table) {
+        Schema::create('load_car_clearings', function (Blueprint $table) {
             $table->bigInteger('id', true);
             $table->string('uuid')->default(Str::uuid()->toString());
             $table->bigInteger('user_id')->index('user_id');
@@ -26,17 +26,21 @@ return new class extends Migration
             $table->string('car_model', 30)->nullable();
             $table->string('car_value', 30)->nullable();
             $table->year('car_year');
-            $table->unsignedBigInteger('document');
+            $table->string('document')->nullable();
             $table->text('comment')->nullable();
             $table->enum('is_final', ['Yes', 'No'])->default('No');
             $table->string('receiver_name', 30)->nullable();
-            $table->string('phone', 30)->nullable();
+            $table->string('receiver_email', 70)->nullable();
+            $table->string('receiver_phone', 70)->nullable();
+            $table->string('deliver_apartment', 70)->nullable();
             $table->string('zip_code', 30)->nullable();
             $table->string('deliver_from_city', 20)->nullable();
             $table->string('deliver_to_city', 20)->nullable();
             $table->string('city', 30)->nullable();
             $table->string('street', 30)->nullable();
             $table->text('add_info')->nullable();
+            $table->enum('insure_it', ['Yes', 'No'])->default('No')->nullable();
+            $table->decimal('insure_amount', 20)->nullable()->default(0);
             $table->enum('status', ['Pending', 'Approved', 'Failed'])->default('Pending');
             $table->timestamps();
         });

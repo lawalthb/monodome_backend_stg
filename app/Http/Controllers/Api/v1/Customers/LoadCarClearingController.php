@@ -12,6 +12,7 @@ use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CarClearingRequest;
+use App\Http\Resources\LoadCarClearingResource;
 
 class LoadCarClearingController extends Controller
 {
@@ -25,13 +26,16 @@ class LoadCarClearingController extends Controller
         $key = request()->input('search');
         $size = request()->input('size') ?? 20;
 
+      //  return auth()->id();
         $loadBulk = LoadCarClearing::where('user_id', auth()->id())->where(function ($q) use ($key) {
-            $q->where('sender_name', 'like', "%{$key}%")
-                ->orWhere('sender_email', 'like', "%{$key}%");
+            $q->where('car_value', 'like', "%{$key}%")
+            ->orWhere('receiver_name', 'like', "%{$key}%")
+                ->orWhere('car_year', 'like', "%{$key}%");
         })->latest()->paginate($size);
 
 
-        return LoadCarClearing::collection($loadBulk);
+        return $loadBulk;
+        return LoadCarClearingResource::collection($loadBulk);
 
 
     } catch (\Exception $e) {
@@ -44,8 +48,7 @@ class LoadCarClearingController extends Controller
         try {
             DB::beginTransaction();
 
-
-                  // Find the LoadType based on load_type_id
+            // Find the LoadType based on load_type_id
             $loadType = LoadType::find($request->load_type_id);
 
             if (!$loadType) {
@@ -58,12 +61,9 @@ class LoadCarClearingController extends Controller
               // Associate the LoadType
              $carClearing->loadType()->associate($loadType);
 
-
-
                    // Handle document uploads (if any)
         if ($request->hasFile('documents')) {
             $documents = [];
-
             foreach ($request->file('documents') as $file) {
 
                 $file = $this->uploadFileWithDetails('load_documents', $file);
@@ -84,11 +84,11 @@ class LoadCarClearingController extends Controller
 
             DB::commit();
 
-            return $this->success($carClearing, 'Car clearing record created successfully');
+            return $this->success( new LoadCarClearingResource($carClearing) , 'Car clearing record created successfully');
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return $this->error(null, 'Error creating Car Clearing', 500);
+            return $this->error($e->getMessage(), 'Error creating Car Clearing', 500);
         }
     }
 

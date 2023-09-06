@@ -23,19 +23,59 @@ class LoadCarClearing extends Model
     }
 
     public function loadDocuments()
-{
-    return $this->morphMany(LoadDocument::class, 'loadable');
-}
+    {
+        return $this->morphMany(LoadDocument::class, 'loadable');
+    }
 
-protected static function boot()
-{
-    parent::boot();
 
-    // Generate a UUID for the new vehicle model when creating it
-    static::creating(function ($LoadCarClearing) {
-        $LoadCarClearing->uuid = Str::uuid()->toString();
-        $LoadCarClearing->user_id = auth()->id();
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
-    });
-}
+    public function DepCountry()
+    {
+        return $this->belongsTo(Country::class, "departure_country");
+    }
+
+    public function DesCountry()
+    {
+        return $this->belongsTo(Country::class, "destination_country");
+    }
+
+    public function carType()
+    {
+        return $this->belongsTo(VehicleType::class, "car_type");
+    }
+
+    public function carModel()
+    {
+        return $this->belongsTo(VehicleModel::class, "car_model");
+    }
+
+    public function carMake()
+    {
+        return $this->belongsTo(VehicleMake::class, "car_make");
+    }
+
+    public function DFromCity()
+    {
+        return  $this->belongsTo(City::class, 'deliver_from_city');
+    }
+
+    public function DToCity()
+    {
+        return  $this->belongsTo(City::class, 'deliver_to_city');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Generate a UUID for the new vehicle model when creating it
+        static::creating(function ($LoadCarClearing) {
+            $LoadCarClearing->uuid = Str::uuid()->toString();
+            $LoadCarClearing->user_id = auth()->id();
+        });
+    }
 }
