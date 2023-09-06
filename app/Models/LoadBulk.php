@@ -51,6 +51,10 @@ class LoadBulk extends Model
         return $this->morphMany(LoadDocument::class, 'loadable');
     }
 
+    public function office(){
+        return $this->belongsTo(Agent::class,'to_office_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

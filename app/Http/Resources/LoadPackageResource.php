@@ -19,7 +19,7 @@ class LoadPackageResource extends JsonResource
             "id" => $this->id,
             "uuid" => $this->uuid,
             "deliver_from" => $this->deliver_from,
-            "to_office_id" => $this->to_office_id,
+            'office' => ($this->deliver_from =="office") ? new AgentResource($this->office) :  null,
             "sender_name" => $this->sender_name,
             "sender_phone" => $this->sender_phone,
             "sender_apartment" => $this->sender_apartment,

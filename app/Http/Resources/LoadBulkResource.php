@@ -20,7 +20,7 @@ class LoadBulkResource extends JsonResource
             'load_type_id'=>$this->load_type_id,
             'load_type_name'=>$this->load_type_name,
             'deliver_from'=>$this->deliver_from,
-            'to_office_id'=>$this->to_office_id,
+            'office' => ($this->deliver_from =="office") ? new AgentResource($this->office) :  null,
             'sender_name'=>$this->sender_name,
             'sender_phone'=>$this->sender_phone,
             'sender_street'=>$this->sender_street_no,
