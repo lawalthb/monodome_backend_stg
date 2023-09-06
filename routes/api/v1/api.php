@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\v1\Agents\AgentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\CountryController;
-// use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
+// use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
+use App\Http\Controllers\Api\v1\Agents\AgentController;
 use App\Http\Controllers\Api\v1\Customers\LoadBulkController;
 use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
 use App\Http\Controllers\Api\v1\Customers\LoadBoardController;
@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\v1\customers\VehicleMakeController;
 use App\Http\Controllers\Api\v1\customers\VehicleTypeController;
 use App\Http\Controllers\Api\v1\auth\EmailVerificationController;
 use App\Http\Controllers\Api\v1\customers\VehicleModelController;
+use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return-json'], function () {
 
@@ -58,12 +59,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
 
 
-         // load Load Car Clearing  route
-         Route::get('/load-car-clearing', [LoadCarClearingController::class, 'index']);
-         Route::post('/load-car-clearing', [LoadCarClearingController::class, 'store']);
-         Route::get('/load-car-clearing/{id}', [LoadCarClearingController::class, 'show']);
-         Route::post('/load-car-clearing/{loadBulk}', [LoadCarClearingController::class, 'update']);
-         Route::delete('/load-car-clearing/{id}', [LoadCarClearingController::class, 'destroy']);
+        // load Load Car Clearing  route
+        Route::get('/load-car-clearing', [LoadCarClearingController::class, 'index']);
+        Route::post('/load-car-clearing', [LoadCarClearingController::class, 'store']);
+        Route::get('/load-car-clearing/{id}', [LoadCarClearingController::class, 'show']);
+        Route::post('/load-car-clearing/{loadBulk}', [LoadCarClearingController::class, 'update']);
+        Route::delete('/load-car-clearing/{id}', [LoadCarClearingController::class, 'destroy']);
 
         // load board route
         Route::get('/load-board', [LoadBoardController::class, 'index']);
@@ -80,7 +81,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/show/{id}', [AgentController::class, 'show']);
         Route::post('/update/{id}', [AgentController::class, 'update']);
         Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
-
     });
 
     //vehicle route group here

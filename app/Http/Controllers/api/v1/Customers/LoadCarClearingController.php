@@ -18,10 +18,6 @@ class LoadCarClearingController extends Controller
     public function index()
 {
     try {
-        $carClearingRecords = LoadCarClearing::all();
-
-     //   return $this->success($carClearingRecords, 'Car clearing records retrieved successfully');
-
 
         $key = request()->input('search');
         $size = request()->input('size') ?? 20;
