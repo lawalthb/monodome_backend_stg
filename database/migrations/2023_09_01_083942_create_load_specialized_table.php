@@ -18,13 +18,12 @@ return new class extends Migration
             $table->bigInteger('id', true);
             $table->string('uuid')->default(Str::uuid()->toString());;
             $table->bigInteger('user_id')->index('user_id');
-
+            $table->unsignedBigInteger('load_type_id');
             $table->bigInteger('load_board_id');
             $table->string('load_type_name')->default('specialize-shipment');
-            $table->integer('delivery_from_country');
-            $table->integer('delivery_to_country');
+            $table->integer('deliver_from_city');
+            $table->integer('deliver_to_city');
             $table->text('description')->nullable();
-            $table->bigInteger('document_id');
             $table->enum('status', ['Pending', 'Approved', 'Failed'])->default('Pending');
             $table->timestamps();
         });
