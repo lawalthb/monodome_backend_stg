@@ -30,7 +30,7 @@ class LoadBulkRequest extends FormRequest
             'sender_phone' => 'required|string|max:50',
             'sender_street' => 'required|string|max:20',
             'sender_lga' => 'required|integer',
-            'sender_apartment' => 'required|string|max:50',
+            'sender_apartment' => 'nullable|string|max:50',
             'sender_apartment_no' => 'sometime|string|max:50',
             'sender_state' => 'required|integer',
             'sender_email' => 'required|email|max:50',
