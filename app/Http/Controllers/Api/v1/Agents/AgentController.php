@@ -40,6 +40,32 @@ class AgentController extends Controller
     }
 
 
+    public function search(Request $request)
+    {
+        $terms = explode(" ", $request->input('search'));
+        $perPage = $request->input('per_page', 10);
+
+        $agents = Agent::query();
+
+        foreach ($terms as $term) {
+            $agents->where(function ($query) use ($term) {
+                $query->orWhereHas('user', function ($userQuery) use ($term) {
+                    $userQuery->where('email', 'like', "%$term%")
+                        ->orWhere('full_name', 'like', "%$term%");
+                })
+                ->orWhere('street', 'like', "%$term%")
+                ->orWhereHas('state', function ($stateQuery) use ($term) {
+                    $stateQuery->where('name', 'like', "%$term%");
+                });
+            });
+        }
+
+        $agents = $agents->latest()->paginate($perPage);
+
+        return AgentResource::collection($agents);
+    }
+
+
     public function store(AgentFormRequest $request)
     {
         try {

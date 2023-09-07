@@ -51,8 +51,8 @@ class LoadBulkResource extends JsonResource
             'is_fragile'=>$this->is_fragile,
             "loadType" => new LoadTypeResource($this->loadType),
             "document" => LoadDocumentResource::collection($this->loadDocuments),
-            'created_at'=>$this->created_at,
-            'updated_at'=>$this->updated_at,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
