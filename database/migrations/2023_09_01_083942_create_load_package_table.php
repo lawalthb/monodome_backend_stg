@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('load_type_id');
             $table->string('load_type_name')->default("package")->nullable();
             $table->enum('deliver_from', ['address', 'office'])->nullable();
-            $table->integer('to_office_id')->nullable()->default(1);
+            $table->integer('to_office_id')->nullable();
             $table->string('sender_email', 30)->nullable();
             $table->string('sender_name', 30)->nullable();
             $table->string('sender_phone', 30)->nullable();
