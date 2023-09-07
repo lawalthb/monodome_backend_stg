@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\CountryController;
-use App\Http\Controllers\Api\v1\auth\AuthController;
+use App\Http\Controllers\Api\v1\Customers\LoadSpecializedController;
 // use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
+use App\Http\Controllers\Api\v1\auth\AuthController;
 use App\Http\Controllers\Api\v1\Agents\AgentController;
 use App\Http\Controllers\Api\v1\Customers\LoadBulkController;
 use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
@@ -69,11 +70,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
 
         // load-specialized  route
-        Route::get('/load-specialized', [LoadBulkController::class, 'index']);
-        Route::post('/load-specialized', [LoadBulkController::class, 'store']);
-        Route::get('/load-specialized/{id}', [LoadBulkController::class, 'show']);
-        Route::post('/load-specialized/{loadBulk}', [LoadBulkController::class, 'update']);
-        Route::delete('/load-specialized/{id}', [LoadBulkController::class, 'destroy']);
+        Route::get('/load-specialized', [LoadSpecializedController::class, 'index']);
+        Route::post('/load-specialized', [LoadSpecializedController::class, 'store']);
+        Route::get('/load-specialized/{id}', [LoadSpecializedController::class, 'show']);
+        Route::post('/load-specialized/{loadBulk}', [LoadSpecializedController::class, 'update']);
+        Route::delete('/load-specialized/{id}', [LoadSpecializedController::class, 'destroy']);
 
         // load board route
         Route::get('/load-board', [LoadBoardController::class, 'index']);

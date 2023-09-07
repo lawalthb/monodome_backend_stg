@@ -54,7 +54,7 @@ class LoadBulkController extends Controller
     }
 
     // Create a new LoadBulk instance with validated data
-    $loadBulk = LoadBulk::createOrUpdate($request->validated());
+    $loadBulk = LoadBulk::updateOrCreate($request->validated());
 
     // Associate the LoadType
     $loadBulk->loadType()->associate($loadType);

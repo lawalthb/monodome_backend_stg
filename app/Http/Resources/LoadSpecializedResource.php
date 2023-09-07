@@ -14,6 +14,18 @@ class LoadSpecializedResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "id" =>  $this->id,
+            "uuid" =>  $this->uuid,
+            "user_id" =>  new UserResource($this->user),
+            "load_type_name" =>  $this->load_type_name,
+            "from" =>  new StateResource($this->RState),
+            "to" =>  new StateResource($this->SState),
+            "status" =>  $this->status,
+            "loadType" => new LoadTypeResource($this->loadType),
+            "description" =>  $this->description,
+            "created_at" =>  $this->created_at,
+            "updated_at" =>  $this->updated_at,
+        ];
     }
 }

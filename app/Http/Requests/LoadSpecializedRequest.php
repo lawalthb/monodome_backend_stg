@@ -2,16 +2,19 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoadSpecialized extends FormRequest
+class LoadSpecializedRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +28,7 @@ class LoadSpecialized extends FormRequest
             'load_type_id' => 'required|integer',
             'deliver_from_city' => 'required|integer',
             'deliver_to_city' => 'required|integer',
-            'description' => 'required|integer',
+            'description' => 'required|string',
             // 'documents' => 'required',
         ];
     }

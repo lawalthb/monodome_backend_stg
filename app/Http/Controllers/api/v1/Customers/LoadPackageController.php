@@ -44,7 +44,7 @@ use App\Http\Resources\LoadPackageResource;
     {
         $loadType=LoadType::find($request->load_type_id);
 
-        $loadPackage = $loadType->loadPackages()->create($request->validated());
+        $loadPackage = $loadType->loadPackages()->updateOrCreate($request->validated());
 
         event(new LoadTypeCreated($loadPackage));
 
