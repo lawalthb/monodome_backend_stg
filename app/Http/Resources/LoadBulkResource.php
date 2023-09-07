@@ -44,6 +44,7 @@ class LoadBulkResource extends JsonResource
             'insure_it'=>$this->insure_it,
             'insure_amount'=>$this->insure_amount,
             'is_fragile'=>$this->is_fragile,
+            "status" => $this->status,
             "loadType" => new LoadTypeResource($this->loadType),
             "document" => LoadDocumentResource::collection($this->loadDocuments),
             'created_at' => $this->created_at,

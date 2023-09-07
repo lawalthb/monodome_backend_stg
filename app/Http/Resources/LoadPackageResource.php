@@ -18,8 +18,6 @@ class LoadPackageResource extends JsonResource
         return [
             "id" => $this->id,
             "uuid" => $this->uuid,
-            "deliver_from" => $this->deliver_from,
-            'office' => ($this->deliver_from == "office") ? new AgentResource($this->office) :  null,
             "sender_name" => $this->sender_name,
             "sender_phone" => $this->sender_phone,
             "sender_apartment" => $this->sender_apartment,
@@ -28,8 +26,7 @@ class LoadPackageResource extends JsonResource
             "sender_street" => $this->sender_street,
             "sender_state" => new StateResource($this->SState),
             "sender_email" => $this->sender_email,
-            "deliver_to" => $this->deliver_to,
-            // "from_office_id" => $this->from_office_id,load
+            'office' => ($this->deliver_to == "office") ? new AgentResource($this->office) :  null,            // "from_office_id" => $this->from_office_id,load
             "receiver_name" => $this->receiver_name,
             "receiver_email" => $this->receiver_email,
             "receiver_phone" => $this->receiver_phone,
@@ -44,6 +41,7 @@ class LoadPackageResource extends JsonResource
             "width" => $this->width,
             "length" => $this->length,
             "height" => $this->height,
+            "status" => $this->status,
             "insure_it" => $this->insure_it,
             "insure_amount" => $this->insure_amount,
             "is_fragile" => $this->is_fragile,
