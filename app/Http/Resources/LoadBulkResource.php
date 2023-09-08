@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\StateResource;
+use App\Http\Resources\LocalStateResource;
+use App\Http\Resources\LocalGovernmentResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LoadBulkResource extends JsonResource
@@ -22,7 +24,7 @@ class LoadBulkResource extends JsonResource
             'sender_phone'=>$this->sender_phone,
             'sender_street'=>$this->sender_street,
             'sender_lga'=>new LocalGovernmentResource($this->SLga),
-            "sender_state" => new StateResource($this->SState),
+            "sender_state" => new LocalStateResource($this->SState),
             'sender_apartment'=>$this->sender_apartment,
             'sender_email'=>$this->sender_email,
             'office' => ($this->deliver_to =="office") ? new AgentResource($this->office) :  null,
@@ -31,7 +33,7 @@ class LoadBulkResource extends JsonResource
             'receiver_lga'=> new LocalGovernmentResource($this->RLga),
             'receiver_street'=>$this->receiver_street,
             'receiver_apartment'=>$this->receiver_apartment,
-            "receiver_state" => new StateResource($this->RState),
+            "receiver_state" => new LocalStateResource($this->RState),
             'receiver_email'=>$this->receiver_email,
             'is_schedule'=>$this->is_schedule,
             'description'=>$this->description,

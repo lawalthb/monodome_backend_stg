@@ -45,11 +45,11 @@ class LoadPackage extends Model
 
 
         public function RState(){
-            return $this->belongsTo(State::class,'receiver_state');
+            return $this->belongsTo(LocalState::class,'receiver_state');
         }
 
         public function SState(){
-            return $this->belongsTo(State::class,'sender_state');
+            return $this->belongsTo(LocalState::class,'sender_state');
         }
 
         protected static function boot()
