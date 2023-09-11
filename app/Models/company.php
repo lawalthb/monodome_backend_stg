@@ -17,6 +17,12 @@ class company extends Model
         return $this->morphMany(Guarantor::class, 'loadable');
     }
 
+
+    public function trucks(){
+
+        return $this->hasMany(VehicleType::class,'truck_type');
+    }
+
     protected static function boot()
     {
         parent::boot();
