@@ -82,7 +82,7 @@ class ShippingCompanyController extends Controller
                // 'profile_picture' => $request->input('profile_picture'),
                 'nin_number' => $request->input('nin_number'),
                 'phone_number' => $request->input('phone_number'),
-                'status' => 'Pending',
+                'status' => 'Waiting',
 
             ]);
             $shippingComPany->profile_picture = $this->uploadFile('shipping_company/agent_images', $request->file('profile_picture'));
