@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('state_id');
             $table->string('street')->nullable();
             $table->string('lga')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('nin_number')->nullable();
             $table->string('profile_picture')->nullable();
             $table->enum('status', ['Waiting', 'confirmed', 'Rejected', 'Banned'])->default('Waiting');

@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Api\v1\ShippingCompany;
 
-use App\Models\ShippingCompany;
 use Illuminate\Http\Request;
+use App\Traits\ApiStatusTrait;
+use App\Models\ShippingCompany;
+use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 
 
 class ShippingCompanyController extends Controller
 {
+    use ApiStatusTrait,FileUploadTrait;
+
     /**
      * Display a listing of the resource.
      */

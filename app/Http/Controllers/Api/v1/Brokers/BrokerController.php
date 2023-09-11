@@ -7,6 +7,8 @@ use App\Models\Broker;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
@@ -17,12 +19,27 @@ use App\Http\Resources\BrokerResource;
 
 class BrokerController extends Controller
 {
+    use ApiStatusTrait,FileUploadTrait;
+
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $agents = Broker::where(function ($q) use ($key) {
+            // Assuming there's a relationship between Agent and User
+            $q->whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('full_name', 'like', "%{$key}%");
+            })->orWhere('street', 'like', "%{$key}%");
+        })
+            ->latest()
+            ->paginate($perPage);
+
+        return BrokerResource::collection($agents);
     }
 
     /**
@@ -48,10 +65,10 @@ class BrokerController extends Controller
                 $user->full_name = $request->input('full_name');
                 $user->email = $request->input('email');
                 $user->address = $request->input('address');
+                $user->phone_number  = $request->input('phone_number');
                 $password  = Str::random(16);
-
                 $user->password = bcrypt(Str::random(16));
-                $user->user_type = 'agent';
+                $user->user_type = 'broker';
                 $user->save();
 
                 $data = [
@@ -73,13 +90,9 @@ class BrokerController extends Controller
                 'user_id' => $user->id,
                 'state_id' => $request->input('state_id'),
                 'street' => $request->input('street'),
-                'status' => 'Waiting',
-                'user_type' => 'broker',
-                'role_id' =>  $role->id,
-                'role' => 'broker',
                 'lga' => $request->input('lga'),
                 'nin_number' => $request->input('nin_number'),
-                'city_of_residence' => $request->input('city_of_residence'),
+                'status' => 'Waiting',
                 // Add other agent fields here
             ]);
 
