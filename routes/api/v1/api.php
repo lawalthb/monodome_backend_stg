@@ -17,7 +17,7 @@ use App\Http\Controllers\Api\v1\Brokers\BrokerController;
 use App\Http\Controllers\Api\v1\customers\VehicleModelController;
 use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
 use App\Http\Controllers\Api\v1\ShippingCompany\ShippingCompanyController;
-use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\Api\v1\CompanyController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return-json'], function () {
 
