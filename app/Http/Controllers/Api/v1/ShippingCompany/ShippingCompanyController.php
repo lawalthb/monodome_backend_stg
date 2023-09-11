@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\ShippingCompany;
 
+use App\Models\User;
 use App\Models\Guarantor;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -9,6 +10,8 @@ use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
 use App\Models\ShippingCompany;
 use App\Traits\FileUploadTrait;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
