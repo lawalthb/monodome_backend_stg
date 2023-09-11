@@ -36,6 +36,17 @@ class ShippingCompany extends Model
         return $this->belongsTo(LocalGovernment::class,'sender_lga');
     }
 
+    public function loadable()
+    {
+        return $this->morphTo('loadable');
+    }
+
+    public function guarantors()
+    {
+        return $this->morphMany(Guarantor::class, 'loadable');
+    }
+
+
 
     protected static function boot()
     {

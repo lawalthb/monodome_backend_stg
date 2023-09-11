@@ -21,6 +21,11 @@ class Guarantor extends Model
         return $this->belongsTo(Driver::class);
     }
 
+    public function shippingCompany()
+    {
+        return $this->belongsTo(ShippingCompany::class);
+    }
+
     public function loadable()
     {
         return $this->morphTo('loadable');

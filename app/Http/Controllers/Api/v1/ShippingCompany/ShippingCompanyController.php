@@ -12,8 +12,11 @@ use App\Models\ShippingCompany;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\ShippingCompanyRequest;
+use App\Http\Resources\ShippingCompanyResource;
 
 
 class ShippingCompanyController extends Controller
@@ -39,7 +42,7 @@ class ShippingCompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ShippingCompanyRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -52,9 +55,8 @@ class ShippingCompanyController extends Controller
                 $user->email = $request->input('email');
                 $user->address = $request->input('address');
                 $password  = Str::random(16);
-
                 $user->password = bcrypt(Str::random(16));
-                $user->user_type = 'agent';
+                $user->user_type = 'shipping_company_super';
                 $user->save();
 
                 $data = [
@@ -65,66 +67,49 @@ class ShippingCompanyController extends Controller
                 Mail::to($user->email)->send(
                     new SendPasswordMail($data)
                 );
-                $role = Role::where('name', 'Agent')->first();
+                $role = Role::where('name', 'Shipping Company')->first();
 
                 if ($role) {
                     $user->assignRole($role);
                 }
             }
 
-            $agent = new ShippingCompany([
+            $shippingComPany = new ShippingCompany([
                 'user_id' => $user->id,
-                'country_id' => $request->input('country_id'),
                 'state_id' => $request->input('state_id'),
                 'street' => $request->input('street'),
-                'status' => 'Pending',
                 'lga' => $request->input('lga'),
-                'state_of_residence' => $request->input('state_of_residence'),
-                'city_of_residence' => $request->input('city_of_residence'),
-                // Add other agent fields here
+               // 'profile_picture' => $request->input('profile_picture'),
+                'nin_number' => $request->input('nin_number'),
+                'phone_number' => $request->input('phone_number'),
+                'status' => 'Pending',
+
             ]);
+            $shippingComPany->profile_picture = $this->uploadFile('shipping_company/agent_images', $request->file('profile_picture'));
 
-            $agent->store_front_image = $this->uploadFile('agent/agent_images', $request->file('store_front_image'));
-            $agent->inside_store_image = $this->uploadFile('agent/agent_images', $request->file('inside_store_image'));
-            $agent->registration_documents = $this->uploadFile('agent/agent_documents', $request->file('registration_documents'));
 
-            $agent->save();
+            $shippingComPany->save();
 
-            $guarantorProfilePictures = [];
-
-            foreach ($request->input('guarantors') as $key => $guarantorData) {
                 $guarantor = new Guarantor([
-                    'full_name' => $guarantorData['full_name'],
-                    'phone_number' => $guarantorData['phone_number'],
-                    'address' => $guarantorData['address'],
-                    'street' => $guarantorData['street'],
-                    'state' => $guarantorData['state'],
-                    'lga' => $guarantorData['lga'],
-                    'state_of_residence' => $guarantorData['state_of_residence'],
-                    'city_of_residence' => $guarantorData['city_of_residence'],
-                    // Add other guarantor fields here
+                    'full_name' =>  $request->input('guarantors_full_name'),
+                    'phone_number' =>  $request->input('guarantors_phone_number'),
+                    'street' =>  $request->input('guarantors_street'),
+                    'state' =>  $request->input('guarantors_state'),
+                    'lga' =>  $request->input('guarantors_lga'),
+                    'profile_picture' => $this->uploadFile('agent/guarantor_images', $request->file("guarantors_profile_picture")),
+
                 ]);
 
-                $guarantor->loadable()->associate($agent);
-
-                $guarantorProfilePictures[] = $this->uploadFile('agent/guarantor_images', $request->file("guarantors.$key.profile_picture"));
-
-                $agent->guarantors()->save($guarantor);
-            }
-
-            foreach ($agent->guarantors as $key => $guarantor) {
-                $guarantor->profile_picture = $guarantorProfilePictures[$key];
-                $guarantor->save();
-            }
+                $guarantor->loadable()->associate($shippingComPany);
 
             DB::commit();
 
-            return $this->success( new AgentResource($agent), 'Agent and guarantors registered successfully');
+            return $this->success( new ShippingCompanyResource($shippingComPany), 'ShippingCompany and guarantors registered successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
 
-            return $this->error('An error occurred while registering the agent and guarantors.');
+            return $this->error('An error occurred while registering the ShippingCompany and guarantors.');
         }
     }
 

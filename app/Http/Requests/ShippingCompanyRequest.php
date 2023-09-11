@@ -11,7 +11,7 @@ class ShippingCompanyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,22 @@ class ShippingCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-        ];
+              'full_name' => 'required|string',
+              'email' => 'required|email|unique:users,email',
+              'phone_number' => 'required|string',
+              'street' => 'required|string',
+              'state_id' => 'required|exists:states,id',
+              'lga' => 'required|numeric',
+              'profile_picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+              'guarantors_full_name' => 'required|string',
+              'guarantors_phone_number' => 'required|string',
+              'guarantors_street' => 'required|string',
+              'guarantors_state' => 'required|numeric',
+              'guarantors_lga' => 'required|numeric',
+              'guarantors_profile_picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+              // 'guarantors_address' => 'required|string',
+              //  'guarantors_state_of_residence' => 'required|string',
+              //'guarantors_city_of_residence' => 'required|string',
+          ];
     }
 }
