@@ -82,6 +82,20 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/load-board/{id}', [LoadBoardController::class, 'show']);
         Route::post('/load-board/{loadBulk}', [LoadBoardController::class, 'update']);
         Route::delete('/load-board/{id}', [LoadBoardController::class, 'destroy']);
+
+
+       /// Route::get('load')
+    });
+
+
+
+    Route::group(['prefix' => 'broker'], function () {
+
+        Route::get('/', [AgentController::class, 'index']);
+        Route::post('/store', [AgentController::class, 'store']);
+        Route::get('/show/{id}', [AgentController::class, 'show']);
+        Route::post('/update/{id}', [AgentController::class, 'update']);
+        Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'agent'], function () {
