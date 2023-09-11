@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\v1\Brokers\BrokerController;
 use App\Http\Controllers\Api\v1\customers\VehicleModelController;
 use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
 use App\Http\Controllers\Api\v1\ShippingCompany\ShippingCompanyController;
+use App\Http\Controllers\CompanyController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return-json'], function () {
 
@@ -98,6 +99,15 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/show/{id}', [BrokerController::class, 'show']);
         Route::post('/update/{id}', [BrokerController::class, 'update']);
         Route::delete('/destroy/{id}', [BrokerController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'company'], function () {
+
+        Route::get('/', [CompanyController::class, 'index']);
+        Route::post('/store', [CompanyController::class, 'store']);
+        Route::get('/show/{id}', [CompanyController::class, 'show']);
+        Route::post('/update/{id}', [CompanyController::class, 'update']);
+        Route::delete('/destroy/{id}', [CompanyController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'shippingCompany'], function () {
