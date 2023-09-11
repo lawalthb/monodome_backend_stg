@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\v1\auth\EmailVerificationController;
 use App\Http\Controllers\Api\v1\Brokers\BrokerController;
 use App\Http\Controllers\Api\v1\customers\VehicleModelController;
 use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
+use App\Http\Controllers\Api\v1\ShippingCompany\ShippingCompanyController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return-json'], function () {
 
@@ -97,6 +98,15 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/show/{id}', [BrokerController::class, 'show']);
         Route::post('/update/{id}', [BrokerController::class, 'update']);
         Route::delete('/destroy/{id}', [BrokerController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'shippingCompany'], function () {
+
+        Route::get('/', [ShippingCompanyController::class, 'index']);
+        Route::post('/store', [ShippingCompanyController::class, 'store']);
+        Route::get('/show/{id}', [ShippingCompanyController::class, 'show']);
+        Route::post('/update/{id}', [ShippingCompanyController::class, 'update']);
+        Route::delete('/destroy/{id}', [ShippingCompanyController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'agent'], function () {
