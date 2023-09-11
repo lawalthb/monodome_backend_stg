@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class company extends Model
 {
@@ -15,4 +16,14 @@ class company extends Model
     {
         return $this->morphMany(Guarantor::class, 'loadable');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function($model){
+            $model->uuid =  Str::uuid()->toString();
+           // $model->user_id =  auth()->id();
+        });
+    }
+
 }

@@ -81,13 +81,12 @@ class CompanyController extends Controller
 
             $company = new Company([
                 'user_id' => $user->id,
-                'country_id' => $request->input('country_id'),
                 'state_id' => $request->input('state_id'),
                 'street' => $request->input('street'),
-                'type_of_truck' => $request->input('type_of_truck'),
+                'truck_type' => $request->input('type_of_truck'),
                 'number_of_drivers' => $request->input('number_of_drivers'),
                 'number_of_trucks' => $request->input('number_of_trucks'),
-                'status' => 'Pending',
+                'status' => 'Waiting',
                 'lga' => $request->input('lga'),
                 'state_of_residence' => $request->input('state_of_residence'),
                 'city_of_residence' => $request->input('city_of_residence'),

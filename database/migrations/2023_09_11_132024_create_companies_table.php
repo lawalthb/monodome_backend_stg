@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('company_logo')->nullable();
             $table->string('company_name')->nullable();
-            $table->string('registration_documents')->nullable();
+            $table->string('cac_documents')->nullable();
             $table->enum('status', ['Waiting', 'Confirmed', 'Rejected', 'Banned', 'Cancelled'])->default('Waiting');
             $table->timestamps();
             $table->softDeletes();
