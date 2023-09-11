@@ -33,7 +33,7 @@ class ShippingCompany extends Model
 
     public function SLga()
     {
-        return $this->belongsTo(LocalGovernment::class,'sender_lga');
+        return $this->belongsTo(LocalGovernment::class,'lga');
     }
 
     public function loadable()

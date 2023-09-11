@@ -26,9 +26,21 @@ class ShippingCompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $agents = Agent::where(function ($q) use ($key) {
+            // Assuming there's a relationship between Agent and User
+            $q->whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('full_name', 'like', "%{$key}%");
+            })->orWhere('street', 'like', "%{$key}%");
+        })
+            ->latest()
+            ->paginate($perPage);
+
+        return AgentResource::collection($agents);
     }
 
     /**
@@ -101,6 +113,7 @@ class ShippingCompanyController extends Controller
                 ]);
 
                 $guarantor->loadable()->associate($shippingComPany);
+                $shippingComPany->guarantors()->save($guarantor);
 
             DB::commit();
 
