@@ -31,7 +31,7 @@ class ShippingCompanyController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $agents = Agent::where(function ($q) use ($key) {
+        $agents = ShippingCompany::where(function ($q) use ($key) {
             // Assuming there's a relationship between Agent and User
             $q->whereHas('user', function ($userQuery) use ($key) {
                 $userQuery->where('full_name', 'like', "%{$key}%");
@@ -40,7 +40,7 @@ class ShippingCompanyController extends Controller
             ->latest()
             ->paginate($perPage);
 
-        return AgentResource::collection($agents);
+        return ShippingCompanyResource::collection($agents);
     }
 
     /**
