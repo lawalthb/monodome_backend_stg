@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('nin_number')->nullable();
             $table->string('profile_picture')->nullable();
-            $table->enum('status', ['Waiting', 'confirmed', 'Rejected', 'Banned'])->default('Waiting');
+            $table->enum('status', ['Waiting', 'Confirmed', 'Rejected', 'Banned', 'Cancelled'])->default('Waiting');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
