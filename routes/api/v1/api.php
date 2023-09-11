@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
 use App\Http\Controllers\Api\v1\customers\VehicleMakeController;
 use App\Http\Controllers\Api\v1\customers\VehicleTypeController;
 use App\Http\Controllers\Api\v1\auth\EmailVerificationController;
+use App\Http\Controllers\Api\v1\Brokers\BrokerController;
 use App\Http\Controllers\Api\v1\customers\VehicleModelController;
 use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
 
@@ -91,11 +92,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
     Route::group(['prefix' => 'broker'], function () {
 
-        Route::get('/', [AgentController::class, 'index']);
-        Route::post('/store', [AgentController::class, 'store']);
-        Route::get('/show/{id}', [AgentController::class, 'show']);
-        Route::post('/update/{id}', [AgentController::class, 'update']);
-        Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
+        Route::get('/', [BrokerController::class, 'index']);
+        Route::post('/store', [BrokerController::class, 'store']);
+        Route::get('/show/{id}', [BrokerController::class, 'show']);
+        Route::post('/update/{id}', [BrokerController::class, 'update']);
+        Route::delete('/destroy/{id}', [BrokerController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'agent'], function () {

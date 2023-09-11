@@ -12,6 +12,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\BrokersRequest;
 use App\Http\Resources\BrokerResource;
 
 class BrokerController extends Controller
@@ -35,7 +36,7 @@ class BrokerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BrokersRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -61,7 +62,7 @@ class BrokerController extends Controller
                 Mail::to($user->email)->send(
                     new SendPasswordMail($data)
                 );
-                $role = Role::where('name', 'Agent')->first();
+                $role = Role::where('name', 'Broker')->first();
 
                 if ($role) {
                     $user->assignRole($role);
@@ -73,6 +74,9 @@ class BrokerController extends Controller
                 'state_id' => $request->input('state_id'),
                 'street' => $request->input('street'),
                 'status' => 'Waiting',
+                'user_type' => 'broker',
+                'role_id' =>  $role->id,
+                'role' => 'broker',
                 'lga' => $request->input('lga'),
                 'nin_number' => $request->input('nin_number'),
                 'city_of_residence' => $request->input('city_of_residence'),
