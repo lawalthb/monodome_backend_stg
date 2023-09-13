@@ -140,6 +140,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/show/{id}', [DriverController::class, 'show']);
         Route::post('/update/{id}', [DriverController::class, 'update']);
         Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
+        Route::get('/broadcast/{id}', [DriverController::class, 'singleBroadcast']);
     });
 
     //vehicle route group here
