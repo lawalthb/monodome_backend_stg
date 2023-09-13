@@ -96,7 +96,7 @@ class BrokerController extends Controller
                 // Add other agent fields here
             ]);
 
-            Log::info($request);
+            //Log::info($request);
             $broker->profile_picture = $this->uploadFile('broker/broker_images', $request->file('profile_picture'));
             $broker->save();
 

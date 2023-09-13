@@ -13,24 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('driver_details', function (Blueprint $table) {
+        Schema::create('drivers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('uuid');
             $table->bigInteger('user_id')->index('user_id');
             $table->unsignedBigInteger('state_id');
-            // $table->unsignedBigInteger('city_id');
-            $table->unsignedBigInteger('country_id');
             $table->enum('type', ['driver', 'drives'])->default('driver');
+            $table->enum('have_motor', ['Yes', 'No'])->default('Yes');
             $table->string('street');
             $table->string('lga');
-            $table->string('state_of_residence');
-            $table->string('city_of_residence');
             $table->string('nin_number');
             $table->string('license_number');
+            $table->string('proof_of_license');
             $table->unsignedBigInteger('vehicle_type_id');
-            $table->string('profile_pic_url');
-            $table->string('vehicle_img_url');
-            $table->string('license_url');
+            $table->string('profile_picture');
             $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
             $table->timestamps();
             $table->softDeletes();
