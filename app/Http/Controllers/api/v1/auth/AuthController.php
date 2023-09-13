@@ -29,15 +29,15 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
-                //'role' => ucfirst($request->role),
+                'role_id' => $request->role_id,
             ]);
 
-            $roleName = str_replace('_', ' ', $request->input('role'));
-            $role = Role::where('name', ucwords($roleName))->first();
+           // $roleName = str_replace('_', ' ', $request->input('role'));
+            $role = Role::find($request->role_id);
             if ($role) {
-               // $user->user_type = $request->input('role');
+               $user->user_type = str_replace(' ', '_', $role->name);;
                 $user->role_id = $role->id;
-               // $user->role = $role->name;
+               $user->role = $role->name;
                 $user->assignRole($role);
             }
             $user->save();

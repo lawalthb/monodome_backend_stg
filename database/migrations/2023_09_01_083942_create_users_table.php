@@ -26,8 +26,10 @@ return new class extends Migration
             $table->string('user_created_by')->nullable();
             $table->string('role_id')->nullable();
             $table->string('imageUrl')->nullable();
-            $table->enum('user_type', ['customer', 'broker', 'shipping_company_super', 'shipping_company_admin', 'agent', 'clearing_forwarding', 'driver', 'driver_manager', 'driver_manager_driver', 'company_transporter_super', 'company_transporter_admin', 'company_transporter_driver','super_admin','admin'])->default('customer');
-            $table->enum('role', ['customer', 'broker', 'shipping_company', 'agent', 'clearing_forwarding', 'driver', 'driver_manager', 'company_transporter']);
+            $table->string('user_type')->nullable();
+            $table->string('role')->nullable();
+           // $table->enum('user_type', ['customer', 'broker', 'shipping_company_super', 'shipping_company_admin', 'agent', 'clearing_forwarding', 'driver', 'driver_manager', 'driver_manager_driver', 'company_transporter_super', 'company_transporter_admin', 'company_transporter_driver','super_admin','admin'])->default('customer');
+           // $table->enum('role', ['customer', 'broker', 'shipping_company', 'agent', 'clearing_forwarding', 'driver', 'driver_manager', 'company_transporter']);
             $table->rememberToken();
             $table->timestamps();
         });

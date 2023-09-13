@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RegisterRequest extends FormRequest
 {
@@ -25,7 +26,12 @@ class RegisterRequest extends FormRequest
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
-            'role' => 'required|in:customer,broker,shipping_company,agent,clearing_forwarding,driver,driver_manager,company_transporter',
+            'role_id' => [
+                'required',
+                'numeric',
+                Rule::notIn([1, 2]), // This rule ensures that the value is not 1 or 2
+            ],
+            // 'role' => 'required|in:customer,broker,shipping_company,agent,clearing_forwarding,driver,driver_manager,company_transporter',
         ];
     }
 }

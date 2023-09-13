@@ -19,8 +19,13 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
+        // Filter roles to exclude "admin" and "Super Admin"
+    $filteredRoles = $roles->filter(function ($role) {
+        $roleName = strtolower($role->name);
+        return $roleName !== 'admin' && $roleName !== 'super admin';
+    });
 
-        return response()->json(['roles' => $roles]);
+        return response()->json(['roles' => $filteredRoles]);
     }
 
 
