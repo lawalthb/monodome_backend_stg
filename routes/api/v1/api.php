@@ -7,6 +7,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Api\v1\CountryController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
 use App\Http\Controllers\Api\v1\Agents\AgentController;
+use App\Http\Controllers\Api\v1\Driver\DriverController;
 use App\Http\Controllers\Api\v1\Brokers\BrokerController;
 use App\Http\Controllers\Api\v1\Company\CompanyController;
 use App\Http\Controllers\Api\v1\Customers\LoadBulkController;
@@ -128,6 +129,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/show/{id}', [AgentController::class, 'show']);
         Route::post('/update/{id}', [AgentController::class, 'update']);
         Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
+    });
+
+
+    Route::group(['prefix' => 'driver'], function () {
+
+        Route::get('/', [DriverController::class, 'index']);
+        Route::post('/store', [DriverController::class, 'store']);
+        Route::get('/show/{id}', [DriverController::class, 'show']);
+        Route::post('/update/{id}', [DriverController::class, 'update']);
+        Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
     });
 
     //vehicle route group here

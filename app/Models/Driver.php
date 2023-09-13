@@ -23,14 +23,24 @@ class Driver extends Model
         return $this->morphMany(Guarantor::class, 'loadable');
     }
 
-    // public function loadable()
-    // {
-    //     return $this->morphTo('loadable');
-    // }
+    public function loadable()
+    {
+        return $this->morphTo('loadable');
+    }
+
+    public function loadDocuments()
+    {
+        return $this->morphMany(LoadDocument::class, 'loadable');
+    }
 
     public function user(){
 
         return $this->belongsTo(User::class);
+    }
+
+    public function RLga()
+    {
+        return $this->belongsTo(LocalGovernment::class,'receiver_lga');
     }
 
     public function country(){

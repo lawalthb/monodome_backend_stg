@@ -79,8 +79,7 @@ class AgentController extends Controller
                 $user->email = $request->input('email');
                 $user->address = $request->input('address');
                 $password  = Str::random(16);
-
-                $user->password = bcrypt(Str::random(16));
+                $user->password = $password;
                 $user->user_type = 'agent';
                 $user->save();
 

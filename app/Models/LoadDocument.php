@@ -13,7 +13,7 @@ class LoadDocument extends Model
 
     public function loadable()
     {
-        return $this->morphTo('loadable');
+    return $this->morphTo('loadable');
     }
 
     public function getFilePathAttribute()

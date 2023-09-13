@@ -1,19 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\Agents;
+namespace App\Http\Controllers\Api\v1\Driver;
 
 use App\Models\User;
 use App\Models\Agent;
 use App\Models\Driver;
 use App\Models\Guarantor;
 use Illuminate\Support\Str;
+use App\Models\LoadDocument;
 use Illuminate\Http\Request;
+use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DriverRequest;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\AgentResource;
 use App\Http\Resources\DriverResource;
 use App\Http\Requests\AgentFormRequest;
@@ -31,7 +35,8 @@ class DriverController extends Controller
             // Assuming there's a relationship between Agent and User
             $q->whereHas('user', function ($userQuery) use ($key) {
                 $userQuery->where('full_name', 'like', "%{$key}%");
-            })->orWhere('address', 'like', "%{$key}%");
+                $userQuery->where('address', 'like', "%{$key}%");
+            })->orWhere('license_number', 'like', "%{$key}%");
         })
             ->latest()
             ->paginate($perPage);
@@ -40,7 +45,7 @@ class DriverController extends Controller
     }
 
 
-    public function store(AgentFormRequest $request)
+    public function store(DriverRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -52,34 +57,73 @@ class DriverController extends Controller
                 $user->full_name = $request->input('full_name');
                 $user->email = $request->input('email');
                 $user->address = $request->input('address');
-                $user->password = bcrypt(Str::random(16));
-                $user->user_type = 'agent';
+                $password  = Str::random(16);
+                $user->password = $password;
+                $user->user_type = 'driver';
                 $user->save();
 
-                $role = Role::where('name', 'Agent')->first();
+                $data = [
+                    "full_name" => $request->input('full_name'),
+                    "password" => $password,
+                    "message" => "",
+                ];
+                Mail::to($user->email)->send(
+                    new SendPasswordMail($data)
+                );
+
+                $role = Role::where('name', 'Driver')->first();
 
                 if ($role) {
                     $user->assignRole($role);
                 }
             }
 
-            $agent = new Agent([
-                'user_id' => $user->id,
-                'country_id' => $request->input('country_id'),
-                'state_id' => $request->input('state_id'),
-                'street' => $request->input('street'),
-                'status' => 'Pending',
-                'lga' => $request->input('lga'),
-                'state_of_residence' => $request->input('state_of_residence'),
-                'city_of_residence' => $request->input('city_of_residence'),
-                // Add other agent fields here
-            ]);
 
-            $agent->store_front_image = $this->uploadFile('agent/agent_images', $request->file('store_front_image'));
-            $agent->inside_store_image = $this->uploadFile('agent/agent_images', $request->file('inside_store_image'));
-            $agent->registration_documents = $this->uploadFile('agent/agent_documents', $request->file('registration_documents'));
+           // $data = $request->validated();
+           $driver = Driver::create($data);
 
-            $agent->save();
+
+            // $driver = new Driver([
+            //     'user_id' => $user->id,
+            //     'state_id' => $request->input('state_id'),
+            //     'street' => $request->input('street'),
+            //     'status' => 'Pending',
+            //     'lga' => $request->input('lga'),
+            //     'nin_number' => $request->input('nin_number'),
+            //     'license_number' => $request->input('license_number'),
+            //     'have_motor' => $request->input('have_motor'),
+            //     'vehicle_type_id' => $request->input('vehicle_type_id'),
+            //     // Add other agent fields here
+            // ]);
+
+
+            $driver->proof_of_license = $this->uploadFile('driver/driver_images', $request->file('proof_of_license'));
+            $driver->profile_picture = $this->uploadFile('driver/driver_images', $request->file('profile_picture'));
+           // $driver->registration_documents = $this->uploadFile('agent/agent_documents', $request->file('registration_documents'));
+
+            $driver->save();
+
+            if ($request->hasFile('vehicle_image')) {
+                $documents = [];
+
+                foreach ($request->file('vehicle_image') as $file) {
+
+                    $file = $this->uploadFileWithDetails('vehicle_image', $file);
+                    $path = $file['path'];
+                    $name = $file['file_name'];
+
+                    // Create a record in the load_documents table
+                    $document = new LoadDocument([
+                        'name' => $name,
+                        'path' => $path,
+                       // 'loadable_id' => $driver->id, // Set the loadable_id to the driver's ID
+                         //'loadable_type' => Driver::class, //
+                    ]);
+
+                    // Associate the document with the LoadBulk
+                    $driver->loadDocuments()->save($document);
+                }
+            }
 
             $guarantorProfilePictures = [];
 
@@ -96,26 +140,26 @@ class DriverController extends Controller
                     // Add other guarantor fields here
                 ]);
 
-                $guarantor->loadable()->associate($agent);
+                $guarantor->loadable()->associate($driver);
 
-                $guarantorProfilePictures[] = $this->uploadFile('agent/guarantor_images', $request->file("guarantors.$key.profile_picture"));
+                $guarantorProfilePictures[] = $this->uploadFile('driver/guarantor_images', $request->file("guarantors.$key.profile_picture"));
 
-                $agent->guarantors()->save($guarantor);
+                $driver->guarantors()->save($guarantor);
             }
 
-            foreach ($agent->guarantors as $key => $guarantor) {
+            foreach ($driver->guarantors as $key => $guarantor) {
                 $guarantor->profile_picture = $guarantorProfilePictures[$key];
                 $guarantor->save();
             }
 
             DB::commit();
 
-            return $this->success( new AgentResource($agent), 'Agent and guarantors registered successfully');
+            return $this->success( new DriverResource($driver), 'Driver and guarantors registered successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
 
-            return $this->error('An error occurred while registering the agent and guarantors.');
+            return $this->error('An error occurred while registering the driver and guarantors.');
         }
     }
 

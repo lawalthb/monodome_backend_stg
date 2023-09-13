@@ -13,11 +13,6 @@ class Agent extends Model
 
     public $guarded = [];
 
-    // public function guarantors()
-    // {
-    //     return $this->hasMany(Guarantor::class);
-    // }
-
     public function guarantors()
     {
         return $this->morphMany(Guarantor::class, 'loadable');
