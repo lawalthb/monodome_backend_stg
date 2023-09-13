@@ -87,7 +87,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/load-board/{id}', [LoadBoardController::class, 'destroy']);
 
 
-       /// Route::get('load')
+        /// Route::get('load')
     });
 
 
@@ -153,6 +153,21 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/type/{id}', [VehicleTypeController::class, 'destroy']);
     });
 
+    Route::group(['prefix' => 'roles'], function () {
+
+        Route::get('', [RoleController::class, 'index']);
+        Route::post('', [RoleController::class, 'store']);
+        Route::get('/{role}', [RoleController::class, 'show']);
+        Route::put('/{role}', [RoleController::class, 'update']);
+        Route::delete('/{role}', [RoleController::class, 'destroy']);
+
+
+        Route::get('permissions', [PermissionController::class, 'index']);
+        Route::post('permissions', [PermissionController::class, 'store']);
+        Route::get('permissions/{permission}', [PermissionController::class, 'show']);
+        Route::put('permissions/{permission}', [PermissionController::class, 'update']);
+        Route::delete('permissions/{permission}', [PermissionController::class, 'destroy']);
+    });
 
     Route::group(['prefix' => 'place'], function () {
 
@@ -171,6 +186,5 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         // for nigeria
         Route::get('/nigeria/states', [CountryController::class, 'getNigeriaState']);
         Route::get('/nigeria/lga/{state_id}',  [CountryController::class, 'getLgaByState']);
-
     });
 });

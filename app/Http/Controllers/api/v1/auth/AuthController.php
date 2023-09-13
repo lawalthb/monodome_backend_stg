@@ -29,16 +29,18 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
-                'user_type' => 'Customer',
-                'role' => ucfirst($request->role),
+                //'role' => ucfirst($request->role),
             ]);
-            $user->save();
 
-            $roleName = str_replace('_', ' ', $request->input('user_type'));
-            $role = Role::where('name', $roleName)->first();
+            $roleName = str_replace('_', ' ', $request->input('role'));
+            $role = Role::where('name', ucwords($roleName))->first();
             if ($role) {
+               // $user->user_type = $request->input('role');
+                $user->role_id = $role->id;
+               // $user->role = $role->name;
                 $user->assignRole($role);
             }
+            $user->save();
 
             $token = $user->createToken("monodomebackend". $request->email)->plainTextToken;
 
