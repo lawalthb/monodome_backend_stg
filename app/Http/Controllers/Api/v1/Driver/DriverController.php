@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Agent;
 use App\Models\Driver;
 use App\Models\Guarantor;
+use App\Models\LoadBoard;
 use Illuminate\Support\Str;
 use App\Models\LoadDocument;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\AgentResource;
 use App\Http\Resources\DriverResource;
 use App\Http\Requests\AgentFormRequest;
+use App\Http\Resources\LoadBoardResource;
 
 class DriverController extends Controller
 {
@@ -44,6 +46,25 @@ class DriverController extends Controller
         return DriverResource::collection($driver);
     }
 
+
+    public function broadcast(Request $request)
+    {
+        $query = LoadBoard::whereIn('load_type_id', [1, 2])->orderBy('created_at', 'desc');;
+
+        // Filter by Order Number
+        if ($request->has('order_no')) {
+            $query->where('order_no', $request->input('order_no'));
+        }
+
+        // Add more filters as needed
+
+        $perPage = $request->input('per_page', 10); // Number of items per page, defaulting to 10.
+
+        // Use the paginate method to paginate the results
+        $loadBoards = $query->paginate($perPage);
+
+        return LoadBoardResource::collection($loadBoards);
+    }
 
     public function store(DriverRequest $request)
     {

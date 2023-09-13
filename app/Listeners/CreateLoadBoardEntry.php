@@ -24,8 +24,9 @@ class CreateLoadBoardEntry
      */
     public function handle(LoadTypeCreated $event)
     {
+        Log::info($event->loadType);
 
-         $loadTypeId = $event->loadType->id;
+         $loadTypeId = $event->loadType->load_type_id;
          $userId = Auth::user()->id; // Adjust this according to your LoadType model
 
          $load_board = new LoadBoard();

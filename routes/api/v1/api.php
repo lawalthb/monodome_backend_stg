@@ -135,6 +135,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     Route::group(['prefix' => 'driver'], function () {
 
         Route::get('/', [DriverController::class, 'index']);
+        Route::get('/broadcast', [DriverController::class, 'broadcast']);
         Route::post('/store', [DriverController::class, 'store']);
         Route::get('/show/{id}', [DriverController::class, 'show']);
         Route::post('/update/{id}', [DriverController::class, 'update']);
