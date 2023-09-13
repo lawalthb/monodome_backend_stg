@@ -80,21 +80,21 @@ class DriverController extends Controller
 
 
            // $data = $request->validated();
-           $driver = Driver::create($data);
+        //   $driver = Driver::create($data);
 
 
-            // $driver = new Driver([
-            //     'user_id' => $user->id,
-            //     'state_id' => $request->input('state_id'),
-            //     'street' => $request->input('street'),
-            //     'status' => 'Pending',
-            //     'lga' => $request->input('lga'),
-            //     'nin_number' => $request->input('nin_number'),
-            //     'license_number' => $request->input('license_number'),
-            //     'have_motor' => $request->input('have_motor'),
-            //     'vehicle_type_id' => $request->input('vehicle_type_id'),
-            //     // Add other agent fields here
-            // ]);
+            $driver = new Driver([
+                'user_id' => $user->id,
+                'state_id' => $request->input('state_id'),
+                'street' => $request->input('street'),
+                'status' => 'Pending',
+                'lga' => $request->input('lga'),
+                'nin_number' => $request->input('nin_number'),
+                'license_number' => $request->input('license_number'),
+                'have_motor' => $request->input('have_motor'),
+                'vehicle_type_id' => $request->input('vehicle_type_id'),
+                // Add other agent fields here
+            ]);
 
 
             $driver->proof_of_license = $this->uploadFile('driver/driver_images', $request->file('proof_of_license'));

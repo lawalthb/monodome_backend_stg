@@ -40,7 +40,7 @@ class Driver extends Model
 
     public function RLga()
     {
-        return $this->belongsTo(LocalGovernment::class,'receiver_lga');
+        return $this->belongsTo(LocalGovernment::class,'lga');
     }
 
     public function country(){
