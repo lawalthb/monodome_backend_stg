@@ -68,7 +68,7 @@ class ShippingCompanyController extends Controller
                 $user->address = $request->input('address');
                 $password  = Str::random(16);
                 $user->password = bcrypt(Str::random(16));
-                $user->user_type = 'company_transporter_super';
+                //$user->user_type = 'company_transporter_super';
                 $user->save();
 
                 $data = [
@@ -79,11 +79,16 @@ class ShippingCompanyController extends Controller
                 Mail::to($user->email)->send(
                     new SendPasswordMail($data)
                 );
-                $role = Role::where('name', 'Company Transport')->first();
 
-                if ($role) {
-                    $user->assignRole($role);
-                }
+            }
+
+            $role = Role::find(5);
+            if ($role) {
+               $user->user_type = str_replace(' ', '_', $role->name);;
+                $user->role_id = $role->id;
+               $user->role = $role->name;
+                $user->assignRole($role);
+                $user->save();
             }
 
             $shippingComPany = new ShippingCompany([

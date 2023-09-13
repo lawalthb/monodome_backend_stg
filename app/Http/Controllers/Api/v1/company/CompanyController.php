@@ -20,7 +20,7 @@ use App\Http\Resources\CompanyResource;
 
 class CompanyController extends Controller
 {
-    use ApiStatusTrait,FileUploadTrait;
+    use ApiStatusTrait, FileUploadTrait;
 
     /**
      * Display a listing of the resource.
@@ -60,7 +60,7 @@ class CompanyController extends Controller
                 $user->phone_number = $request->input('phone_number');
                 $password  = Str::random(16);
                 $user->password = bcrypt(Str::random(16));
-                $user->user_type = 'shipping_company_super';
+                //$user->user_type = 'shipping_company_super';
                 $user->imageUrl = $this->uploadFile('company/company_images', $request->file('company_logo'));
                 $user->save();
 
@@ -72,13 +72,16 @@ class CompanyController extends Controller
                 Mail::to($user->email)->send(
                     new SendPasswordMail($data)
                 );
-                $role = Role::where('name', 'Shipping Company')->first();
-
-                if ($role) {
-                    $user->assignRole($role);
-                }
             }
 
+            $role = Role::find(10);
+            if ($role) {
+                $user->user_type = str_replace(' ', '_', $role->name);;
+                $user->role_id = $role->id;
+                $user->role = $role->name;
+                $user->assignRole($role);
+            }
+            $user->save();
             $company = new Company([
                 'user_id' => $user->id,
                 'state_id' => $request->input('state_id'),
@@ -99,7 +102,7 @@ class CompanyController extends Controller
 
             DB::commit();
 
-            return $this->success( new CompanyResource($company), 'Company registered successfully');
+            return $this->success(new CompanyResource($company), 'Company registered successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
