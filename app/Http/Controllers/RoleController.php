@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    use ApiStatusTrait, FileUploadTrait;
+
      /**
      * Display a listing of the roles.
      *
