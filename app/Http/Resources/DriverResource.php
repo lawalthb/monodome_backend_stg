@@ -19,7 +19,7 @@ class DriverResource extends JsonResource
         'name' => $this->user->full_name,
           'street' => $this->street,
           "lga" => new LocalGovernmentResource($this->RLga),
-          //'registration_documents' =>  getImageFile($this->registration_documents),
+          'registration_documents' =>  getImageFile($this->registration_documents),
           'proof_of_license' => getImageFile($this->proof_of_license),
           'profile_picture' => getImageFile($this->profile_picture),
           'status' => $this->status,
