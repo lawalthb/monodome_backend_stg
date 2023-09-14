@@ -111,6 +111,7 @@ class ShippingCompanyController extends Controller
                     'full_name' =>  $request->input('guarantors_full_name'),
                     'phone_number' =>  $request->input('guarantors_phone_number'),
                     'street' =>  $request->input('guarantors_street'),
+                    'email' =>  $request->input('email'),
                     'state' =>  $request->input('guarantors_state'),
                     'lga' =>  $request->input('guarantors_lga'),
                     'profile_picture' => $this->uploadFile('agent/guarantor_images', $request->file("guarantors_profile_picture")),

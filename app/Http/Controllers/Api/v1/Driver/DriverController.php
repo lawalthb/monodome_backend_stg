@@ -175,12 +175,12 @@ class DriverController extends Controller
                 $guarantor = new Guarantor([
                     'full_name' => $guarantorData['full_name'],
                     'phone_number' => $guarantorData['phone_number'],
-                    'address' => $guarantorData['address'],
+                    'email' => $guarantorData['email'],
                     'street' => $guarantorData['street'],
                     'state' => $guarantorData['state'],
                     'lga' => $guarantorData['lga'],
-                    'state_of_residence' => $guarantorData['state_of_residence'],
-                    'city_of_residence' => $guarantorData['city_of_residence'],
+                  //  'state_of_residence' => $guarantorData['state_of_residence'],
+                    //'city_of_residence' => $guarantorData['city_of_residence'],
                     // Add other guarantor fields here
                 ]);
 
