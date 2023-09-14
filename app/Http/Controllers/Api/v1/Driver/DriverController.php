@@ -18,6 +18,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DriverRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\AgentResource;
 use App\Http\Resources\DriverResource;
@@ -204,6 +205,68 @@ class DriverController extends Controller
 
             return $this->error('An error occurred while registering the driver and guarantors.');
         }
+    }
+
+
+    public function updateProfile(Request $request)
+    {
+        if(Auth::user()->hasRole('driver'))
+        {
+
+         $user = auth()->user(); // Assuming you are using authentication
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'full_name' => 'required|string',
+            'address' => 'required|string',
+            'phone_number' => 'required|string',
+            'license_number' => 'required|string',
+            'vehicle_type_id' => 'required|string',
+        ]);
+
+        // Update user profile data
+        $user->update([
+            'full_name' => $validatedData['full_name'],
+            'address' => $validatedData['address'],
+            'phone_number' => $validatedData['phone_number'],
+        ]);
+
+
+        $driver = new Driver([
+            'user_id' => $user->id,
+            'street' => $request->input('address'),
+            'nin_number' => $request->input('nin_number'),
+            'license_number' => $request->input('license_number'),
+            'vehicle_type_id' => $request->input('vehicle_type_id'),
+        ]);
+
+
+
+        return $this->success(['user' => new DriverResource($driver)], "Profile updated successfully");
+        // return response()->json(['message' => 'Profile updated successfully']);
+
+    }else{
+        return $this->error(null, 'user is not a driver', 422);
+
+    }
+
+    }
+
+    public function changeImage(Request $request){
+
+        $user = auth()->user();
+         $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Example validation for image upload
+        ]);
+
+           // Handle image upload if provided
+           if ($request->hasFile('image')) {
+            $imagePath =  $request->image ? $this->saveImage('profile', $request->image, 500, 500) : null;
+             $user->update(['imageUrl' => $imagePath]);
+             $user->driver->update(['profile_picture' => $imagePath]);
+         }
+
+         return $this->success(['user' => new DriverResource($user->driver)], "Profile updated successfully");
+
     }
 
 }

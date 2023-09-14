@@ -135,12 +135,20 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     Route::group(['prefix' => 'driver'], function () {
 
         Route::get('/', [DriverController::class, 'index']);
-        Route::get('/broadcast', [DriverController::class, 'broadcast']);
+        Route::post('/store', [DriverController::class, 'store']);
         Route::post('/store', [DriverController::class, 'store']);
         Route::get('/show/{id}', [DriverController::class, 'show']);
         Route::post('/update/{id}', [DriverController::class, 'update']);
         Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
         Route::get('/broadcast/{id}', [DriverController::class, 'singleBroadcast']);
+
+        Route::group(['middleware' => 'auth:sanctum','role:Driver'], function () {
+
+            Route::get('/broadcast', [DriverController::class, 'broadcast']);
+            Route::post('/profile/change-image', [DriverController::class, 'changeImage']);
+            Route::post('/profile/update-details', [DriverController::class, 'updateProfile']);
+
+        });
     });
 
     //vehicle route group here

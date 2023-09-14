@@ -6,12 +6,13 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPermissions;
 
 
     protected $guard_name = 'api';
@@ -73,6 +74,11 @@ class User extends Authenticatable
     public function loadContainer(){
 
         return $this->hasMany(LoadContainer::class);
+    }
+
+
+    public function driver(){
+        return $this->belongsTo(Driver::class);
     }
 
     public function getImagePathAttribute()
