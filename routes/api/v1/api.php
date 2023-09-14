@@ -6,6 +6,7 @@ use App\Http\Controllers\PermissionController;
 // use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
 use App\Http\Controllers\Api\v1\CountryController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
+use App\Http\Controllers\Api\v1\Wallet\CardController;
 use App\Http\Controllers\Api\v1\Agents\AgentController;
 use App\Http\Controllers\Api\v1\Driver\DriverController;
 use App\Http\Controllers\Api\v1\Brokers\BrokerController;
@@ -42,6 +43,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::post('/update-profile', [AuthController::class, 'updateProfile']);
     });
 
+    // customer Route
     Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function () {
 
         //load type route
@@ -65,15 +67,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::post('/load-bulk/{loadBulk}', [LoadBulkController::class, 'update']);
         Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
 
-
         // load Load Car Clearing  route
         Route::get('/load-car-clearing', [LoadCarClearingController::class, 'index']);
         Route::post('/load-car-clearing', [LoadCarClearingController::class, 'store']);
         Route::get('/load-car-clearing/{id}', [LoadCarClearingController::class, 'show']);
         Route::post('/load-car-clearing/{loadBulk}', [LoadCarClearingController::class, 'update']);
         Route::delete('/load-car-clearing/{id}', [LoadCarClearingController::class, 'destroy']);
-
-
 
         // load-specialized  route
         Route::get('/load-specialized', [LoadSpecializedController::class, 'index']);
@@ -94,7 +93,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     });
 
 
-
+     // broker route group
     Route::group(['prefix' => 'broker'], function () {
 
         Route::get('/', [BrokerController::class, 'index']);
@@ -104,6 +103,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/destroy/{id}', [BrokerController::class, 'destroy']);
     });
 
+     // company route group
     Route::group(['prefix' => 'company'], function () {
 
         Route::get('/', [CompanyController::class, 'index']);
@@ -113,6 +113,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/destroy/{id}', [CompanyController::class, 'destroy']);
     });
 
+    // shipping company route group
     Route::group(['prefix' => 'shippingCompany'], function () {
 
         Route::get('/', [ShippingCompanyController::class, 'index']);
@@ -122,6 +123,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/destroy/{id}', [ShippingCompanyController::class, 'destroy']);
     });
 
+
+    // agent route group
     Route::group(['prefix' => 'agent'], function () {
 
         Route::get('/', [AgentController::class, 'index']);
@@ -151,9 +154,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         });
     });
 
-
     // wallet route group
     Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {
+
         Route::post('/cards', [CardController::class, 'store']);
         Route::get('/cards', [CardController::class, 'index']);
         Route::get('/cards/{id}', [CardController::class, 'show']);
@@ -202,6 +205,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('permissions/{permission}', [PermissionController::class, 'destroy']);
     });
 
+    // places route group
     Route::group(['prefix' => 'place'], function () {
 
         Route::get('/countries', [CountryController::class, 'getCountry']);
