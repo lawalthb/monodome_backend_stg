@@ -77,9 +77,10 @@ class User extends Authenticatable
     }
 
 
-    public function driver(){
-        return $this->belongsTo(Driver::class);
-    }
+    public function driver()
+{
+    return $this->hasOne(Driver::class);
+}
 
     public function getImagePathAttribute()
     {

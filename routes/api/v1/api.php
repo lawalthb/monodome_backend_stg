@@ -142,7 +142,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
         Route::get('/broadcast/{id}', [DriverController::class, 'singleBroadcast']);
 
-        Route::group(['middleware' => 'auth:sanctum','role:Driver'], function () {
+        Route::group(['middleware' => 'auth:api','role:Driver'], function () {
 
             Route::get('/broadcast', [DriverController::class, 'broadcast']);
             Route::post('/profile/change-image', [DriverController::class, 'changeImage']);

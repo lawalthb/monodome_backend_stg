@@ -253,19 +253,27 @@ class DriverController extends Controller
 
     public function changeImage(Request $request){
 
+
+        if(Auth::user()->hasRole('driver'))
+        {
+
         $user = auth()->user();
          $request->validate([
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Example validation for image upload
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Example validation for image upload
         ]);
 
            // Handle image upload if provided
            if ($request->hasFile('image')) {
             $imagePath =  $request->image ? $this->saveImage('profile', $request->image, 500, 500) : null;
              $user->update(['imageUrl' => $imagePath]);
-             $user->driver->update(['profile_picture' => $imagePath]);
+           //  $user->driver->update(['profile_picture' => $imagePath]);
          }
 
          return $this->success(['user' => new DriverResource($user->driver)], "Profile updated successfully");
+        }else{
+            return $this->error(null, 'user is not a driver', 422);
+
+        }
 
     }
 
