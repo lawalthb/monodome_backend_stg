@@ -24,6 +24,8 @@ class CardController extends Controller
      */
     public function store(CardRequest  $request)
     {
+
+        dd("oay");
         $encryptedCard = new Card;
         $encryptedCard->user_id = $request->input('user_id');
         $encryptedCard->type = $request->input('type');
