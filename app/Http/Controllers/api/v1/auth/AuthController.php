@@ -22,6 +22,7 @@ class AuthController extends Controller
     public function register(RegisterRequest  $request)
     {
 
+        //https://beyondco.de/blog/a-guide-to-soft-delete-models-in-laravel
         try {
 
             $user = new User([
