@@ -4,19 +4,32 @@ namespace App\Http\Controllers\Api\v1\Wallet;
 
 use App\Models\Card;
 use Illuminate\Http\Request;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use App\Http\Requests\CardRequest;
 use App\Http\Controllers\Controller;
 
 class CardController extends Controller
 {
+
+    use ApiStatusTrait, FileUploadTrait;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-         // Retrieve all cards
-         $cards = Card::where('user_id',auth()->user()->id);
-         return $this->success(['card' => $cards], "All Card details");
+        $cards = Card::where('user_id', auth()->user()->id)->get();
+
+    // Decrypt sensitive card information in each card
+    foreach ($cards as $card) {
+        $card->card_number = decrypt($card->card_number);
+        $card->cvv = decrypt($card->cvv);
+        $card->expiry_month = decrypt($card->expiry_month);
+        $card->expiry_year = decrypt($card->expiry_year);
+    }
+
+    return $this->success(['cards' => $cards], "All Card details");
     }
 
     /**
@@ -24,10 +37,8 @@ class CardController extends Controller
      */
     public function store(CardRequest  $request)
     {
-
-        dd("oay");
         $encryptedCard = new Card;
-        $encryptedCard->user_id = $request->input('user_id');
+        $encryptedCard->user_id = auth()->user()->id;
         $encryptedCard->type = $request->input('type');
         $encryptedCard->card_number = encrypt($request->input('card_number'));
         $encryptedCard->cvv = encrypt($request->input('cvv'));

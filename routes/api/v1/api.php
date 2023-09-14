@@ -154,6 +154,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         });
     });
 
+    Route::group(['prefix' => 'settings', 'middleware' => 'auth:api'], function () {
+
+         Route::get('/', [SettingController::class, 'index']);
+         Route::get('/{id}', [SettingController::class, 'show']);
+    });
 
     // wallet route group
     Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {

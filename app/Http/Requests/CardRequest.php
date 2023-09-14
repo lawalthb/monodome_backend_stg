@@ -22,7 +22,6 @@ class CardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|integer',
             'type' => 'required|in:credit,debit',
             'card_number' => 'required|string|max:255',
             'cvv' => 'nullable|string|max:200',
