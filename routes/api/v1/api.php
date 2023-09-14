@@ -131,7 +131,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
     });
 
-
+    // driver route group
     Route::group(['prefix' => 'driver'], function () {
 
         Route::get('/', [DriverController::class, 'index']);
@@ -149,6 +149,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
             Route::post('/profile/update-details', [DriverController::class, 'updateProfile']);
 
         });
+    });
+
+
+    // wallet route group
+    Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {
+        Route::post('/cards', [CardController::class, 'store']);
+        Route::get('/cards', [CardController::class, 'index']);
+        Route::get('/cards/{id}', [CardController::class, 'show']);
+        Route::put('/cards/{id}', [CardController::class, 'update']);
+        Route::delete('/cards/{id}', [CardController::class, 'destroy']);
     });
 
     //vehicle route group here
@@ -176,6 +186,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/type/{id}', [VehicleTypeController::class, 'destroy']);
     });
 
+    //roles and permission Route group
     Route::group(['prefix' => 'roles'], function () {
 
         Route::get('', [RoleController::class, 'index']);
@@ -183,7 +194,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/{role}', [RoleController::class, 'show']);
         Route::put('/{role}', [RoleController::class, 'update']);
         Route::delete('/{role}', [RoleController::class, 'destroy']);
-
 
         Route::get('permissions', [PermissionController::class, 'index']);
         Route::post('permissions', [PermissionController::class, 'store']);
