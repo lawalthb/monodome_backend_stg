@@ -157,7 +157,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
     Route::group(['prefix' => 'notification', 'middleware' => 'auth:api'], function () {
         Route::get('/', [NotificationController::class, 'index']);
-        Route::get('/read', [NotificationController::class, 'readNotification']);
+        Route::get('/read/{id}', [NotificationController::class, 'readNotification']);
 
     });
     Route::group(['prefix' => 'settings', 'middleware' => 'auth:api'], function () {

@@ -21,7 +21,7 @@ class NotificationController extends Controller
 
         $notifications = $user->notifications()->orderBy('id','desc')->get();
 
-        return response()->json(['roles' => NotificationResource::collection($notifications)]);
+        return response()->json(['notifications' => NotificationResource::collection($notifications)]);
 
 
     }
@@ -33,7 +33,10 @@ class NotificationController extends Controller
     public function readNotification($id) {
     	$notifications = Notification::find($id);
     	$notifications->is_viewed = 1;
+        $notifications->read_at = now();
     	$notifications->save();
-    	return response()->json(['status' => '1', 'data' => $notifications], 200);
+
+       // return $notifications;
+        return response()->json(['notifications' => new NotificationResource($notifications)]);
     }
 }
