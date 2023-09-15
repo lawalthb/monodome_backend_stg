@@ -22,7 +22,7 @@ trait SendNotification
 
         $notification = new Notification();
 
-        $notification->user_id = $user_id;
+        //$notification->user_id = $user_id;
         $notification->text = $message;
         $notification->type = 'App\Notifications\SendNotification';
         $notification->notifiable_type = 'App\User';
