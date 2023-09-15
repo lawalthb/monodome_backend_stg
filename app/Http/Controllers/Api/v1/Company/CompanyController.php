@@ -54,14 +54,12 @@ class CompanyController extends Controller
             $user = User::firstOrNew(['email' => $request->input('email')]);
 
             if (!$user->exists) {
-                // User doesn't exist, so create a new user
                 $user->full_name = $request->input('full_name');
                 $user->email = $request->input('email');
                 $user->address = $request->input('address');
                 $user->phone_number = $request->input('phone_number');
                 $password  = Str::random(16);
                 $user->password = Hash::make($password);
-                //$user->user_type = 'shipping_company_super';
                 $user->imageUrl = $this->uploadFile('company/company_images', $request->file('company_logo'));
                 $user->save();
 
