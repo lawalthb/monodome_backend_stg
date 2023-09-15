@@ -6,6 +6,7 @@ use App\Models\Card;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use App\Notifications\SendNotification;
 use App\Http\Requests\CardRequest;
 use App\Http\Controllers\Controller;
 
@@ -47,6 +48,10 @@ class CardController extends Controller
         $encryptedCard->expiry_year = encrypt($request->input('expiry_year'));
 
         if($encryptedCard->save()){
+
+
+        $message ="Your Profile details was save successfully. Thank you for trusting us";
+        auth()->user()->notify(new SendNotification(auth()->user(), $message));
 
             return $this->success(['card' => $encryptedCard], "Card details Save successfully");
         }else{
