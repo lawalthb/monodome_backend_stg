@@ -33,7 +33,7 @@ class AuthController extends Controller
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
                 'role_id' => $request->role_id,
-                'location' => Location::get($ip),
+                'location' => Location::get(),
             ]);
 
            // $roleName = str_replace('_', ' ', $request->input('role'));
@@ -69,14 +69,15 @@ class AuthController extends Controller
 
         try {
 
-
             if (auth()->attempt($credentials)) {
                 $user = auth()->user();
+                $user->location =  Location::get();
+                $user->save();
 
                 $token = $user->createToken('monodomebackend' . $request->email)->plainTextToken;
 
 
-             $message ="Login ".config('app.name');
+             $message ="There was a successful login to your ".config('app.name'). " account. Please see below login details: ";
              $user->notify(new SendNotification($user, $message));
 
                 return $this->success(
