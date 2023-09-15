@@ -21,7 +21,10 @@ class NotificationController extends Controller
 
         $notifications = $user->notifications()->orderBy('id','desc')->get();
 
-        return response()->json(['notifications' => NotificationResource::collection($notifications)]);
+        return $this->success([
+            "totalUnreadNotifications" => auth()->user()->unreadNotifications->count(),
+            'notifications' => NotificationResource::collection($notifications),
+        ], "All Notification successfully");
 
 
     }
@@ -36,7 +39,7 @@ class NotificationController extends Controller
         $notifications->read_at = now();
     	$notifications->save();
 
-       // return $notifications;
-        return response()->json(['notifications' => new NotificationResource($notifications)]);
+        return $this->success(['notifications' => new NotificationResource($notifications)], "notification mark as read successfully");
+
     }
 }
