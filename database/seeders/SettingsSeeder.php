@@ -73,7 +73,7 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'name' => 'Contact Us',
-                'value' => 'contact@sigmapays.com',
+                'value' => 'donejeh@gmail.com',
                 'slug' => 'contact_us',
                 'created_at' => '2020-04-12 21:19:29',
                 'updated_at' => '2020-04-12 21:17:26',
@@ -123,7 +123,7 @@ class SettingsSeeder extends Seeder
 
             [
                 'name' => 'Secret Key',
-                'value' => 'sk_live_0dfb1dcec4968129d8cec451e0939578ec2a9701',
+                'value' => 'sk_test_5c5f8c527269a6cbf2d1be70abb555195ed0e869',
                 'slug' => 'secretkey',
                 'created_at' => '2020-01-07 18:30:00',
                 'updated_at' => null,
@@ -131,7 +131,7 @@ class SettingsSeeder extends Seeder
 
             [
                 'name' => 'Public Key',
-                'value' => 'pk_live_47b1d1c776df7e17fc281aaa3c092fbfd8490e1b',
+                'value' => 'pk_test_050699a6e3ee4c79ec253cf5eeb1cbde63aa2c22',
                 'slug' => 'publickey',
                 'created_at' => '2020-01-07 18:30:00',
                 'updated_at' => null,
