@@ -169,6 +169,10 @@ class AuthController extends Controller
             $user->update(['imageUrl' => $imagePath]);
         }
 
+
+        $message ="Your Profile details was updated successfully";
+        $user->notify(new SendNotification($user, $message));
+
         return $this->success(['user' => new UserResource($user)], "Profile updated successfully");
         // return response()->json(['message' => 'Profile updated successfully']);
     }
