@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\BrokersRequest;
 use App\Http\Resources\BrokerResource;
@@ -67,7 +68,7 @@ class BrokerController extends Controller
                 $user->address = $request->input('address');
                 $user->phone_number  = $request->input('phone_number');
                 $password  = Str::random(16);
-                $user->password = bcrypt(Str::random(16));
+                $user->password = Hash::make($password);
                 $user->user_type = 'broker';
                 $user->save();
 

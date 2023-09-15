@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DriverRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\AgentResource;
 use App\Http\Resources\DriverResource;
@@ -102,7 +103,7 @@ class DriverController extends Controller
                 $user->email = $request->input('email');
                 $user->address = $request->input('address');
                 $password  = Str::random(16);
-                $user->password = $password;
+                $user->password = Hash::make($password);
                 $user->user_type = 'driver';
                 $user->save();
 
