@@ -180,9 +180,6 @@ class DriverController extends Controller
                     'street' => $guarantorData['street'],
                     'state' => $guarantorData['state'],
                     'lga' => $guarantorData['lga'],
-                  //  'state_of_residence' => $guarantorData['state_of_residence'],
-                    //'city_of_residence' => $guarantorData['city_of_residence'],
-                    // Add other guarantor fields here
                 ]);
 
                 $guarantor->loadable()->associate($driver);

@@ -38,12 +38,9 @@ class DriverRequest extends FormRequest
               'guarantors' => 'required|array',
               'guarantors.*.full_name' => 'required|string',
               'guarantors.*.phone_number' => 'required|string',
-              'guarantors.*.address' => 'required|string',
               'guarantors.*.street' => 'required|string',
               'guarantors.*.state' => 'required|string',
               'guarantors.*.lga' => 'required|string',
-              'guarantors.*.state_of_residence' => 'required|string',
-              'guarantors.*.city_of_residence' => 'required|string',
               'guarantors.*.profile_picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
           ];
     }

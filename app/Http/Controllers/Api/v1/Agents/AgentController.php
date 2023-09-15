@@ -126,9 +126,6 @@ class AgentController extends Controller
                     'state' => $guarantorData['state'],
                     'lga' => $guarantorData['lga'],
                     'email' => $guarantorData['email'],
-                   // 'state_of_residence' => $guarantorData['state_of_residence'],
-                   // 'city_of_residence' => $guarantorData['city_of_residence'],
-                    // Add other guarantor fields here
                 ]);
 
                 $guarantor->loadable()->associate($agent);
