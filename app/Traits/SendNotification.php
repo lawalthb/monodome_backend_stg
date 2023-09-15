@@ -25,7 +25,7 @@ trait SendNotification
         //$notification->user_id = $user_id;
         $notification->text = $message;
         $notification->type = 'App\Notifications\SendNotification';
-        $notification->notifiable_type = 'App\User';
+        $notification->notifiable_type = 'App\Models\User';
         $notification->data = '{"message" : "' . $message . '"}';
 
         $notification->save();

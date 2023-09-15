@@ -14,7 +14,7 @@ class SendNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(public $data)
+    public function __construct(public $user, public $message)
     {
         //
     }
@@ -35,7 +35,13 @@ class SendNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                ->markdown('mail.send_notification');
+                ->priority(1)
+                ->subject('System Notification')
+                ->markdown('mail.send_notification',
+                        ["url"=> config('app.url'),
+                         'message'=>$this->message,
+                         'user'=>$this->user
+                        ]);
     }
 
     /**
@@ -46,7 +52,7 @@ class SendNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => $this->data->message
+            'message' => $this->message
         ];
     }
 }

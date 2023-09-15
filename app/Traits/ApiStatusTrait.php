@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\User;
 use App\Models\Notification;
 
 
@@ -56,25 +57,21 @@ trait ApiStatusTrait
         return $notification;
     }
 
-    public function createNotification($user_id, $message)
+    public function createNotification(User $user, $message)
     {
+        $notification = new Notification([
+            'text' => $message,
+            'type' => 'App\Notifications\SendNotification',
+            'data' => '{"message" : "' . $message . '"}',
+        ]);
 
-        $notification = new Notification();
-
-        $notification->user_id = $user_id;
-        $notification->text = $message;
-        $notification->type = 'App\Notifications\SendNotification';
-        $notification->notifiable_type = 'App\User';
-        $notification->data = '{"message" : "' . $message . '"}';
-
-        $notification->save();
+        $user->notifications()->save($notification);
 
         if (!$notification) {
             return false;
         }
 
         return true;
-
-        //return redirect()->route('user.dashboard');
     }
+
 }

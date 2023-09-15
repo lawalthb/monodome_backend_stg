@@ -16,13 +16,14 @@ use App\Http\Requests\RegisterRequest;
 use App\Notifications\SendNotification;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Validator;
+use Stevebauman\Location\Facades\Location;
 
 class AuthController extends Controller
 {
     use FileUploadTrait, ApiStatusTrait;
     public function register(RegisterRequest  $request)
     {
-
+        $ip = '49.35.41.195';
         //https://beyondco.de/blog/a-guide-to-soft-delete-models-in-laravel
         try {
 
@@ -32,6 +33,7 @@ class AuthController extends Controller
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
                 'role_id' => $request->role_id,
+                'location' => Location::get($ip),
             ]);
 
            // $roleName = str_replace('_', ' ', $request->input('role'));
@@ -44,11 +46,10 @@ class AuthController extends Controller
             }
             $user->save();
 
-            $message = "Message here";
+             $message ="Thank you for Registering with ".config('app.name');
 
-            $this->createNotification($user->id,$message);
-
-           // $user->notify(new SendNotification($user));
+             $user->notify(new SendNotification($user, $message));
+             // $this->createNotification($user,$message);
 
             $token = $user->createToken("monodomebackend". $request->email)->plainTextToken;
 

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Notification extends Model
 {
@@ -14,5 +15,20 @@ class Notification extends Model
     public function user(){
 
         return $this->belongsTo(User::class);
+    }
+
+
+    public function notifiable()
+    {
+        return $this->morphTo();
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function($model){
+            $model->id =  Str::uuid()->toString();
+           // $model->user_id =  auth()->id();
+        });
     }
 }

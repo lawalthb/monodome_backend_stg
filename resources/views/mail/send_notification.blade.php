@@ -1,9 +1,9 @@
 <x-mail::message>
-# Introduction
+# Hi {{ $user['full_name'] }}
 
-The body of your message.
+{{  $message }}
 
-<x-mail::button :url="''">
+<x-mail::button :url="$url">
 Check it
 </x-mail::button>
 
