@@ -13,6 +13,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
+use App\Notifications\SendNotification;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Validator;
 
@@ -42,6 +43,12 @@ class AuthController extends Controller
                 $user->assignRole($role);
             }
             $user->save();
+
+            $message = "Message here";
+
+            $this->createNotification($user->id,$message);
+
+           // $user->notify(new SendNotification($user));
 
             $token = $user->createToken("monodomebackend". $request->email)->plainTextToken;
 

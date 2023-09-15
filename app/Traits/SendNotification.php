@@ -16,4 +16,26 @@ trait SendNotification
         $notification->save();
         return $notification;
     }
+
+    public function createNotification($user_id, $message)
+    {
+
+        $notification = new Notification();
+
+        $notification->user_id = $user_id;
+        $notification->text = $message;
+        $notification->type = 'App\Notifications\SendNotification';
+        $notification->notifiable_type = 'App\User';
+        $notification->data = '{"message" : "' . $message . '"}';
+
+        $notification->save();
+
+        if (!$notification) {
+            return false;
+        }
+
+        return true;
+
+        //return redirect()->route('user.dashboard');
+    }
 }
