@@ -34,6 +34,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
                 'role_id' => $request->role_id,
                 'location' => Location::get(),
+                'user_agent' => $request->header('User-Agent'),
             ]);
 
            // $roleName = str_replace('_', ' ', $request->input('role'));
@@ -72,6 +73,7 @@ class AuthController extends Controller
             if (auth()->attempt($credentials)) {
                 $user = auth()->user();
                 $user->location =  Location::get();
+                $user->user_agent = $request->header('User-Agent');
                 $user->save();
 
                 $token = $user->createToken('monodomebackend' . $request->email)->plainTextToken;
