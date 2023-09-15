@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 // use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Api\v1\CountryController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
 use App\Http\Controllers\Api\v1\Wallet\CardController;
@@ -154,8 +155,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         });
     });
 
-    Route::group(['prefix' => 'settings', 'middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'notification', 'middleware' => 'auth:api'], function () {
+        Route::get('/', [NotificationController::class, 'index']);
 
+    });
+    Route::group(['prefix' => 'settings', 'middleware' => 'auth:api'], function () {
          Route::get('/', [SettingController::class, 'index']);
          Route::get('/{id}', [SettingController::class, 'show']);
     });

@@ -47,9 +47,7 @@ class AuthController extends Controller
             $user->save();
 
              $message ="Thank you for Registering with ".config('app.name');
-
              $user->notify(new SendNotification($user, $message));
-             // $this->createNotification($user,$message);
 
             $token = $user->createToken("monodomebackend". $request->email)->plainTextToken;
 
@@ -77,6 +75,9 @@ class AuthController extends Controller
 
                 $token = $user->createToken('monodomebackend' . $request->email)->plainTextToken;
 
+
+             $message ="Login ".config('app.name');
+             $user->notify(new SendNotification($user, $message));
 
                 return $this->success(
                     [
