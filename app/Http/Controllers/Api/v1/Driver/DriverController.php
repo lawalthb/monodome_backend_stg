@@ -90,7 +90,7 @@ class DriverController extends Controller
         return LoadBoardResource::collection($loadBoards);
     }
 
-    public function store(DriverRequest $request)
+    public function store(Request $request)
     {
         try {
             DB::beginTransaction();
