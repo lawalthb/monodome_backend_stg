@@ -26,7 +26,13 @@ use App\Http\Controllers\Api\v1\ShippingCompany\ShippingCompanyController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return-json'], function () {
 
-    echo "V1 Server is up and running";
+    Route::get('/', function () {
+
+         return response()->json(['message' =>"v1 Server is up and running"]);
+        //return "here is the user";
+    });
+
+
     // user registration namespace
     Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
         Route::post('/register', [AuthController::class, 'register']);
