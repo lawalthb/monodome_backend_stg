@@ -240,4 +240,32 @@ class ShippingCompanyController extends Controller
 
         return response()->json(['message' => 'List of users registered under ' . Auth::user()->full_name, 'users' => UserResource::collection($myUsers)], 200);
     }
+
+
+    public function changeRole(Request $request)
+    {
+        // Check if the logged-in user has the 'Shipping Company' role
+        if (!Auth::user()->hasRole('Shipping Company')) {
+            return response()->json(['message' => 'You do not have permission to access this resource'], 403);
+        }
+
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required|in:5,2', // 1 for super admin, 2 for admin
+        ]);
+
+        // Fetch the list of users registered under the logged-in user
+        $user = User::where('user_created_by', Auth::user()->id)->first();
+
+        $role = $role = Role::find($request->input('role')); //$request->input('role') == 1 ? 'super-admin' : 'admin';
+        if ($user) {
+            // User already exists; update their role
+            $user->syncRoles([$role]);
+
+            return response()->json(['message' => 'User role updated successfully'], 200);
+        }else{
+
+            return response()->json(['message' => 'User not found!'], 404);
+        }
+    }
 }
