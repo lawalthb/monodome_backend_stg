@@ -213,16 +213,16 @@ class ShippingCompanyController extends Controller
         //$user->user_type = 'company_transporter_super';
         $user->save();
 
+        $role =  $role = Role::find($request->input('role')); //$request->input('role') == 1 ? 'super-admin' : 'admin';
         $data = [
             "full_name" => $request->input('full_name'),
             "password" => $password,
-            "message" => "",
+            "message" => "Your account as a/an ".$role->name." has been created",
         ];
         Mail::to($user->email)->send(
             new SendPasswordMail($data)
         );
         // Assign the user's role
-        $role =  $role = Role::find($request->input('role')); //$request->input('role') == 1 ? 'super-admin' : 'admin';
         $user->assignRole($role);
 
         return response()->json(['message' => 'User created successfully', 'user' => new UserResource($user)], 201);
