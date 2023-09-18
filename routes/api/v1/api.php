@@ -136,7 +136,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     });
     });
 
-
     // agent route group
     Route::group(['prefix' => 'agent'], function () {
 
