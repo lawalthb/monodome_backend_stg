@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -223,6 +224,20 @@ class ShippingCompanyController extends Controller
         $role =  $role = Role::find($request->input('role')); //$request->input('role') == 1 ? 'super-admin' : 'admin';
         $user->assignRole($role);
 
-        return response()->json(['message' => 'User created successfully','user'=>$user], 201);
+        return response()->json(['message' => 'User created successfully', 'user' => new UserResource($user)], 201);
+    }
+
+
+    public function myUsers()
+    {
+        // Check if the logged-in user has the 'Shipping Company' role
+        if (!Auth::user()->hasRole('Shipping Company')) {
+            return response()->json(['message' => 'You do not have permission to access this resource'], 403);
+        }
+
+        // Fetch the list of users registered under the logged-in user
+        $myUsers = User::where('user_created_by', Auth::user()->id)->get();
+
+        return response()->json(['message' => 'List of users registered under ' . Auth::user()->full_name, 'users' => UserResource::collection($myUsers)], 200);
     }
 }
