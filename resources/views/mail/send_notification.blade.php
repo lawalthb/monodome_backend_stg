@@ -12,7 +12,7 @@ You can continue from here
 Location: {{  $user['location']['ip'] }}  | {{ $user['location']['countryName'] }} | {{ $user['location']['regionName'] }}
 </em>
 @endif
-
+<br><br>
 <em style="color: red">Remember:</em> <em>Keep your card and Pin information secure.
 Do not respond to emails requesting for your card/PIN details. If you think an email is suspicious, don't click on any links. Instead, forward it to our customer support.
 </em>
