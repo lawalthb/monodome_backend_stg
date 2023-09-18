@@ -29,7 +29,6 @@ class DriverResource extends JsonResource
           'user' => new UserResource($this->user),
           'guarantors' => GuarantorResource::collection($this->guarantors),
           'state' => new StateResource($this->state),
-         // 'state_of_residence' => new StateResource($this->state_of_residence),
         ];
     }
 }

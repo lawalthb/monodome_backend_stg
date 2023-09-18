@@ -18,6 +18,11 @@ class Agent extends Model
         return $this->morphMany(Guarantor::class, 'loadable');
     }
 
+    public function loadable()
+    {
+        return $this->morphTo('loadable');
+    }
+
     public function user(){
 
         return $this->belongsTo(User::class);
@@ -33,10 +38,7 @@ class Agent extends Model
         return $this->belongsTo(State::class);
     }
 
-    public function loadable()
-    {
-        return $this->morphTo('loadable');
-    }
+
 
     protected static function boot()
     {
