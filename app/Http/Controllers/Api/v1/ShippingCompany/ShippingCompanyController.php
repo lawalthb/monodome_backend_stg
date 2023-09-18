@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ShippingCompanyRequest;
@@ -22,7 +23,10 @@ use App\Http\Resources\ShippingCompanyResource;
 
 class ShippingCompanyController extends Controller
 {
-    use ApiStatusTrait,FileUploadTrait;
+    use ApiStatusTrait, FileUploadTrait;
+
+
+
 
     /**
      * Display a listing of the resource.
@@ -80,14 +84,13 @@ class ShippingCompanyController extends Controller
                 Mail::to($user->email)->send(
                     new SendPasswordMail($data)
                 );
-
             }
 
             $role = Role::find(5);
             if ($role) {
-               $user->user_type = str_replace(' ', '_', $role->name);;
+                $user->user_type = str_replace(' ', '_', $role->name);
                 $user->role_id = $role->id;
-               $user->role = $role->name;
+                $user->role = $role->name;
                 $user->assignRole($role);
                 $user->save();
             }
@@ -97,7 +100,7 @@ class ShippingCompanyController extends Controller
                 'state_id' => $request->input('state_id'),
                 'street' => $request->input('street'),
                 'lga' => $request->input('lga'),
-               // 'profile_picture' => $request->input('profile_picture'),
+                // 'profile_picture' => $request->input('profile_picture'),
                 'nin_number' => $request->input('nin_number'),
                 'phone_number' => $request->input('phone_number'),
                 'status' => 'Waiting',
@@ -108,23 +111,23 @@ class ShippingCompanyController extends Controller
 
             $shippingComPany->save();
 
-                $guarantor = new Guarantor([
-                    'full_name' =>  $request->input('guarantors_full_name'),
-                    'phone_number' =>  $request->input('guarantors_phone_number'),
-                    'street' =>  $request->input('guarantors_street'),
-                    'email' =>  $request->input('email'),
-                    'state' =>  $request->input('guarantors_state'),
-                    'lga' =>  $request->input('guarantors_lga'),
-                    'profile_picture' => $this->uploadFile('agent/guarantor_images', $request->file("guarantors_profile_picture")),
+            $guarantor = new Guarantor([
+                'full_name' =>  $request->input('guarantors_full_name'),
+                'phone_number' =>  $request->input('guarantors_phone_number'),
+                'street' =>  $request->input('guarantors_street'),
+                'email' =>  $request->input('email'),
+                'state' =>  $request->input('guarantors_state'),
+                'lga' =>  $request->input('guarantors_lga'),
+                'profile_picture' => $this->uploadFile('agent/guarantor_images', $request->file("guarantors_profile_picture")),
 
-                ]);
+            ]);
 
-                $guarantor->loadable()->associate($shippingComPany);
-                $shippingComPany->guarantors()->save($guarantor);
+            $guarantor->loadable()->associate($shippingComPany);
+            $shippingComPany->guarantors()->save($guarantor);
 
             DB::commit();
 
-            return $this->success( new ShippingCompanyResource($shippingComPany), 'ShippingCompany and guarantors registered successfully');
+            return $this->success(new ShippingCompanyResource($shippingComPany), 'ShippingCompany and guarantors registered successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
@@ -163,5 +166,63 @@ class ShippingCompanyController extends Controller
     public function destroy(ShippingCompany $shippingCompany)
     {
         //
+    }
+
+
+    // adding users
+
+    public function createUser(Request $request)
+    {
+
+        if (!Auth::user()->hasRole('Shipping Company')) {
+
+            return response()->json(['message' => 'You dont have permission to create or updated user'], 422);
+        }
+
+        // Validate the request data
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+            'full_name' => 'required|string',
+            'phone_number' => 'required|numeric',
+            'role' => 'required|in:5,2', // 1 for super admin, 2 for admin
+        ]);
+
+        // Check if the user already exists by email
+        $user = User::where('email', $request->input('email'))->first();
+
+        $role = $role = Role::find($request->input('role')); //$request->input('role') == 1 ? 'super-admin' : 'admin';
+        if ($user) {
+            // User already exists; update their role
+            $user->syncRoles([$role]);
+
+            return response()->json(['message' => 'User role updated successfully'], 200);
+        }
+
+        // Create a new user
+        $user = new User();
+        $user->email = $request->input('email');
+        $user->full_name = $request->input('full_name');
+        $user->address = $request->input('address');
+        $user->phone_number = $request->input('phone_number');
+        $user->user_created_by = Auth::user()->id;
+        $user->user_type = str_replace(' ', '_', $role->name);
+        $password  = Str::random(16);
+        $user->password = Hash::make($password);
+        //$user->user_type = 'company_transporter_super';
+        $user->save();
+
+        $data = [
+            "full_name" => $request->input('full_name'),
+            "password" => $password,
+            "message" => "",
+        ];
+        Mail::to($user->email)->send(
+            new SendPasswordMail($data)
+        );
+        // Assign the user's role
+        $role =  $role = Role::find($request->input('role')); //$request->input('role') == 1 ? 'super-admin' : 'admin';
+        $user->assignRole($role);
+
+        return response()->json(['message' => 'User created successfully','user'=>$user], 201);
     }
 }

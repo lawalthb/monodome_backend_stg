@@ -8,6 +8,7 @@ use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
@@ -33,10 +34,12 @@ class AuthController extends Controller
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
                 'role_id' => $request->role_id,
-                'location' => Location::get(),
+                'location' => Location::get($request->ip()),
                 'user_agent' => $request->header('User-Agent'),
             ]);
 
+
+            Log::info($request->ip());
            // $roleName = str_replace('_', ' ', $request->input('role'));
             $role = Role::find($request->role_id);
             if ($role) {

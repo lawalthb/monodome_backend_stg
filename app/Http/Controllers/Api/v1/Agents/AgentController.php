@@ -100,13 +100,13 @@ class AgentController extends Controller
 
             $agent = new Agent([
                 'user_id' => $user->id,
-                'country_id' => $request->input('country_id'),
+               // 'country_id' => $request->input('country_id'),
                 'state_id' => $request->input('state_id'),
                 'street' => $request->input('street'),
                 'status' => 'Pending',
                 'lga' => $request->input('lga'),
-                'state_of_residence' => $request->input('state_of_residence'),
-                'city_of_residence' => $request->input('city_of_residence'),
+               // 'state_of_residence' => $request->input('state_of_residence'),
+                //'city_of_residence' => $request->input('city_of_residence'),
                 // Add other agent fields here
             ]);
 

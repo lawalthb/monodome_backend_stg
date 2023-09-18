@@ -129,6 +129,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/show/{id}', [ShippingCompanyController::class, 'show']);
         Route::post('/update/{id}', [ShippingCompanyController::class, 'update']);
         Route::delete('/destroy/{id}', [ShippingCompanyController::class, 'destroy']);
+
+        Route::group(['middleware' => 'auth:api','role:Shipping Company'], function () {
+
+        Route::post('/addUser', [ShippingCompanyController::class, 'createUser']);
+    });
     });
 
 
