@@ -18,6 +18,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\SendNotification;
 use App\Http\Requests\ShippingCompanyRequest;
 use App\Http\Resources\ShippingCompanyResource;
 
@@ -261,6 +262,8 @@ class ShippingCompanyController extends Controller
         if ($user) {
             // User already exists; update their role
             $user->syncRoles([$role]);
+            $message ="Your Role has been changed to ".$role->name;
+             $user->notify(new SendNotification($user, $message));
 
             return response()->json(['message' => 'User role updated successfully'], 200);
         }else{
