@@ -104,6 +104,7 @@ class AgentController extends Controller
                 'state_id' => $request->input('state_id'),
                 'street' => $request->input('street'),
                 'status' => 'Pending',
+                'business_name' =>  $request->input('business_name'),
                 'lga' => $request->input('lga'),
                // 'state_of_residence' => $request->input('state_of_residence'),
                 //'city_of_residence' => $request->input('city_of_residence'),

@@ -26,6 +26,7 @@ class AgentFormRequest extends FormRequest
                 'email' => 'required|email|unique:users,email',
                 'phone_number' => 'required|string',
                 'street' => 'required|string',
+                'business_name' => 'nullable|string',
                 // 'country_id' => 'required|exists:countries,id',
                 'state_id' => 'required|exists:states,id',
                 'lga' => 'required|numeric',
