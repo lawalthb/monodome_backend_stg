@@ -38,6 +38,15 @@ class CardController extends Controller
      */
     public function store(CardRequest  $request)
     {
+
+
+        // if($request->has('card_id')){
+
+        //     $card =  Card::find($request->card_id);
+
+        // }
+
+
         $encryptedCard = new Card;
         $encryptedCard->user_id = auth()->user()->id;
         $encryptedCard->type = $request->input('type');

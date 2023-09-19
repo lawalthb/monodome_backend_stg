@@ -251,12 +251,12 @@ class ShippingCompanyController extends Controller
         }
 
         $request->validate([
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|exists:users,email',
             'role' => 'required|in:5,2', // 1 for super admin, 2 for admin
         ]);
 
         // Fetch the list of users registered under the logged-in user
-        $user = User::where('user_created_by', Auth::user()->id)->first();
+        $user = User::where(['user_created_by' => Auth::user()->id,'email'=>$request->email])->first();
 
         $role = $role = Role::find($request->input('role')); //$request->input('role') == 1 ? 'super-admin' : 'admin';
         if ($user) {
@@ -265,7 +265,7 @@ class ShippingCompanyController extends Controller
             $message ="Your Role has been changed to ".$role->name;
              $user->notify(new SendNotification($user, $message));
 
-            return response()->json(['message' => 'User role updated successfully'], 200);
+            return response()->json(['message' => 'User role updated successfully','user'=> new UserResource($user)], 200);
         }else{
 
             return response()->json(['message' => 'User not found!'], 404);

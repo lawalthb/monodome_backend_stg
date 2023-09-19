@@ -133,6 +133,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::group(['middleware' => 'auth:api','role:Shipping Company'], function () {
 
         Route::post('/addUser', [ShippingCompanyController::class, 'createUser']);
+        Route::get('/myUsers', [ShippingCompanyController::class, 'myUsers']);
         Route::post('/changeRole', [ShippingCompanyController::class, 'changeRole']);
     });
     });
