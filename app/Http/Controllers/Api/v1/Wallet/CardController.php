@@ -38,8 +38,6 @@ class CardController extends Controller
      */
     public function store(CardRequest  $request)
     {
-
-
         // if($request->has('card_id')){
 
         //     $card =  Card::find($request->card_id);
