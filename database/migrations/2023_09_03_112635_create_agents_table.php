@@ -20,6 +20,7 @@ return new class extends Migration
         $table->string('street')->nullable();
         // $table->enum('status', ['Active', 'Inactive'])->default('Active');
         $table->string('lga')->nullable();
+        $table->string('business_name')->nullable();
         $table->string('state_of_residence')->nullable();
         $table->string('city_of_residence')->nullable();
         $table->string('store_front_image')->nullable();
