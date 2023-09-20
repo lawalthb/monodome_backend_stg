@@ -51,6 +51,7 @@ class PaymentController extends Controller
                 $walletHistory->save();
             }
         }
+        http_response_code(200);
 
         return response()->json(['message' => 'Webhook received successfully'], 200);
     }
