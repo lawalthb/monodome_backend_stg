@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('wallet_type')->default('mono_wallet');
             $table->bigInteger('user_id')->unsigned();
             $table->float('amount');
-            $table->tinyInteger('status')->default('success')->comment('0=pending, 1=success, 2=cancelled');
+            $table->string('status')->default('success')->comment('0=pending, 1=success, 2=cancelled');
             $table->timestamps();
 
             // Define foreign key constraint
