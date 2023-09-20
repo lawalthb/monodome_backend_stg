@@ -10,6 +10,8 @@ class Wallet extends Model
 {
     use HasFactory;
 
+    public $guarded = [];
+
 
     public function user()
     {
