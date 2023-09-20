@@ -68,8 +68,6 @@ class AgentController extends Controller
 
     public function store(AgentFormRequest $request)
     {
-
-        Log::info($request);
         try {
             DB::beginTransaction();
 

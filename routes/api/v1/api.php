@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\v1\Wallet\CardController;
 use App\Http\Controllers\Api\v1\Agents\AgentController;
 use App\Http\Controllers\Api\v1\Driver\DriverController;
 use App\Http\Controllers\Api\v1\Brokers\BrokerController;
+use App\Http\Controllers\Api\v1\Wallet\PaymentController;
 use App\Http\Controllers\Api\v1\Company\CompanyController;
 use App\Http\Controllers\Api\v1\Customers\LoadBulkController;
 use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
@@ -178,6 +179,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
          Route::get('/{id}', [SettingController::class, 'show']);
     });
 
+
+    Route::get('paystack/webhooks', [PaymentController::class, 'webhooks']);
+    Route::post('paystack/webhooks', [PaymentController::class, 'webhooks']);
     // wallet route group
     Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {
 
@@ -186,6 +190,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/cards/{id}', [CardController::class, 'show']);
         Route::put('/cards/{id}', [CardController::class, 'update']);
         Route::delete('/cards/{id}', [CardController::class, 'destroy']);
+
     });
 
     //vehicle route group here
