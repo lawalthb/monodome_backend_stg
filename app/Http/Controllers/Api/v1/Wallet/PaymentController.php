@@ -25,7 +25,7 @@ class PaymentController extends Controller
                 if ($user->wallet) {
                     // Update the existing wallet
                     $user->wallet->update([
-                        "amount" => $user->wallet->amount + ($data['amount'] / 100), // Add to the current amount
+                        "amount" => $user->wallet->amount + ($data['amount'] / 100),
                         "status" => "success",
                     ]);
                 } else {
@@ -33,8 +33,8 @@ class PaymentController extends Controller
                     $wallet = new Wallet;
                     $wallet->amount = $data['amount'] / 100;
                     $wallet->status = 'success';
-                    $wallet->user_id = $user->id; // Make sure to associate the wallet with the user
-                    $wallet->save(); // Save the new wallet to the database
+                    $wallet->user_id = $user->id;
+                    $wallet->save();
                 }
 
                 // Create a wallet history entry
@@ -44,8 +44,8 @@ class PaymentController extends Controller
                 $walletHistory->payment_type = "paystack";
                 $walletHistory->amount = $data['amount'] / 100;
 
-                $walletHistory->closing_balance = $user->wallet->amount; // Use the updated wallet balance here
-                $walletHistory->fee = $data['fee']; // Set the actual fee value here
+                $walletHistory->closing_balance = $user->wallet->amount;
+                $walletHistory->fee = $data['fee'];
                 $walletHistory->description = "Paystack deposit";
 
                 $walletHistory->save();
