@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\v1\Wallet;
 
+use App\Models\Card;
 use App\Models\User;
 use App\Models\Wallet;
-use App\Models\WalletHistory;
 use Illuminate\Http\Request;
+use App\Models\WalletHistory;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,6 @@ class PaymentController extends Controller
 
     public function webhooks(Request $request)
     {
-        Log::info($request);
 
         if ($request['event'] == 'charge.success') {
             $data = $request['data'];
@@ -49,6 +49,20 @@ class PaymentController extends Controller
                 $walletHistory->description = "Paystack deposit";
 
                 $walletHistory->save();
+
+                //$last4Digits = substr($cardNumber, -4);
+
+                $card = Card::where('user_id', $user->id)
+               // ->where('bin', $request->input('bin'))
+               // ->where('last4', $request->input('last4'))
+                ->first();
+
+                if($card){
+                $card->auth_token =  $data['authorization']['authorization_code'];
+                $card->customer_code = $data['customer']['customer_code'];
+
+                $card->save();
+            }
             }
         }
         http_response_code(200);
