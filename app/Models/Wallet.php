@@ -34,7 +34,7 @@ class Wallet extends Model
             $uniqueID = "$randomPart1 $randomPart2 $randomPart3 $randomPart4";
 
             $model->uuid =  $uniqueID ;//Str::uuid()->toString();
-            $model->user_id =  auth()->id();
+           // $model->user_id =  auth()->id();
         });
     }
 
