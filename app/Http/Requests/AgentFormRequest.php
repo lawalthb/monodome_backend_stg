@@ -35,14 +35,14 @@ class AgentFormRequest extends FormRequest
                 'store_front_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'inside_store_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'registration_documents' => 'required|file|mimes:pdf|max:2048',
-                'guarantors' => 'required|array',
-                'guarantors.*.full_name' => 'required|string',
-                'guarantors.*.phone_number' => 'required|string',
-                'guarantors.*.street' => 'required|string',
-                'guarantors.*.state' => 'required|numeric',
-                'guarantors.*.lga' => 'required|numeric',
-                'guarantors.*.email' => 'required|email',
-                'guarantors.*.profile_picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'guarantors' => 'nullable|array',
+                'guarantors.*.full_name' => 'nullable|string',
+                'guarantors.*.phone_number' => 'nullable|string',
+                'guarantors.*.street' => 'nullable|string',
+                'guarantors.*.state' => 'nullable|numeric',
+                'guarantors.*.lga' => 'nullable|numeric',
+                'guarantors.*.email' => 'nullable|email',
+                'guarantors.*.profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             ];
         }
 }
