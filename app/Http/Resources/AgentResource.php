@@ -25,7 +25,7 @@ class AgentResource extends JsonResource
           'status' => $this->status,
           'created_at' => $this->created_at,
           'updated_at' => $this->updated_at,
-          'lga' => new LocalGovernmentResource($this->lga),
+          //'lga' => new LocalGovernmentResource($this->lga),
           'state' => new StateResource($this->state),
           'user' => new UserResource($this->user),
           'guarantors' => GuarantorResource::collection($this->guarantors),

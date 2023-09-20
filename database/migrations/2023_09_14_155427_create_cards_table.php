@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('card_number', 255);
             $table->string('cvv', 200)->nullable();
             $table->string('auth_token', 200)->nullable();
+            $table->string('customer_code', 200)->nullable();
             $table->string('name_on_card', 255)->nullable();
             $table->string('expiry_month', 200);
             $table->string('expiry_year', 200);

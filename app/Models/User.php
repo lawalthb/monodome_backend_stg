@@ -68,6 +68,16 @@ class User extends Authenticatable implements Auditable
         return $this->hasMany(LoadContainer::class);
     }
 
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class);
+    }
+
+    public function walletHistories()
+    {
+        return $this->hasMany(WalletHistory::class);
+    }
+
 
     public function driver()
 {

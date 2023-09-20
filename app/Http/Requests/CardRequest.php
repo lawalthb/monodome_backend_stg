@@ -28,6 +28,7 @@ class CardRequest extends FormRequest
             'name_on_card' => 'nullable|string|max:255',
             'expiry_month' => 'required|string|max:200',
             'expiry_year' => 'required|string|max:200',
+            'amount' => 'required|numeric',
         ];
     }
 }

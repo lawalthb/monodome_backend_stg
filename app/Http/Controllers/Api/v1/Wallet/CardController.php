@@ -127,4 +127,13 @@ class CardController extends Controller
         return $this->error(null, 'Error deleting card', 422);
     }
 }
+
+public function payWithExistingCard(Request $request){
+
+    $this->validate($request,[
+        "card_id" => 'required|exists,cards',
+        "transaction_type" => 'required|in:deposit,withdraw,transfer',
+    ]);
+    $encryptedCard = Card::where(['user_id'=> auth()->user()->id,'id'=>$request->card_id])->first();
+}
 }
