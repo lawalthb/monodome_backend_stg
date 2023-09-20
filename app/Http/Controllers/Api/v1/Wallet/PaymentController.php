@@ -20,7 +20,7 @@ class PaymentController extends Controller
         if ($request['event'] == 'charge.success') {
             $data = $request['data'];
             $user = User::where('email', $data['customer']['email'])->first();
-
+            Log::info($user);
             if ($user) {
                 if ($user->wallet) {
                     // Update the existing wallet
@@ -40,6 +40,7 @@ class PaymentController extends Controller
                 // Create a wallet history entry
                 $walletHistory = new WalletHistory;
                 $walletHistory->wallet_id = $user->wallet->id;
+                $walletHistory->user_id =  $user->id;
                 $walletHistory->type = "deposit";
                 $walletHistory->payment_type = "paystack";
                 $walletHistory->amount = $data['amount'] / 100;
