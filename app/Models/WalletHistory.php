@@ -9,6 +9,7 @@ class WalletHistory extends Model
 {
     use HasFactory;
 
+    public $guarded = [];
 
     public function user()
     {
