@@ -123,7 +123,7 @@ class SettingsSeeder extends Seeder
 
             [
                 'name' => 'Secret Key',
-                'value' => 'sk_test_5c5f8c527269a6cbf2d1be70abb555195ed0e869',
+                'value' => 'sk_test_61c50b3d3e1e227bb2fc3e36b57774f0ae257936',
                 'slug' => 'secretkey',
                 'created_at' => '2020-01-07 18:30:00',
                 'updated_at' => null,
@@ -131,7 +131,7 @@ class SettingsSeeder extends Seeder
 
             [
                 'name' => 'Public Key',
-                'value' => 'pk_test_050699a6e3ee4c79ec253cf5eeb1cbde63aa2c22',
+                'value' => 'pk_test_9667c0c4009cfbd260edb090b6317ebab8b87ce1',
                 'slug' => 'publickey',
                 'created_at' => '2020-01-07 18:30:00',
                 'updated_at' => null,

@@ -39,7 +39,7 @@ class AuthController extends Controller
             ]);
 
 
-            Log::info($request->ip());
+           // Log::info($request->ip());
            // $roleName = str_replace('_', ' ', $request->input('role'));
             $role = Role::find($request->role_id);
             if ($role) {

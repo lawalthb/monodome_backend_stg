@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wallet_histories', function (Blueprint $table) {
+
+        $currencyLength = 36;
+        $currencyDecimals = 18;
+        Schema::create('wallet_histories', function (Blueprint $table) use  ($currencyLength, $currencyDecimals) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('wallet_id')->unsigned();
             $table->string('type', 20)->comment('withdrawal, transfer');
             $table->string('payment_type', 20)->comment('1=paystack,2=wallet');
             $table->string('paystack_reference');
-            $table->float('amount');
-            $table->float('closing_balance');
+            $table->decimal('amount',$currencyLength, $currencyDecimals)->default(0);
+            $table->decimal('closing_balance',$currencyLength, $currencyDecimals)->default(0);
             $table->float('fee');
             $table->string('description');
             $table->timestamps();

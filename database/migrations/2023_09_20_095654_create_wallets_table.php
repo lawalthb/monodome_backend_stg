@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wallets', function (Blueprint $table) {
+
+        $currencyLength = 36;
+        $currencyDecimals = 18;
+        Schema::create('wallets', function (Blueprint $table) use ($currencyLength, $currencyDecimals)  {
             $table->id();
             $table->string('uuid');
-            $table->string('wallet_type')->default('mono_wallet');
+            $table->string('wallet_type')->default('monolog_wallet');
             $table->bigInteger('user_id')->unsigned();
-            $table->float('amount');
-            $table->string('status')->default('success')->comment('0=pending, 1=success, 2=cancelled');
+            $table->decimal('amount',$currencyLength, $currencyDecimals)->default(0);
+            $table->string('status')->default('Active')->comment('0=inActive, 1=Active');
             $table->timestamps();
 
             // Define foreign key constraint

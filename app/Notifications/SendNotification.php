@@ -14,7 +14,7 @@ class SendNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(public $user, public $message)
+    public function __construct(public $user, public $message, public $title = null)
     {
         //
     }
@@ -36,7 +36,7 @@ class SendNotification extends Notification
     {
         return (new MailMessage)
                 ->priority(1)
-                ->subject('System Notification')
+                ->subject('System Notification'.' | '.$this->title)
                 ->markdown('mail.send_notification',
                         ["url"=> config('app.url'),
                          'message'=>$this->message,

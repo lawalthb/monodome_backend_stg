@@ -13,5 +13,11 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        'paystack/*',
+        'paystack/webhooks/*',
+        '/subscription/webhook',
+        '/payment/webhook',
+        'paystack',
+        'api/v1/*'
     ];
 }
