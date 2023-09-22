@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9dbe723219ced2114ffae2e34e49f18e",
+    "content-hash": "7f86f740ab112f34d142ed917391e72b",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -1400,6 +1400,66 @@
                 }
             ],
             "time": "2023-08-27T10:19:19+00:00"
+        },
+        {
+            "name": "hypnodev/openapi-generator",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hypnodev/openapi-generator.git",
+                "reference": "607cc84f9d2c5161450c670897634029e57c67f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hypnodev/openapi-generator/zipball/607cc84f9d2c5161450c670897634029e57c67f6",
+                "reference": "607cc84f9d2c5161450c670897634029e57c67f6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^10.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Hypnodev\\OpenapiGenerator\\OpenapiGeneratorServiceProvider"
+                    ],
+                    "aliases": {
+                        "OpenapiGenerator": "Hypnodev\\OpenapiGenerator\\OpenapiGeneratorFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hypnodev\\OpenapiGenerator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cristian Cosenza",
+                    "email": "me@cristiancosenza.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "OpenAPI generator",
+            "homepage": "https://github.com/hypnodev/openapi-generator",
+            "keywords": [
+                "hypnodev",
+                "openapi-generator"
+            ],
+            "support": {
+                "issues": "https://github.com/hypnodev/openapi-generator/issues",
+                "source": "https://github.com/hypnodev/openapi-generator/tree/v1.0.4"
+            },
+            "time": "2023-09-22T08:02:36+00:00"
         },
         {
             "name": "intervention/image",
