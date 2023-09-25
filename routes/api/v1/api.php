@@ -188,7 +188,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {
 
         Route::get('/', [WalletController::class, 'index']);
-        Route::get('/', [WalletController::class, 'index']);
+        Route::get('/check-pin', [WalletController::class, 'checkPinExists']);
         Route::get('/wallet-history', [WalletController::class, 'wallet_history']);
 
         //card endpoint here
