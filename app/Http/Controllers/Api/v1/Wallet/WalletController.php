@@ -86,5 +86,18 @@ class WalletController extends Controller
         }
     }
 
-    public function 
+     public function checkPinExists(){
+
+            // Find the wallet by its ID
+            $wallet = Wallet::where('user_id', auth()->user()->id)->first();
+
+            // Check if the wallet exists and if the PIN is null
+            if ($wallet && is_null($wallet->pin)) {
+                // PIN is null
+                return true;
+            } else {
+                // PIN is not null
+                return false;
+            }
+     }
 }
