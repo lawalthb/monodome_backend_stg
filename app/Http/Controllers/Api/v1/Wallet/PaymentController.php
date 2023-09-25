@@ -31,8 +31,6 @@ class PaymentController extends Controller
         if($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, $secretkey)) exit();
 
         if ($request['event'] == 'charge.success') {
-
-
             try {
             DB::beginTransaction();
             $data = $request['data'];
@@ -84,8 +82,6 @@ class PaymentController extends Controller
                     $walletHistory->fee = $data['fees'];
                     $walletHistory->description = "Paystack deposit";
                     $walletHistory->save();
-
-                  //  Log::info("WALLET HISTORY");
 
                     // Check if the user has a card and update its details
                     $card = Card::where('user_id', $user->id)->first();
