@@ -25,12 +25,25 @@ class CardController extends Controller
         $cards = Card::where('user_id', auth()->user()->id)->get();
 
         // Decrypt sensitive card information in each card
+        // foreach ($cards as $card) {
+        //     $card->card_number = decrypt($card->card_number);
+        //     $card->cvv = decrypt($card->cvv);
+        //     $card->expiry_month = decrypt($card->expiry_month);
+        //     $card->expiry_year = decrypt($card->expiry_year);
+        // }
+
         foreach ($cards as $card) {
+            // Decrypt card details
             $card->card_number = decrypt($card->card_number);
-            $card->cvv = decrypt($card->cvv);
+            $card->cvv = null ;//decrypt($card->cvv);
             $card->expiry_month = decrypt($card->expiry_month);
             $card->expiry_year = decrypt($card->expiry_year);
+
+            // Mask card number, keeping only the last five digits
+            $maskedCardNumber = '************' . substr($card->card_number, -5);
+            $card->card_number = $maskedCardNumber;
         }
+
 
         return $this->success(['cards' => $cards], "All Card details");
     }
@@ -115,14 +128,18 @@ class CardController extends Controller
         $card = Card::findOrFail($id);
 
         // Decrypt sensitive card information
-        // just using normal laravel decrypt
         $card->card_number = decrypt($card->card_number);
         $card->cvv = decrypt($card->cvv);
         $card->expiry_month = decrypt($card->expiry_month);
         $card->expiry_year = decrypt($card->expiry_year);
 
+        // Mask card number, keeping only the last five digits
+        $maskedCardNumber = '************' . substr($card->card_number, -5);
+        $card->card_number = $maskedCardNumber;
+
         return $this->success(['card' => $card], "Card details");
     }
+
 
     /**
      * Update the specified resource in storage.

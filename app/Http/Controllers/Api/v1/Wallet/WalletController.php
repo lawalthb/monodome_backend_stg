@@ -55,7 +55,7 @@ class WalletController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //api
     }
 
     public function wallet_history(){
