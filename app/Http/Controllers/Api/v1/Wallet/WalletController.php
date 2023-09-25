@@ -65,4 +65,26 @@ class WalletController extends Controller
         return $this->success(['walletHistory' => WalletHistoryResource::collection($walletHistory)], "Wallet History details");
 
     }
+
+    public function update_pin(Request $request){
+
+        $request->validate([
+            'pin' => 'required|numeric|max:5',
+        ]);
+
+        $wallet = Wallet::where('user_id', auth()->user()->id)->first();
+
+        $wallet->pin = $request->pin;
+
+        if($wallet->save()){
+
+            return $this->success(['walletHistory' => WalletResource::collection($wallet)], "Wallet pin updated successfully");
+
+        }else{
+            return $this->error(null, 'Error Wallet pin details', 422);
+
+        }
+    }
+
+    public function 
 }
