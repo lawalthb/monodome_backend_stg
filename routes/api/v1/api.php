@@ -189,7 +189,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
         Route::get('/', [WalletController::class, 'index']);
         Route::get('/check-pin', [WalletController::class, 'checkPinExists']);
-        Route::post('/change-pin', [WalletController::class, 'update_pin']);
+        Route::post('/update-pin', [WalletController::class, 'update_pin']);
         Route::get('/wallet-history', [WalletController::class, 'wallet_history']);
 
         //card endpoint here
