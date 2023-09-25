@@ -20,7 +20,7 @@ return new class extends Migration
             $table->bigInteger('wallet_id')->unsigned();
             $table->string('type', 20)->comment('withdrawal, transfer');
             $table->string('payment_type', 20)->comment('1=paystack,2=wallet');
-            $table->string('paystack_reference');
+            $table->string('paystack_reference')->nullable();
             $table->decimal('amount',$currencyLength, $currencyDecimals)->default(0);
             $table->decimal('closing_balance',$currencyLength, $currencyDecimals)->default(0);
             $table->float('fee');
