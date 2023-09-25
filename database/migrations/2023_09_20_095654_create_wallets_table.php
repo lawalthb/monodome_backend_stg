@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('wallet_type')->default('monolog_wallet');
             $table->bigInteger('user_id')->unsigned();
             $table->decimal('amount',$currencyLength, $currencyDecimals)->default(0);
+            $table->string('pin')->nullable()->comment('user pin code');
             $table->string('status')->default('Active')->comment('0=inActive, 1=Active');
             $table->timestamps();
 
