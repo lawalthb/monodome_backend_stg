@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\v1\auth\AuthController;
 use App\Http\Controllers\Api\v1\Wallet\CardController;
 use App\Http\Controllers\Api\v1\Agents\AgentController;
 use App\Http\Controllers\Api\v1\Driver\DriverController;
+use App\Http\Controllers\Api\v1\Wallet\WalletController;
 use App\Http\Controllers\Api\v1\Brokers\BrokerController;
 use App\Http\Controllers\Api\v1\Wallet\PaymentController;
 use App\Http\Controllers\Api\v1\Company\CompanyController;
@@ -186,6 +187,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     // wallet route group
     Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {
 
+        Route::get('/', [WalletController::class, 'index']);
         Route::post('/cards', [CardController::class, 'store']);
         Route::get('/cards', [CardController::class, 'index']);
         Route::get('/cards/{id}', [CardController::class, 'show']);
