@@ -101,7 +101,7 @@ class AgentController extends Controller
 
             $agent = new Agent([
                 'user_id' => $user->id,
-               // 'country_id' => $request->input('country_id'),
+                'phone_number' => $request->input('phone_number'),
                 'state_id' => $request->input('state_id'),
                 'street' => $request->input('street'),
                 'status' => 'Pending',
