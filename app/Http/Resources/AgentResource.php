@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\LocalGovernmentResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AgentResource extends JsonResource
@@ -25,7 +26,7 @@ class AgentResource extends JsonResource
           'status' => $this->status,
           'created_at' => $this->created_at,
           'updated_at' => $this->updated_at,
-          //'lga' => new LocalGovernmentResource($this->lga),
+          'lga' => new LocalGovernmentResource($this->local),
           'state' => new StateResource($this->state),
           'user' => new UserResource($this->user),
           'guarantors' => GuarantorResource::collection($this->guarantors),

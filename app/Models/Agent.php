@@ -35,7 +35,12 @@ class Agent extends Model
 
     public function state(){
 
-        return $this->belongsTo(State::class);
+        return $this->belongsTo(LocalState::class);
+    }
+
+    public function local(){
+
+        return $this->belongsTo(LocalGovernment::class,'lga');
     }
 
 
