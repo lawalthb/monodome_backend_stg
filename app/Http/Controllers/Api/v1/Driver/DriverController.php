@@ -103,6 +103,7 @@ class DriverController extends Controller
                 $user->email = $request->input('email');
                 $user->address = $request->input('address');
                 $password  = Str::random(16);
+                $user->phone_number = $request->input('phone_number');
                 $user->password = Hash::make($password);
                 $user->user_type = 'driver';
                 $user->save();

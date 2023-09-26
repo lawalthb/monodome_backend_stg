@@ -78,6 +78,7 @@ class AgentController extends Controller
                 $user->full_name = $request->input('full_name');
                 $user->email = $request->input('email');
                 $user->address = $request->input('address');
+                $user->phone_number = $request->input('phone_number');
                 $password  = Str::random(16);
                 $user->password = $password;
                 $user->user_type = 'agent';
