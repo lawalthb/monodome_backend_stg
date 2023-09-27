@@ -12,9 +12,10 @@
 
 - Run migration using
 ```
-php artisan migrate
+php artisan migrate:fresh --seed
 ```
 
 Enjoy
 
+NOTE: MAKE YOU SEED DEFAULT BECAUSE OF SITE SETTING.
 # We currently on API V1
