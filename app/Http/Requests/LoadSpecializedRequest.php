@@ -26,8 +26,16 @@ class LoadSpecializedRequest extends FormRequest
     {
         return [
             'load_type_id' => 'required|integer',
-            'deliver_from_city' => 'required|integer',
-            'deliver_to_city' => 'required|integer',
+            'deliver_from_country' => 'required|integer',
+            'deliver_from_state' => 'required|integer',
+            'deliver_to_country' => 'required|integer',
+            'deliver_to_state' => 'required|integer',
+            'sender_email' => 'required|email',
+            'sender_name' => 'required|string',
+            'sender_phone' => 'required|string',
+            'receiver_name' => 'required|string',
+            'receiver_email' => 'required|email',
+            'receiver_phone' => 'required|string',
             'description' => 'required|string',
             // 'documents' => 'required',
         ];

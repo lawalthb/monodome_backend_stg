@@ -21,8 +21,19 @@ return new class extends Migration
             $table->unsignedBigInteger('load_type_id');
            // $table->bigInteger('load_board_id');
             $table->string('load_type_name')->default('specialize-shipment');
-            $table->integer('deliver_from_city');
-            $table->integer('deliver_to_city');
+            $table->integer('deliver_from_country');
+            $table->integer('deliver_from_state');
+            $table->integer('deliver_to_country');
+            $table->integer('deliver_to_state');
+
+            $table->string('sender_email', 100)->nullable();
+            $table->string('sender_name', 100)->nullable();
+            $table->string('sender_phone', 100)->nullable();
+
+            $table->string('receiver_name', 100)->nullable();
+            $table->string('receiver_email', 100)->nullable();
+            $table->string('receiver_phone', 100)->nullable();
+
             $table->text('description')->nullable();
             $table->enum('status', ['Pending', 'Approved', 'Failed'])->default('Pending');
             $table->timestamps();

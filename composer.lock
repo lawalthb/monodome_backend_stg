@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f86f740ab112f34d142ed917391e72b",
+    "content-hash": "c943222d062cc3e5d9ac625d8e2f3286",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -524,6 +524,44 @@
                 }
             ],
             "time": "2022-12-15T16:57:16+00:00"
+        },
+        {
+            "name": "donejeh/nuban",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/donejeh/nuban-api.git",
+                "reference": "309e7081074e38d6d42c26de20ebccdafb2840c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/donejeh/nuban-api/zipball/309e7081074e38d6d42c26de20ebccdafb2840c7",
+                "reference": "309e7081074e38d6d42c26de20ebccdafb2840c7",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Donejeh\\Nuban\\NubapiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Donejeh\\Nuban\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "You can use it to get the account name of any bank account in Nigeria",
+            "support": {
+                "issues": "https://github.com/donejeh/nuban-api/issues",
+                "source": "https://github.com/donejeh/nuban-api/tree/1.0.1"
+            },
+            "time": "2023-09-07T09:59:44+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
