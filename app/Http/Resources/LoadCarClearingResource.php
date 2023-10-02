@@ -20,6 +20,7 @@ class LoadCarClearingResource extends JsonResource
             "car_year" => $this->car_year,
             "comment" => $this->comment,
             "is_final" => $this->is_final,
+            "suggested_amount" => $this->suggested_amount,
             "car_type" => new VehicleTypeResource($this->carType),
             "car_model" => new VehicleModelResource($this->carModel),
             "deliver_from_city" => $this->DFromCity->name,//new CityResource($this->DFromCity),

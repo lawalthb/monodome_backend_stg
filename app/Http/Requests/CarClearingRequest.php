@@ -42,8 +42,8 @@ class CarClearingRequest extends FormRequest
             'zip_code' => 'required|string|max:30',
             'street' => 'required|string|max:30',
             'add_info' => 'required|string',
-            'insure_it' => 'nullable|in:Yes,No',
-            'insure_amount' => 'nullable',
+            //'insure_it' => 'nullable|in:Yes,No',
+            'suggested_amount' => 'nullable|integer',
             'status' => 'nullable|in:Pending,Approved,Failed',
         ];
     }
