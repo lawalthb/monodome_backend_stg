@@ -103,7 +103,7 @@ class ShippingCompanyController extends Controller
                 'state_id' => $request->input('state_id'),
                 'street' => $request->input('street'),
                 'lga' => $request->input('lga'),
-                // 'profile_picture' => $request->input('profile_picture'),
+                'company_name' => $request->input('company_name'),
                 'nin_number' => $request->input('nin_number'),
                 'phone_number' => $request->input('phone_number'),
                 'status' => 'Waiting',
@@ -187,13 +187,13 @@ class ShippingCompanyController extends Controller
             'email' => 'required|email|unique:users,email',
             'full_name' => 'required|string',
             'phone_number' => 'required|numeric',
-            'role' => 'required|in:5,2', // 1 for super admin, 2 for admin
+            'role' => 'required|in:super_admin,admin', // 1 for super admin, 2 for admin
         ]);
 
         // Check if the user already exists by email
         $user = User::where('email', $request->input('email'))->first();
 
-        $role = $role = Role::find($request->input('role')); //$request->input('role') == 1 ? 'super-admin' : 'admin';
+        $role = $role = Role::find(5); //$request->input('role') == 1 ? 'super-admin' : 'admin';
         if ($user) {
             // User already exists; update their role
             $user->syncRoles([$role]);
@@ -208,13 +208,14 @@ class ShippingCompanyController extends Controller
         $user->address = $request->input('address');
         $user->phone_number = $request->input('phone_number');
         $user->user_created_by = Auth::user()->id;
+        $user->role =$request->input('role');
         $user->user_type = str_replace(' ', '_', $role->name);
         $password  = Str::random(16);
         $user->password = Hash::make($password);
         //$user->user_type = 'company_transporter_super';
         $user->save();
 
-        $role =  $role = Role::find($request->input('role')); //$request->input('role') == 1 ? 'super-admin' : 'admin';
+        $role =  $role = Role::find(5); //$request->input('role') == 1 ? 'super-admin' : 'admin';
         $data = [
             "full_name" => $request->input('full_name'),
             "password" => $password,

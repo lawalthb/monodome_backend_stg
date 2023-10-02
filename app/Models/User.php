@@ -79,6 +79,10 @@ class User extends Authenticatable implements Auditable
         return $this->hasMany(WalletHistory::class);
     }
 
+    public function user_created_by(){
+        return $this->hasOne(User::class,'user_created_by');
+    }
+
 
     public function driver()
 {

@@ -21,6 +21,8 @@ class UserResource extends JsonResource
             'phone_number' => $this->phone_number,
             "address" => $this->address,
             "role" => $this->roles,
+            "user_created_by" => new UserResource($this->whenLoaded('user_created_by')),
+            "admin_type" => $this->role,
             "user_type" => strtolower($this->user_type),
             "profile_url" => getImageFile($this->image_path),
             "updated_at" => $this->updated_at,

@@ -17,6 +17,7 @@ class ShippingCompanyResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->user->full_name,
+            'company_name' => $this->company_name,
             'email' => $this->user->email,
            'street' => $this->street,
            'phone_number' => $this->phone_number,

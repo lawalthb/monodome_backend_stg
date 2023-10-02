@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('uuid');
             $table->unsignedBigInteger('user_id'); // Foreign key to link the guarantor with an agent
             $table->unsignedBigInteger('state_id');
+            $table->string('company_name')->nullable();
             $table->string('street')->nullable();
             $table->string('lga')->nullable();
             $table->string('phone_number')->nullable();

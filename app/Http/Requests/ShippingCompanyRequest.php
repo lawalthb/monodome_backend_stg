@@ -26,6 +26,7 @@ class ShippingCompanyRequest extends FormRequest
               'email' => 'required|email|unique:users,email',
               'phone_number' => 'required|string',
               'street' => 'required|string',
+              'company_name' => 'required|string',
               'state_id' => 'required|exists:states,id',
               'lga' => 'required|numeric',
               'profile_picture' => 'required|mimes:jpeg,png,jpg|max:2048',
