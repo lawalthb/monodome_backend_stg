@@ -32,6 +32,17 @@ class UsersTableSeeder extends Seeder
         'updated_at' => now(),
     ]);
 
+
+      // Create Admin user
+      $customer = DB::table('users')->insertGetId([
+        'full_name' => 'Customer',
+        'user_type' => 'User',
+        'email' => 'admin@example.com',
+        'password' => Hash::make('password'),
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
     // Find the roles
     $superAdminRole = Role::where('name', 'Super Admin')->first();
     $adminRole = Role::where('name', 'Admin')->first();
@@ -39,6 +50,9 @@ class UsersTableSeeder extends Seeder
     // Assign roles to users
     $superAdminRole = Role::where('name', 'Super Admin')->first();
     $adminRole = Role::where('name', 'Admin')->first();
+
+    $CustomerRole = Role::where('name', 'Customer')->first();
+   // $adminRole = Role::where('name', 'Customer')->first();
 
     // Assign roles to users if they don't already have them
     if ($superAdminRole && $adminRole) {
@@ -49,9 +63,13 @@ class UsersTableSeeder extends Seeder
         if (!$adminRole->users->contains($admin)) {
             $adminRole->users()->attach($admin);
         }
+
+        if (!$CustomerRole->users->contains($customer)) {
+            $CustomerRole->users()->attach($admin);
+        }
     }
 
-        // Assign roles to users
+    // Assign roles to usersu
    //     $superAdminRole = Role::create(['name' => 'super admin']);
      //   $adminRole = Role::create(['name' => 'admin']);
 

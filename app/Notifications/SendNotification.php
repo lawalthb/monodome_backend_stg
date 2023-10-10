@@ -27,7 +27,7 @@ class SendNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        Log::info($notifiable);
+       // Log::info($notifiable);
         return ['mail','database'];
     }
 

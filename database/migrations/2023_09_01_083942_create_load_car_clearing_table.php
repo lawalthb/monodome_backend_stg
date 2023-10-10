@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('receiver_email', 100)->nullable();
             $table->string('receiver_phone', 100)->nullable();
             $table->string('deliver_apartment', 100)->nullable();
-            $table->string('zip_code', 30)->nullable();
+            // $table->string('zip_code', 30)->nullable();
             $table->string('deliver_from_city', 100)->nullable();
             $table->string('deliver_to_city', 100)->nullable();
             $table->string('city', 30)->nullable();
