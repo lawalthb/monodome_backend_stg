@@ -65,7 +65,7 @@ class UsersTableSeeder extends Seeder
         }
 
         if (!$CustomerRole->users->contains($customer)) {
-            $CustomerRole->users()->attach($admin);
+            $CustomerRole->users()->attach($customer);
         }
     }
 
