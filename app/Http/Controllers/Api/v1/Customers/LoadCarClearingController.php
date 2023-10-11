@@ -10,6 +10,7 @@ use App\Events\LoadTypeCreated;
 use App\Models\LoadCarClearing;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CarClearingRequest;
 use App\Http\Resources\LoadCarClearingResource;
@@ -65,6 +66,8 @@ class LoadCarClearingController extends Controller
         if ($request->hasFile('documents')) {
             $documents = [];
             $documents = $request->input('documents_type');
+
+            Log::info($documents);
             foreach ($request->file('documents') as $x => $file) {
 
                 $file = $this->uploadFileWithDetails('load_documents', $file);
