@@ -36,7 +36,7 @@ class CarClearingRequest extends FormRequest
             'deliver_from_city' => 'required_if:is_final,Yes|string|max:20',
             'deliver_to_city' => 'required_if:is_final,Yes|string|max:20',
             'receiver_name' => 'required|string|max:30',
-            'deliver_apartment' => 'required|string|max:30',
+           // 'deliver_apartment' => 'required|string|max:30',
             'receiver_email' => 'required|email',
             'receiver_phone' => 'required|string|max:30',
           //  'zip_code' => 'required|string|max:30',
