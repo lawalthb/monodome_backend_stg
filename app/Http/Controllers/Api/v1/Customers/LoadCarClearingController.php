@@ -34,7 +34,7 @@ class LoadCarClearingController extends Controller
         })->latest()->paginate($size);
 
 
-        return $loadBulk;
+     //   return $loadBulk;
         return LoadCarClearingResource::collection($loadBulk);
 
 
