@@ -24,7 +24,7 @@ class DriverRequest extends FormRequest
         return [
               'have_motor' => 'nullable|in:No,Yes',
               'full_name' => 'required|string',
-              'email' => 'required|email|unique:users,email',
+              'email' => 'required|email|email',
               'phone_number' => 'required|string',
               'street' => 'required|string',
               'vehicle_type_id' => 'required|exists:vehicle_types,id',

@@ -37,7 +37,7 @@ class UsersTableSeeder extends Seeder
       $customer = DB::table('users')->insertGetId([
         'full_name' => 'Customer',
         'user_type' => 'User',
-        'email' => 'customer@example.com',
+        'email' => 'customer@gmail.com',
         'password' => Hash::make('password'),
         'created_at' => now(),
         'updated_at' => now(),

@@ -202,7 +202,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     });
 
     //vehicle route group here
-    Route::group(['prefix' => 'vehicle', 'middleware' => 'auth:api'], function () {
+    // Route::group(['prefix' => 'vehicle', 'middleware' => 'auth:api'], function () {
+     Route::group(['prefix' => 'vehicle'], function () {
 
         // route for vehicle make
         Route::get('/make', [VehicleMakeController::class, 'index']);

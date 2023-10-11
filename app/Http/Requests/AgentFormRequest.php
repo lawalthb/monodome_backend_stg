@@ -23,7 +23,7 @@ class AgentFormRequest extends FormRequest
     {
             return [
                 'full_name' => 'required|string',
-                'email' => 'required|email|unique:users,email',
+                'email' => 'required|email',
                 'phone_number' => 'required|string',
                 'street' => 'required|string',
                 'business_name' => 'nullable|string',

@@ -23,8 +23,8 @@ class BrokersRequest extends FormRequest
     {
         return [
             'full_name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'phone_number' => 'required|string|unique:users,phone_number',
+            'email' => 'required|email|email',
+            'phone_number' => 'required|string|phone_number',
             'street' => 'required|string',
             'state_id' => 'required|exists:states,id',
             'lga' => 'required|string',
