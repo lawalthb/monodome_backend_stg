@@ -93,7 +93,7 @@ class ShippingCompanyController extends Controller
             if ($role) {
                 $user->user_type = str_replace(' ', '_', $role->name);
                 $user->role_id = $role->id;
-                $user->role = $role->name;
+                $user->role = "super_admin";
                 $user->assignRole($role);
                 $user->save();
             }
