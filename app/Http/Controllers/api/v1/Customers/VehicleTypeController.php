@@ -20,7 +20,7 @@ class VehicleTypeController extends Controller
 
         $types = VehicleType::where(function ($q) use ($key) {
             $q->where('name', 'like', "%{$key}%");
-        })->latest()->paginate();
+        })->latest()->get();
 
         //
         return VehicleTypeResource::collection($types);

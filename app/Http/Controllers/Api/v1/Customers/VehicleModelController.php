@@ -21,7 +21,7 @@ class VehicleModelController extends Controller
         $models = VehicleModel::where(function ($q) use ($key) {
             $q->where('name', 'like', "%{$key}%")
                 ->orWhere('code', 'like', "%{$key}%");
-        })->latest()->paginate();
+        })->latest()->get();
 
         //
         return VehicleModelResource::collection($models);
