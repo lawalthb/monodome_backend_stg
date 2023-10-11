@@ -64,11 +64,12 @@ class LoadCarClearingController extends Controller
                    // Handle document uploads (if any)
         if ($request->hasFile('documents')) {
             $documents = [];
-            foreach ($request->file('documents') as $file) {
+            $documents = $request->input('documents_type');
+            foreach ($request->file('documents') as $x => $file) {
 
                 $file = $this->uploadFileWithDetails('load_documents', $file);
                 $path = $file['path'];
-                $name = $file['file_name'];
+                $name =  $documents[$x];//$file['file_name'];
 
                 // Create a record in the load_documents table
                 $document = new LoadDocument([

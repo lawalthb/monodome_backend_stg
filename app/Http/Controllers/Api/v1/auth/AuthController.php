@@ -72,6 +72,10 @@ class AuthController extends Controller
     {
         $credentials = $request->only(['email', 'password']);
 
+        //$user = User::where("email",$request->email)->first();
+
+
+
         try {
 
             if (auth()->attempt($credentials)) {
