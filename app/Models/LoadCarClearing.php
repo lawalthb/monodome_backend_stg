@@ -60,12 +60,12 @@ class LoadCarClearing extends Model
 
     public function DFromCity()
     {
-        return  $this->belongsTo(City::class, 'deliver_from_city');
+        return  $this->belongsTo(State::class, 'deliver_from_city');
     }
 
     public function DToCity()
     {
-        return  $this->belongsTo(City::class, 'deliver_to_city');
+        return  $this->belongsTo(State::class, 'deliver_to_city');
     }
 
     protected static function boot()
