@@ -66,7 +66,7 @@ class LoadCarClearingController extends Controller
         if ($request->hasFile('documents')) {
             $documents = [];
             $documents = $request->input('documents_type');
-
+            Log::info($request->file('documents'));
             foreach ($request->file('documents') as $x => $file) {
                 Log::info($documents[$x]);
 
