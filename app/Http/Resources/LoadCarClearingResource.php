@@ -16,6 +16,8 @@ class LoadCarClearingResource extends JsonResource
     {
         return [
             "id" => $this->id,
+            "destination_country" => $this->destination_country,
+            "departure_country" => $this->departure_country,
             "car_value" => $this->car_value,
             "car_year" => $this->car_year,
             "comment" => $this->comment,
