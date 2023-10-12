@@ -63,16 +63,13 @@ class LoadCarClearingController extends Controller
              $carClearing->loadType()->associate($loadType);
 
                    // Handle document uploads (if any)
-        if ($request->hasFile('documents')) {
-            $documents = [];
-            $documents = $request->input('documents_type');
-          //  Log::info($request->file('documents'));
-            foreach ($request->file('documents') as $x => $file) {
-            //    Log::info($documents[$x]);
+        if ($request->input('documents')) {
 
-                $file = $this->uploadFileWithDetails('load_documents', $file);
+            foreach ($request->input('documents') as $key => $fileData) {
+
+                $file = $this->uploadFileWithDetails('load_documents', $request->file("documents.$key.file"));
                 $path = $file['path'];
-                $name =  $documents[$x];//$file['file_name'];
+                $name = $fileData['document_type'];//$file['file_name'];
 
                 // Create a record in the load_documents table
                 $document = new LoadDocument([
