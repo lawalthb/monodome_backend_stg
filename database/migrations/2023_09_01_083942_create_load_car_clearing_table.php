@@ -33,13 +33,11 @@ return new class extends Migration
             $table->string('receiver_email', 100)->nullable();
             $table->string('receiver_phone', 100)->nullable();
             $table->string('deliver_apartment', 100)->nullable();
-            // $table->string('zip_code', 30)->nullable();
             $table->string('deliver_from_city', 100)->nullable();
             $table->string('deliver_to_city', 100)->nullable();
             $table->string('city', 30)->nullable();
             $table->string('street', 30)->nullable();
             $table->text('add_info')->nullable();
-            $table->enum('insure_it', ['Yes', 'No'])->default('No')->nullable();
             $table->decimal('suggested_amount', 20)->nullable()->default(0);
             $table->enum('status', ['Pending', 'Approved', 'Failed'])->default('Pending');
             $table->timestamps();

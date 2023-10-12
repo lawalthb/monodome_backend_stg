@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\v1\Customers\VehicleMakeController;
 use App\Http\Controllers\Api\v1\Customers\VehicleTypeController;
 use App\Http\Controllers\Api\v1\auth\EmailVerificationController;
 use App\Http\Controllers\Api\v1\Customers\VehicleModelController;
+use App\Http\Controllers\Api\v1\Customers\LoadContainerController;
 use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
 use App\Http\Controllers\Api\v1\Customers\LoadSpecializedController;
 use App\Http\Controllers\Api\v1\ShippingCompany\ShippingCompanyController;
@@ -87,11 +88,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
 
         // load Load Container Shipment route
-        Route::get('/load-container-Shipment', [LoadContainerController::class, 'index']);
-        Route::post('/load-container-Shipment', [LoadContainerController::class, 'store']);
-        Route::get('/load-container-Shipment/{id}', [LoadContainerController::class, 'show']);
-        Route::post('/load-container-Shipment/{loadBulk}', [LoadContainerController::class, 'update']);
-        Route::delete('/load-container-Shipment/{id}', [LoadContainerController::class, 'destroy']);
+        Route::get('/load-container-shipment', [LoadContainerController::class, 'index']);
+        Route::post('/load-container-shipment', [LoadContainerController::class, 'store']);
+        Route::get('/load-container-shipment/{id}', [LoadContainerController::class, 'show']);
+        Route::post('/load-container-shipment/{loadBulk}', [LoadContainerController::class, 'update']);
+        Route::delete('/load-container-shipment/{id}', [LoadContainerController::class, 'destroy']);
 
         // load-specialized  route
         Route::get('/load-specialized', [LoadSpecializedController::class, 'index']);

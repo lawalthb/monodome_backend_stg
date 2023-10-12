@@ -30,7 +30,7 @@ class LoadContainerShipmentRequest extends FormRequest
             'container_value' => 'required|string',
             // 'documents' => 'required|array',
             // '*.documents' => 'required|string',
-            'describe' => 'nullable|string',
+            'content_description' => 'nullable|string',
             'is_final' => 'required|in:Yes,No',
             'deliver_from_city' => 'required_if:is_final,Yes|integer',
             'deliver_to_city' => 'required_if:is_final,Yes|integer',

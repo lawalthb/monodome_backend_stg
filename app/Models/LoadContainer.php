@@ -34,6 +34,25 @@ class LoadContainer extends Model
             return $this->belongsTo(LocalGovernment::class,'sender_lga');
         }
 
+        public function DepCountry()
+    {
+        return $this->belongsTo(Country::class, "departure_country");
+    }
+
+    public function DFromCity()
+    {
+        return  $this->belongsTo(State::class, 'deliver_from_city');
+    }
+
+    public function DToCity()
+    {
+        return  $this->belongsTo(State::class, 'deliver_to_city');
+    }
+
+    public function DesCountry()
+    {
+        return $this->belongsTo(Country::class, "destination_country");
+    }
 
         public function RState(){
             return $this->belongsTo(State::class,'receiver_state');
