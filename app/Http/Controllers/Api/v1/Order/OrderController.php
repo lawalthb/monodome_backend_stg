@@ -64,7 +64,7 @@ class OrderController extends Controller
         $order = Order::where(['user_id'=>Auth::id(),'loadable_id'=>$load->id,'status'=>'Paid'])->first();
 
         if($order){
-            return $this->error('', 'Order/load already paid   !', 404);
+            return $this->error('', 'This Order has already been paid!', 404);
 
         }
 
