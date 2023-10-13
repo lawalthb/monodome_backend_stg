@@ -20,10 +20,10 @@ class OrderResource extends JsonResource
             "uuid" =>  $this->uuid,
             "order_no" =>  $this->order_no,
             "amount" =>  $this->amount,
-            "user" =>  new UserResource($this->user),
             "status" =>  $this->status,
             "updated_at" =>  $this->updated_at,
             "created_at" =>  $this->created_at,
+            "user" =>  new UserResource($this->user),
         ];
     }
 }

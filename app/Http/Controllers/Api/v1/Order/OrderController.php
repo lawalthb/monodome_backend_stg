@@ -10,6 +10,7 @@ use App\Events\LoadTypeCreated;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
@@ -30,9 +31,9 @@ class OrderController extends Controller
     {
         $loadType = LoadType::find($request->load_type_id);
 
-        if(!$loadType){
+        if (!$loadType) {
 
-            return $this->error('','LoadType not found', 404);
+            return $this->error('', 'LoadType not found', 404);
         }
 
         $specificType = $loadType->specificType; // This will return the related specific type (Package, Bulk, Container, or CarClearing)
@@ -42,24 +43,30 @@ class OrderController extends Controller
         }
 
         //this get load to pay
-       $load = $specificType->where('id', $request->load_id)->first();
+        $load = $specificType->where('id', $request->load_id)->first();
 
         if (!$load) {
             return $this->error('', 'Load not found', 404);
         }
 
-        if(!$load->user->wallet){
+        if (!$load->user->wallet) {
             return $this->error('', 'wallet not setup', 404);
-
         }
 
-            $loadTotalAmount = number_format($load->total_amount, 2, '.', ''); // Format as a string with 2 decimal places
-            $userWalletAmount = number_format($load->user->wallet->amount, 2, '.', '');
 
-            if ($userWalletAmount < $loadTotalAmount ) {
-                return $this->error('', 'Insufficient funds in wallet!', 404);
-            }
+        $loadTotalAmount = number_format($load->total_amount, 2, '.', ''); // Format as a string with 2 decimal places
+        $userWalletAmount = number_format($load->user->wallet->amount, 2, '.', '');
 
+        if ($userWalletAmount < $loadTotalAmount) {
+            return $this->error('', 'Insufficient funds in wallet!', 404);
+        }
+
+        $order = Order::where(['user_id'=>Auth::id(),'loadable_id'=>$load->id,'status'=>'Paid'])->first();
+
+        if($order){
+            return $this->error('', 'Order/load already paid   !', 404);
+
+        }
 
         $load->user->wallet->amount -= $loadTotalAmount;
 
@@ -79,21 +86,17 @@ class OrderController extends Controller
 
         // Associate the order with the load
         $order->loadable()->associate($load);
-      //  $order->save();
+        //  $order->save();
 
-         if($order->save()){
+        if ($order->save()) {
 
             event(new LoadTypeCreated($load));
 
-            return $this->success( new OrderResource($order) , 'Order payment was successfully');
-
-
-         }else{
+            return $this->success(new OrderResource($order), 'Order payment was successfully');
+        } else {
 
             return $this->error([], 'Error placing other', 500);
-
-         }
-
+        }
     }
 
     /**
