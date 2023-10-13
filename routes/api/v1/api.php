@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\v1\Customers\VehicleModelController;
 use App\Http\Controllers\Api\v1\Customers\LoadContainerController;
 use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
 use App\Http\Controllers\Api\v1\Customers\LoadSpecializedController;
+use App\Http\Controllers\Api\v1\Order\OrderController;
 use App\Http\Controllers\Api\v1\ShippingCompany\ShippingCompanyController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return-json'], function () {
@@ -113,6 +114,17 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     });
 
 
+    Route::group(['prefix' => 'order', 'middleware' => 'auth:api'], function () {
+
+        //load type route
+        Route::get('/load-order', [OrderController::class, 'index']);
+        Route::post('/load-order', [OrderController::class, 'store']);
+        Route::get('/load-order/{id}', [OrderController::class, 'show']);
+        Route::post('/load-order/{id}', [OrderController::class, 'update']);
+        Route::delete('/load-order/{id}', [OrderController::class, 'destroy']);
+
+
+    });
      // broker route group
     Route::group(['prefix' => 'broker'], function () {
 

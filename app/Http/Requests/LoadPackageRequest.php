@@ -22,7 +22,7 @@ class LoadPackageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'load_type_id' => 'required|integer',
+            'load_type_id' => 'required|integer|exists:load_types,id',
             'load_type_type' => 'nullable|string|max:30',
             'deliver_from' => 'nullable|in:address,office',
             'to_office_id' => 'required|integer|',

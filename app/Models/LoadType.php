@@ -49,6 +49,25 @@ class LoadType extends Model
     }
 
 
+    public function specificType()
+    {
+        // Define a relationship to the specific type (Package, Bulk, or Container)
+        switch ($this->id) {
+            case 1:
+                return $this->hasOne(LoadPackage::class);
+            case 2:
+                return $this->hasOne(LoadBulk::class);
+            case 3:
+                return $this->hasOne(LoadCarClearing::class);
+            case 4:
+                return $this->hasOne(LoadContainer::class);
+            case 5:
+                return $this->hasOne(LoadSpecialized::class);
+            default:
+                return null;
+        }
+    }
+
 
     protected static function boot()
     {
