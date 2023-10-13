@@ -75,7 +75,7 @@ class OrderController extends Controller
 
             event(new LoadTypeCreated($load));
 
-            return $this->success( new OrderResource($order) , 'Car clearing record created successfully');
+            return $this->success( new OrderResource($order) , 'Order payment was successfully');
 
 
          }else{
