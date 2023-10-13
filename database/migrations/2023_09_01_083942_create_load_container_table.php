@@ -38,6 +38,7 @@ return new class extends Migration
             $table->string('street', 30)->nullable();
             $table->text('add_info')->nullable();
             $table->decimal('suggested_amount', 20)->nullable()->default(0);
+            $table->decimal('total_amount', 20)->nullable()->default(0);
             $table->enum('status', ['Pending', 'Approved', 'Failed'])->default('Pending');
 
             $table->timestamps();

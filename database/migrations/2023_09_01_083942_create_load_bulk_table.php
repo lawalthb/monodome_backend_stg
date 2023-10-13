@@ -52,6 +52,7 @@ return new class extends Migration
             $table->decimal('height', 20)->nullable();
             $table->enum('insure_it', ['Yes', 'No'])->default('No')->nullable();
             $table->decimal('insure_amount', 20)->nullable()->default(0);
+            $table->decimal('total_amount', 20)->nullable()->default(0);
             $table->enum('is_fragile', ['Yes', 'No'])->default('No')->nullable();
             $table->enum('status', ['Pending', 'Approved', 'Failed'])->default('Pending');
 

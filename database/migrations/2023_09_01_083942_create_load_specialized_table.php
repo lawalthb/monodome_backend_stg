@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('receiver_name', 100)->nullable();
             $table->string('receiver_email', 100)->nullable();
             $table->string('receiver_phone', 100)->nullable();
+            $table->decimal('total_amount', 20)->nullable()->default(0);
 
             $table->text('description')->nullable();
             $table->enum('status', ['Pending', 'Approved', 'Failed'])->default('Pending');
