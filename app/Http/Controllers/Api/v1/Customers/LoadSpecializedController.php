@@ -80,7 +80,7 @@ class LoadSpecializedController extends Controller
                 $loadBulk->loadDocuments()->save($document);
             }
         }
-        event(new LoadTypeCreated($loadBulk));
+        //event(new LoadTypeCreated($loadBulk));
 
         return $this->success(
             [

@@ -6,8 +6,11 @@ use App\Models\Order;
 use App\Models\LoadType;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
+use App\Events\LoadTypeCreated;
 use App\Http\Requests\OrderRequest;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {
@@ -45,9 +48,41 @@ class OrderController extends Controller
             return $this->error('', 'Load not found', 404);
         }
 
-       // return $load;
+        if(!$load->user->wallet){
+            return $this->error('', 'wallet not setup', 404);
 
-        $order = new Order;
+        }
+
+            $loadTotalAmount = number_format($load->total_amount, 2, '.', ''); // Format as a string with 2 decimal places
+            $userWalletAmount = number_format($load->user->wallet->amount, 2, '.', '');
+
+            if ($userWalletAmount < $loadTotalAmount ) {
+                return $this->error('', 'Insufficient funds in wallet!', 404);
+            }
+
+
+        $load->user->wallet->amount -= $loadTotalAmount;
+
+         $order = new Order;
+         $order->order_no = getNumber();
+         $order->driver_id = 1;
+         $order->amount = $loadTotalAmount;
+         $order->user_id = $load->user_id;
+         $order->status = "Paid";
+         $order->loadable()->associate($load);
+
+         if($order->save()){
+
+            event(new LoadTypeCreated($load));
+
+            return $this->success( new OrderResource($order) , 'Car clearing record created successfully');
+
+
+         }else{
+
+            return $this->error([], 'Error placing other', 500);
+
+         }
 
     }
 

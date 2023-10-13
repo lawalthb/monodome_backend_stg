@@ -20,7 +20,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->index('user_id');
             $table->integer('load_type_id')->index('load_type_name');
             $table->string('load_type_name', 30)->nullable()->comment('package, bulk, car clearing, container shipment, specialize shipment');
-            $table->enum('status', ['Pending', 'Failed', 'Completed', 'Rejected'])->default('Pending');
+            $table->enum('status', ['Pending', 'Failed','Paid', 'Completed', 'Rejected'])->default('Pending');
             $table->string('order_no');
             $table->timestamp('load_date')->useCurrent();
             $table->unsignedBigInteger('loadable_id');

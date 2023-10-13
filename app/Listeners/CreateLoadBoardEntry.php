@@ -35,7 +35,7 @@ class CreateLoadBoardEntry
          $load_board->load_type_id = $loadTypeId;
          $load_board->load_type_name = $event->loadType->loadType->slug; // You may need to define this method
          $load_board->order_no = getNumber();
-         $load_board->status = 'Pending'; // Set the initial status
+         $load_board->status = 'Paid'; // Set the initial status
          $load_board->save();
     }
 }

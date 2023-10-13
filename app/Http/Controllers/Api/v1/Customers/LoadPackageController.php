@@ -46,7 +46,7 @@ use App\Http\Resources\LoadPackageResource;
 
         $loadPackage = $loadType->loadPackages()->updateOrCreate($request->validated());
 
-        event(new LoadTypeCreated($loadPackage));
+        //event(new LoadTypeCreated($loadPackage));
 
 
         return $this->success(

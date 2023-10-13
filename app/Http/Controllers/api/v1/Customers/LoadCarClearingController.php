@@ -81,7 +81,7 @@ class LoadCarClearingController extends Controller
                 $carClearing->loadDocuments()->save($document);
             }
         }
-        event(new LoadTypeCreated($carClearing));
+       // event(new LoadTypeCreated($carClearing));
 
             DB::commit();
 

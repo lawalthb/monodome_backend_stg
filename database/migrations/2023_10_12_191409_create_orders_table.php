@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('uuid')->default(Str::uuid()->toString());
             $table->string('order_no');
             $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('driver_id')->unsigned();
+            $table->bigInteger('driver_id')->unsigned()->nullable();
             $table->decimal('amount',38, 18)->default(0);
             $table->decimal('fee',38, 18)->default(0);
             $table->unsignedBigInteger('loadable_id'); // Foreign key to the associated load
