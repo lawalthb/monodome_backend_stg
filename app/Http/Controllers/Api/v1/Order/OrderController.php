@@ -63,13 +63,23 @@ class OrderController extends Controller
 
         $load->user->wallet->amount -= $loadTotalAmount;
 
-         $order = new Order;
-         $order->order_no = getNumber();
-         $order->driver_id = 1;
-         $order->amount = $loadTotalAmount;
-         $order->user_id = $load->user_id;
-         $order->status = "Paid";
-         $order->loadable()->associate($load);
+        $order = Order::updateOrCreate(
+            [
+                'user_id' => $load->user_id,
+                'loadable_id' => $load->id, // Add loadable_id condition
+                'loadable_type' => get_class($load),
+            ],
+            [
+                'order_no' => getNumber(),
+                'driver_id' => 1,
+                'amount' => $loadTotalAmount,
+                'status' => "Paid",
+            ]
+        );
+
+        // Associate the order with the load
+        $order->loadable()->associate($load);
+      //  $order->save();
 
          if($order->save()){
 
