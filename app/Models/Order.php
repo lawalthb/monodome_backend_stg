@@ -17,6 +17,12 @@ class Order extends Model
     return $this->morphTo('loadable');
     }
 
+    public function user(){
+
+        return $this->belongsTo(User::class);
+    }
+
+
     protected static function boot()
     {
         parent::boot();

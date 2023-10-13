@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\auth;
 
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
@@ -83,6 +84,15 @@ class AuthController extends Controller
                 $user->location =  Location::get();
                 $user->user_agent = $request->header('User-Agent');
                 $user->save();
+
+
+                if(!$user->wallet){
+                    $wallet = new Wallet;
+                    $wallet->amount = 0;
+                    $wallet->status = 'active';
+                    $wallet->user_id = $user->id;
+                    $wallet->save();
+                }
 
                 $token = $user->createToken('monodomebackend' . $request->email)->plainTextToken;
 
