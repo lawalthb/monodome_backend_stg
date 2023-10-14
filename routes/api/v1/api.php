@@ -172,6 +172,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
     });
 
+
+    Route::group(['prefix' => 'chat'], function(){
+
+        
+    });
+
     // driver route group
     Route::group(['prefix' => 'driver'], function () {
 

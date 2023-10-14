@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\OrderResource;
+use App\Notifications\SendNotification;
 
 class OrderController extends Controller
 {
@@ -89,6 +90,9 @@ class OrderController extends Controller
         //  $order->save();
 
         if ($order->save()) {
+
+            $message ="Your Order with the follow ID: ".$order->order_no. " was successfully!";
+            $order->user->notify(new SendNotification($order->user, $message));
 
             event(new LoadTypeCreated($load));
 
