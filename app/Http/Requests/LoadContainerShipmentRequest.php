@@ -39,7 +39,7 @@ class LoadContainerShipmentRequest extends FormRequest
             'receiver_email' => 'required_if:is_final,Yes|email',
             'receiver_phone' => 'required_if:is_final,Yes|string|max:30',
           //  'zip_code' => 'required|string|max:30',
-            'street' => 'required|string|max:30',
+            'street' => 'required_if:is_final,Yes|string|max:30',
             'add_info' => 'nullable|string',
             //'insure_it' => 'nullable|in:Yes,No',
             'suggested_amount' => 'nullable|integer',
