@@ -37,21 +37,21 @@ class LoadSpecialized extends Model
 
 
     public function RState(){
-        return $this->belongsTo(State::class,'deliver_from_city');
+        return $this->belongsTo(State::class,'deliver_to_state');
     }
 
     public function DepCountry()
     {
-        return $this->belongsTo(Country::class, "departure_country");
+        return $this->belongsTo(Country::class, "deliver_from_country");
     }
 
     public function DesCountry()
     {
-        return $this->belongsTo(Country::class, "destination_country");
+        return $this->belongsTo(Country::class, "deliver_to_country");
     }
 
     public function SState(){
-        return $this->belongsTo(State::class,'deliver_to_city');
+        return $this->belongsTo(State::class,'deliver_from_state');
     }
 
     public function loadBoard()

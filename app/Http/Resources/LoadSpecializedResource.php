@@ -25,6 +25,7 @@ class LoadSpecializedResource extends JsonResource
             "receiver_phone" =>  $this->receiver_phone,
             "total_amount" =>  $this->total_amount,
             "description" =>  $this->description,
+            "document" => LoadDocumentResource::collection($this->loadDocuments),
             "user" =>  new UserResource($this->user),
             "loadType" => new LoadTypeResource($this->loadType),
             "deliver_from_country" =>  new CountryResource($this->DepCountry),
