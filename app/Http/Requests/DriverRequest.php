@@ -22,12 +22,12 @@ class DriverRequest extends FormRequest
     public function rules(): array
     {
         return [
-              'have_motor' => 'nullable|in:No,Yes',
+              'have_motor' => 'required|in:No,Yes',
               'full_name' => 'required|string',
               'email' => 'required|email|email',
               'phone_number' => 'required|string',
               'street' => 'required|string',
-              'vehicle_type_id' => 'required|exists:vehicle_types,id',
+              'vehicle_type_id' => 'required_if:have_motor,Yes|exists:vehicle_types,id',
               'state_id' => 'required|exists:states,id',
               'lga' => 'required|string',
               'nin_number' => 'required|string',
