@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('profile_pic_url');
             $table->string('vehicle_img_url');
             $table->string('license_url');
-            $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
+            $table->enum('status', ['Pending', 'Confirmed', 'Approved', 'Rejected','Failed'])->default('Pending');
             $table->timestamps();
             $table->softDeletes();
 

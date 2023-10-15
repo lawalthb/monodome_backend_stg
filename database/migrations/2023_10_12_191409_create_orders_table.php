@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('fee',38, 18)->default(0);
             $table->unsignedBigInteger('loadable_id'); // Foreign key to the associated load
             $table->string('loadable_type'); // Type of load (e.g., 'load_packages', 'load_specialized', etc.)
-            $table->enum('status', ['Pending', 'Failed', 'Paid'])->default('Pending');
+            $table->enum('status', ['Pending', 'Confrimed', 'Failed', 'Paid'])->default('Pending');
             $table->timestamps();
 
 

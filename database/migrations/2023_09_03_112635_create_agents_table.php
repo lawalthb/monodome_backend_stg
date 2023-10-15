@@ -27,7 +27,7 @@ return new class extends Migration
         $table->string('store_front_image')->nullable();
         $table->string('inside_store_image')->nullable();
         $table->string('registration_documents')->nullable();
-        $table->enum('status', ['Pending', 'Approved', 'Failed'])->default('Pending');
+        $table->enum('status', ['Pending', 'Confirmed', 'Approved', 'Rejected','Failed'])->default('Pending');
         $table->timestamps();
         $table->softDeletes();
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

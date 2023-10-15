@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('inside_office_image')->nullable();
             $table->string('registration_documents')->nullable();
             $table->string('cac_certificate')->nullable();
-            $table->enum('status', ['Pending', 'Approved', 'Failed'])->default('Pending');
+            $table->enum('status', ['Pending', 'Confirmed', 'Approved', 'Rejected','Failed'])->default('Pending');
             $table->timestamps();
             $table->softDeletes();
 

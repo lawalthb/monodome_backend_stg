@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\v1\Admin\AgentController;
 use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
 
 
@@ -22,5 +23,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
             Route::post('/verify-otp', [AdminAuthController::class, 'otp_verification_submit']);
             Route::post('/check-email', [AdminAuthController::class, 'check_if_email_exist']);
         });
+
+
+         // agent route group
+    Route::group(['prefix' => 'agent'], function () {
+
+        Route::get('/', [AgentController::class, 'index']);
+        //Route::post('/store', [AgentController::class, 'store']);
+        Route::get('/show/{id}', [AgentController::class, 'show']);
+        Route::post('/update/{id}', [AgentController::class, 'update']);
+        Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
+    });
 
 });
