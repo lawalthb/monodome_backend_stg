@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
 
 
 
-Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return-json'], function () {
+Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => 'return-json'], function () {
 
     Route::get('/', function () {
 
@@ -12,14 +13,14 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         //return "here is the user";
     });
 
-        // user registration namespace
+        // admin registration namespace
         Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
-            Route::post('/login', [AuthController::class, 'login']);
+            Route::post('/login', [AdminAuthController::class, 'login']);
 
-            Route::post('/forgot-password', [EmailVerificationController::class, 'reset_password_request']);
-            Route::post('/send-otp', [EmailVerificationController::class, 'send_otp']);
-            Route::post('/verify-otp', [EmailVerificationController::class, 'otp_verification_submit']);
-            Route::post('/check-email', [EmailVerificationController::class, 'check_if_email_exist']);
+            Route::post('/forgot-password', [AdminAuthController::class, 'reset_password_request']);
+            Route::post('/send-otp', [AdminAuthController::class, 'send_otp']);
+            Route::post('/verify-otp', [AdminAuthController::class, 'otp_verification_submit']);
+            Route::post('/check-email', [AdminAuthController::class, 'check_if_email_exist']);
         });
 
 });
