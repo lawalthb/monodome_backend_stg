@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('nin_number');
             $table->string('license_number');
             $table->string('proof_of_license');
-            $table->unsignedBigInteger('vehicle_type_id');
+            $table->unsignedBigInteger('vehicle_type_id')->nullable();
             $table->string('profile_picture');
             $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
             $table->timestamps();
