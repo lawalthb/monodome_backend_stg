@@ -25,7 +25,7 @@ class LoadSpecializedRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'load_type_id' => 'required|integer',
+            'load_type_id' => 'required|integer|in:5',
             'deliver_from_country' => 'required|integer',
             'deliver_from_state' => 'required|integer',
             'deliver_to_country' => 'required|integer',

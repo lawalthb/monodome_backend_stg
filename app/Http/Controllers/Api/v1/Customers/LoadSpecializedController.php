@@ -84,9 +84,9 @@ class LoadSpecializedController extends Controller
 
         return $this->success(
             [
-                "loadBulk" => new LoadSpecializedResource($loadBulk),
+                "LoadSpecialized" => new LoadSpecializedResource($loadBulk),
             ],
-            "Created Successfully"
-        );
+            "Created Successfully",
+        200);
     }
 }
