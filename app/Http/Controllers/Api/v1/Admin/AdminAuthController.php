@@ -29,7 +29,9 @@ class AdminAuthController extends Controller
     {
         $validatedData = $request->validate([
             'email' => 'required|email|exists:users,email', // Ignore the current user's email
-            'role_id' => 'required|integer|in:role,1', // Ignore the current user's email
+            'role_id' => 'required|integer|in:role,1',
+            'password' => 'required|string',
+            // Ignore the current user's email
         ],[
             'role_id.in' => 'Only Super Admins are allowed to login.',
         ]);
