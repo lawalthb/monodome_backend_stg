@@ -20,7 +20,7 @@ class UserResource extends JsonResource
             "full_name" => $this->full_name,
             'phone_number' => $this->phone_number,
             "address" => $this->address,
-            "role" => $this->roles,
+            "role" => UserRoleResource::collection($this->roles),
             "user_created_by" => new UserResource($this->whenLoaded('user_created_by')),
             "admin_type" => $this->role,
             "user_type" => strtolower($this->user_type),

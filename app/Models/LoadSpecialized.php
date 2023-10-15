@@ -40,6 +40,16 @@ class LoadSpecialized extends Model
         return $this->belongsTo(State::class,'deliver_from_city');
     }
 
+    public function DepCountry()
+    {
+        return $this->belongsTo(Country::class, "departure_country");
+    }
+
+    public function DesCountry()
+    {
+        return $this->belongsTo(Country::class, "destination_country");
+    }
+
     public function SState(){
         return $this->belongsTo(State::class,'deliver_to_city');
     }
