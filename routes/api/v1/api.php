@@ -199,7 +199,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         });
     });
 
-    Route::group(['prefix' => 'driver-manager'], function () {
+Route::group(['prefix' => 'driver-manager'], function () {
 
         Route::get('/', [DriverMangerController::class, 'index']);
         Route::post('/store', [DriverMangerController::class, 'store']);

@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 use App\Models\DriverManger;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
@@ -18,6 +20,9 @@ use App\Http\Resources\DriverMangerResource;
 
 class DriverMangerController extends Controller
 {
+
+    use ApiStatusTrait,FileUploadTrait;
+
     /**
      * Display a listing of the resource.
      */
