@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\v1\Customers\VehicleModelController;
 use App\Http\Controllers\Api\v1\Customers\LoadContainerController;
 use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
 use App\Http\Controllers\Api\v1\Customers\LoadSpecializedController;
+use App\Http\Controllers\Api\v1\DriverManger\DriverMangerController;
 use App\Http\Controllers\Api\v1\Order\OrderController;
 use App\Http\Controllers\Api\v1\ShippingCompany\ShippingCompanyController;
 
@@ -175,7 +176,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
     Route::group(['prefix' => 'chat'], function(){
 
-        
+
     });
 
     // driver route group
@@ -196,6 +197,15 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
             Route::post('/profile/update-details', [DriverController::class, 'updateProfile']);
 
         });
+    });
+
+    Route::group(['prefix' => 'driver-manager'], function () {
+
+        Route::get('/', [DriverMangerController::class, 'index']);
+        Route::post('/store', [DriverMangerController::class, 'store']);
+        Route::get('/show/{id}', [DriverMangerController::class, 'show']);
+        Route::post('/update/{id}', [DriverMangerController::class, 'update']);
+        Route::delete('/destroy/{id}', [DriverMangerController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'notification', 'middleware' => 'auth:api'], function () {
