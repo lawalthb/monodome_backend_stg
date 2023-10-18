@@ -1,13 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\SettingController;
 // use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Api\v1\CountryController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
+use App\Http\Controllers\Api\v1\Order\OrderController;
 use App\Http\Controllers\Api\v1\Wallet\CardController;
 use App\Http\Controllers\Api\v1\Agents\AgentController;
 use App\Http\Controllers\Api\v1\Driver\DriverController;
@@ -27,7 +29,6 @@ use App\Http\Controllers\Api\v1\Customers\LoadContainerController;
 use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
 use App\Http\Controllers\Api\v1\Customers\LoadSpecializedController;
 use App\Http\Controllers\Api\v1\DriverManger\DriverMangerController;
-use App\Http\Controllers\Api\v1\Order\OrderController;
 use App\Http\Controllers\Api\v1\ShippingCompany\ShippingCompanyController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return-json'], function () {
@@ -299,4 +300,19 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::get('/nigeria/states', [CountryController::class, 'getNigeriaState']);
         Route::get('/nigeria/lga/{state_id}',  [CountryController::class, 'getLgaByState']);
     });
+
+
+    Route::group(['prefix' => 'wipe'], function () {
+        Route::get('/', function(){
+
+            Artisan::call('migrate:fresh --seed');
+
+            return response()->json([
+                'message' => 'Database migrated and seeded successfully.'
+            ]);
+        });
+
+    });
+
 });
+
