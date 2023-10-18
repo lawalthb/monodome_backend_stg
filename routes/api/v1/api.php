@@ -305,7 +305,10 @@ Route::group(['prefix' => 'driver-manager'], function () {
     Route::group(['prefix' => 'wipe'], function () {
         Route::get('/', function(){
 
-            Artisan::call('migrate:fresh --seed');
+          //  Artisan::call('migrate:fresh --seed');
+
+          \Artisan::call('migrate:fresh');
+          \Artisan::call('db:seed');
 
             return response()->json([
                 'message' => 'Database migrated and seeded successfully.'
