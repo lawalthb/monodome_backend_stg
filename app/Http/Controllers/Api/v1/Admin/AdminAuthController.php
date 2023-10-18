@@ -40,8 +40,6 @@ class AdminAuthController extends Controller
             return $this->error('', 'Invalid OTP', 422);
         }
 
-
-
         $credentials = $request->only(['email', 'password']);
 
         try {
