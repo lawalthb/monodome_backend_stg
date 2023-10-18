@@ -36,7 +36,7 @@ class UsersTableSeeder extends Seeder
       // Create Admin user
       $customer = DB::table('users')->insertGetId([
         'full_name' => 'Customer',
-        'user_type' => 'User',
+        'user_type' => 'customer',
         'email' => 'customer@gmail.com',
         'password' => Hash::make('password'),
         'created_at' => now(),
