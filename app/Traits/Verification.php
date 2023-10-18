@@ -14,7 +14,7 @@ trait Verification
         PasswordReset::where('email', $email)->delete();
 
         // Generate a random code
-        $code = getNumber(6); // You need to define the `getNumber` function
+        $code = getOTPNumber(6); // You need to define the `getNumber` function
 
         // Create a new password reset record
         $passwordReset = PasswordReset::create([

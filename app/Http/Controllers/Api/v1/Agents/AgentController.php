@@ -99,18 +99,20 @@ class AgentController extends Controller
                 }
             }
 
-            $agent = new Agent([
-                'user_id' => $user->id,
-                'phone_number' => $request->input('phone_number'),
-                'state_id' => $request->input('state_id'),
-                'street' => $request->input('street'),
-                'status' => 'Pending',
-                'business_name' =>  $request->input('business_name'),
-                'lga' => $request->input('lga'),
-               // 'state_of_residence' => $request->input('state_of_residence'),
-                //'city_of_residence' => $request->input('city_of_residence'),
-                // Add other agent fields here
-            ]);
+            $agent = Agent::updateOrCreate(
+                [
+                    'user_id' => $user->id
+                ],
+                [
+                    'phone_number' => $request->input('phone_number'),
+                    'state_id' => $request->input('state_id'),
+                    'street' => $request->input('street'),
+                    'status' => 'Pending',
+                    'business_name' => $request->input('business_name'),
+                    'lga' => $request->input('lga'),
+                    // Add other agent fields here
+                ]
+            );
 
             $agent->store_front_image = $this->uploadFile('agent/agent_images', $request->file('store_front_image'));
             $agent->inside_store_image = $this->uploadFile('agent/agent_images', $request->file('inside_store_image'));

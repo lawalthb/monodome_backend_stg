@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1\Admin;
 use App\Models\User;
 use App\Models\Wallet;
 use App\Mail\NewUserMail;
+use App\Traits\Verification;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
@@ -24,14 +25,22 @@ use Stevebauman\Location\Facades\Location;
 
 class AdminAuthController extends Controller
 {
-    use FileUploadTrait, ApiStatusTrait;
+    use FileUploadTrait, ApiStatusTrait,Verification;
     public function login(Request $request)
     {
         $validatedData = $request->validate([
             'email' => 'required|email|exists:users,email', // Ignore the current user's email
             'password' => 'required|string',
-            // Ignore the current user's email
+            'otp' => 'required|numeric',
         ]);
+
+
+
+        if (!$this->verifyOTPCode($request->email, $request->otp) ||  $request->otp===000000) {
+            return $this->error('', 'Invalid OTP', 422);
+        }
+
+
 
         $credentials = $request->only(['email', 'password']);
 

@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
        $superAdmin = DB::table('users')->insertGetId([
         'full_name' => 'super admin',
         'user_type' => 'super_admin',
-        'email' => 'superadmin@example.com',
+        'email' => 'admin@monodome.co',
         'password' => Hash::make('password'),
         'created_at' => now(),
         'updated_at' => now(),
