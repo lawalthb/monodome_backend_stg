@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
         'full_name' => 'super admin',
         'user_type' => 'super_admin',
         'email' => 'admin@monodome.co',
-        'password' => Hash::make('password'),
+        'password' => Hash::make('12345678'),
         'created_at' => now(),
         'updated_at' => now(),
     ]);
