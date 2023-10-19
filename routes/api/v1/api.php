@@ -227,7 +227,7 @@ Route::group(['prefix' => 'driver-manager'], function () {
 
         Route::get('/', [WalletController::class, 'index']);
         Route::get('/check-pin', [WalletController::class, 'checkPinExists']);
-        Route::get('/validate-pin', [WalletController::class, 'validate_pin']);
+        Route::post('/validate-pin', [WalletController::class, 'validate_pin']);
         Route::post('/update-pin', [WalletController::class, 'update_pin']);
         Route::get('/wallet-history', [WalletController::class, 'wallet_history']);
 
