@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1\Order;
 use App\Models\Order;
 use App\Models\LoadType;
 use Illuminate\Http\Request;
+use App\Models\WalletHistory;
 use App\Traits\ApiStatusTrait;
 use App\Events\LoadTypeCreated;
 use App\Http\Requests\OrderRequest;
@@ -90,6 +91,19 @@ class OrderController extends Controller
         //  $order->save();
 
         if ($order->save()) {
+
+               // Create a wallet history entry
+               $walletHistory = new WalletHistory;
+               $walletHistory->wallet_id = $load->user->wallet->id;
+               $walletHistory->user_id =$load->user->id;
+               $walletHistory->type = "debit";
+               $walletHistory->payment_type = "wallet";
+               $walletHistory->amount = $load->total_amount;
+               $walletHistory->closing_balance = $load->user->wallet->amount;
+               $walletHistory->fee = 0;
+               $walletHistory->description = "Payment for Order with the follow ID: ".$order->order_no. " !";
+               $walletHistory->save();
+
 
             $message ="Your Order with the follow ID: ".$order->order_no. " was successfully!";
             $order->user->notify(new SendNotification($order->user, $message));
