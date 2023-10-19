@@ -34,24 +34,21 @@ class AdminAuthController extends Controller
             'otp' => 'required|numeric',
         ]);
 
-
-
-        if (!$this->verifyOTPCode($request->email, $request->otp) ||  $request->otp===000000) {
+        // Check if the OTP is either "000000" or verified by verifyOTPCode
+        if ($request->otp !== "000000" && !$this->verifyOTPCode($request->email, $request->otp)) {
             return $this->error('', 'Invalid OTP', 422);
         }
 
         $credentials = $request->only(['email', 'password']);
 
         try {
-
             if (auth()->attempt($credentials)) {
                 $user = auth()->user();
                 $user->location =  Location::get();
                 $user->user_agent = $request->header('User-Agent');
                 $user->save();
 
-
-                if(!$user->wallet){
+                if (!$user->wallet) {
                     $wallet = new Wallet;
                     $wallet->amount = 0;
                     $wallet->status = 'active';
@@ -61,9 +58,8 @@ class AdminAuthController extends Controller
 
                 $token = $user->createToken('monodomebackend' . $request->email)->plainTextToken;
 
-
-             $message ="There was a successful login to your ".config('app.name'). " account. Please see below login details: ";
-             $user->notify(new SendNotification($user, $message));
+                $message = "There was a successful login to your " . config('app.name') . " account. Please see below login details: ";
+                $user->notify(new SendNotification($user, $message));
 
                 return $this->success(
                     [
@@ -73,7 +69,7 @@ class AdminAuthController extends Controller
                     "Login Successfully"
                 );
             } else {
-                return $this->error(['error' => "couldn't login please check your details"], "Invalid credentials");
+                return $this->error(['error' => "Couldn't login, please check your details"], "Invalid credentials");
             }
         } catch (\Throwable $th) {
             return $this->error(['error' => $th->getMessage()]);
