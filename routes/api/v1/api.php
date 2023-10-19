@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RoleController;
 // use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
+use App\Http\Controllers\MapApiController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\NotificationController;
@@ -302,6 +303,14 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::get('/nigeria/lga/{state_id}',  [CountryController::class, 'getLgaByState']);
     });
 
+
+        //map api
+    Route::group(['prefix' => 'mapapi'], function () {
+        Route::get('place-api-autocomplete', [MapApiController::class,'place_api_autocomplete']);
+        Route::get('distance-api', [MapApiController::class, 'distance_api']);
+        Route::get('place-api-details', [MapApiController::class,'place_api_details']);
+        Route::get('geocode-api', [MapApiController::class,'geocode_api']);
+    });
 
     Route::group(['prefix' => 'wipe'], function () {
         Route::get('/', function(){
