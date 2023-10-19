@@ -111,7 +111,7 @@ class WalletController extends Controller
           'pin' => 'required|numeric|digits:4'
         ]);
         // Find the wallet by its ID
-        $wallet = Wallet::where(['user_id' => auth()->user()->id, 'pin',$request->pin])->first();
+        $wallet = Wallet::where(['user_id' => auth()->user()->id, 'pin'=>$request->pin])->first();
 
         // Check if the wallet exists and if the PIN is null
         if ($wallet) {
