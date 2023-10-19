@@ -306,10 +306,10 @@ Route::group(['prefix' => 'driver-manager'], function () {
 
         //map api
     Route::group(['prefix' => 'mapapi'], function () {
-        Route::get('place-api-autocomplete', [MapApiController::class,'place_api_autocomplete']);
-        Route::get('distance-api', [MapApiController::class, 'distance_api']);
-        Route::get('place-api-details', [MapApiController::class,'place_api_details']);
-        Route::get('geocode-api', [MapApiController::class,'geocode_api']);
+        Route::post('place-api-autocomplete', [MapApiController::class,'place_api_autocomplete']);
+        Route::post('distance-api', [MapApiController::class, 'distance_api']);
+        Route::post('place-api-details', [MapApiController::class,'place_api_details']);
+        Route::post('geocode-api', [MapApiController::class,'geocode_api']);
     });
 
     Route::group(['prefix' => 'wipe'], function () {
