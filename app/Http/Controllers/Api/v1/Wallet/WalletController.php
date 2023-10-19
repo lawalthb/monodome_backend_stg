@@ -97,10 +97,29 @@ class WalletController extends Controller
             // Check if the wallet exists and if the PIN is null
             if ($wallet && is_null($wallet->pin)) {
                 // PIN is null
-                return true;
+                return $this->success(['message' =>true], "This user has set his wallet pin");
             } else {
                 // PIN is not null
-                return false;
+                return $this->error(['message' =>false], 'Wallet pin was not set by user', 422);
             }
      }
+
+
+     public function validate_pin(Request $request){
+
+        $request->validate([
+          'pin' => 'required|numeric|digits:4'
+        ]);
+        // Find the wallet by its ID
+        $wallet = Wallet::where(['user_id' => auth()->user()->id, 'pin',$request->pin])->first();
+
+        // Check if the wallet exists and if the PIN is null
+        if ($wallet) {
+            // PIN is null
+            return $this->success(['pin' =>$wallet->pin], "Correct pin code",200);
+        } else {
+            // PIN is not null
+            return $this->error([], 'Pin code is not correct', 422);
+        }
+ }
 }
