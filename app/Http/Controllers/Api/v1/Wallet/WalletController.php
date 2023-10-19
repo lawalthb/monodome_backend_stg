@@ -69,7 +69,7 @@ class WalletController extends Controller
     public function update_pin(Request $request){
 
         $request->validate([
-            'pin' => 'required|numeric|max:5',
+          'pin' => 'required|numeric|digits:4'
         ]);
 
         $wallet = Wallet::where('user_id', auth()->user()->id)->first();
@@ -77,14 +77,17 @@ class WalletController extends Controller
         $wallet->pin = $request->pin;
 
         if($wallet->save()){
+          $walletHistory = WalletHistory::where('wallet_id', $wallet->id)->get();
 
-            return $this->success(['walletHistory' => WalletResource::collection($wallet)], "Wallet pin updated successfully");
-
+          if($walletHistory->isEmpty()){
+            return $this->success(['walletHistory' => []], "Wallet pin updated successfully");
+          }else{
+            return $this->success(['walletHistory' => WalletResource::collection($walletHistory)], "Wallet pin updated successfully");
+          }
         }else{
-            return $this->error(null, 'Error Wallet pin details', 422);
-
+          return $this->error(null, 'Error Wallet pin details', 422);
         }
-    }
+      }
 
      public function checkPinExists(){
 
