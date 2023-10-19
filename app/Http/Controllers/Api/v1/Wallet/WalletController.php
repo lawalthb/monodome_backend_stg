@@ -116,7 +116,7 @@ class WalletController extends Controller
         // Check if the wallet exists and if the PIN is null
         if ($wallet) {
             // PIN is null
-            return $this->success(['pin' =>$wallet->pin], "Correct pin code",200);
+            return $this->success(['pin' =>$wallet->pin], "Correct pin code");
         } else {
             // PIN is not null
             return $this->error([], 'Pin code is not correct', 422);
