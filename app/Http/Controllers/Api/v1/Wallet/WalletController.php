@@ -97,10 +97,10 @@ class WalletController extends Controller
             // Check if the wallet exists and if the PIN is null
             if ($wallet && is_null($wallet->pin)) {
                 // PIN is null
-                return $this->success(['message' =>true], "This user has set his wallet pin");
+                return $this->error(['message' =>false], 'Wallet pin was not set by user', 422);
             } else {
                 // PIN is not null
-                return $this->error(['message' =>false], 'Wallet pin was not set by user', 422);
+                return $this->success(['message' =>true], "This user has set his wallet pin");
             }
      }
 

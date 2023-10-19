@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -55,6 +56,20 @@ function error_processor($validator)
     }
     return $err_keeper;
 }
+
+function get_business_settings($name)
+    {
+        $config = null;
+            $data = Setting::where(['slug' => $name])->first();
+            if (isset($data)) {
+                $config = json_decode($data['value'], true);
+                if (is_null($config)) {
+                    $config = $data['value'];
+                }
+            }
+
+        return $config;
+    }
 
 function getOTPNumber($length = 8)
 {

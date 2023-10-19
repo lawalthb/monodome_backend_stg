@@ -19,7 +19,7 @@ class MapApiController extends Controller
         if ($validator->errors()->count() > 0) {
             return response()->json(['errors' => error_processor($validator)], 403);
         }
-        $api_key = get_business_settings('map_api_key_server');
+       return $api_key = get_business_settings('map_api_key_server');
         $response = Http::get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' . $request['search_text'] . '&key=' . $api_key);
         return $response->json();
     }
