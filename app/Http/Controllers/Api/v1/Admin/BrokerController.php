@@ -145,18 +145,18 @@ class BrokerController extends Controller
             return $this->error('', $validator->errors()->first(), 422);
         }
 
-        $agent = Agent::find($brokerId);
+        $broker = Broker::find($brokerId);
 
-        if (!$agent) {
+        if (!$broker) {
 
-            return $this->error('', 'Agent not found', 422);
+            return $this->error('', 'broker not found', 422);
 
         }
 
         // Update the status
-        $agent->status = $request->status;
-        $agent->save();
+        $broker->status = $request->status;
+        $broker->save();
 
-        return $this->success(['agent'=> new BrokerResource($agent)], 'Agent status updated successfully');
+        return $this->success(['broker'=> new BrokerResource($broker)], 'Agent status updated successfully');
     }
 }
