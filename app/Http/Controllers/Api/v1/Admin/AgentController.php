@@ -155,7 +155,7 @@ class AgentController extends Controller
         $agent->status = $request->status;
         $agent->save();
 
-        return $this->success(['agent'=>$agent], 'Agent status updated successfully');
+        return $this->success(['agent'=> new AgentResource($agent)], 'Agent status updated successfully');
     }
 
 
