@@ -147,13 +147,13 @@ class DriverController extends Controller
 
     public function destroy($driverID) {
         // Find the user by ID
-            $driver = Driver::findOrFail($driverID);
+            $driver = Driver::find($driverID);
 
         if (!$driver) {
-            return response()->json(['message' => 'User not found'], 404);
+            return response()->json(['message' => 'Driver not found'], 404);
         }
 
-        $user = $driver->user;
+       return $user = $driver->user;
         if ($user) {
             $user->delete();
         }

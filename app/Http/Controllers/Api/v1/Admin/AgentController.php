@@ -112,23 +112,37 @@ class AgentController extends Controller
     }
 
 
-    public function destroy($userId) {
-        // Find the user by ID
-        $user = User::find($userId);
+    public function destroy($agentId)
+    {
+        try {
+            // Find the agent by ID
+            $agent = Agent::with('user')->findOrFail($agentId);
 
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
+            dd($agent);
 
-        $agent = $user->agent;
-        if ($agent) {
+        if (!$agent) {
+                return $this->error('', 'Agent not found', 404);
+            }
+
+            // Retrieve the associated user
+            dd($agentId, $agent->user, $agent->user_id);
+
+            if (!$user) {
+                return $this->error('', 'User not found', 404);
+            }
+
+            // Delete the agent
             $agent->delete();
+
+            // Delete the user
+            $user->delete();
+
+            return $this->success([], 'Agent and user deleted successfully');
+        } catch (\Exception $e) {
+            return $this->error('', 'Unable to delete Agent and user', 500);
         }
-
-        $user->delete();
-
-        return response()->json(['message' => 'User deleted successfully']);
     }
+
 
 
     public function setStatus(Request $request, $agentId) {

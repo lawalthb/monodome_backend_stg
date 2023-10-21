@@ -15,7 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements Auditable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPermissions,SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPermissions, SoftDeletes, \OwenIt\Auditing\Auditable;
 
 
     protected $guard_name = 'api';
@@ -50,27 +50,44 @@ class User extends Authenticatable implements Auditable
     ];
 
 
-    public function agent(){
+    public function agent()
+    {
 
         return $this->hasOne(Agent::class);
     }
 
-    public function loadBulk(){
+    public function driver()
+    {
+        return $this->hasOne(Driver::class);
+    }
+
+
+    public function broker()
+    {
+        return $this->hasOne(Broker::class);
+    }
+
+
+    public function loadBulk()
+    {
 
         return $this->hasMany(LoadBulk::class);
     }
 
-    public function loadPackage(){
+    public function loadPackage()
+    {
 
         return $this->hasMany(LoadPackage::class);
     }
 
-    public function loadCarClearing(){
+    public function loadCarClearing()
+    {
 
         return $this->hasMany(LoadCarClearing::class);
     }
 
-    public function loadContainer(){
+    public function loadContainer()
+    {
 
         return $this->hasMany(LoadContainer::class);
     }
@@ -85,20 +102,16 @@ class User extends Authenticatable implements Auditable
         return $this->hasMany(WalletHistory::class);
     }
 
-    public function user_created_by(){
-        return $this->hasOne(User::class,'user_created_by');
+    public function user_created_by()
+    {
+        return $this->hasOne(User::class, 'user_created_by');
     }
 
 
-    public function driver()
-{
-    return $this->hasOne(Driver::class);
-}
 
     public function getImagePathAttribute()
     {
-        if ($this->imageUrl)
-        {
+        if ($this->imageUrl) {
             return $this->imageUrl;
         } else {
             return 'uploads/default/user.png';
