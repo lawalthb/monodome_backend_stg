@@ -49,6 +49,12 @@ class User extends Authenticatable implements Auditable
         'location' => 'array',
     ];
 
+
+    public function agent(){
+
+        return $this->hasOne(Agent::class);
+    }
+
     public function loadBulk(){
 
         return $this->hasMany(LoadBulk::class);

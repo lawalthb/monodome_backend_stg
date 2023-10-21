@@ -81,37 +81,36 @@ class AgentController extends Controller
         try {
             DB::beginTransaction();
 
-            $user = User::findOrFail($id);
+            $agent = Agent::findOrFail($id);
 
-                // User doesn't exist, so create a new user
-                $user->full_name = $request->input('full_name');
-                $user->email = $request->input('email');
-                $user->address = $request->input('address');
-                $user->phone_number = $request->input('phone_number');
-                $user->save();
-
-            $agent = Agent::updateOrCreate(
-                [
-                    'user_id' => $user->id
-                ],
-                [
-                    'phone_number' => $request->input('phone_number'),
-                    'street' => $request->input('address'),
-                ]
-            );
-
+            // Update agent information
+            $agent->phone_number = $request->input('phone_number');
+            $agent->street = $request->input('address');
             $agent->save();
+
+            // Update agent information
+            if ($agent->user) {
+                // If the user has an associated agent, update its information
+            $user = $agent->user;
+            $user->full_name = $request->input('full_name');
+            $user->email = $request->input('email');
+            $user->address = $request->input('address');
+            $user->phone_number = $request->input('phone_number');
+            $user->save();
+
+            }
 
             DB::commit();
 
-            return $this->success( new AgentResource($agent), 'Agent update successfully');
+            return $this->success(new AgentResource($user->agent), 'Agent updated successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
 
-            return $this->error('An error occurred while registering the agent and guarantors.');
+            return $this->error('An error occurred while updating the agent and user.');
         }
     }
+
 
     public function destroy($userId) {
         // Find the user by ID
