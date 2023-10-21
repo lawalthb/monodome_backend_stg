@@ -15,7 +15,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements Auditable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPermissions, SoftDeletes, \OwenIt\Auditing\Auditable;
+    // use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPermissions, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPermissions, \OwenIt\Auditing\Auditable;
 
 
     protected $guard_name = 'api';

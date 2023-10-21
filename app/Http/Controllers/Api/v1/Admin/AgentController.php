@@ -126,7 +126,7 @@ class AgentController extends Controller
             if ( $user = $agent->user) {
                 $agent->delete();
 
-            $user->delete();
+                $user->delete();
 
             return $this->success([], 'Agent and user deleted successfully');
 
