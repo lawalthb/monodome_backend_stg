@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BrokerResource;
+use Illuminate\Support\Facades\Validator;
 
 class BrokerController extends Controller
 {
@@ -109,24 +110,27 @@ class BrokerController extends Controller
     }
 
 
-    public function destroy($userId) {
-        // Find the user by ID
-        $broker = Broker::find($userId);
+    public function destroy($brokerId)
+    {
+        try {
+            // Find the driver by ID
+            $driver = Broker::with('user')->find($brokerId);
 
-        if (!$broker) {
-            return response()->json(['message' => 'broker not found'], 404);
+        if (!$driver) {
+                return $this->error('', 'driver not found', 404);
+            }
+
+            if ( $user = $driver->user) {
+                $driver->delete();
+
+                $user->delete();
+
+            return $this->success([], 'driver and user deleted successfully');
+
         }
-
-        $user = $broker->user;
-        if ($user) {
-            $broker->delete();
-            $user->delete();
-            return response()->json(['message' => 'broker deleted successfully']);
-        }else{
-
+        } catch (\Exception $e) {
+            return $this->error('', 'Unable to delete driver and user', 500);
         }
-
-
     }
 
 
