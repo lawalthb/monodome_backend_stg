@@ -111,20 +111,22 @@ class BrokerController extends Controller
 
     public function destroy($userId) {
         // Find the user by ID
-        $user = Broker::find($userId);
+        $broker = Broker::find($userId);
 
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+        if (!$broker) {
+            return response()->json(['message' => 'broker not found'], 404);
         }
 
-        $agent = $user->broker;
-        if ($agent) {
-            $agent->delete();
+        $user = $broker->user;
+        if ($user) {
+            $broker->delete();
+            $user->delete();
+            return response()->json(['message' => 'broker deleted successfully']);
+        }else{
+
         }
 
-        $user->delete();
 
-        return response()->json(['message' => 'User deleted successfully']);
     }
 
 

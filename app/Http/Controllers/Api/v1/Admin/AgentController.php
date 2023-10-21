@@ -122,7 +122,6 @@ class AgentController extends Controller
                 return $this->error('', 'Agent not found', 404);
             }
 
-
             if ( $user = $agent->user) {
                 $agent->delete();
 

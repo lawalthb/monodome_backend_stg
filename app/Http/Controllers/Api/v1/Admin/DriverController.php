@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DriverResource;
+use App\Models\Broker;
 use Illuminate\Support\Facades\Validator;
 
 class DriverController extends Controller
@@ -145,27 +146,27 @@ class DriverController extends Controller
     }
 
 
-    public function destroy($driverID) {
-        // Find the user by ID
-            $driver = Driver::find($driverID);
+    public function destroy($driverID)
+    {
+        try {
+            // Find the driver by ID
+            $driver = Driver::with('user')->find($driverID);
 
         if (!$driver) {
+                return $this->error('', 'driver not found', 404);
+            }
 
-            return $this->error([],'Driver not found.',404);
+            if ( $user = $driver->user) {
+                $driver->delete();
 
-        }
+                $user->delete();
 
-        $user = $driver->user;
-        if ($user) {
-            $driver->delete();
-            $user->delete();
-            return $this->success([], 'User deleted successfully');
-
-        }else{
-            return $this->error('An error occurred while deleting the Driver and user.');
+            return $this->success([], 'driver and user deleted successfully');
 
         }
-
+        } catch (\Exception $e) {
+            return $this->error('', 'Unable to delete driver and user', 500);
+        }
     }
 
 
