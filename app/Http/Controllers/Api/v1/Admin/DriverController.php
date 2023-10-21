@@ -150,17 +150,22 @@ class DriverController extends Controller
             $driver = Driver::find($driverID);
 
         if (!$driver) {
-            return response()->json(['message' => 'Driver not found'], 404);
+
+            return $this->error([],'Driver not found.',404);
+
         }
 
-       return $user = $driver->user;
+        $user = $driver->user;
         if ($user) {
+            $driver->delete();
             $user->delete();
+            return $this->success([], 'User deleted successfully');
+
+        }else{
+            return $this->error('An error occurred while deleting the Driver and user.');
+
         }
 
-        $user->delete();
-
-        return response()->json(['message' => 'User deleted successfully']);
     }
 
 
