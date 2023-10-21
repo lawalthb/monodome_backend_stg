@@ -7,8 +7,11 @@ use App\Models\Agent;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AgentResource;
+use Illuminate\Support\Facades\Validator;
 
 class AgentController extends Controller
 {
@@ -64,10 +67,50 @@ class AgentController extends Controller
         $agent = Agent::find($agentId);
 
         if (!$agent) {
-            return response()->json(['message' => 'Agent not found'], 404);
+
+            return $this->error('', 'Agent not found', 422);
+
         }
 
         return new AgentResource($agent);
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $user = User::findOrFail($id);
+
+                // User doesn't exist, so create a new user
+                $user->full_name = $request->input('full_name');
+                $user->email = $request->input('email');
+                $user->address = $request->input('address');
+                $user->phone_number = $request->input('phone_number');
+                $user->save();
+
+            $agent = Agent::updateOrCreate(
+                [
+                    'user_id' => $user->id
+                ],
+                [
+                    'phone_number' => $request->input('phone_number'),
+                    'street' => $request->input('address'),
+                ]
+            );
+
+            $agent->save();
+
+            DB::commit();
+
+            return $this->success( new AgentResource($agent), 'Agent update successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+
+            return $this->error('An error occurred while registering the agent and guarantors.');
+        }
     }
 
     public function destroy($userId) {
@@ -89,19 +132,30 @@ class AgentController extends Controller
     }
 
 
-    public function setStatus($agentId, $newStatus) {
-        // Find the agent by ID
+    public function setStatus(Request $request, $agentId) {
+
+
+        $validator = Validator::make($request->all(), [
+            'status' => ['required', 'string','in:Pending,Confirmed,Rejected,Failed'],
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error('', $validator->errors()->first(), 422);
+        }
+
         $agent = Agent::find($agentId);
 
         if (!$agent) {
-            return response()->json(['message' => 'Agent not found'], 404);
+
+            return $this->error('', 'Agent not found', 422);
+
         }
 
         // Update the status
-        $agent->status = $newStatus;
+        $agent->status = $request->status;
         $agent->save();
 
-        return response()->json(['message' => 'Agent status updated successfully', 'new_status' => $newStatus]);
+        return $this->success(['agent'=>$agent], 'Agent status updated successfully');
     }
 
 

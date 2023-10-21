@@ -137,6 +137,14 @@ class SettingsSeeder extends Seeder
                 'updated_at' => null,
             ],
 
+            [
+                'name' => 'Map Api Server Key',
+                'value' => 'AIzaSyAvHCgdqlX55-kjQ5ZMwEAevkV2jc7Kxl8',
+                'slug' => 'map_api_key_server',
+                'created_at' => '2020-01-07 18:30:00',
+                'updated_at' => null,
+            ],
+
 
         ];
 

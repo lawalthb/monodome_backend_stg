@@ -29,7 +29,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
     Route::group(['prefix' => 'agent'], function () {
 
         Route::get('/', [AgentController::class, 'index']);
-        //Route::post('/store', [AgentController::class, 'store']);
+        Route::post('/store', [AgentController::class, 'store']);
+        Route::post('/status/{id}', [AgentController::class, 'setStatus']);
         Route::get('/show/{id}', [AgentController::class, 'show']);
         Route::post('/update/{id}', [AgentController::class, 'update']);
         Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
