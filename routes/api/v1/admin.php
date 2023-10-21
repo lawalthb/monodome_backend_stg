@@ -24,7 +24,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
     });
 
 
-    Route::group(['middleware' => 'auth:api'], function () {
+    Route::group(['middleware' => ['auth:api', 'superadmin'] ], function () {
 
     // agent route group
     Route::group(['prefix' => 'agent'], function () {
