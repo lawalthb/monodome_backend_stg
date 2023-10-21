@@ -116,28 +116,21 @@ class AgentController extends Controller
     {
         try {
             // Find the agent by ID
-            $agent = Agent::with('user')->findOrFail($agentId);
-
-            dd($agent);
+            $agent = Agent::with('user')->find($agentId);
 
         if (!$agent) {
                 return $this->error('', 'Agent not found', 404);
             }
 
-            // Retrieve the associated user
-            dd($agentId, $agent->user, $agent->user_id);
 
-            if (!$user) {
-                return $this->error('', 'User not found', 404);
-            }
+            if ( $user = $agent->user) {
+                $agent->delete();
 
-            // Delete the agent
-            $agent->delete();
-
-            // Delete the user
             $user->delete();
 
             return $this->success([], 'Agent and user deleted successfully');
+
+        }
         } catch (\Exception $e) {
             return $this->error('', 'Unable to delete Agent and user', 500);
         }
