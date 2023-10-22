@@ -65,6 +65,18 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
     });
 
 
+    // driver route group
+    Route::group(['prefix' => 'driver-manager'], function () {
+        Route::get('/', [DriverController::class, 'index']);
+        Route::post('/store', [DriverController::class, 'store']);
+        Route::get('/search', [DriverController::class, 'search']);
+        Route::post('/status/{id}', [DriverController::class, 'setStatus']);
+        Route::get('/show/{id}', [DriverController::class, 'show']);
+        Route::post('/update/{id}', [DriverController::class, 'update']);
+        Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
+    });
+
+
       // driver route group
       Route::group(['prefix' => 'broker'], function () {
         Route::get('/', [BrokerController::class, 'index']);
