@@ -114,22 +114,22 @@ class BrokerController extends Controller
     {
         try {
             // Find the driver by ID
-            $driver = Broker::with('user')->find($brokerId);
+            $broker = Broker::with('user')->find($brokerId);
 
-        if (!$driver) {
-                return $this->error('', 'driver not found', 404);
+        if (!$broker) {
+                return $this->error('', 'Broker not found', 404);
             }
 
-            if ( $user = $driver->user) {
-                $driver->delete();
+            if ( $user = $broker->user) {
+                $broker->delete();
 
                 $user->delete();
 
-            return $this->success([], 'driver and user deleted successfully');
+            return $this->success([], 'Broker and user deleted successfully');
 
         }
         } catch (\Exception $e) {
-            return $this->error('', 'Unable to delete driver and user', 500);
+            return $this->error('', 'Unable to delete Broker and user', 500);
         }
     }
 
