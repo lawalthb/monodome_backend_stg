@@ -48,11 +48,14 @@ class DriverController extends Controller
             $drivers->where(function ($query) use ($term) {
                 $query->orWhereHas('user', function ($userQuery) use ($term) {
                     $userQuery->where('email', 'like', "%$term%")
+                        ->orWhere('phone_number', 'like', "%$term%")
                         ->orWhere('full_name', 'like', "%$term%");
                 })
                 ->orWhere('street', 'like', "%$term%")
                 ->orWhere('have_motor', 'like', "%$term%")
                 ->orWhere('type', 'like', "%$term%")
+                ->orWhere('license_number', 'like', "%$term%")
+                ->orWhere('nin_number', 'like', "%$term%")
                 ->orWhere('status', 'like', "%$term%")
                 ->orWhereHas('state', function ($stateQuery) use ($term) {
                     $stateQuery->where('name', 'like', "%$term%");
@@ -118,7 +121,7 @@ class DriverController extends Controller
             $Driver = Driver::findOrFail($id);
 
             // Update Driver information
-            $Driver->phone_number = $request->input('phone_number');
+          //  $Driver->phone_number = $request->input('phone_number');
             $Driver->street = $request->input('address');
             $Driver->save();
 

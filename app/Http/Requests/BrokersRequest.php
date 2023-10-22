@@ -24,7 +24,7 @@ class BrokersRequest extends FormRequest
         return [
             'full_name' => 'required|string',
             'email' => 'required|email|email',
-            'phone_number' => 'required|string|phone_number',
+            'phone_number' => 'required|numeric|min:10',
             'street' => 'required|string',
             'state_id' => 'required|exists:states,id',
             'lga' => 'required|string',

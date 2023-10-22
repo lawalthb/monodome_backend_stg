@@ -48,6 +48,11 @@ class Driver extends Model
         return $this->belongsTo(Country::class);
     }
 
+    public function vehicleType(){
+
+        return $this->belongsTo(VehicleType::class,'vehicle_type_id');
+    }
+
     public function state(){
 
         return $this->belongsTo(State::class);

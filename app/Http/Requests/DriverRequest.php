@@ -25,7 +25,7 @@ class DriverRequest extends FormRequest
               'have_motor' => 'required|in:No,Yes',
               'full_name' => 'required|string',
               'email' => 'required|email|email',
-              'phone_number' => 'required|string',
+              'phone_number' => 'required|numeric|min:10',
               'street' => 'required|string',
               'vehicle_type_id' => 'required_if:have_motor,Yes|exists:vehicle_types,id',
               'state_id' => 'required|exists:states,id',

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
 use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
+use App\Http\Controllers\Api\v1\Admin\BrokerController;
 use App\Http\Controllers\Api\v1\Admin\DriverController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => 'return-json'], function () {
@@ -31,7 +32,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
         Route::get('/', [AgentController::class, 'index']);
         Route::post('/store', [AgentController::class, 'store']);
-        Route::get('/search', [DriverController::class, 'search']);
+        Route::get('/search', [AgentController::class, 'search']);
         Route::post('/status/{id}', [AgentController::class, 'setStatus']);
         Route::get('/show/{id}', [AgentController::class, 'show']);
         Route::post('/update/{id}', [AgentController::class, 'update']);
@@ -48,6 +49,18 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/show/{id}', [DriverController::class, 'show']);
         Route::post('/update/{id}', [DriverController::class, 'update']);
         Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
+    });
+
+
+      // driver route group
+      Route::group(['prefix' => 'broker'], function () {
+        Route::get('/', [BrokerController::class, 'index']);
+        Route::post('/store', [BrokerController::class, 'store']);
+        Route::get('/search', [BrokerController::class, 'search']);
+        Route::post('/status/{id}', [BrokerController::class, 'setStatus']);
+        Route::get('/show/{id}', [BrokerController::class, 'show']);
+        Route::post('/update/{id}', [BrokerController::class, 'update']);
+        Route::delete('/destroy/{id}', [BrokerController::class, 'destroy']);
     });
 
 

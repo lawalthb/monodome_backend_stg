@@ -39,6 +39,7 @@ class AgentController extends Controller
     public function search(Request $request)
     {
         $terms = explode(" ", $request->input('search'));
+
         $perPage = $request->input('per_page', 10);
 
         $agents = Agent::query();
@@ -51,6 +52,7 @@ class AgentController extends Controller
                 })
                 ->orWhere('street', 'like', "%$term%")
                 ->orWhere('business_name', 'like', "%$term%")
+                ->orWhere('phone_number', 'like', "%$term%")
                 ->orWhere('status', 'like', "%$term%")
                 ->orWhereHas('state', function ($stateQuery) use ($term) {
                     $stateQuery->where('name', 'like', "%$term%");
