@@ -16,12 +16,13 @@ class DriverMangerResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->user->full_name,
+         'name' => $this->user->full_name,
           'street' => $this->street,
           'cac_certificate' =>  getImageFile($this->cac_certificate),
           'inside_office_image' => getImageFile($this->inside_office_image),
           'inside_store_image' => getImageFile($this->inside_store_image),
           'status' => $this->status,
+          'total_user_manage' => $this->user_created_by->count(),
           'created_at' => $this->created_at,
           'updated_at' => $this->updated_at,
           'lga' => new LocalGovernmentResource($this->local),

@@ -24,16 +24,17 @@ class DriverManagerController extends Controller
         $perPage = $request->input('per_page', 10);
 
         $drivers = DriverManger::where(function ($q) use ($key) {
-            // Assuming there's a relationship between Driver and User
             $q->whereHas('user', function ($userQuery) use ($key) {
                 $userQuery->where('full_name', 'like', "%{$key}%");
-            })->orWhere('status', 'like', "%{$key}%")->orWhere('have_motor', 'like', "%{$key}%");
+            })->orWhere('status', 'like', "%{$key}%")->orWhere('business_name', 'like', "%{$key}%");
         })
-            ->latest()
-            ->paginate($perPage);
+        ->withCount('user_created_by') // Eager load the user_created_by relationship and count
+        ->latest()
+        ->paginate($perPage);
 
         return DriverMangerResource::collection($drivers);
     }
+
 
 
     public function search(Request $request)

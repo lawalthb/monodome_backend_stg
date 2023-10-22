@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
 use App\Http\Controllers\Api\v1\Admin\BrokerController;
 use App\Http\Controllers\Api\v1\Admin\CustomerController;
 use App\Http\Controllers\Api\v1\Admin\DriverController;
+use App\Http\Controllers\api\v1\admin\DriverManagerController;
 use App\Http\Controllers\Api\v1\Admin\SettingController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => 'return-json'], function () {
@@ -67,13 +68,13 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
     // driver route group
     Route::group(['prefix' => 'driver-manager'], function () {
-        Route::get('/', [DriverController::class, 'index']);
-        Route::post('/store', [DriverController::class, 'store']);
-        Route::get('/search', [DriverController::class, 'search']);
-        Route::post('/status/{id}', [DriverController::class, 'setStatus']);
-        Route::get('/show/{id}', [DriverController::class, 'show']);
-        Route::post('/update/{id}', [DriverController::class, 'update']);
-        Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
+        Route::get('/', [DriverManagerController::class, 'index']);
+        Route::post('/store', [DriverManagerController::class, 'store']);
+        Route::get('/search', [DriverManagerController::class, 'search']);
+        Route::post('/status/{id}', [DriverManagerController::class, 'setStatus']);
+        Route::get('/show/{id}', [DriverManagerController::class, 'show']);
+        Route::post('/update/{id}', [DriverManagerController::class, 'update']);
+        Route::delete('/destroy/{id}', [DriverManagerController::class, 'destroy']);
     });
 
 

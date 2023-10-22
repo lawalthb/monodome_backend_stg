@@ -44,6 +44,11 @@ class DriverManger extends Model
     }
 
 
+    public function user_created_by()
+    {
+        return $this->hasMany(User::class, 'user_created_by'); // Adjust the foreign key name as needed
+    }
+
     protected static function boot()
     {
         parent::boot();
