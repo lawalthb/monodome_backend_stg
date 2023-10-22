@@ -59,7 +59,6 @@ class SettingController extends Controller
 
     }
 
-
     public function delete(Request $request, $id){
 
 
