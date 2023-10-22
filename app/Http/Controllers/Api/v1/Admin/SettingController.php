@@ -59,6 +59,28 @@ class SettingController extends Controller
 
     }
 
+
+    public function delete(Request $request, $id){
+
+
+        if (!is_numeric($id) || empty($id)) {
+            return $this->error('', 'id must be a numeric value and cannot be empty', 422);
+        }
+
+        $setting = Setting::find($id);
+
+        if( $setting){
+            return $this->success(
+               '',
+                "setting deleted"
+            );
+        }else{
+            return $this->error('','setting will following id not found!',422);
+
+        }
+
+    }
+
   public function store(Request $request){
         Validator::make($request->all(), [
             'name' => 'required',
