@@ -27,7 +27,36 @@ class SettingController extends Controller
             ->latest()
             ->paginate($perPage);
 
-        return $settings;
+            return $this->success(
+                [
+                    "settings" => $settings
+                ],
+                "Login Successfully"
+            );
+    }
+
+    public function show(Request $request, $id){
+
+
+        if (!is_numeric($id) || empty($id)) {
+            return $this->error('', 'id must be a numeric value and cannot be empty', 422);
+        }
+
+        $setting = Setting::find($id);
+
+        if( $setting){
+            return $this->success(
+                [
+
+                    "settings" => $setting
+                ],
+                "Single Settings"
+            );
+        }else{
+            return $this->error('','setting will following id not found!',422);
+
+        }
+
     }
 
   public function store(Request $request){
@@ -50,9 +79,8 @@ class SettingController extends Controller
             'value' => 'required',
         ])->validate();
 
-        if(!is_int($id) || $id==''){
-            return $this->error('','id must be int or cant be empty',422);
-
+        if (!is_numeric($id) || empty($id)) {
+            return $this->error('', 'id must be a numeric value and cannot be empty', 422);
         }
 
         $setting = Setting::find($id);
