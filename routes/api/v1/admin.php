@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
 use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
 use App\Http\Controllers\Api\v1\Admin\BrokerController;
+use App\Http\Controllers\Api\v1\Admin\CustomerController;
 use App\Http\Controllers\Api\v1\Admin\DriverController;
+use App\Http\Controllers\Api\v1\Admin\SettingController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => 'return-json'], function () {
 
@@ -27,6 +29,15 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
     Route::group(['middleware' => ['auth:api', 'superadmin'] ], function () {
 
+
+        //setting route group
+
+        Route::group(['prefix' => 'setting'], function () {
+            Route::get('/', [SettingController::class, 'index']);
+            Route::post('/store', [SettingController::class, 'store']);
+            Route::post('/update', [SettingController::class, 'update']);
+
+        });
     // agent route group
     Route::group(['prefix' => 'agent'], function () {
 
@@ -61,6 +72,18 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/show/{id}', [BrokerController::class, 'show']);
         Route::post('/update/{id}', [BrokerController::class, 'update']);
         Route::delete('/destroy/{id}', [BrokerController::class, 'destroy']);
+    });
+
+
+     // driver route group
+     Route::group(['prefix' => 'customer'], function () {
+        Route::get('/', [CustomerController::class, 'index']);
+        Route::post('/store', [CustomerController::class, 'store']);
+        Route::get('/search', [CustomerController::class, 'search']);
+        Route::post('/status/{id}', [CustomerController::class, 'setStatus']);
+        Route::get('/show/{id}', [CustomerController::class, 'show']);
+        Route::post('/update/{id}', [CustomerController::class, 'update']);
+        Route::delete('/destroy/{id}', [CustomerController::class, 'destroy']);
     });
 
 

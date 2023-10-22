@@ -69,6 +69,11 @@ class User extends Authenticatable implements Auditable
     }
 
 
+    public function order(){
+
+        return $this->hasMany(Order::class);
+    }
+
     public function loadBulk()
     {
 

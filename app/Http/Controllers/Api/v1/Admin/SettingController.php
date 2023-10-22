@@ -2,10 +2,71 @@
 
 namespace App\Http\Controllers\Api\v1\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Setting;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class SettingController extends Controller
 {
-    //
+
+    use FileUploadTrait, ApiStatusTrait;
+
+    public function index(Request $request)
+    {
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $settings = Setting::where(function ($q) use ($key) {
+            // Assuming there's a relationship between Agent and User
+            $q->orWhere('value', 'like', "%{$key}%")->orWhere('slug', 'like', "%{$key}%");
+        })
+            ->latest()
+            ->paginate($perPage);
+
+        return $settings;
+    }
+
+  public function store(Request $request){
+        Validator::make($request->all(), [
+            'name' => 'required',
+            'value' => 'required',
+        ])->validate();
+
+        $setting = new Setting;
+        $setting->name = $request->name;
+        $setting->value = $request->value;
+        $setting->slug = Str::studly($request->name);
+        $setting->save();
+        return $setting;
+    }
+
+    public function update(Request $request, $id){
+        Validator::make($request->all(), [
+            'name' => 'required',
+            'value' => 'required',
+        ])->validate();
+
+        if(!is_int($id) || $id==''){
+            return $this->error('','id must be int or cant be empty',422);
+
+        }
+
+        $setting = Setting::find($id);
+
+        if( $setting){
+
+            $setting->name = $request->name;
+            $setting->value = $request->value;
+            $setting->slug = Str::studly($request->name);
+            $setting->save();
+            return $setting;
+        }else{
+            return $this->error('','setting not found!',422);
+
+        }
+    }
 }
