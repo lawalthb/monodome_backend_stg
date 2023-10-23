@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\api\v1\admin;
 
-use App\Models\Broker;
+use App\Models\company;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
-use App\Models\ShippingCompany;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CompanyResource;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\ShippingCompanyResource;
 
-class ShippingCompanyController extends Controller
+class CompanyController extends Controller
 {
     use ApiStatusTrait,FileUploadTrait;
 
@@ -22,8 +21,8 @@ class ShippingCompanyController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $shippingCompany = ShippingCompany::where(function ($q) use ($key) {
-            // Assuming there's a relationship between shippingCompany and User
+        $company = company::where(function ($q) use ($key) {
+            // Assuming there's a relationship between Company and User
             $q->whereHas('user', function ($userQuery) use ($key) {
                 $userQuery->where('full_name', 'like', "%{$key}%");
             })->orWhere('status', 'like', "%{$key}%")->orWhere('nin_number', 'like', "%{$key}%");
@@ -31,7 +30,7 @@ class ShippingCompanyController extends Controller
             ->latest()
             ->paginate($perPage);
 
-        return ShippingCompanyResource::collection($shippingCompany);
+        return CompanyResource::collection($company);
     }
 
 
@@ -40,10 +39,10 @@ class ShippingCompanyController extends Controller
         $terms = explode(" ", $request->input('search'));
         $perPage = $request->input('per_page', 10);
 
-        $shippingCompany = ShippingCompany::query();
+        $company = company::query();
 
         foreach ($terms as $term) {
-            $shippingCompany->where(function ($query) use ($term) {
+            $company->where(function ($query) use ($term) {
                 $query->orWhereHas('user', function ($userQuery) use ($term) {
                     $userQuery->where('email', 'like', "%$term%")
                         ->orWhere('full_name', 'like', "%$term%");
@@ -57,21 +56,21 @@ class ShippingCompanyController extends Controller
             });
         }
 
-        $shippingCompany = $shippingCompany->latest()->paginate($perPage);
+        $company = $company->latest()->paginate($perPage);
 
-        return ShippingCompanyResource::collection($shippingCompany);
+        return CompanyResource::collection($company);
     }
 
-    public function show($shippingCompanyId) {
-        $shippingCompany = ShippingCompany::find($shippingCompanyId);
+    public function show($companyId) {
+        $company = company::find($companyId);
 
-        if (!$shippingCompany) {
+        if (!$company) {
 
             return $this->error('', 'shipping Company not found', 422);
 
         }
 
-        return new ShippingCompanyResource($shippingCompany);
+        return new CompanyResource($company);
     }
 
 
@@ -80,17 +79,17 @@ class ShippingCompanyController extends Controller
         try {
             DB::beginTransaction();
 
-            $shippingCompany = ShippingCompany::findOrFail($id);
+            $company = company::findOrFail($id);
 
-            // Update shippingCompany information
-            $shippingCompany->phone_number = $request->input('phone_number');
-            $shippingCompany->street = $request->input('address');
-            $shippingCompany->save();
+            // Update company information
+            $company->phone_number = $request->input('phone_number');
+            $company->street = $request->input('address');
+            $company->save();
 
-            // Update shippingCompany information
-            if ($shippingCompany->user) {
-                // If the user has an associated shippingCompany, update its information
-            $user = $shippingCompany->user;
+            // Update company information
+            if ($company->user) {
+                // If the user has an associated company, update its information
+            $user = $company->user;
             $user->full_name = $request->input('full_name');
             $user->email = $request->input('email');
             $user->address = $request->input('address');
@@ -101,41 +100,41 @@ class ShippingCompanyController extends Controller
 
             DB::commit();
 
-            return $this->success(new ShippingCompanyResource($user->shippingCompany), 'shippingCompany updated successfully');
+            return $this->success(new CompanyResource($user->company), 'Company updated successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
 
-            return $this->error('An error occurred while updating the shippingCompany and user.');
+            return $this->error('An error occurred while updating the Company and user.');
         }
     }
 
 
-    public function destroy($shippingCompanyId)
+    public function destroy($companyId)
     {
         try {
             // Find the driver by ID
-            $shippingCompany = ShippingCompany::with('user')->find($shippingCompanyId);
+            $company = company::with('user')->find($companyId);
 
-        if (!$shippingCompany) {
-                return $this->error('', 'shippingCompany not found', 404);
+        if (!$company) {
+                return $this->error('', 'company not found', 404);
             }
 
-            if ( $user = $shippingCompany->user) {
-                $shippingCompany->delete();
+            if ( $user = $company->user) {
+                $company->delete();
 
                 $user->delete();
 
-            return $this->success([], 'shippingCompany and user deleted successfully');
+            return $this->success([], 'Company and user deleted successfully');
 
         }
         } catch (\Exception $e) {
-            return $this->error('', 'Unable to delete shippingCompany and user', 500);
+            return $this->error('', 'Unable to delete Company and user', 500);
         }
     }
 
 
-    public function setStatus(Request $request, $shippingCompanyId) {
+    public function setStatus(Request $request, $companyId) {
 
 
         $validator = Validator::make($request->all(), [
@@ -146,19 +145,18 @@ class ShippingCompanyController extends Controller
             return $this->error('', $validator->errors()->first(), 422);
         }
 
-        $shippingCompany = ShippingCompany::find($shippingCompanyId);
+        $company = company::find($companyId);
 
-        if (!$shippingCompany) {
+        if (!$company) {
 
-            return $this->error('', 'shippingCompany not found', 422);
+            return $this->error('', 'company not found', 422);
 
         }
 
         // Update the status
-        $shippingCompany->status = $request->status;
-        $shippingCompany->save();
+        $company->status = $request->status;
+        $company->save();
 
-        return $this->success(['shippingCompany'=> new ShippingCompanyResource($shippingCompany)], 'shippingCompany status updated successfully');
+        return $this->success(['company'=> new CompanyResource($company)], 'Company status updated successfully');
     }
-
 }

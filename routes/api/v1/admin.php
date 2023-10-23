@@ -2,12 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
-use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
 use App\Http\Controllers\Api\v1\Admin\BrokerController;
-use App\Http\Controllers\Api\v1\Admin\CustomerController;
 use App\Http\Controllers\Api\v1\Admin\DriverController;
-use App\Http\Controllers\api\v1\admin\DriverManagerController;
 use App\Http\Controllers\Api\v1\Admin\SettingController;
+use App\Http\Controllers\Api\v1\Admin\CustomerController;
+use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
+use App\Http\Controllers\Api\v1\admin\LoadBoardController;
+use App\Http\Controllers\api\v1\admin\DriverManagerController;
+use App\Http\Controllers\api\v1\admin\ShippingCompanyController;
+use App\Http\Controllers\api\v1\admin\SpecializedShipmentController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => 'return-json'], function () {
 
@@ -77,6 +80,29 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::delete('/destroy/{id}', [DriverManagerController::class, 'destroy']);
     });
 
+    // shipping-company route group
+    Route::group(['prefix' => 'shipping-company'], function () {
+        Route::get('/', [ShippingCompanyController::class, 'index']);
+        Route::post('/store', [ShippingCompanyController::class, 'store']);
+        Route::get('/search', [ShippingCompanyController::class, 'search']);
+        Route::post('/status/{id}', [ShippingCompanyController::class, 'setStatus']);
+        Route::get('/show/{id}', [ShippingCompanyController::class, 'show']);
+        Route::post('/update/{id}', [ShippingCompanyController::class, 'update']);
+        Route::delete('/destroy/{id}', [ShippingCompanyController::class, 'destroy']);
+    });
+
+
+    // load-board route group
+    Route::group(['prefix' => 'load-board'], function () {
+
+    Route::get('/', [LoadBoardController::class, 'index']);
+    Route::post('/', [LoadBoardController::class, 'store']);
+    Route::get('/{id}', [LoadBoardController::class, 'show']);
+    Route::post('/{loadBulk}', [LoadBoardController::class, 'update']);
+    Route::delete('/{id}', [LoadBoardController::class, 'destroy']);
+
+});
+
 
       // driver route group
       Route::group(['prefix' => 'broker'], function () {
@@ -99,6 +125,18 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/show/{id}', [CustomerController::class, 'show']);
         Route::post('/update/{id}', [CustomerController::class, 'update']);
         Route::delete('/destroy/{id}', [CustomerController::class, 'destroy']);
+    });
+
+
+      // specialized-shipment route group
+      Route::group(['prefix' => 'specialized-shipment'], function () {
+        Route::get('/', [SpecializedShipmentController::class, 'index']);
+        Route::post('/store', [SpecializedShipmentController::class, 'store']);
+        Route::get('/search', [SpecializedShipmentController::class, 'search']);
+        Route::post('/status/{id}', [SpecializedShipmentController::class, 'setStatus']);
+        Route::get('/show/{id}', [SpecializedShipmentController::class, 'show']);
+        Route::post('/update/{id}', [SpecializedShipmentController::class, 'update']);
+        Route::delete('/destroy/{id}', [SpecializedShipmentController::class, 'destroy']);
     });
 
 
