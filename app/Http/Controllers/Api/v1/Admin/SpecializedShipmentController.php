@@ -21,14 +21,10 @@ class SpecializedShipmentController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $specialized = LoadSpecialized::where(function ($q) use ($key) {
-            // Assuming there's a relationship between Specialized and User
-            $q->whereHas('user', function ($userQuery) use ($key) {
-                $userQuery->where('full_name', 'like', "%{$key}%");
-            })->orWhere('status', 'like', "%{$key}%")->orWhere('nin_number', 'like', "%{$key}%");
-        })
-            ->latest()
-            ->paginate($perPage);
+        $specialized = LoadSpecialized::where('user_id', auth()->id())->where(function ($q) use ($key) {
+            $q->where('sender_name', 'like', "%{$key}%")
+            ->orWhere('sender_email', 'like', "%{$key}%");
+        })->latest()->paginate();
 
         return LoadSpecializedResource::collection($specialized);
     }
