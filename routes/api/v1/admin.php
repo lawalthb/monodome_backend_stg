@@ -67,7 +67,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::put('/{role}', [RoleController::class, 'update']);
         Route::delete('/{role}', [RoleController::class, 'destroy']);
         Route::post('/change-role', [RoleController::class, 'changeRole']);
-        Route::delete('/{role}/user/{user}', [RoleController::class, 'update']);
+        Route::get('/user/{user}', [RoleController::class, 'user_role']);
 
         Route::get('permissions', [PermissionController::class, 'index']);
         Route::post('permissions', [PermissionController::class, 'store']);
