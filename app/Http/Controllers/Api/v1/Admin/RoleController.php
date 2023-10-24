@@ -131,7 +131,7 @@ class RoleController extends Controller
 
         if ($user) {
 
-            return response()->json(['message' => ' successfully', 'roles' =>  UserRoleResource::collection($user->roles) ], 200);
+            return response()->json(['message' => 'All roles successfully', 'roles' =>  UserRoleResource::collection($user->roles) ], 200);
         } else {
 
             return response()->json(['message' => 'User not found!'], 404);
