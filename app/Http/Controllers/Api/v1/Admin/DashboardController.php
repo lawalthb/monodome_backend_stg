@@ -8,6 +8,8 @@ use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\UserRoleResource;
 
 class DashboardController extends Controller
 {
@@ -57,5 +59,18 @@ class DashboardController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function user_role(Request $request, User $user)
+    {
+
+        $user = Auth::user();
+        if ($user) {
+
+            return response()->json(['message' => $user->full_name.' roles', 'roles' =>  UserRoleResource::collection($user->roles),'permission' =>$user->getAllPermissions() ], 200);
+        } else {
+
+            return response()->json(['message' => 'User not found!'], 404);
+        }
     }
 }

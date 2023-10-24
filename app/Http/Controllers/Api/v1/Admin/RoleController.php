@@ -137,4 +137,44 @@ class RoleController extends Controller
             return response()->json(['message' => 'User not found!'], 404);
         }
     }
+
+    public function givePermissionToRole(Request $request, Role $role){
+
+        $request->validate([
+            'permission_ids' => 'required|array|exists:roles,id', // 1 for super admin, 2 for admin
+        ]);
+
+       $permissions = Permission::whereIn('id',$request->permission_ids)->get();
+
+       $role->syncPermissions($permissions);
+
+
+       if(Role::with('permissions')->get()){
+        return response()->json(['message' => 'Updated successfully', 'role' => Role::with('permissions')->get()], 200);
+     } else {
+
+         return response()->json(['message' => 'Unable to perform actions!'], 404);
+     }
+
+    }
+
+
+    public function removePermissionToRole(Request $request, Role $role){
+
+        $request->validate([
+            'permission_id' => 'required|numeric|exists:roles,id', // 1 for super admin, 2 for admin
+        ]);
+
+       $permissions = Permission::where('id',$request->permission_ids)->first();
+
+       $role->revokePermissionTo($permissions);
+
+        if(Role::with('permissions')->get()){
+       return response()->json(['message' => 'Updated successfully', 'role' => Role::with('permissions')->get()], 200);
+    } else {
+
+        return response()->json(['message' => 'Unable to perform operation!'], 404);
+    }
+
+    }
 }

@@ -36,10 +36,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
     Route::group(['middleware' => ['auth:api', 'superadmin'] ], function () {
         //setting route group
-
-
         Route::group(['prefix' => 'dashboard'], function () {
             Route::get('/', [DashboardController::class, 'index']);
+            Route::get('/user', [DashboardController::class, 'user_role']);
             Route::get('/{id}', [DashboardController::class, 'show']);
             Route::delete('/{id}', [DashboardController::class, 'delete']);
             Route::post('/store', [DashboardController::class, 'store']);
@@ -67,14 +66,21 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::put('/{role}', [RoleController::class, 'update']);
         Route::delete('/{role}', [RoleController::class, 'destroy']);
         Route::post('/change-role', [RoleController::class, 'changeRole']);
+        Route::post('/permission-to-role/{role}', [RoleController::class, 'givePermissionToRole']);
+        Route::post('/remove-permission-to-role/{role}', [RoleController::class, 'removePermissionToRole']);
         Route::get('/user/{user}', [RoleController::class, 'user_role']);
 
-        Route::get('permissions', [PermissionController::class, 'index']);
-        Route::post('permissions', [PermissionController::class, 'store']);
-        Route::get('permissions/{permission}', [PermissionController::class, 'show']);
-        Route::put('permissions/{permission}', [PermissionController::class, 'update']);
-        Route::delete('permissions/{permission}', [PermissionController::class, 'destroy']);
     });
+
+    Route::group(['prefix' => 'permissions'], function () {
+        Route::get('/', [PermissionController::class, 'index']);
+        Route::post('/', [PermissionController::class, 'store']);
+        Route::get('/{permission}', [PermissionController::class, 'show']);
+        Route::put('/{permission}', [PermissionController::class, 'update']);
+        Route::delete('/{permission}', [PermissionController::class, 'destroy']);
+    });
+
+
 
 
     // agent route group
@@ -99,6 +105,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/show/{id}', [DriverController::class, 'show']);
         Route::post('/update/{id}', [DriverController::class, 'update']);
         Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
+
+
     });
 
 
