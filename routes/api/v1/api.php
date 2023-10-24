@@ -270,8 +270,8 @@ Route::group(['prefix' => 'driver-manager'], function () {
     //roles and permission Route group
     Route::group(['prefix' => 'roles'], function () {
 
-        Route::get('', [RoleController::class, 'index']);
-        Route::post('', [RoleController::class, 'store']);
+        Route::get('/', [RoleController::class, 'index']);
+        Route::post('/', [RoleController::class, 'store']);
         Route::get('/{role}', [RoleController::class, 'show']);
         Route::put('/{role}', [RoleController::class, 'update']);
         Route::delete('/{role}', [RoleController::class, 'destroy']);
