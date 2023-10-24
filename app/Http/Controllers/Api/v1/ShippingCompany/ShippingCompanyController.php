@@ -263,6 +263,8 @@ class ShippingCompanyController extends Controller
         $role = $role = Role::find($request->input('role')); //$request->input('role') == 1 ? 'super-admin' : 'admin';
         if ($user) {
             // User already exists; update their role
+            $user->user_type = Str::slug($role->name, "_");
+            $user->save();
             $user->syncRoles([$role]);
             $message ="Your Role has been changed to ".$role->name;
              $user->notify(new SendNotification($user, $message));
