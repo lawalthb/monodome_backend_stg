@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\v1\Admin\CustomerController;
 use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
 use App\Http\Controllers\api\v1\admin\DashboardController;
 use App\Http\Controllers\Api\v1\admin\LoadBoardController;
+use App\Http\Controllers\api\v1\admin\ManageUserController;
 use App\Http\Controllers\api\v1\admin\PermissionController;
 use App\Http\Controllers\api\v1\admin\DriverManagerController;
 use App\Http\Controllers\api\v1\admin\ShippingCompanyController;
@@ -38,13 +39,17 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         //setting route group
         Route::group(['prefix' => 'dashboard'], function () {
             Route::get('/', [DashboardController::class, 'index']);
-            Route::get('/user', [DashboardController::class, 'user_role']);
             Route::get('/{id}', [DashboardController::class, 'show']);
             Route::delete('/{id}', [DashboardController::class, 'delete']);
             Route::post('/store', [DashboardController::class, 'store']);
             Route::post('/update/{id}', [DashboardController::class, 'update']);
 
         });
+
+        Route::group(['prefix' => 'user'], function () {
+
+        Route::get('/', [ManageUserController::class, 'user_role']);
+    });
 
         Route::group(['prefix' => 'setting'], function () {
             Route::get('/', [SettingController::class, 'index']);
