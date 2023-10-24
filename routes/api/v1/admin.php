@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\v1\admin\RoleController;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
 use App\Http\Controllers\Api\v1\Admin\BrokerController;
 use App\Http\Controllers\Api\v1\Admin\DriverController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Api\v1\Admin\CustomerController;
 use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
 use App\Http\Controllers\api\v1\admin\DashboardController;
 use App\Http\Controllers\Api\v1\admin\LoadBoardController;
+use App\Http\Controllers\api\v1\admin\PermissionController;
 use App\Http\Controllers\api\v1\admin\DriverManagerController;
 use App\Http\Controllers\api\v1\admin\ShippingCompanyController;
 use App\Http\Controllers\api\v1\admin\SpecializedShipmentController;
@@ -53,6 +55,24 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
             Route::post('/update/{id}', [SettingController::class, 'update']);
 
         });
+
+
+
+    //roles and permission Route group
+    Route::group(['prefix' => 'roles'], function () {
+
+        Route::get('/', [RoleController::class, 'index']);
+        Route::post('/', [RoleController::class, 'store']);
+        Route::get('/{role}', [RoleController::class, 'show']);
+        Route::put('/{role}', [RoleController::class, 'update']);
+        Route::delete('/{role}', [RoleController::class, 'destroy']);
+
+        Route::get('permissions', [PermissionController::class, 'index']);
+        Route::post('permissions', [PermissionController::class, 'store']);
+        Route::get('permissions/{permission}', [PermissionController::class, 'show']);
+        Route::put('permissions/{permission}', [PermissionController::class, 'update']);
+        Route::delete('permissions/{permission}', [PermissionController::class, 'destroy']);
+    });
 
 
     // agent route group
