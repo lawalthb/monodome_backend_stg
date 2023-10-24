@@ -120,11 +120,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     Route::group(['prefix' => 'order', 'middleware' => 'auth:api'], function () {
 
         //load type route
-        Route::get('/load-order', [OrderController::class, 'index']);
-        Route::post('/load-order', [OrderController::class, 'store']);
-        Route::get('/load-order/{id}', [OrderController::class, 'show']);
-        Route::post('/load-order/{id}', [OrderController::class, 'update']);
-        Route::delete('/load-order/{id}', [OrderController::class, 'destroy']);
+        Route::get('/', [OrderController::class, 'index']);
+        Route::post('/', [OrderController::class, 'store']);
+        Route::get('/{id}', [OrderController::class, 'show']);
+        Route::post('/{id}', [OrderController::class, 'update']);
+        Route::delete('/{id}', [OrderController::class, 'destroy']);
 
 
     });

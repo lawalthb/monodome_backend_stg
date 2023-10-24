@@ -135,8 +135,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/search', [SpecializedShipmentController::class, 'search']);
         Route::post('/status/{id}', [SpecializedShipmentController::class, 'setStatus']);
         Route::get('/show/{id}', [SpecializedShipmentController::class, 'show']);
-        Route::post('/update/{id}', [SpecializedShipmentController::class, 'update']);
-        Route::delete('/destroy/{id}', [SpecializedShipmentController::class, 'destroy']);
+       // Route::post('/update/{id}', [SpecializedShipmentController::class, 'update']);
+       // Route::delete('/destroy/{id}', [SpecializedShipmentController::class, 'destroy']);
     });
 
 

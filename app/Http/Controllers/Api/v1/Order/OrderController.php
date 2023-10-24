@@ -21,9 +21,21 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $agents = Order::where(function ($q) use ($key) {
+            // Assuming there's a relationship between Agent and User
+            $q->whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('full_name', 'like', "%{$key}%");
+            })->orWhere('order_no', 'like', "%{$key}%");
+        })
+            ->latest()
+            ->paginate($perPage);
+
+        return OrderResource::collection($agents);
     }
 
     /**
@@ -55,11 +67,16 @@ class OrderController extends Controller
             return $this->error('', 'wallet not setup', 404);
         }
 
+        if ($load->total_amount == 0) {
+            return $this->error('', 'order amount cant be zero', 404);
+        }
+
+
 
         $loadTotalAmount = number_format($load->total_amount, 2, '.', ''); // Format as a string with 2 decimal places
         $userWalletAmount = number_format($load->user->wallet->amount, 2, '.', '');
 
-        if ($userWalletAmount < $loadTotalAmount) {
+        if ($loadTotalAmount >= $userWalletAmount) {
             return $this->error('', 'Insufficient funds in wallet!', 404);
         }
 
@@ -69,9 +86,9 @@ class OrderController extends Controller
             return $this->error('', 'This Order has already been paid!', 404);
 
         }
+        $load->user->wallet->amount =  $load->user->wallet->amount - $loadTotalAmount;
 
-        $load->user->wallet->amount -= $loadTotalAmount;
-
+        $load->save();
         $order = Order::updateOrCreate(
             [
                 'user_id' => $load->user_id,
@@ -122,7 +139,15 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $order = Order::find($id);
+
+        if (!$order) {
+
+            return $this->error('', 'shipping order not found', 422);
+
+        }
+
+        return new OrderResource($order);
     }
 
     /**

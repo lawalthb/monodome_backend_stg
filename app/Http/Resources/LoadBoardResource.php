@@ -7,6 +7,7 @@ use App\Models\LoadPackage;
 use Illuminate\Http\Request;
 use App\Models\LoadContainer;
 use App\Models\LoadSpecialized;
+use App\Http\Resources\LoadBulkResource;
 use App\Http\Resources\LoadContainerResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
