@@ -48,7 +48,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
         Route::group(['prefix' => 'user'], function () {
 
-        Route::get('/', [ManageUserController::class, 'user_role']);
+        Route::get('/', [ManageUserController::class, 'index']);
+        Route::get('/{id}', [ManageUserController::class, 'show']);
+        Route::delete('/{id}', [ManageUserController::class, 'delete']);
+        Route::post('/store', [ManageUserController::class, 'store']);
+        Route::post('/update/{id}', [ManageUserController::class, 'update']);
+        Route::get('/user-with-role', [ManageUserController::class, 'user_role']);
     });
 
         Route::group(['prefix' => 'setting'], function () {

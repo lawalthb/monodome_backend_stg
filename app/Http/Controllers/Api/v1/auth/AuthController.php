@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\auth;
 
 use App\Models\User;
 use App\Models\Wallet;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
@@ -40,11 +41,9 @@ class AuthController extends Controller
             ]);
 
 
-           // Log::info($request->ip());
-           // $roleName = str_replace('_', ' ', $request->input('role'));
             $role = Role::find($request->role_id);
             if ($role) {
-               $user->user_type = str_replace(' ', '_', $role->name);;
+               $user->user_type = Str::slug($role->name, "_");// str_replace(' ', '_', $role->name);;
                 $user->role_id = $role->id;
                $user->role = $role->name;
                 $user->assignRole($role);

@@ -75,7 +75,7 @@ class CompanyController extends Controller
 
             $role = Role::find(10);
             if ($role) {
-                $user->user_type = str_replace(' ', '_', $role->name);;
+                $user->user_type = Str::slug($role->name, "_"); //str_replace(' ', '_', $role->name);;
                 $user->role_id = $role->id;
                 $user->role = $role->name;
                 $user->assignRole($role);

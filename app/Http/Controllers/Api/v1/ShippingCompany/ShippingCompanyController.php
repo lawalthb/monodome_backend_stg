@@ -91,7 +91,7 @@ class ShippingCompanyController extends Controller
 
             $role = Role::find(5);
             if ($role) {
-                $user->user_type = str_replace(' ', '_', $role->name);
+                $user->user_type = Str::slug($role->name, "_"); //str_replace(' ', '_', $role->name);
                 $user->role_id = $role->id;
                 $user->role = "super_admin";
                 $user->assignRole($role);
@@ -209,7 +209,7 @@ class ShippingCompanyController extends Controller
         $user->phone_number = $request->input('phone_number');
         $user->user_created_by = Auth::user()->id;
         $user->role =$request->input('role');
-        $user->user_type = str_replace(' ', '_', $role->name);
+        $user->user_type = Str::slug($role->name, "_"); //str_replace(' ', '_', $role->name);
         $password  = Str::random(16);
         $user->password = Hash::make($password);
         //$user->user_type = 'company_transporter_super';
