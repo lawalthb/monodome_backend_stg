@@ -22,7 +22,7 @@ class PermissionsTableSeeder extends Seeder
             0 =>
             array (
                 'id' => 1,
-                'name' => 'manage_course',
+                'name' => 'manage_roles',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -30,7 +30,7 @@ class PermissionsTableSeeder extends Seeder
             1 =>
             array (
                 'id' => 2,
-                'name' => 'pending_course',
+                'name' => 'manage_permission',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -38,7 +38,7 @@ class PermissionsTableSeeder extends Seeder
             2 =>
             array (
                 'id' => 3,
-                'name' => 'hold_course',
+                'name' => 'manage_users',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -46,7 +46,7 @@ class PermissionsTableSeeder extends Seeder
             3 =>
             array (
                 'id' => 4,
-                'name' => 'approved_course',
+                'name' => 'approved_user',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -54,7 +54,7 @@ class PermissionsTableSeeder extends Seeder
             4 =>
             array (
                 'id' => 5,
-                'name' => 'all_course',
+                'name' => 'manage_order',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -62,7 +62,7 @@ class PermissionsTableSeeder extends Seeder
             5 =>
             array (
                 'id' => 6,
-                'name' => 'manage_course_reference',
+                'name' => 'manage_agent',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -70,7 +70,7 @@ class PermissionsTableSeeder extends Seeder
             6 =>
             array (
                 'id' => 7,
-                'name' => 'manage_course_category',
+                'name' => 'manage_driver',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -78,7 +78,7 @@ class PermissionsTableSeeder extends Seeder
             7 =>
             array (
                 'id' => 8,
-                'name' => 'manage_course_subcategory',
+                'name' => 'manage_customers',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -86,7 +86,7 @@ class PermissionsTableSeeder extends Seeder
             8 =>
             array (
                 'id' => 9,
-                'name' => 'manage_course_tag',
+                'name' => 'manage_broker',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -94,7 +94,7 @@ class PermissionsTableSeeder extends Seeder
             9 =>
             array (
                 'id' => 10,
-                'name' => 'manage_course_language',
+                'name' => 'manage_shipping_company',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -102,7 +102,7 @@ class PermissionsTableSeeder extends Seeder
             10 =>
             array (
                 'id' => 11,
-                'name' => 'manage_course_difficulty_level',
+                'name' => 'manage_employee',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -110,7 +110,7 @@ class PermissionsTableSeeder extends Seeder
             11 =>
             array (
                 'id' => 12,
-                'name' => 'manage_instructor',
+                'name' => 'manage_load_board',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -118,7 +118,7 @@ class PermissionsTableSeeder extends Seeder
             12 =>
             array (
                 'id' => 13,
-                'name' => 'pending_instructor',
+                'name' => 'manage_admin',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -126,7 +126,7 @@ class PermissionsTableSeeder extends Seeder
             13 =>
             array (
                 'id' => 14,
-                'name' => 'approved_instructor',
+                'name' => 'manage_wallet',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -134,7 +134,7 @@ class PermissionsTableSeeder extends Seeder
             14 =>
             array (
                 'id' => 15,
-                'name' => 'all_instructor',
+                'name' => 'manage_price',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -142,7 +142,7 @@ class PermissionsTableSeeder extends Seeder
             15 =>
             array (
                 'id' => 16,
-                'name' => 'add_instructor',
+                'name' => 'manage_transaction',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -150,7 +150,7 @@ class PermissionsTableSeeder extends Seeder
             16 =>
             array (
                 'id' => 17,
-                'name' => 'manage_student',
+                'name' => 'manage_transport_company',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -158,7 +158,7 @@ class PermissionsTableSeeder extends Seeder
             17 =>
             array (
                 'id' => 18,
-                'name' => 'manage_coupon',
+                'name' => 'manage_clear_forwarding_agent',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -166,7 +166,7 @@ class PermissionsTableSeeder extends Seeder
             18 =>
             array (
                 'id' => 19,
-                'name' => 'manage_promotion',
+                'name' => 'manage_notifications',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -182,7 +182,7 @@ class PermissionsTableSeeder extends Seeder
             20 =>
             array (
                 'id' => 21,
-                'name' => 'payout',
+                'name' => 'manage_load_bulk',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -190,7 +190,7 @@ class PermissionsTableSeeder extends Seeder
             21 =>
             array (
                 'id' => 22,
-                'name' => 'finance',
+                'name' => 'manage_map',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -198,7 +198,7 @@ class PermissionsTableSeeder extends Seeder
             22 =>
             array (
                 'id' => 23,
-                'name' => 'manage_certificate',
+                'name' => 'manage_load_type',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -206,7 +206,7 @@ class PermissionsTableSeeder extends Seeder
             23 =>
             array (
                 'id' => 24,
-                'name' => 'ranking_level',
+                'name' => 'manage_vehicle',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -214,7 +214,7 @@ class PermissionsTableSeeder extends Seeder
             24 =>
             array (
                 'id' => 25,
-                'name' => 'manage_language',
+                'name' => 'manage_profile',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -307,87 +307,7 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
             ),
-            36 =>
-            array (
-                'id' => 37,
-                'name' => 'manage_subscriptions',
-                'guard_name' => 'api',
-                'created_at' => '2022-12-04 22:35:33',
-                'updated_at' => '2022-12-04 22:35:33',
-            ),
-            37 =>
-            array (
-                'id' => 38,
-                'name' => 'manage_saas',
-                'guard_name' => 'api',
-                'created_at' => '2022-12-04 22:35:33',
-                'updated_at' => '2022-12-04 22:35:33',
-            ),
-            38 =>
-            array (
-                'id' => 39,
-                'name' => 'manage_organization',
-                'guard_name' => 'api',
-                'created_at' => '2022-12-04 22:35:33',
-                'updated_at' => '2022-12-04 22:35:33',
-            ),
-            39 =>
-            array (
-                'id' => 40,
-                'name' => 'pending_organization',
-                'guard_name' => 'api',
-                'created_at' => '2022-12-04 22:35:33',
-                'updated_at' => '2022-12-04 22:35:33',
-            ),
-            40 =>
-            array (
-                'id' => 41,
-                'name' => 'approved_organization',
-                'guard_name' => 'api',
-                'created_at' => '2022-12-04 22:35:33',
-                'updated_at' => '2022-12-04 22:35:33',
-            ),
-            41 =>
-            array (
-                'id' => 42,
-                'name' => 'all_organization',
-                'guard_name' => 'api',
-                'created_at' => '2022-12-04 22:35:33',
-                'updated_at' => '2022-12-04 22:35:33',
-            ),
-            42 =>
-            array (
-                'id' => 43,
-                'name' => 'add_organization',
-                'guard_name' => 'api',
-                'created_at' => '2022-12-04 22:35:33',
-                'updated_at' => '2022-12-04 22:35:33',
-            ),
-            43 =>
-            array (
-                'id' => 44,
-                'name' => 'skill',
-                'guard_name' => 'api',
-                'created_at' => '2022-12-04 22:35:33',
-                'updated_at' => '2022-12-04 22:35:33',
-            ),
-            44 =>
-            array (
-                'id' => 45,
-                'name' => 'distribute_subscription',
-                'guard_name' => 'api',
-                'created_at' => '2022-12-01 02:48:19',
-                'updated_at' => '2022-12-01 02:48:19',
-            ),
-            45 =>
-            array (
-                'id' => 46,
-                'name' => 'manage_version_update',
-                'guard_name' => 'api',
-                'created_at' => '2022-12-01 02:48:19',
-                'updated_at' => '2022-12-01 02:48:19',
-            ),
-            46 =>
+           46 =>
             array (
                 'id' => 47,
                 'name' => 'manage_wallet_recharge',
@@ -398,7 +318,7 @@ class PermissionsTableSeeder extends Seeder
             47 =>
             array (
                 'id' => 48,
-                'name' => 'page_management',
+                'name' => 'create_blog',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-01 02:48:19',
                 'updated_at' => '2022-12-01 02:48:19',
@@ -422,7 +342,7 @@ class PermissionsTableSeeder extends Seeder
             50 =>
             array (
                 'id' => 51,
-                'name' => 'forum_management',
+                'name' => 'blog_management',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-01 02:48:19',
                 'updated_at' => '2022-12-01 02:48:19',
