@@ -22,10 +22,12 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(AdminSeeder::class);
+        $this->call(UsersTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(PermissionsTableSeeder::class);
         $this->call(ModelHasRolesTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
+        $this->call(RoleHasPermissionsTableSeeder::class);
+        $this->call(ModelHasRolesTableSeeder::class);
 
 
         $this->call(CountrySeeder::class);
