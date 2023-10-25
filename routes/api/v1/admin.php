@@ -49,11 +49,13 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::group(['prefix' => 'user'], function () {
 
         Route::get('/', [ManageUserController::class, 'index']);
+        Route::post('/', [ManageUserController::class, 'store']);
         Route::get('/{id}', [ManageUserController::class, 'show']);
         Route::delete('/{id}', [ManageUserController::class, 'delete']);
-        Route::post('/store', [ManageUserController::class, 'store']);
         Route::post('/update/{id}', [ManageUserController::class, 'update']);
-        Route::get('/user-with-role', [ManageUserController::class, 'user_role']);
+        Route::get('/user-with-role', [ManageUserController::class, 'user_role_auth']);
+        Route::get('/user-with-role/{user}', [ManageUserController::class, 'user_role']);
+        Route::post('/change-password/{user}', [ManageUserController::class, 'change_password']);
     });
 
         Route::group(['prefix' => 'setting'], function () {
