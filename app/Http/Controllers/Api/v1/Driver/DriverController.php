@@ -32,6 +32,7 @@ class DriverController extends Controller
 
     public function index(Request $request)
     {
+
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 

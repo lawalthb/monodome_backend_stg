@@ -48,6 +48,7 @@ class Agent extends Model
         parent::boot();
         self::creating(function($model){
             $model->uuid =  Str::uuid()->toString();
+            $model->uuid =  getOTPNumber(6);
            // $model->user_id =  auth()->id();
         });
     }
