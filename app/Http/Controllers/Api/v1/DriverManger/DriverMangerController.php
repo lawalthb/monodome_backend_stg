@@ -138,6 +138,8 @@ class DriverMangerController extends Controller
         }
     }
 
+
+
     /**
      * Display the specified resource.
      */
@@ -166,6 +168,27 @@ class DriverMangerController extends Controller
     public function broadcast(Request $request)
     {
         $query = LoadBoard::orderBy('created_at', 'desc');;
+
+        // Filter by Order Number
+        if ($request->has('order_no')) {
+            $query->where('order_no', $request->input('order_no'));
+        }
+
+        // Add more filters as needed
+
+        $perPage = $request->input('per_page', 10); // Number of items per page, defaulting to 10.
+
+        // Use the paginate method to paginate the results
+        $loadBoards = $query->latest()->paginate($perPage);
+
+        return LoadBoardResource::collection($loadBoards);
+    }
+
+    public function singleBroadcast(Request $request,$id)
+    {
+
+
+        $query = LoadBoard::where("id",$id)->orderBy('created_at', 'desc');
 
         // Filter by Order Number
         if ($request->has('order_no')) {

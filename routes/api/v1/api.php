@@ -210,6 +210,8 @@ Route::group(['prefix' => 'driver-manager'], function () {
                 Route::get('/', [DriverMangerController::class, 'index']);
 
                 Route::get('/drivers', [DriverMangerController::class, 'index']);
+                Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
+                Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);
                 // Route::get('/show/{id}', [DriverMangerController::class, 'show']);
                 // Route::post('/update/{id}', [DriverMangerController::class, 'update']);
                 // Route::delete('/destroy/{id}', [DriverMangerController::class, 'destroy']);
