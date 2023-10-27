@@ -41,7 +41,7 @@ class DriverMangerController extends Controller
                 $userQuery->where('full_name', 'like', "%{$key}%");
                 $userQuery->where('address', 'like', "%{$key}%");
             })->orWhere('license_number', 'like', "%{$key}%");
-        })
+        })->where("have_motor","No")
             ->latest()
             ->paginate($perPage);
 
