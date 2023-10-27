@@ -1,19 +1,28 @@
+name: Publish Website
+
 on:
   push:
     branches:
       - main
-name: 🚀 Deploy website on push
+
 jobs:
   web-deploy:
-    name: 🎉 Deploy
+    name: 🚀 Deploy Website Every Commit
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
+    - name: 🚚 Get Latest Code
       uses: actions/checkout@v3
 
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+    - name: 📂 Install Rsync
+      run: |
+        sudo apt update
+        sudo apt install rsync
+      #This step installs rsync on the runner
+
+    - name: 📂 Sync Files
+      uses: SamKirkland/web-deploy@v1
       with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
+        target-server: "131.153.147.106"
+        remote-user: "kaysolak"
+        private-ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        destination-path: "/home/kaysolak/www/monolog.kaysolaknigventures.com/"
