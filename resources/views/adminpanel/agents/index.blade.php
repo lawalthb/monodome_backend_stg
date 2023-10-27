@@ -171,7 +171,7 @@
           columns += '<td>' + value.state.name + '(' + value.lga.name + ')' + '</td>';
 
           columns += '<td>' + value.status + '</td>';
-          columns += '<td><a href="view">View</a> </td>';
+          columns += '<td><a href="view"><img src={{asset("assets/img/eye.png")}} width="30px" height="30px"  /></a> </td>';
 
           columns += '</tr>';
         });
