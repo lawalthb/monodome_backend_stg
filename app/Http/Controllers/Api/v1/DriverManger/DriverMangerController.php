@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\v1\DriverManger;
 
 use App\Models\User;
+use App\Models\Driver;
 use App\Models\Guarantor;
+use App\Models\LoadBoard;
 use Illuminate\Support\Str;
 use App\Models\DriverManger;
 use Illuminate\Http\Request;
@@ -15,6 +17,8 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Resources\DriverResource;
+use App\Http\Resources\LoadBoardResource;
 use App\Http\Requests\DriverMangerRequest;
 use App\Http\Resources\DriverMangerResource;
 
@@ -26,9 +30,22 @@ class DriverMangerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $driver = Driver::where(function ($q) use ($key) {
+            // Assuming there's a relationship between Agent and User
+            $q->whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('full_name', 'like', "%{$key}%");
+                $userQuery->where('address', 'like', "%{$key}%");
+            })->orWhere('license_number', 'like', "%{$key}%");
+        })
+            ->latest()
+            ->paginate($perPage);
+
+        return DriverResource::collection($driver);
     }
 
     /**
@@ -121,6 +138,8 @@ class DriverMangerController extends Controller
         }
     }
 
+
+
     /**
      * Display the specified resource.
      */
@@ -143,5 +162,46 @@ class DriverMangerController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    public function broadcast(Request $request)
+    {
+        $query = LoadBoard::orderBy('created_at', 'desc');;
+
+        // Filter by Order Number
+        if ($request->has('order_no')) {
+            $query->where('order_no', $request->input('order_no'));
+        }
+
+        // Add more filters as needed
+
+        $perPage = $request->input('per_page', 10); // Number of items per page, defaulting to 10.
+
+        // Use the paginate method to paginate the results
+        $loadBoards = $query->latest()->paginate($perPage);
+
+        return LoadBoardResource::collection($loadBoards);
+    }
+
+    public function singleBroadcast(Request $request,$id)
+    {
+
+
+        $query = LoadBoard::where("id",$id)->orderBy('created_at', 'desc');
+
+        // Filter by Order Number
+        if ($request->has('order_no')) {
+            $query->where('order_no', $request->input('order_no'));
+        }
+
+        // Add more filters as needed
+
+        $perPage = $request->input('per_page', 10); // Number of items per page, defaulting to 10.
+
+        // Use the paginate method to paginate the results
+        $loadBoards = $query->latest()->paginate($perPage);
+
+        return LoadBoardResource::collection($loadBoards);
     }
 }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('agents', function (Blueprint $table) {
         $table->id();
         $table->string('uuid');
+        $table->string('agent_code');
         $table->unsignedBigInteger('user_id')->index('user_id');
         $table->unsignedBigInteger('country_id')->nullable();
         $table->unsignedBigInteger('state_id');

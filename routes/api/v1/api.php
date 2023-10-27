@@ -202,12 +202,24 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     });
 
 Route::group(['prefix' => 'driver-manager'], function () {
+    Route::post('/store', [DriverMangerController::class, 'store']);
 
-        Route::get('/', [DriverMangerController::class, 'index']);
-        Route::post('/store', [DriverMangerController::class, 'store']);
-        Route::get('/show/{id}', [DriverMangerController::class, 'show']);
-        Route::post('/update/{id}', [DriverMangerController::class, 'update']);
-        Route::delete('/destroy/{id}', [DriverMangerController::class, 'destroy']);
+        Route::middleware(['auth:api'])->group(function () {
+          //  Route::get('/your-url', function () {
+
+                Route::get('/', [DriverMangerController::class, 'index']);
+
+                Route::get('/drivers', [DriverMangerController::class, 'index']);
+                Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
+                Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);
+                // Route::get('/show/{id}', [DriverMangerController::class, 'show']);
+                // Route::post('/update/{id}', [DriverMangerController::class, 'update']);
+                // Route::delete('/destroy/{id}', [DriverMangerController::class, 'destroy']);
+
+
+         //   });
+        });
+
     });
 
     Route::group(['prefix' => 'notification', 'middleware' => 'auth:api'], function () {
