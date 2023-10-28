@@ -122,4 +122,15 @@ class WalletController extends Controller
             return $this->error([], 'Pin code is not correct', 422);
         }
  }
+
+    public function calculatePrice(Request $request){
+        $request->validate([
+        'distance' => 'required|string',
+            'type' => 'required|string'
+          ]);
+    }
+
+    public function allPrice(Request $request){
+
+    }
 }

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PriceSetting extends Model
 {
     use HasFactory;
+
+
+    public function loadType(){
+        return $this->belongsTo(LoadType::class,'load_type_id');
+    }
 }

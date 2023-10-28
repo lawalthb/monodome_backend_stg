@@ -243,6 +243,8 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::post('/validate-pin', [WalletController::class, 'validate_pin']);
         Route::post('/update-pin', [WalletController::class, 'update_pin']);
         Route::get('/wallet-history', [WalletController::class, 'wallet_history']);
+        Route::get('/calculate', [WalletController::class, 'calculatePrice']);
+        Route::get('/price', [WalletController::class, 'allPrice']);
 
         //card endpoint here
         Route::post('/cards', [CardController::class, 'store']);

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
+use App\Models\PriceSetting;
 use Illuminate\Support\Facades\Validator;
 
 class SettingController extends Controller
@@ -117,5 +118,16 @@ class SettingController extends Controller
             return $this->error('','setting not found!',422);
 
         }
+    }
+
+    public function price(){
+
+        return $this->success(
+            [
+
+                "settings" => PriceSetting::get()
+            ],
+            "Single Settings"
+        );
     }
 }

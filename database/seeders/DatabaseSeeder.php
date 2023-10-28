@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\AdminSeeder;
 use Database\Seeders\SettingsSeeder;
+use DistanceSettingSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -37,8 +38,7 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call(PriceSettingsSeeder::class);
-
-        //  $this->call(CountrySeeder::class);
+        $this->call(DistanceSeeder::class);
         //  $this->call(StateSeeder::class);
          $this->call(CityOneSeeder::class);
         sleep(5);

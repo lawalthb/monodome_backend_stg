@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('price_settings', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->unsignedInteger('load_type_id');
             $table->timestamps();
+
+         //   $table->foreign('load_type_id')->references('id')->on('load_types')->onDelete('cascade');
+
         });
     }
 
