@@ -26,6 +26,16 @@ class Guarantor extends Model
         return $this->belongsTo(ShippingCompany::class);
     }
 
+    public function state(){
+
+        return $this->belongsTo(LocalState::class);
+    }
+
+    public function local(){
+
+        return $this->belongsTo(LocalGovernment::class,'lga');
+    }
+
     public function loadable()
     {
         return $this->morphTo('loadable');

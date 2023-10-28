@@ -19,10 +19,10 @@ jobs:
         sudo apt install rsync
       #This step installs rsync on the runner
 
-    - name: 📂 Sync Files
-      uses: SamKirkland/web-deploy@v1
-      with:
-        target-server: "131.153.147.106"
-        remote-user: "kaysolak"
-        private-ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        destination-path: "/home/kaysolak/www/monolog.kaysolaknigventures.com/"
+    # - name: 📂 Sync Files
+    #   uses: SamKirkland/web-deploy@v1
+    #   with:
+    #     target-server: "131.153.147.106"
+    #     remote-user: "kaysolak"
+    #     private-ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    #     destination-path: "/home/kaysolak/www/monolog.kaysolaknigventures.com/"
