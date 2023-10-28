@@ -18,11 +18,13 @@ return new class extends Migration
             $table->string('order_no');
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('driver_id')->unsigned()->nullable();
+            $table->bigInteger('placed_by_id')->unsigned()->nullable();
+            $table->enum('accepted', ['Yes', 'No', 'Rejected'])->default('No');
             $table->decimal('amount',38, 18)->default(0);
             $table->decimal('fee',38, 18)->default(0);
             $table->unsignedBigInteger('loadable_id'); // Foreign key to the associated load
             $table->string('loadable_type'); // Type of load (e.g., 'load_packages', 'load_specialized', etc.)
-            $table->enum('status', ['Pending', 'Confrimed', 'Failed', 'Paid'])->default('Pending');
+            $table->enum('status', ['Pending', 'Confirmed', 'Failed', 'Paid'])->default('Pending');
             $table->timestamps();
 
 
