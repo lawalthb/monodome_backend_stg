@@ -11,6 +11,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Api\v1\CountryController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
 use App\Http\Controllers\Api\v1\Order\OrderController;
+use App\Http\Controllers\Api\v1\Truck\TruckController;
 use App\Http\Controllers\Api\v1\Wallet\CardController;
 use App\Http\Controllers\Api\v1\Agents\AgentController;
 use App\Http\Controllers\Api\v1\Driver\DriverController;
@@ -175,6 +176,17 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/show/{id}', [AgentController::class, 'show']);
         Route::post('/update/{id}', [AgentController::class, 'update']);
         Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
+    });
+
+
+      // agent route group
+      Route::group(['prefix' => 'truck'], function () {
+
+        Route::get('/', [TruckController::class, 'index']);
+        Route::post('/store', [TruckController::class, 'store']);
+        Route::get('/show/{id}', [TruckController::class, 'show']);
+        Route::post('/update/{id}', [TruckController::class, 'update']);
+        Route::delete('/destroy/{id}', [TruckController::class, 'destroy']);
     });
 
 
