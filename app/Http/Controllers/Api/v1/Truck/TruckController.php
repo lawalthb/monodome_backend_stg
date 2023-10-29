@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Api\v1\Truck;
 use App\Models\User;
 use App\Models\Truck;
 use Illuminate\Support\Str;
+use App\Models\LoadDocument;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
@@ -16,6 +19,8 @@ use App\Http\Resources\TruckResource;
 
 class TruckController extends Controller
 {
+    use ApiStatusTrait,FileUploadTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -36,13 +41,13 @@ class TruckController extends Controller
 
             if (!$user->exists) {
                 // User doesn't exist, so create a new user
-                $user->full_name = $request->input('full_name');
+                $user->full_name = "Truck";//$request->input('full_name');
                 $user->email = $request->input('email');
-                $user->address = $request->input('address');
+              //  $user->address = $request->input('address');
                 $user->phone_number = $request->input('phone_number');
                 $password  = Str::random(16);
                 $user->password = $password;
-                $user->user_type = 'agent';
+                $user->user_type = 'truck';
                 $user->save();
 
                 // $data = [
@@ -83,14 +88,29 @@ class TruckController extends Controller
             );
 
             $truck->profile_picture = $this->uploadFile('truck/truck_images', $request->file('profile_picture'));
-            $truck->inside_store_image = $this->uploadFile('truck/truck_images', $request->file('inside_store_image'));
-            $truck->registration_documents = $this->uploadFile('truck/truck_documents', $request->file('registration_documents'));
+          //  $truck->inside_store_image = $this->uploadFile('truck/truck_images', $request->file('inside_store_image'));
+            //$truck->registration_documents = $this->uploadFile('truck/truck_documents', $request->file('registration_documents'));
 
             $truck->save();
 
-            $guarantorProfilePictures = [];
+            if ($request->input('documents')) {
 
+                foreach ($request->input('documents') as $key => $fileData) {
 
+                    $file = $this->uploadFileWithDetails('load_documents', $request->file("documents.$key.file"));
+                    $path = $file['path'];
+                    $name = $fileData['document_type'];//$file['file_name'];
+
+                    // Create a record in the load_documents table
+                    $document = new LoadDocument([
+                        'name' => $name,
+                        'path' => $path,
+                    ]);
+
+                    // Associate the document with the LoadBulk
+                    $truck->loadDocuments()->save($document);
+                }
+            }
 
             DB::commit();
 
