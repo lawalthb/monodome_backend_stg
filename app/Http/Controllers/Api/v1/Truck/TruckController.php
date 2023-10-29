@@ -24,9 +24,23 @@ class TruckController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $truck = Truck::where(function ($q) use ($key) {
+            // Assuming there's a relationship between Agent and User
+            $q->whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('email', 'like', "%{$key}%");
+            })->orWhere('plate_number', 'like', "%{$key}%")
+            ->orWhere('truck_location', 'like', "%{$key}%")
+            ->orWhere('truck_name', 'like', "%{$key}%");
+        })
+            ->latest()
+            ->paginate($perPage);
+
+        return TruckResource::collection($truck);
     }
 
     /**

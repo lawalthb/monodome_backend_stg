@@ -224,6 +224,7 @@ Route::group(['prefix' => 'driver-manager'], function () {
                 Route::get('/', [DriverMangerController::class, 'index']);
 
                 Route::get('/drivers', [DriverMangerController::class, 'index']);
+                Route::get('/truck', [TruckController::class, 'truck']);
                 Route::get('/order', [DriverMangerController::class, 'order']);
                 Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
                 Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);
