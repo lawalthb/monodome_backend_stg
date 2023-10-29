@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\WalletHistory;
 use App\Traits\ApiStatusTrait;
 use App\Events\LoadTypeCreated;
+use App\Models\DistanceSetting;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -171,7 +172,7 @@ class OrderController extends Controller
     {
 
          $request->validate([
-        'distance' => 'required|string',
+          'distance' => 'required|string',
             'type' => 'required|string'
           ]);
 
@@ -181,18 +182,18 @@ class OrderController extends Controller
         $type = $payload['type'];
         $distance = (int)filter_var($payload['distance'], FILTER_SANITIZE_NUMBER_INT);
 
-        $priceSettings = PriceSetting::where('loadable_type', $type)
+        $distanceSetting = DistanceSetting::where('loadable_type', $type)
             ->where('from', '<=', $distance)
             ->where('to', '>=', $distance)
             ->first();
 
-        if (!$priceSettings) {
+        if (!$distanceSetting) {
             // Handle the case where no matching price settings were found
             return response()->json(['message' => 'No matching price settings found.'], 404);
         }
 
         // Calculate the final price
-        $finalPrice = $priceSettings->price;
+        $finalPrice = $distanceSetting->price;
 
         return response()->json([
             'success' => true,
