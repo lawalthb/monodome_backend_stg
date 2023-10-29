@@ -211,7 +211,7 @@ class SettingController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'DistanceSetting created or updated successfully',
-            'data' => $distanceSetting,
+            'data' => new DistanceSettingResource($distanceSetting),
         ], 201); // 201 Created status code
     }
 

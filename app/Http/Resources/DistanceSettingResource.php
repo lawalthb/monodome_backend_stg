@@ -14,6 +14,13 @@ class DistanceSettingResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "weight" => $this->weight,
+            "from" => $this->from,
+            "to" => $this->to,
+            "price" => $this->price,
+            "priceType" => $this->id,
+        ];
     }
 }
