@@ -5,9 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TruckOnly extends Model
+class Truck extends Model
 {
     use HasFactory;
-
-    public $table = 'truck_only';
 }
