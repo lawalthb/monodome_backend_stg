@@ -123,7 +123,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/', [OrderController::class, 'index']);
         Route::post('/', [OrderController::class, 'store']);
         Route::post('/calculate', [OrderController::class, 'calculatePrice']);
-        Route::get('/price', [OrderController::class, 'allPrice']);
+        Route::get('/price', [OrderController::class, 'distancePrice']);
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::post('/{id}', [OrderController::class, 'update']);
         Route::delete('/{id}', [OrderController::class, 'destroy']);

@@ -16,6 +16,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\OrderResource;
 use App\Notifications\SendNotification;
+use App\Http\Resources\DistanceSettingResource;
 
 class OrderController extends Controller
 {
@@ -207,7 +208,26 @@ class OrderController extends Controller
         ]);
     }
 
-    public function allPrice(Request $request){
+    public function distancePrice()
+    {
+        $groupedDistanceSettings = DistanceSetting::with('loadable')
+        ->get()
+        ->groupBy(function ($item) {
+            return $item->loadable->name; // Assuming 'name' is the attribute you want to group by
+        });
 
+    $result = [];
+    foreach ($groupedDistanceSettings as $name => $settings) {
+        $result[] = [
+            'price_setting_name' => $name,
+            'distance_settings' => DistanceSettingResource::collection($settings),
+        ];
+    }
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Distance settings grouped by Price Setting',
+        'data' => $result,
+    ]);
     }
 }
