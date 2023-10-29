@@ -198,6 +198,11 @@ class SettingController extends Controller
                 'loadable_type' => PriceSetting::class,
             ],
             [
+                'weight' => $request->weight,
+                'from' => $request->from,
+                'to' => $request->to,
+                'loadable_id' => $priceSetting->id,
+                'loadable_type' => PriceSetting::class,
                 'price' => $request->price,
             ]
         );
