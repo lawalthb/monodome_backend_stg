@@ -163,16 +163,41 @@ class SettingController extends Controller
     }
 
 
-    public function distance(){
 
-        return $this->success(
-            [
+    public function distance()
+    {
+        $groupedDistanceSettings = DistanceSetting::with('loadable')
+        ->get()
+        ->groupBy(function ($item) {
+            return $item->loadable->name; // Assuming 'name' is the attribute you want to group by
+        });
 
-                "settings" => DistanceSettingResource::collection(DistanceSetting::get())
-            ],
-            "Distance and price Settings"
-        );
+    $result = [];
+    foreach ($groupedDistanceSettings as $name => $settings) {
+        $result[] = [
+            'price_setting_name' => $name,
+            'distance_settings' => DistanceSettingResource::collection($settings),
+        ];
     }
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Distance settings grouped by Price Setting',
+        'data' => $result,
+    ]);
+    }
+
+
+
+    // public function distance(){
+
+    //     return $this->success(
+
+    //             DistanceSettingResource::collection(DistanceSetting::get())
+    //         ,
+    //         "Distance and price Settings"
+    //     );
+    // }
 
 
     public function storeDistance(Request $request)
