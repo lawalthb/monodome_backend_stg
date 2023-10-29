@@ -24,7 +24,7 @@ class DriverMangerRequest extends FormRequest
         return [
             //'full_name' => 'required|string',
             'email' => 'required|email',
-            'phone_number' => 'required|numeric|min:10',
+            'phone_number' => 'required|numeric|min:10|unique:users,phone_number',
             'street' => 'required|string',
             'business_name' => 'nullable|string',
             // 'country_id' => 'required|exists:countries,id',
