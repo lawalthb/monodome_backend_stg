@@ -170,26 +170,31 @@ class OrderController extends Controller
 
     public function calculatePrice(Request $request)
     {
-
-         $request->validate([
-          'distance' => 'required|string',
-            'type' => 'required|string'
-          ]);
+        $request->validate([
+            'distance' => 'required|string',
+            'type' => 'required|string|in:Packages,Documents,Bulk Delivery,Car Clearing,Car Delivery,Container Delivery',
+        ]);
 
         $payload = $request->all();
+        $type = $request->type;
 
-
-        $type = $payload['type'];
         $distance = (int)filter_var($payload['distance'], FILTER_SANITIZE_NUMBER_INT);
 
-        $distanceSetting = DistanceSetting::where('loadable_type', $type)
+        // Find the related PriceSetting by name
+        $priceSetting = PriceSetting::where('name', $type)->first();
+
+        if (!$priceSetting) {
+            return response()->json(['message' => 'No matching price settings found.'], 404);
+        }
+
+        // Now you can find the matching distance setting
+        $distanceSetting = DistanceSetting::where('loadable_id', $priceSetting->id)
             ->where('from', '<=', $distance)
             ->where('to', '>=', $distance)
             ->first();
 
         if (!$distanceSetting) {
-            // Handle the case where no matching price settings were found
-            return response()->json(['message' => 'No matching price settings found.'], 404);
+            return response()->json(['message' => 'No matching distance settings found.'], 404);
         }
 
         // Calculate the final price
