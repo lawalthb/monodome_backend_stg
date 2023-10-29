@@ -75,6 +75,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
             Route::delete('/{id}', [SettingController::class, 'delete']);
             Route::post('/store', [SettingController::class, 'store']);
             Route::post('/create-price', [SettingController::class, 'createPrice']);
+            Route::post('/create-distance', [SettingController::class, 'storeDistance']);
             Route::post('/update/{id}', [SettingController::class, 'update']);
 
         });

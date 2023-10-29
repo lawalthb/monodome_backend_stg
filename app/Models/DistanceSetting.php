@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DistanceSetting extends Model
 {
@@ -11,8 +12,11 @@ class DistanceSetting extends Model
 
     public $guarded = [];
 
-    public function loadable()
+   /**
+     * Get the owning loadable model.
+     */
+    public function loadable(): MorphTo
     {
-    return $this->morphTo('loadable');
+        return $this->morphTo();
     }
 }

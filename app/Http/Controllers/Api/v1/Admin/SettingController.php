@@ -173,4 +173,41 @@ class SettingController extends Controller
             "Distance and price Settings"
         );
     }
+
+
+    public function storeDistance(Request $request)
+    {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'weight' => 'required|string',
+            'from' => 'required|string',
+            'to' => 'required|string',
+            'price' => 'required|numeric',
+            'price_type_id' => 'required|numeric|exists:price_settings,id',
+        ]);
+
+        $priceSetting = PriceSetting::find($request->price_type_id);
+
+        // Create or update the DistanceSetting record
+        $distanceSetting = DistanceSetting::updateOrCreate(
+            [
+                'weight' => $request->weight,
+                'from' => $request->from,
+                'to' => $request->to,
+                'loadable_id' => $priceSetting->id,
+                'loadable_type' => PriceSetting::class,
+            ],
+            [
+                'price' => $request->price,
+            ]
+        );
+
+        // Return a response indicating success
+        return response()->json([
+            'success' => true,
+            'message' => 'DistanceSetting created or updated successfully',
+            'data' => $distanceSetting,
+        ], 201); // 201 Created status code
+    }
+
 }
