@@ -165,6 +165,31 @@ class DriverMangerController extends Controller
     }
 
 
+    public function order(Request $request)
+    {
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $drivers = Driver::where(function ($q) use ($key) {
+            $q->where('have_motor', 'like', "%{$key}%");
+            $q->orWhere('nin_number', 'like', "%{$key}%");
+            $q->orWhereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('full_name', 'like', "%{$key}%");
+            });
+        })->where("have_motor", "No")
+            ->whereHas('acceptedOrders', function ($orderQuery) use ($key) {
+                $orderQuery->where('amount', '>=', "%{$key}%");
+                $orderQuery->orWhere('order_no', 'like', "%{$key}%");
+
+            })
+            ->latest()
+            ->paginate($perPage);
+
+        return DriverResource::collection($drivers);
+    }
+
+
+
     public function broadcast(Request $request)
     {
         $query = LoadBoard::orderBy('created_at', 'desc');;
