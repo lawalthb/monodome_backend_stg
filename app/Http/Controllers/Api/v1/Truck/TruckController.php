@@ -2,8 +2,17 @@
 
 namespace App\Http\Controllers\Api\v1\Truck;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Truck;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Mail\SendPasswordMail;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Resources\TruckResource;
 
 class TruckController extends Controller
 {
@@ -20,7 +29,78 @@ class TruckController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $user = User::firstOrNew(['email' => $request->input('email')]);
+
+            if (!$user->exists) {
+                // User doesn't exist, so create a new user
+                $user->full_name = $request->input('full_name');
+                $user->email = $request->input('email');
+                $user->address = $request->input('address');
+                $user->phone_number = $request->input('phone_number');
+                $password  = Str::random(16);
+                $user->password = $password;
+                $user->user_type = 'agent';
+                $user->save();
+
+                // $data = [
+                //     "full_name" => $request->input('full_name'),
+                //     "password" => $password,
+                //     "message" => "",
+                // ];
+                // Mail::to($user->email)->send(
+                //     new SendPasswordMail($data)
+                // );
+                $role = Role::where('name', 'Truck')->first();
+
+                if ($role) {
+                    $user->assignRole($role);
+                }
+            }
+
+            $truck = Truck::updateOrCreate(
+                [
+                    'user_id' => $user->id
+                ],
+                [
+                    'phone_number' => $request->input('phone_number'),
+                    'state_id' => $request->input('state_id'),
+                    'street' => $request->input('street'),
+                    'lga' => $request->input('lga'),
+                    'status' => 'Pending',
+                    'truck_name' => $request->input('truck_name'),
+                    'truck_type' => $request->input('truck_type'),
+                    'truck_location' => $request->input('truck_location'),
+                    'truck_make' => $request->input('truck_make'),
+                    'plate_number' => $request->input('plate_number'),
+                    'cac_number' => $request->input('cac_number'),
+                    'truck_description' => $request->input('truck_description'),
+                    'business_name' => $request->input('business_name'),
+                    // Add other truck fields here
+                ]
+            );
+
+            $truck->profile_picture = $this->uploadFile('truck/truck_images', $request->file('profile_picture'));
+            $truck->inside_store_image = $this->uploadFile('truck/truck_images', $request->file('inside_store_image'));
+            $truck->registration_documents = $this->uploadFile('truck/truck_documents', $request->file('registration_documents'));
+
+            $truck->save();
+
+            $guarantorProfilePictures = [];
+
+
+
+            DB::commit();
+
+            return $this->success( new TruckResource($truck), 'Truck registered successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+
+            return $this->error('An error occurred while registering the agent and guarantors.');
+        }
     }
 
     /**

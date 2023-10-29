@@ -11,7 +11,7 @@ class TruckFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,22 @@ class TruckFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+        'business_name' => 'required|string',
+        'phone_number' => 'required|string|unique:truck_owners,phone_number',
+        'email' => 'required|email|unique:users,email',
+        'street' => 'required|string',
+        'state_id' => 'required|exists:states,id',
+        'lga' => 'required|numeric',
+        'truck_name' => 'required|string',
+        'truck_type' => 'required|string',
+        'truck_location' => 'required|string',
+        'truck_make' => 'required|string',
+        'plate_number' => 'required|string',
+        'cac_number' => 'nullable|string',
+        'truck_description' => 'nullable|string',
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'outside_truck_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'truck_document' => 'nullable|file|mimes:pdf,jpeg,png,jpg|max:2048',
         ];
     }
 }

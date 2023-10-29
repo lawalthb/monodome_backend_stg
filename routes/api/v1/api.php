@@ -345,8 +345,8 @@ Route::group(['prefix' => 'driver-manager'], function () {
 
           //  Artisan::call('migrate:fresh --seed');
 
-          \Artisan::call('migrate:fresh');
-          \Artisan::call('db:seed');
+          Artisan::call('migrate:fresh');
+          Artisan::call('db:seed');
 
             return response()->json([
                 'message' => 'Database migrated and seeded successfully.'
