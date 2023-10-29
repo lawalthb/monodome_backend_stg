@@ -71,8 +71,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::group(['prefix' => 'price'], function () {
             Route::get('/', [SettingController::class, 'price']);
             Route::get('/distance', [SettingController::class, 'distance']);
-            Route::get('/{id}', [SettingController::class, 'show']);
-            Route::delete('/{id}', [SettingController::class, 'delete']);
+            Route::delete('/distance/{id}', [SettingController::class, 'deleteDistance']);
+            Route::delete('/{id}', [SettingController::class, 'deletePrice']);
             Route::post('/store', [SettingController::class, 'store']);
             Route::post('/create-price', [SettingController::class, 'createPrice']);
             Route::post('/create-distance', [SettingController::class, 'storeDistance']);

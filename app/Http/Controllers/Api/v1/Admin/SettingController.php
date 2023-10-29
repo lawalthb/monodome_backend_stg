@@ -135,6 +135,35 @@ class SettingController extends Controller
         );
     }
 
+    public function deletePrice(Request $request,$id){
+
+       $price =  PriceSetting::findOrFail($id);
+
+       if($price->delete()){
+
+           return $this->success(
+               null
+               ,
+               "price Settings delete"
+            );
+        }
+    }
+
+
+    public function deleteDistance(Request $request,$id){
+
+        $distance =  DistanceSetting::findOrFail($id);
+
+        if($distance->delete()){
+
+            return $this->success(
+                null
+                ,
+                "Distance Settings delete"
+             );
+         }
+     }
+
 
     public function createPrice(Request $request){
 
