@@ -54,7 +54,7 @@ class DriverMangerController extends Controller
     public function store(DriverMangerRequest $request)
     {
 
-        $request->validated();
+
         try {
             DB::beginTransaction();
 
