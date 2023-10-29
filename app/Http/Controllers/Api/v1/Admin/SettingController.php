@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\Setting;
+use App\Models\LoadType;
 use Illuminate\Support\Str;
+use App\Models\PriceSetting;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
+use App\Models\DistanceSetting;
 use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
-use App\Models\PriceSetting;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\PriceSettingResource;
+use App\Http\Resources\DistanceSettingResource;
 
 class SettingController extends Controller
 {
@@ -125,9 +129,48 @@ class SettingController extends Controller
         return $this->success(
             [
 
-                "settings" => PriceSetting::get()
+                "settings" => PriceSettingResource::collection(PriceSetting::get())
             ],
-            "Single Settings"
+            "price Settings"
+        );
+    }
+
+
+    public function createPrice(Request $request){
+
+        Validator::make($request->all(), [
+            'name' => 'required|string',
+            'load_type_id' => 'required|integer',
+        ])->validate();
+
+        $loadType=LoadType::find($request->load_type_id);
+
+        $priceSetting = PriceSetting::updateOrCreate([
+            'load_type_id'=>$loadType->id,
+            'name'=>$request->name,
+        ],[
+            'load_type_id'=>$loadType->id,
+            'name'=>$request->name,
+        ]);
+
+        return $this->success(
+            [
+
+                "settings" => new PriceSettingResource($priceSetting)
+            ],
+            "price Settings"
+        );
+    }
+
+
+    public function distance(){
+
+        return $this->success(
+            [
+
+                "settings" => DistanceSettingResource::collection(DistanceSetting::get())
+            ],
+            "Distance and price Settings"
         );
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Order;
 
 use App\Models\Order;
 use App\Models\LoadType;
+use App\Models\PriceSetting;
 use Illuminate\Http\Request;
 use App\Models\WalletHistory;
 use App\Traits\ApiStatusTrait;
@@ -164,5 +165,43 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function calculatePrice(Request $request)
+    {
+
+         $request->validate([
+        'distance' => 'required|string',
+            'type' => 'required|string'
+          ]);
+
+        $payload = $request->all();
+
+
+        $type = $payload['type'];
+        $distance = (int)filter_var($payload['distance'], FILTER_SANITIZE_NUMBER_INT);
+
+        $priceSettings = PriceSetting::where('loadable_type', $type)
+            ->where('from', '<=', $distance)
+            ->where('to', '>=', $distance)
+            ->first();
+
+        if (!$priceSettings) {
+            // Handle the case where no matching price settings were found
+            return response()->json(['message' => 'No matching price settings found.'], 404);
+        }
+
+        // Calculate the final price
+        $finalPrice = $priceSettings->price;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Price calculation successful',
+            'data' => ['final_price' => $finalPrice],
+        ]);
+    }
+
+    public function allPrice(Request $request){
+
     }
 }

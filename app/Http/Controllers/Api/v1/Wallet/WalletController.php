@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Wallet;
 
 use App\Models\Wallet;
+use App\Models\PriceSetting;
 use Illuminate\Http\Request;
 use App\Models\WalletHistory;
 use App\Traits\ApiStatusTrait;
@@ -123,14 +124,5 @@ class WalletController extends Controller
         }
  }
 
-    public function calculatePrice(Request $request){
-        $request->validate([
-        'distance' => 'required|string',
-            'type' => 'required|string'
-          ]);
-    }
 
-    public function allPrice(Request $request){
-
-    }
 }

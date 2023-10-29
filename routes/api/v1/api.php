@@ -122,6 +122,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         //load type route
         Route::get('/', [OrderController::class, 'index']);
         Route::post('/', [OrderController::class, 'store']);
+        Route::post('/calculate', [OrderController::class, 'calculatePrice']);
+        Route::get('/price', [OrderController::class, 'allPrice']);
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::post('/{id}', [OrderController::class, 'update']);
         Route::delete('/{id}', [OrderController::class, 'destroy']);
@@ -243,8 +245,7 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::post('/validate-pin', [WalletController::class, 'validate_pin']);
         Route::post('/update-pin', [WalletController::class, 'update_pin']);
         Route::get('/wallet-history', [WalletController::class, 'wallet_history']);
-        Route::get('/calculate', [WalletController::class, 'calculatePrice']);
-        Route::get('/price', [WalletController::class, 'allPrice']);
+
 
         //card endpoint here
         Route::post('/cards', [CardController::class, 'store']);
