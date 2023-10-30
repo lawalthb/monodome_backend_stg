@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Agent;
+use App\Models\Driver;
 use App\Models\Guarantor;
+use App\Models\ShippingCompany;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -98,7 +100,8 @@ class UsersTableSeeder extends Seeder
         ));
 
 
-         for ($i = 1; $i <= 30; $i++) {
+        // for agent
+         for ($i = 1; $i <= 100; $i++) {
              // Create a user
              $user = \App\Models\User::factory()->create([
 
@@ -123,6 +126,57 @@ class UsersTableSeeder extends Seeder
             ]);
 
          }
+
+
+
+         //driver
+
+         for ($i = 1; $i <= 100; $i++) {
+            // Create a user
+            $user = \App\Models\User::factory()->create([
+
+                'user_type' => "driver",
+                'role' => "driver",
+                'role_id' => 8,
+            ]);
+
+            // Create an agent and associate it with the user
+            $agent = Driver::factory()->create([
+                'user_id' => $user->id,
+            ]);
+
+            $guarantor1 = Guarantor::factory()->create([
+               'loadable_id' => $agent->id,
+               'loadable_type' => 'App\\Models\\Driver',
+           ]);
+
+           $guarantor2 = Guarantor::factory()->create([
+               'loadable_id' => $agent->id,
+               'loadable_type' => 'App\\Models\\Driver',
+           ]);
+
+        }
+
+         // for shipping company
+         for ($i = 1; $i <= 100; $i++) {
+            // Create a user
+            $user = \App\Models\User::factory()->create([
+
+                'user_type' => "shipping_company",
+                'role' => "shipping_company",
+                'role_id' => 5,
+            ]);
+
+            // Create an shipping company and associate it with the user
+            $agent = ShippingCompany::factory()->create([
+                'user_id' => $user->id,
+            ]);
+
+            $guarantor1 = Guarantor::factory()->create([
+               'loadable_id' => $agent->id,
+               'loadable_type' => 'App\\Models\\ShippingCompany',
+           ]);
+        }
 
 
      }
