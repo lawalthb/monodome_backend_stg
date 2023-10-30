@@ -20,19 +20,51 @@ class AgentController extends Controller
 
     public function index(Request $request)
     {
-        $key = $request->input('search');
+
+        $terms = explode(" ", $request->input('search'));
+
         $perPage = $request->input('per_page', 10);
 
-        $agents = Agent::where(function ($q) use ($key) {
-            // Assuming there's a relationship between Agent and User
-            $q->whereHas('user', function ($userQuery) use ($key) {
-                $userQuery->where('full_name', 'like', "%{$key}%");
-            })->orWhere('status', 'like', "%{$key}%")->orWhere('business_name', 'like', "%{$key}%");
-        })
-            ->latest()
-            ->paginate($perPage);
+        $agents = Agent::query();
+
+        foreach ($terms as $term) {
+            $agents->where(function ($query) use ($term) {
+                $query->orWhereHas('user', function ($userQuery) use ($term) {
+                    $userQuery->where('email', 'like', "%$term%")
+                        ->orWhere('full_name', 'like', "%$term%");
+                })
+                ->orWhere('agent_code', 'like', "%$term%")
+                ->orWhere('business_name', 'like', "%$term%")
+                ->orWhere('agent_code', 'like', "%$term%")
+                ->orWhere('status', 'like', "%$term%")
+                ->orWhereHas('state', function ($stateQuery) use ($term) {
+                    $stateQuery->where('name', 'like', "%$term%");
+                });
+            });
+        }
+
+        $agents = $agents->latest()->paginate($perPage);
 
         return AgentResource::collection($agents);
+
+
+
+        // $key = $request->input('search');
+        // $perPage = $request->input('per_page', 10);
+
+        // $agents = Agent::where(function ($q) use ($key) {
+        //     // Assuming there's a relationship between Agent and User
+        //     $q->whereHas('user', function ($userQuery) use ($key) {
+        //         $userQuery->where('full_name', 'like', "%{$key}%");
+        //     })->orWhere('status', 'like', "%{$key}%")
+        //     ->orWhere('agent_code', 'like', "%{$key}%")
+        //     ->orWhere('nin_number', 'like', "%{$key}%")
+        //     ->orWhere('business_name', 'like', "%{$key}%");
+        // })
+        //     ->latest()
+        //     ->paginate($perPage);
+
+        // return AgentResource::collection($agents);
     }
 
 
