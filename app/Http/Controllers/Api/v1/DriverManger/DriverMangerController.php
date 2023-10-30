@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\DriverManger;
 
 use App\Models\User;
+use App\Models\Truck;
 use App\Models\Driver;
 use App\Models\Guarantor;
 use App\Models\LoadBoard;
@@ -17,6 +18,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Resources\TruckResource;
 use App\Http\Resources\DriverResource;
 use App\Http\Resources\LoadBoardResource;
 use App\Http\Requests\DriverMangerRequest;
@@ -41,7 +43,7 @@ class DriverMangerController extends Controller
                 $userQuery->where('full_name', 'like', "%{$key}%");
                 $userQuery->where('address', 'like', "%{$key}%");
             })->orWhere('license_number', 'like', "%{$key}%");
-        })
+        })->where("have_motor","No")
             ->latest()
             ->paginate($perPage);
 
@@ -53,6 +55,8 @@ class DriverMangerController extends Controller
      */
     public function store(DriverMangerRequest $request)
     {
+
+
         try {
             DB::beginTransaction();
 
@@ -164,6 +168,49 @@ class DriverMangerController extends Controller
         //
     }
 
+
+    public function truck(Request $request)
+    {
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $truck = Truck::where(function ($q) use ($key) {
+            // Assuming there's a relationship between Agent and User
+            $q->whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('email', 'like', "%{$key}%");
+            })->orWhere('plate_number', 'like', "%{$key}%")
+            ->orWhere('truck_location', 'like', "%{$key}%")
+            ->orWhere('truck_name', 'like', "%{$key}%");
+        })
+            ->latest()
+            ->paginate($perPage);
+
+        return TruckResource::collection($truck);
+    }
+
+
+    public function order(Request $request)
+    {
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $drivers = Driver::where(function ($q) use ($key) {
+            $q->where('have_motor', 'like', "%{$key}%");
+            $q->orWhere('nin_number', 'like', "%{$key}%");
+            $q->orWhereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('full_name', 'like', "%{$key}%");
+            });
+        })->where("have_motor", "No")
+            ->whereHas('acceptedOrders', function ($orderQuery) use ($key) {
+                $orderQuery->where('amount', '>=', "%{$key}%");
+                $orderQuery->orWhere('order_no', 'like', "%{$key}%");
+
+            })
+            ->latest()
+            ->paginate($perPage);
+
+        return DriverResource::collection($drivers);
+    }
 
     public function broadcast(Request $request)
     {

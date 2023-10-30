@@ -19,6 +19,7 @@ return new class extends Migration
         $table->unsignedBigInteger('country_id')->nullable();
         $table->unsignedBigInteger('state_id');
         $table->string('street')->nullable();
+        $table->string('nin_number');
         // $table->enum('status', ['Active', 'Inactive'])->default('Active');
         $table->string('lga')->nullable();
         $table->string('business_name')->nullable();

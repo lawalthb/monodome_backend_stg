@@ -4,16 +4,19 @@ namespace App\Http\Controllers\Api\v1\Order;
 
 use App\Models\Order;
 use App\Models\LoadType;
+use App\Models\PriceSetting;
 use Illuminate\Http\Request;
 use App\Models\WalletHistory;
 use App\Traits\ApiStatusTrait;
 use App\Events\LoadTypeCreated;
+use App\Models\DistanceSetting;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\OrderResource;
 use App\Notifications\SendNotification;
+use App\Http\Resources\DistanceSettingResource;
 
 class OrderController extends Controller
 {
@@ -164,5 +167,67 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function calculatePrice(Request $request)
+    {
+        $request->validate([
+            'distance' => 'required|string',
+            'type' => 'required|string|in:Packages,Documents,Bulk Delivery,Car Clearing,Car Delivery,Container Delivery',
+        ]);
+
+        $payload = $request->all();
+        $type = $request->type;
+
+        $distance = (int)filter_var($payload['distance'], FILTER_SANITIZE_NUMBER_INT);
+
+        // Find the related PriceSetting by name
+        $priceSetting = PriceSetting::where('name', $type)->first();
+
+        if (!$priceSetting) {
+            return response()->json(['message' => 'No matching price settings found.'], 404);
+        }
+
+        // Now you can find the matching distance setting
+        $distanceSetting = DistanceSetting::where('loadable_id', $priceSetting->id)
+            ->where('from', '<=', $distance)
+            ->where('to', '>=', $distance)
+            ->first();
+
+        if (!$distanceSetting) {
+            return response()->json(['message' => 'No matching distance settings found.'], 404);
+        }
+
+        // Calculate the final price
+        $finalPrice = $distanceSetting->price;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Price calculation successful',
+            'data' => ['final_price' => $finalPrice],
+        ]);
+    }
+
+    public function distancePrice()
+    {
+        $groupedDistanceSettings = DistanceSetting::with('loadable')
+        ->get()
+        ->groupBy(function ($item) {
+            return $item->loadable->name; // Assuming 'name' is the attribute you want to group by
+        });
+
+    $result = [];
+    foreach ($groupedDistanceSettings as $name => $settings) {
+        $result[] = [
+            'price_setting_name' => $name,
+            'distance_settings' => DistanceSettingResource::collection($settings),
+        ];
+    }
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Distance settings grouped by Price Setting',
+        'data' => $result,
+    ]);
     }
 }

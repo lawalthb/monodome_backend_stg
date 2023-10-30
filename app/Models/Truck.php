@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Order extends Model
+class Truck extends Model
 {
     use HasFactory;
 
@@ -14,29 +14,26 @@ class Order extends Model
 
     public function loadable()
     {
-    return $this->morphTo('loadable');
+        return $this->morphTo('loadable');
     }
 
     public function user(){
-
         return $this->belongsTo(User::class);
     }
 
-
-    public function driver(){
-
-        return $this->belongsTo(User::class,'driver_id');
+    public function loadDocuments()
+    {
+        return $this->morphMany(LoadDocument::class, 'loadable');
     }
-
 
 
     protected static function boot()
     {
         parent::boot();
-
-        // Generate a UUID for the new vehicle model when creating it
-        static::creating(function ($Order) {
-            $Order->uuid = Str::uuid()->toString();
+        self::creating(function($model){
+            $model->uuid =  Str::uuid()->toString();
+           // $model->uuid =  getOTPNumber(6);
+           // $model->user_id =  auth()->id();
         });
     }
 

@@ -58,6 +58,15 @@ class Driver extends Model
         return $this->belongsTo(State::class);
     }
 
+    public function order(){
+
+        return $this->hasMany(Order::class);
+    }
+
+    public function acceptedOrders()
+{
+    return $this->hasMany(Order::class, 'driver_id')->where('accepted', 'Yes');
+}
 
     protected static function boot()
     {

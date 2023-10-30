@@ -37,6 +37,8 @@ class LoadSpecializedRequest extends FormRequest
             'receiver_email' => 'required|email',
             'receiver_phone' => 'required|string',
             'description' => 'required|string',
+            'total_amount' => 'required|numeric',
+
             // 'documents' => 'required',
         ];
     }

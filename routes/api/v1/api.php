@@ -11,6 +11,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Api\v1\CountryController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
 use App\Http\Controllers\Api\v1\Order\OrderController;
+use App\Http\Controllers\Api\v1\Truck\TruckController;
 use App\Http\Controllers\Api\v1\Wallet\CardController;
 use App\Http\Controllers\Api\v1\Agents\AgentController;
 use App\Http\Controllers\Api\v1\Driver\DriverController;
@@ -122,6 +123,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         //load type route
         Route::get('/', [OrderController::class, 'index']);
         Route::post('/', [OrderController::class, 'store']);
+        Route::post('/calculate', [OrderController::class, 'calculatePrice']);
+        Route::get('/price', [OrderController::class, 'distancePrice']);
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::post('/{id}', [OrderController::class, 'update']);
         Route::delete('/{id}', [OrderController::class, 'destroy']);
@@ -176,6 +179,17 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     });
 
 
+      // agent route group
+      Route::group(['prefix' => 'truck'], function () {
+
+        Route::get('/', [TruckController::class, 'index']);
+        Route::post('/store', [TruckController::class, 'store']);
+        Route::get('/show/{id}', [TruckController::class, 'show']);
+        Route::post('/update/{id}', [TruckController::class, 'update']);
+        Route::delete('/destroy/{id}', [TruckController::class, 'destroy']);
+    });
+
+
     Route::group(['prefix' => 'chat'], function(){
 
 
@@ -210,6 +224,8 @@ Route::group(['prefix' => 'driver-manager'], function () {
                 Route::get('/', [DriverMangerController::class, 'index']);
 
                 Route::get('/drivers', [DriverMangerController::class, 'index']);
+                Route::get('/truck', [TruckController::class, 'truck']);
+                Route::get('/order', [DriverMangerController::class, 'order']);
                 Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
                 Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);
                 // Route::get('/show/{id}', [DriverMangerController::class, 'show']);
@@ -243,6 +259,7 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::post('/validate-pin', [WalletController::class, 'validate_pin']);
         Route::post('/update-pin', [WalletController::class, 'update_pin']);
         Route::get('/wallet-history', [WalletController::class, 'wallet_history']);
+
 
         //card endpoint here
         Route::post('/cards', [CardController::class, 'store']);
@@ -329,8 +346,8 @@ Route::group(['prefix' => 'driver-manager'], function () {
 
           //  Artisan::call('migrate:fresh --seed');
 
-          \Artisan::call('migrate:fresh');
-          \Artisan::call('db:seed');
+          Artisan::call('migrate:fresh');
+          Artisan::call('db:seed');
 
             return response()->json([
                 'message' => 'Database migrated and seeded successfully.'

@@ -16,24 +16,31 @@ class PriceSettingsSeeder extends Seeder
         $priceSettings = [
             [
                 'name' => 'Packages',
+                'load_type_id'=>1
             ],
             [
                 'name' => 'Documents',
+                'load_type_id'=>1
             ],
             [
                 'name' => 'Bulk Delivery',
+                'load_type_id'=>2
             ],
             [
                 'name' => 'Car Clearing',
+                'load_type_id'=>3
             ],
             [
                 'name' => 'Container Clearing',
+                'load_type_id'=>4
             ],
             [
                 'name' => 'Car Delivery',
+                'load_type_id'=>3
             ],
             [
                 'name' => 'Container Delivery',
+                'load_type_id'=>4
             ],
 
         ];

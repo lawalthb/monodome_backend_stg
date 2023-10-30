@@ -43,6 +43,7 @@ class LoadContainerShipmentRequest extends FormRequest
             'add_info' => 'nullable|string',
             //'insure_it' => 'nullable|in:Yes,No',
             'suggested_amount' => 'nullable|integer',
+            'total_amount' => 'nullable|numeric',
             'status' => 'nullable|in:Pending,Approved,Failed',
         ];
     }

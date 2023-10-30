@@ -50,6 +50,7 @@ class LoadPackageRequest extends FormRequest
             'width' => 'required|numeric',
             'length' => 'required|numeric',
             'height' => 'required|numeric',
+            'total_amount' => 'required|numeric',
             'insure_it' => 'nullable|in:No,Yes',
             'insure_amount' => 'nullable|numeric|',
             'is_fragile' => 'nullable|in:No,Yes',
