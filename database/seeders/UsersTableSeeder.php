@@ -19,15 +19,20 @@ class UsersTableSeeder extends Seeder
      {
          for ($i = 1; $i <= 50; $i++) {
              // Create a user
-             $user = \App\Models\User::factory()->create();
+             $user = \App\Models\User::factory()->create([
+
+                 'user_type' => "agent",
+                 'role' => "agent",
+             ]);
 
              // Create an agent and associate it with the user
              $agent = Agent::factory()->create([
                  'user_id' => $user->id,
              ]);
 
-             // You can customize the user and agent creation further if needed
          }
+
+
      }
 
     // public function run()
