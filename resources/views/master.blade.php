@@ -29,20 +29,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <!-- Template Main CSS File -->
   <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
-  <script>
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      location.replace('/adminpanel');
-    }
-  </script>
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <script  type="module" src="{{asset('assets/js/utils.js')}}"> </script>
   <title>@yield('title')</title>
 </head>
 
@@ -275,7 +262,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+      talosmart
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
@@ -300,7 +287,10 @@
   <script src="{{asset('assets/vendor/php-email-form/validate.js')}}"></script>
 
   <!-- Template Main JS File -->
-  <script src="{{asset('assets/js/main.js')}}"></script>
+  <script type="module" src="{{asset('assets/js/main.js')}}"></script>
+
+
+  @stack('scripts')
 </body>
 
 </html>
