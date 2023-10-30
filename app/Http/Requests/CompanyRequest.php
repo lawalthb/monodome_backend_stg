@@ -26,7 +26,7 @@ class CompanyRequest extends FormRequest
             'company_logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'company_name' => 'required|string',
             'email' => 'required|email|email',
-            'phone_number' => 'required|numeric|min:10',
+            'phone_number' => 'required|numeric|min:10|unique:users,phone_number',
             'street' => 'required|string',
             'state_id' => 'required|exists:states,id',
             'lga' => 'required|numeric',

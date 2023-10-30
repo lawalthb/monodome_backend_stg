@@ -23,6 +23,11 @@ class company extends Model
         return $this->hasMany(VehicleType::class,'truck_type');
     }
 
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

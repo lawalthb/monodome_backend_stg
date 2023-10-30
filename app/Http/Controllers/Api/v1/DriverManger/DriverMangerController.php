@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\DriverManger;
 
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Truck;
 use App\Models\Driver;
 use App\Models\Guarantor;
@@ -250,5 +251,18 @@ class DriverMangerController extends Controller
         $loadBoards = $query->latest()->paginate($perPage);
 
         return LoadBoardResource::collection($loadBoards);
+    }
+
+    public function orderAssign(Request $request){
+
+        $request->validate([
+            'order_id' => 'required',
+            'driver_id' => 'required',
+        ]);
+
+
+        return Order::find($request->order_id);
+
+        Driver::find($request->driver_id);
     }
 }
