@@ -46,7 +46,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
-        Route::get('/is-login', [AuthController::class, 'isLogin']);
         Route::post('/social-login', [AuthController::class, 'handleProviderCallback']);
 
         Route::post('/forgot-password', [EmailVerificationController::class, 'reset_password_request']);
@@ -56,6 +55,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     });
 
     Route::group(['prefix' => 'auth', 'namespace' => 'auth', 'middleware' => 'auth:api'], function () {
+        Route::get('/is-login', [AuthController::class, 'isLogin']);
         Route::get('/profile', [AuthController::class, 'me']);
         Route::get('/logout', [AuthController::class, 'logout']);
         Route::post('/update-profile', [AuthController::class, 'updateProfile']);
