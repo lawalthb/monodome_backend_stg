@@ -20,6 +20,7 @@ class AgentResource extends JsonResource
             'uuid' => $this->uuid,
             'agent_code' => $this->agent_code,
             'name' => $this->user->full_name,
+            'nin_number' => $this->nin_number,
           'street' => $this->street,
           'business_name' => $this->business_name,
          // 'phone_number' => $this->phone_number,
