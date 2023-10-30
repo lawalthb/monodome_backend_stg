@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use App\Notifications\SendNotification;
+use Illuminate\Http\JsonResponse;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Validator;
 use Stevebauman\Location\Facades\Location;
@@ -215,12 +216,30 @@ class AuthController extends Controller
      * @param  mixed $request
      * @return void
      */
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
         $request->user()->tokens()->delete();
         //Auth::user()->currentAccessToken()->delete();
 
         return $this->success('', 'Logged out Successfully', 200);
+    }
+
+
+       /**
+     * isLogin
+     * check if users is login
+     * @param  mixed $request
+     * @return
+     */
+    public function isLogin(Request $request) : JsonResponse  {
+
+        if(Auth::check()){
+
+            return $this->success(true,true);
+
+        }else{
+            return $this->error(false, 'Session expired', 422);
+        }
     }
 
 }

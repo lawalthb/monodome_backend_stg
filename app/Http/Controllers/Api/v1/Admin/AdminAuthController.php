@@ -9,6 +9,7 @@ use App\Traits\Verification;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Log;
@@ -230,5 +231,23 @@ class AdminAuthController extends Controller
         }
 
         return $this->success('', 'OTP Code is valid!');
+    }
+
+
+       /**
+     * isLogin
+     * check if users is login
+     * @param  mixed $request
+     * @return
+     */
+    public function isLogin(Request $request) : JsonResponse  {
+
+        if(Auth::check()){
+
+            return $this->success(true,true);
+
+        }else{
+            return $this->error(false, 'Session expired', 422);
+        }
     }
 }
