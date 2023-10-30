@@ -41,6 +41,7 @@ class LoadPackageResource extends JsonResource
             "width" => $this->width,
             "length" => $this->length,
             "height" => $this->height,
+            "total_amount" => $this->total_amount,
             "status" => $this->status,
             "insure_it" => $this->insure_it,
             "insure_amount" => $this->insure_amount,

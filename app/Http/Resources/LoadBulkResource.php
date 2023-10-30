@@ -47,6 +47,7 @@ class LoadBulkResource extends JsonResource
             'height'=>$this->height,
             'insure_it'=>$this->insure_it,
             'insure_amount'=>$this->insure_amount,
+            "total_amount" => $this->total_amount,
             'is_fragile'=>$this->is_fragile,
             "status" => $this->status,
             "loadType" => new LoadTypeResource($this->loadType),

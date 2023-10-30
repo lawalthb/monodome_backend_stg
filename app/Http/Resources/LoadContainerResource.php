@@ -31,6 +31,7 @@ class LoadContainerResource extends JsonResource
             "receiver_name" => $this->receiver_name,
             "receiver_email" => $this->receiver_email,
             "receiver_phone" => $this->receiver_phone,
+            "total_amount" => $this->total_amount,
             "status" => $this->status,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,

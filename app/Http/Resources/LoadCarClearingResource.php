@@ -33,7 +33,7 @@ class LoadCarClearingResource extends JsonResource
             "receiver_email" => $this->receiver_email,
             "receiver_phone" => $this->receiver_phone,
             "status" => $this->status,
-
+            "total_amount" => $this->total_amount,
             "deliver_apartment" => $this->deliver_apartment,
         ];
     }
