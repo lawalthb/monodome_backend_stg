@@ -22,15 +22,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(AdminSeeder::class);
-        $this->call(UsersTableSeeder::class);
-        $this->call(RolesTableSeeder::class);
-        $this->call(PermissionsTableSeeder::class);
-        $this->call(ModelHasRolesTableSeeder::class);
-        $this->call(RoleHasPermissionsTableSeeder::class);
-        $this->call(ModelHasRolesTableSeeder::class);
-
-
         $this->call(CountrySeeder::class);
         $this->call(StateSeeder::class);
         $this->call(StatesTableSeeder::class);
@@ -56,5 +47,16 @@ class DatabaseSeeder extends Seeder
         $this->call(VehicleMakesTableSeeder::class);
         $this->call(VehicleModelsTableSeeder::class);
         $this->call(SettingsSeeder::class);
+
+        $this->call(AdminSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
+        $this->call(ModelHasRolesTableSeeder::class);
+        $this->call(RoleHasPermissionsTableSeeder::class);
+        $this->call(ModelHasRolesTableSeeder::class);
+
+
+
     }
 }
