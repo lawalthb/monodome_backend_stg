@@ -18,36 +18,6 @@ class AgentsTableSeeder extends Seeder
 
         \DB::table('agents')->delete();
 
-        for ($i=1; $i <51 ; $i++) {
-
-
-            \DB::table('users')->insert(array (
-                0 =>
-            array (
-                'id' => 20+$i,
-                'full_name' =>  fake()->name(),
-                'email' => fake()->unique()->safeEmail(),
-                'phone_number' => fake()->phoneNumber(),
-                'email_verified_at' => NULL,
-                'password' => '$2y$10$eY2s6Gk1vNKb443Xsl7qf.dQanjxEKoGg2b0h4XR1s9ghJmxycsw2',
-                'provider_id' => NULL,
-                'provider' => NULL,
-                'address' => NULL,
-                'user_created_by' => NULL,
-                'role_id' => NULL,
-                'imageUrl' => NULL,
-                'user_type' => 'agent',
-                'role' => NULL,
-                'location' => NULL,
-                'user_agent' => NULL,
-                'status' => 'Pending',
-                'remember_token' => NULL,
-                'deleted_at' => NULL,
-                'created_at' => '2023-10-30 13:36:23',
-                'updated_at' => '2023-10-30 13:36:23',
-            ),
-        ));
-
         \DB::table('agents')->insert(array (
             0 =>
             array (
@@ -74,27 +44,6 @@ class AgentsTableSeeder extends Seeder
             ),
         ));
 
-
-        \DB::table('guarantors')->insert(array (
-            0 =>
-            array (
-                'id' => 15,
-                'full_name' => 'Edgar Koch',
-                'phone_number' => '79933322232',
-                'email' => 'Lew.Oberbrunner38@example.org',
-                'street' => '36930 Langworth Station',
-                'state' => '294',
-                'lga' => '1',
-                'profile_picture' => 'uploads/agent/guarantor_images/169867298735N9rOhHWl.png',
-                'state_of_residence' => NULL,
-                'city_of_residence' => NULL,
-                'loadable_id' => 1,
-                'loadable_type' => 'App\\Models\\Agent',
-                'created_at' => '2023-10-30 13:36:27',
-                'updated_at' => '2023-10-30 13:36:27',
-            ),
-        ));
-    }
 
     }
 }
