@@ -48,7 +48,7 @@ class DistanceSeeder extends Seeder
     for ($loadableId = 1; $loadableId <= 4; $loadableId++) {
         $fromDistance = 1;
         $toDistance = 100;
-        $price = 10000.00;
+        $price = 1000.00;
 
         while ($toDistance <= 1000) {
 
@@ -71,7 +71,7 @@ class DistanceSeeder extends Seeder
             // Update values for the next record
             $fromDistance = $toDistance + 1;
             $toDistance += 50;
-            $price += 30; // Adjust the price increment as needed
+            $price += $toDistance; // Adjust the price increment as needed
         }
     }
 }
