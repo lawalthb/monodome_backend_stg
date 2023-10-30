@@ -27,7 +27,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
     // admin registration namespace
     Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
         Route::post('/login', [AdminAuthController::class, 'login']);
-        Route::get('/is-login', [AdminAuthController::class, 'isLogin']);
 
         Route::post('/forgot-password', [AdminAuthController::class, 'reset_password_request']);
         Route::post('/send-otp', [AdminAuthController::class, 'send_otp']);
@@ -37,6 +36,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
 
     Route::group(['middleware' => ['auth:api', 'superadmin'] ], function () {
+        Route::get('/is-login', [AdminAuthController::class, 'isLogin']);
         //setting route group
         Route::group(['prefix' => 'dashboard'], function () {
             Route::get('/', [DashboardController::class, 'index']);
