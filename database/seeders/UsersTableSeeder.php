@@ -98,7 +98,7 @@ class UsersTableSeeder extends Seeder
         ));
 
 
-         for ($i = 1; $i <= 20; $i++) {
+         for ($i = 1; $i <= 30; $i++) {
              // Create a user
              $user = \App\Models\User::factory()->create([
 
