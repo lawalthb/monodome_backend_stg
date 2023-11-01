@@ -11,7 +11,7 @@
   <!-- Favicons -->
   <link href="{{asset('assets/img/favicon.png')}}" rel="icon">
   <link href="{{asset('assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
-  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <!-- Google Fonts -->

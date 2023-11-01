@@ -13,13 +13,14 @@
         <th scope="col">View </th>
       </tr>
     </thead>
-    <tbody id="tableBody">
+    <tbody id="tableBody2">
       <tr>
         <td class="loading2 text-center" style="display: block;" colspan="7">Loading...</td>
       </tr>
 
     </tbody>
   </table>
+  
 
   <!-- End Table with stripped rows -->
   <!-- mondal for pending agents -->

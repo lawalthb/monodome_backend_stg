@@ -8,8 +8,8 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  background: #f6f9ff;
-  color: #444444;
+  background: #F9F9F9;
+  color: red;
 }
 
 a {
@@ -30,16 +30,22 @@ h5,
 h6 {
   font-family: "Nunito", sans-serif;
 }
+h1, .pagename{
 
+}
 /*--------------------------------------------------------------
 # Main
 --------------------------------------------------------------*/
+.container{
+  background-color: #F9F9F9;
+}
 #main {
   margin-top: 60px;
   margin-right: 10px;
   padding: 20px 20px;
   transition: all 0.3s;
   width: 85%;
+  background-color: #F9F9F9;
 }
 
 @media (max-width: 1199px) {
@@ -56,10 +62,11 @@ h6 {
 }
 
 .pagetitle h1 {
-  font-size: 24px;
+  font-size: 26px;
   margin-bottom: 0;
   font-weight: 600;
-  color: #012970;
+  color: #151515;
+  font-family: Poppins;
 }
 
 /*--------------------------------------------------------------
@@ -72,7 +79,7 @@ h6 {
   right: 15px;
   bottom: 15px;
   z-index: 99999;
-  background: #4154f1;
+  background: green;
   width: 40px;
   height: 40px;
   border-radius: 4px;
@@ -214,16 +221,15 @@ h6 {
 /* Card */
 .card {
   margin-bottom: 30px;
+  margin-left: 2px;
   border: none;
-  border-radius: 5px;
-  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+
 }
 
 .card-header,
 .card-footer {
   border-color: #ebeef4;
   background-color: #fff;
-  color: #798eb3;
   padding: 15px;
 }
 
@@ -242,8 +248,10 @@ h6 {
 }
 
 .card-body {
-  padding: 0 20px 20px 20px;
+
+  background-color: #F9F9F9;
 }
+
 
 .card-img-overlay {
   background-color: rgba(255, 255, 255, 0.6);
@@ -326,13 +334,17 @@ h6 {
 
 /* Bordered Tabs */
 .nav-tabs-bordered {
-  border-bottom: 2px solid #ebeef4;
+  border-bottom: 1px solid #E7E7E7;
 }
 
 .nav-tabs-bordered .nav-link {
   margin-bottom: -2px;
   border: none;
-  color: green;
+  color: #00902F;
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .nav-tabs-bordered .nav-link:hover,
@@ -580,7 +592,7 @@ h6 {
 }
 
 .header-nav .profile .dropdown-item i {
-  margin-right: 10px;
+  margin-right: 5px;
   font-size: 18px;
   line-height: 0;
 }
@@ -611,6 +623,7 @@ h6 {
 
     box-shadow: rgba(0, 0, 0, 0.06) 0px 4px;
 }
+
 .sidebar .nav_s{
   margin-bottom: 5%;
 }
@@ -628,15 +641,29 @@ h6 {
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background-color: #aab7cf;
+  background-color: #42a227;
 }
 
 @media (min-width: 1200px) {
 
   #main,
   #footer {
-    margin-left: 300px;
+    margin-left: 180px;
   }
+}
+
+.input-group-text {
+  width: 100px;
+  /* Adjust the width as needed */
+}
+
+/* Style the appended text */
+.input-group-text {
+  background-color: #F9F9F9;
+  color: #333;
+  margin-left: 30px;
+  border: solid 0px;
+
 }
 
 @media (max-width: 1199px) {
@@ -1219,7 +1246,7 @@ h6 {
   padding: 20px 0;
   font-size: 14px;
   transition: all 0.3s;
-  border-top: 1px solid #cddfff;
+
 }
 
 .footer .copyright {
