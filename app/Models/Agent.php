@@ -23,33 +23,42 @@ class Agent extends Model
         return $this->morphTo('loadable');
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function country(){
+    public function country()
+    {
 
         return $this->belongsTo(Country::class);
     }
 
-    public function state(){
+    public function state()
+    {
 
         return $this->belongsTo(LocalState::class);
     }
 
-    public function local(){
+    public function local()
+    {
 
-        return $this->belongsTo(LocalGovernment::class,'lga');
+        return $this->belongsTo(LocalGovernment::class, 'lga');
     }
 
 
     protected static function boot()
     {
         parent::boot();
-        self::creating(function($model){
+        self::creating(function ($model) {
             $model->uuid =  Str::uuid()->toString();
-            $model->agent_code =  getOTPNumber(8);
-           // $model->user_id =  auth()->id();
+            $model->uuid =  getOTPNumber(6);
+            // $model->user_id =  auth()->id();
         });
+    }
+
+    public function getCreatedAtAttribute($date)
+    {
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d');
     }
 }
