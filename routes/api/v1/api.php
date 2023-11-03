@@ -174,9 +174,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
         Route::get('/', [AgentController::class, 'index']);
         Route::post('/store', [AgentController::class, 'store']);
+
+        Route::group(['middleware' => 'auth:api','role:agent'], function () {
+
+        Route::get('/my-order', [AgentController::class, 'my_order']);
+        Route::get('/show/{id}', [AgentController::class, 'show']);
+        Route::get('/show-single-order/{id}', [AgentController::class, 'showSingleOrder']);
         Route::get('/show/{id}', [AgentController::class, 'show']);
         Route::post('/update/{id}', [AgentController::class, 'update']);
         Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
+    });
     });
 
 

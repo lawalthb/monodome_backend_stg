@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Agents;
 
 use App\Models\User;
 use App\Models\Agent;
+use App\Models\Order;
 use App\Models\Guarantor;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\AgentResource;
+use App\Http\Resources\OrderResource;
 use App\Http\Requests\AgentFormRequest;
 
 class AgentController extends Controller
@@ -154,6 +156,42 @@ class AgentController extends Controller
 
             return $this->error('An error occurred while registering the agent and guarantors.');
         }
+    }
+
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function my_order()
+    {
+
+        $order = Order::where("user_id",auth()->user()->id)->get();
+
+        if (!$order) {
+
+            return $this->error('', 'No order not found', 422);
+
+        }
+
+        return OrderResource::collection($order);
+    }
+
+
+     /**
+     * Display the specified resource.
+     */
+    public function showSingleOrder(string $id)
+    {
+        $order = Order::where("user_id",auth()->user()->id)->find($id);
+
+        if (!$order) {
+
+            return $this->error('', 'No order not found', 422);
+
+        }
+
+        return new OrderResource($order);
     }
 
 }
