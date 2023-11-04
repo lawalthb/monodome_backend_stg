@@ -22,7 +22,7 @@ class ShippingCompanyFactory extends Factory
                 'state_id' => rand(1, 30),
                 'company_name' => fake()->company(),
                 'street' => fake()->streetAddress(),
-                'lga' => rand(1, 100),
+                'lga' => rand(1, 50),
                 'phone_number' => fake()->e164PhoneNumber(),
                 'nin_number' => fake()->creditCardNumber(),
                 'profile_picture' => 'uploads/broker/broker_images/1694596427Cndhetfsv8.jpg',
