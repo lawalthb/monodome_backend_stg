@@ -50,7 +50,7 @@ class DistanceSeeder extends Seeder
         $toDistance = 100;
         $price = 1000.00;
 
-        while ($toDistance <= 1000) {
+        while ($toDistance <= 20000) {
 
             // $randomIncrement = [100, 200, 500][array_rand([100, 200, 500])];
             // $price += $randomIncrement;
