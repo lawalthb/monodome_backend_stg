@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('uuid')->default(Str::uuid()->toString());
             $table->bigInteger('user_id')->index('user_id');
             $table->unsignedBigInteger('load_type_id');
+            $table->integer('sender_location')->nullable();
+            $table->integer('receiver_location')->nullable();
+            $table->integer('distance')->nullable();
             $table->string('load_type_name')->default('car-clearing');
             $table->integer('departure_country');
             $table->integer('destination_country');

@@ -20,6 +20,9 @@ return new class extends Migration
             $table->bigInteger('user_id')->index('user_id');
             $table->unsignedBigInteger('load_type_id');
            // $table->bigInteger('load_board_id');
+           $table->integer('sender_location')->nullable();
+           $table->integer('receiver_location')->nullable();
+           $table->integer('distance')->nullable();
             $table->string('load_type_name')->default('specialize-shipment');
             $table->integer('deliver_from_country');
             $table->integer('deliver_from_state');

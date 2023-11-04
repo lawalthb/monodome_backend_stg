@@ -20,6 +20,9 @@ return new class extends Migration
             $table->bigInteger('user_id')->index('user_id');
             $table->unsignedBigInteger('load_type_id')->default(2);
             $table->string('load_type_name')->default('bulk');
+            $table->integer('sender_location')->nullable();
+            $table->integer('receiver_location')->nullable();
+            $table->integer('distance')->nullable();
             $table->enum('deliver_from', ['address', 'office'])->nullable();
             $table->integer('to_office_id')->nullable();
             $table->string('sender_email', 100)->nullable();

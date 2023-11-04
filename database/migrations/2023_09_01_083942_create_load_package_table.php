@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('load_type_name')->default("package")->nullable();
             $table->enum('deliver_from', ['address', 'office'])->nullable();
             $table->integer('to_office_id')->nullable();
+            $table->integer('sender_location')->nullable();
+            $table->integer('receiver_location')->nullable();
+            $table->integer('distance')->nullable();
             $table->string('sender_email', 30)->nullable();
             $table->string('sender_name', 30)->nullable();
             $table->string('sender_phone', 30)->nullable();
