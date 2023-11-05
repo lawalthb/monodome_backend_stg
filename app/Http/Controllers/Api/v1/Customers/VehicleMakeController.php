@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\customers;
+namespace App\Http\Controllers\Api\v1\Customers;
 
 use App\Models\VehicleMake;
 use Illuminate\Http\Request;
