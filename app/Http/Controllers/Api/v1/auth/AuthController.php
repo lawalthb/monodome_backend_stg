@@ -47,8 +47,14 @@ class AuthController extends Controller
                $user->user_type = Str::slug($role->name, "_");// str_replace(' ', '_', $role->name);;
                 $user->role_id = $role->id;
                $user->role = $role->name;
-                $user->assignRole($role);
+               $user->assignRole($role);
             }
+
+            if($role->id==3){
+                $user->status = "Confirmed";
+
+            }
+
             $user->save();
 
              $message ="Thank you for Registering with ".config('app.name');
@@ -73,11 +79,14 @@ class AuthController extends Controller
     {
         $credentials = $request->only(['email', 'password']);
 
-        //$user = User::where("email",$request->email)->first();
+        $user = User::where("email",$request->email)->first();
 
+        if($user != "Confirmed"){
 
-
+            return $this->error(['error' => "Your account is yet to verify!"],'Account is not activated');
+        }
         try {
+
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user();
