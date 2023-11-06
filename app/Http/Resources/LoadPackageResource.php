@@ -18,6 +18,9 @@ class LoadPackageResource extends JsonResource
         return [
             "id" => $this->id,
             "uuid" => $this->uuid,
+            'sender_location'=>$this->sender_location,
+            'receiver_location'=>$this->receiver_location,
+            'distance'=>$this->distance,
             "sender_name" => $this->sender_name,
             "sender_phone" => $this->sender_phone,
             "sender_apartment" => $this->sender_apartment,
