@@ -223,6 +223,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         });
     });
 
+    Route::group(['prefix' => 'clearing-agent'], function () {
+
+    });
+
+
 Route::group(['prefix' => 'driver-manager'], function () {
     Route::post('/store', [DriverMangerController::class, 'store']);
 
