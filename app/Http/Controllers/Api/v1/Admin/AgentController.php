@@ -68,6 +68,19 @@ class AgentController extends Controller
     }
 
 
+    public function statusType(Request $request,$type)
+    {
+        $perPage = $request->input('per_page', 10);
+
+        $agents = Agent::query();
+
+
+        $agents = $agents->where('status',$type)->latest()->paginate($perPage);
+
+        return AgentResource::collection($agents);
+    }
+
+
     public function search(Request $request)
     {
         $terms = explode(" ", $request->input('search'));
