@@ -119,7 +119,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/show/{id}', [AgentController::class, 'show']);
         Route::post('/update/{id}', [AgentController::class, 'update']);
         Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
-        Route::get('/status/type/{id}', [AgentController::class, 'statusType']);
+        Route::get('/status/type', [AgentController::class, 'statusType']);
     });
 
 
