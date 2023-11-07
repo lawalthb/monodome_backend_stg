@@ -71,11 +71,12 @@ class AgentController extends Controller
     public function statusType(Request $request,$type)
     {
         $perPage = $request->input('per_page', 10);
+        $terms = explode(" ", $type);
 
         $agents = Agent::query();
 
 
-        $agents = $agents->where('status',$type)->latest()->paginate($perPage);
+        $agents = $agents->whereIn('status', $terms)->latest()->paginate($perPage);
 
         return AgentResource::collection($agents);
     }
@@ -90,6 +91,7 @@ class AgentController extends Controller
         $agents = Agent::query();
 
         foreach ($terms as $term) {
+            $terms1 = $terms[1];
             $agents->where(function ($query) use ($term) {
                 $query->orWhereHas('user', function ($userQuery) use ($term) {
                     $userQuery->where('email', 'like', "%$term%")
@@ -99,6 +101,7 @@ class AgentController extends Controller
                 ->orWhere('business_name', 'like', "%$term%")
                 ->orWhere('phone_number', 'like', "%$term%")
                 ->orWhere('status', 'like', "%$term%")
+                ->orWhere('status', 'like', "%$terms1%")
                 ->orWhereHas('state', function ($stateQuery) use ($term) {
                     $stateQuery->where('name', 'like', "%$term%");
                 });
