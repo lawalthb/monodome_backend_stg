@@ -87,6 +87,14 @@ class AuthController extends Controller
         }
         try {
 
+            Log::info(getUserIP());
+            Log::info("---------------------------------------------------");
+            Log::info(Location::get());
+            Log::info("---------------------------------------------------");
+            Log::info($request->ip());
+            Log::info("---------------------------------------------------");
+            Log::info($request->header('User-Agent'));
+
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user();
