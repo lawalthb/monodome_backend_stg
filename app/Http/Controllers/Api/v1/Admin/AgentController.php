@@ -68,17 +68,44 @@ class AgentController extends Controller
     }
 
 
-    public function statusType(Request $request,$type)
+    public function statusType(Request $request)
     {
+
+        $terms = explode(" ", $request->input('search'));
         $perPage = $request->input('per_page', 10);
-        $terms = explode(" ", $type);
 
-        $agents = Agent::query();
+        // Create the query to retrieve agents with "Pending" or "Rejected" status
+        $agents = Agent::where(function ($query) use ($terms) {
+            $query->whereIn('status', $terms);
 
+            foreach ($terms as $term) {
+                $query->orWhereHas('user', function ($userQuery) use ($term) {
+                    $userQuery->where('email', 'like', "%$term%")
+                               ->orWhere('full_name', 'like', "%$term%");
+                })
+                ->orWhere('street', 'like', "%$term%")
+                ->orWhere('business_name', 'like', "%$term%")
+                ->orWhere('phone_number', 'like', "%$term%")
+                ->orWhereHas('state', function ($stateQuery) use ($term) {
+                    $stateQuery->where('name', 'like', "%$term%");
+                });
+            }
+        });
 
-        $agents = $agents->whereIn('status', $terms)->latest()->paginate($perPage);
+        // Retrieve the results and paginate them
+        $agents = $agents->latest()->paginate($perPage);
 
         return AgentResource::collection($agents);
+
+        // $perPage = $request->input('per_page', 10);
+        // $terms = explode(" ", $type);
+
+        // $agents = Agent::query();
+
+
+        // $agents = $agents->whereIn('status', $terms)->latest()->paginate($perPage);
+
+        // return AgentResource::collection($agents);
     }
 
 
