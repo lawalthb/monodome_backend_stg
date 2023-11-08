@@ -18,86 +18,150 @@ class DriverController extends Controller
 {
 
     use ApiStatusTrait,FileUploadTrait;
-
     public function index(Request $request)
     {
-        $key = $request->input('search');
-        $perPage = $request->input('per_page', 10);
 
-        $drivers = Driver::where(function ($q) use ($key) {
-            // Assuming there's a relationship between Driver and User
-            $q->whereHas('user', function ($userQuery) use ($key) {
-                $userQuery->where('full_name', 'like', "%{$key}%");
-            })->orWhere('status', 'like', "%{$key}%")->orWhere('have_motor', 'like', "%{$key}%");
-        })
-            ->latest()
-            ->paginate($perPage);
-
-        return DriverResource::collection($drivers);
-    }
-
-
-    public function search(Request $request)
-    {
         $terms = explode(" ", $request->input('search'));
+
         $perPage = $request->input('per_page', 10);
 
-        $drivers = Driver::query();
+        $driver = Driver::query();
 
         foreach ($terms as $term) {
-            $drivers->where(function ($query) use ($term) {
+            $driver->where(function ($query) use ($term) {
                 $query->orWhereHas('user', function ($userQuery) use ($term) {
                     $userQuery->where('email', 'like', "%$term%")
-                        ->orWhere('phone_number', 'like', "%$term%")
                         ->orWhere('full_name', 'like', "%$term%");
                 })
-                ->orWhere('street', 'like', "%$term%")
+                ->orWhere('nin_number', 'like', "%$term%")
+                ->orWhere('license_number', 'like', "%$term%")
                 ->orWhere('have_motor', 'like', "%$term%")
                 ->orWhere('type', 'like', "%$term%")
-                ->orWhere('license_number', 'like', "%$term%")
-                ->orWhere('nin_number', 'like', "%$term%")
-                ->orWhere('status', 'like', "%$term%")
+              //  ->orWhere('status', 'like', "%$term%")
                 ->orWhereHas('state', function ($stateQuery) use ($term) {
                     $stateQuery->where('name', 'like', "%$term%");
                 });
             });
         }
 
-        $drivers = $drivers->latest()->paginate($perPage);
+        $driver = $driver->where('status','Confirmed')->latest()->paginate($perPage);
 
-        return DriverResource::collection($drivers);
+        return DriverResource::collection($driver);
     }
 
 
 
-//     public function search(Request $request)
-// {
-//     $perPage = $request->input('per_page', 10);
+    // public function search(Request $request)
+    // {
+    //     $terms = explode(" ", $request->input('search'));
+    //     $perPage = $request->input('per_page', 10);
 
-//     $drivers = Driver::query();
+    //     $drivers = Driver::query();
 
-//     // Filter by have_motor
-//     $haveMotor = $request->input('have_motor');
-//     if ($haveMotor !== null) {
-//         $drivers->where('have_motor', $haveMotor);
-//     }
+    //     foreach ($terms as $term) {
+    //         $drivers->where(function ($query) use ($term) {
+    //             $query->orWhereHas('user', function ($userQuery) use ($term) {
+    //                 $userQuery->where('email', 'like', "%$term%")
+    //                     ->orWhere('phone_number', 'like', "%$term%")
+    //                     ->orWhere('full_name', 'like', "%$term%");
+    //             })
+    //             ->orWhere('street', 'like', "%$term%")
+    //             ->orWhere('have_motor', 'like', "%$term%")
+    //             ->orWhere('type', 'like', "%$term%")
+    //             ->orWhere('license_number', 'like', "%$term%")
+    //             ->orWhere('nin_number', 'like', "%$term%")
+    //             ->orWhere('status', 'like', "%$term%")
+    //             ->orWhereHas('state', function ($stateQuery) use ($term) {
+    //                 $stateQuery->where('name', 'like', "%$term%");
+    //             });
+    //         });
+    //     }
 
-//     // Filter by type
-//     $type = $request->input('type');
-//     if ($type) {
-//         $drivers->where('type', 'like', "%$type%");
-//     }
+    //     $drivers = $drivers->latest()->paginate($perPage);
 
-//     // Filter by street
-//     $street = $request->input('street');
-//     if ($street) {
-//         $drivers->where('street', 'like', "%$street%");
-//     }
+    //     return DriverResource::collection($drivers);
+    // }
 
-//     $drivers = $drivers->latest()->paginate($perPage);
 
-//     return DriverResource::collection($drivers);
-// }
+    public function search(Request $request)
+{
+    // Get query parameters from the request
+    $sort = $request->input('sort');
+    $email = $request->input('email');
+    $businessName = $request->input('business_name');
+    $license_number = $request->input('license_number');
+    $nin_number = $request->input('nin_number');
+    $have_motor = $request->input('have_motor');
+    $type = $request->input('type');
+    $status = $request->input('status');
+    $fullName = $request->input('full_name');
+    $startDate = $request->input('start_date');
+    $endDate = $request->input('end_date');
+
+    // Apply filters to the Agent query
+    $driver = Driver::query();
+
+    // Filter by 'sort' parameter
+    if ($sort) {
+        $driver->orderBy($sort);
+    }
+
+    // Filter by 'email' parameter
+    if ($email) {
+        $driver->whereHas('user', function ($userQuery) use ($email) {
+            $userQuery->where('email', 'like', "%$email%");
+        });
+    }
+
+    // Filter by 'business_name' parameter
+    if ($businessName) {
+        $driver->where('business_name', 'like', "%$businessName%");
+    }
+
+    if ($license_number) {
+        $driver->where('license_number', 'like', "%$license_number%");
+    }
+
+    if ($nin_number) {
+        $driver->where('nin_number', 'like', "%$nin_number%");
+    }
+
+    if ($have_motor) {
+        $driver->where('have_motor', 'like', "%$have_motor%");
+    }
+
+    if ($type) {
+        $driver->where('type', 'like', "%$type%");
+    }
+
+    // Filter by 'status' parameter
+    if ($status) {
+        $driver->where('status', $status);
+    }
+
+    // Filter by 'full_name' parameter
+    if ($fullName) {
+        $driver->whereHas('user', function ($userQuery) use ($fullName) {
+            $userQuery->where('full_name', 'like', "%$fullName%");
+        });
+    }
+
+    // Filter by date range
+    if ($startDate) {
+        $driver->whereDate('created_at', '>=', $startDate);
+    }
+
+    if ($endDate) {
+        $driver->whereDate('created_at', '<=', $endDate);
+    }
+
+    $perPage = $request->input('per_page', 10);
+
+    // Retrieve and paginate the results
+    $driver = $driver->latest()->paginate($perPage);
+
+    return DriverResource::collection($driver);
+}
 
 
     public function show($DriverId) {
