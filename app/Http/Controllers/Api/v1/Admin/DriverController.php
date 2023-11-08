@@ -51,6 +51,18 @@ class DriverController extends Controller
 
 
 
+    public function pending(Request $request){
+
+        $perPage = $request->input('per_page', 10);
+
+       $driver = Driver::query();
+
+
+       $driver = $driver->whereIn('status', ['Pending','Rejected'])->latest()->paginate($perPage);
+
+       return DriverResource::collection($driver);
+   }
+
     // public function search(Request $request)
     // {
     //     $terms = explode(" ", $request->input('search'));
