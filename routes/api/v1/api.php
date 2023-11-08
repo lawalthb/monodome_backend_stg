@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\v1\Company\CompanyController;
 use App\Http\Controllers\Api\v1\Customers\LoadBulkController;
 use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
 use App\Http\Controllers\Api\v1\Customers\LoadBoardController;
+use App\Http\Controllers\Api\v1\Agents\ClearingAgentController;
 use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
 use App\Http\Controllers\Api\v1\Customers\VehicleMakeController;
 use App\Http\Controllers\Api\v1\Customers\VehicleTypeController;
@@ -223,7 +224,13 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         });
     });
 
-    Route::group(['prefix' => 'clearing-agent'], function () {
+    Route::group(['prefix' => 'clearing-agent','middleware' => 'auth:api'], function () {
+
+        Route::get('/order', [ClearingAgentController::class, 'order']);
+        Route::post('/order-assign', [ClearingAgentController::class, 'orderAssign']);
+        Route::post('/order-reassign', [ClearingAgentController::class, 'orderReAssign']);
+        Route::get('/broadcast', [ClearingAgentController::class, 'broadcast']);
+        Route::get('/broadcast/{id}', [ClearingAgentController::class, 'singleBroadcast']);
 
     });
 

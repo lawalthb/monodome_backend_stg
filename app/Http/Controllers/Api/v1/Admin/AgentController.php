@@ -67,6 +67,9 @@ class AgentController extends Controller
 
         $terms = explode(" ", $request->input('search'));
         $perPage = $request->input('per_page', 10);
+        $sort = $request->input('sort');
+        $date_start = $request->input('date_start');
+        $date_end = $request->input('date_end');
 
         // Create the query to retrieve agents with "Pending" or "Rejected" status
         $agents = Agent::where(function ($query) use ($terms) {
@@ -93,36 +96,105 @@ class AgentController extends Controller
     }
 
 
+
     public function search(Request $request)
-    {
-        $terms = explode(" ", $request->input('search'));
+{
+    // Get query parameters from the request
+    $sort = $request->input('sort');
+    $email = $request->input('email');
+    $businessName = $request->input('business_name');
+    $phone = $request->input('phone_number');
+    $status = $request->input('status');
+    $fullName = $request->input('full_name');
+    $startDate = $request->input('start_date');
+    $endDate = $request->input('end_date');
 
-        $perPage = $request->input('per_page', 10);
+    // Apply filters to the Agent query
+    $agents = Agent::query();
 
-        $agents = Agent::query();
-
-        foreach ($terms as $term) {
-            $terms1 = $terms[1];
-            $agents->where(function ($query) use ($term) {
-                $query->orWhereHas('user', function ($userQuery) use ($term) {
-                    $userQuery->where('email', 'like', "%$term%")
-                        ->orWhere('full_name', 'like', "%$term%");
-                })
-                ->orWhere('street', 'like', "%$term%")
-                ->orWhere('business_name', 'like', "%$term%")
-                ->orWhere('phone_number', 'like', "%$term%")
-                ->orWhere('status', 'like', "%$term%")
-                ->orWhere('status', 'like', "%$terms1%")
-                ->orWhereHas('state', function ($stateQuery) use ($term) {
-                    $stateQuery->where('name', 'like', "%$term%");
-                });
-            });
-        }
-
-        $agents = $agents->latest()->paginate($perPage);
-
-        return AgentResource::collection($agents);
+    // Filter by 'sort' parameter
+    if ($sort) {
+        $agents->orderBy($sort);
     }
+
+    // Filter by 'email' parameter
+    if ($email) {
+        $agents->whereHas('user', function ($userQuery) use ($email) {
+            $userQuery->where('email', 'like', "%$email%");
+        });
+    }
+
+    // Filter by 'business_name' parameter
+    if ($businessName) {
+        $agents->where('business_name', 'like', "%$businessName%");
+    }
+
+    // Filter by 'phone_number' parameter
+    if ($phone) {
+        $agents->where('phone_number', 'like', "%$phone%");
+    }
+
+    // Filter by 'status' parameter
+    if ($status) {
+        $agents->where('status', $status);
+    }
+
+    // Filter by 'full_name' parameter
+    if ($fullName) {
+        $agents->whereHas('user', function ($userQuery) use ($fullName) {
+            $userQuery->where('full_name', 'like', "%$fullName%");
+        });
+    }
+
+    // Filter by date range
+    if ($startDate) {
+        $agents->whereDate('created_at', '>=', $startDate);
+    }
+
+    if ($endDate) {
+        $agents->whereDate('created_at', '<=', $endDate);
+    }
+
+    $perPage = $request->input('per_page', 10);
+
+    // Retrieve and paginate the results
+    $agents = $agents->latest()->paginate($perPage);
+
+    return AgentResource::collection($agents);
+}
+
+
+
+    // public function search(Request $request)
+    // {
+    //     $terms = explode(" ", $request->input('search'));
+
+    //     $perPage = $request->input('per_page', 10);
+
+    //     $agents = Agent::query();
+
+    //     foreach ($terms as $term) {
+    //         $terms1 = $terms[1];
+    //         $agents->where(function ($query) use ($term) {
+    //             $query->orWhereHas('user', function ($userQuery) use ($term) {
+    //                 $userQuery->where('email', 'like', "%$term%")
+    //                     ->orWhere('full_name', 'like', "%$term%");
+    //             })
+    //             ->orWhere('street', 'like', "%$term%")
+    //             ->orWhere('business_name', 'like', "%$term%")
+    //             ->orWhere('phone_number', 'like', "%$term%")
+    //             ->orWhere('status', 'like', "%$term%")
+    //             ->orWhere('status', 'like', "%$terms1%")
+    //             ->orWhereHas('state', function ($stateQuery) use ($term) {
+    //                 $stateQuery->where('name', 'like', "%$term%");
+    //             });
+    //         });
+    //     }
+
+    //     $agents = $agents->latest()->paginate($perPage);
+
+    //     return AgentResource::collection($agents);
+    // }
 
     public function show($agentId) {
         $agent = Agent::find($agentId);

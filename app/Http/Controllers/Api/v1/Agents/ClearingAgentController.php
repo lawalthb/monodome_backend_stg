@@ -11,8 +11,6 @@ class ClearingAgentController extends Controller
 {
     //
 
-
-
     public function broadcast(Request $request)
     {
         $query = LoadBoard::orderBy('created_at', 'desc');
@@ -30,7 +28,7 @@ class ClearingAgentController extends Controller
 
     public function singleBroadcast(Request $request, $id)
     {
-        $query = LoadBoard::where("id", $id);
+        $query = LoadBoard::where("id", $id)->whereIn('load_type_id',[3,4]);
 
         if ($request->has('order_no')) {
             $query->where('order_no', $request->input('order_no'));
