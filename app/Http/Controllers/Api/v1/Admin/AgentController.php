@@ -36,35 +36,29 @@ class AgentController extends Controller
                 ->orWhere('agent_code', 'like', "%$term%")
                 ->orWhere('business_name', 'like', "%$term%")
                 ->orWhere('agent_code', 'like', "%$term%")
-                ->orWhere('status', 'like', "%$term%")
+              //  ->orWhere('status', 'like', "%$term%")
                 ->orWhereHas('state', function ($stateQuery) use ($term) {
                     $stateQuery->where('name', 'like', "%$term%");
                 });
             });
         }
 
-        $agents = $agents->latest()->paginate($perPage);
+        $agents = $agents->where('status','Confirmed')->latest()->paginate($perPage);
 
         return AgentResource::collection($agents);
+    }
 
 
+    public function pending(Request $request){
 
-        // $key = $request->input('search');
-        // $perPage = $request->input('per_page', 10);
+         $perPage = $request->input('per_page', 10);
 
-        // $agents = Agent::where(function ($q) use ($key) {
-        //     // Assuming there's a relationship between Agent and User
-        //     $q->whereHas('user', function ($userQuery) use ($key) {
-        //         $userQuery->where('full_name', 'like', "%{$key}%");
-        //     })->orWhere('status', 'like', "%{$key}%")
-        //     ->orWhere('agent_code', 'like', "%{$key}%")
-        //     ->orWhere('nin_number', 'like', "%{$key}%")
-        //     ->orWhere('business_name', 'like', "%{$key}%");
-        // })
-        //     ->latest()
-        //     ->paginate($perPage);
+        $agents = Agent::query();
 
-        // return AgentResource::collection($agents);
+
+        $agents = $agents->whereIn('status', ['Pending','Rejected'])->latest()->paginate($perPage);
+
+        return AgentResource::collection($agents);
     }
 
 
@@ -96,16 +90,6 @@ class AgentController extends Controller
         $agents = $agents->latest()->paginate($perPage);
 
         return AgentResource::collection($agents);
-
-        // $perPage = $request->input('per_page', 10);
-        // $terms = explode(" ", $type);
-
-        // $agents = Agent::query();
-
-
-        // $agents = $agents->whereIn('status', $terms)->latest()->paginate($perPage);
-
-        // return AgentResource::collection($agents);
     }
 
 

@@ -106,15 +106,13 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::delete('/{permission}', [PermissionController::class, 'destroy']);
     });
 
-
-
-
     // agent route group
     Route::group(['prefix' => 'agent'], function () {
 
         Route::get('/', [AgentController::class, 'index']);
         Route::post('/store', [AgentController::class, 'store']);
         Route::get('/search', [AgentController::class, 'search']);
+        Route::get('/pending', [AgentController::class, 'pending']);
         Route::post('/status/{id}', [AgentController::class, 'setStatus']);
         Route::get('/show/{id}', [AgentController::class, 'show']);
         Route::post('/update/{id}', [AgentController::class, 'update']);
