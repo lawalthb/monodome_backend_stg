@@ -101,11 +101,13 @@ class TruckController extends Controller
                 ]
             );
 
+          //  dd($request->file('profile_picture'));
             $truck->profile_picture = $this->uploadFile('truck/truck_images', $request->file('profile_picture'));
           //  $truck->inside_store_image = $this->uploadFile('truck/truck_images', $request->file('inside_store_image'));
             //$truck->registration_documents = $this->uploadFile('truck/truck_documents', $request->file('registration_documents'));
 
             $truck->save();
+
 
             if ($request->input('documents')) {
 
