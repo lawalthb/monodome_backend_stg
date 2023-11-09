@@ -55,7 +55,7 @@ class TruckController extends Controller
 
             if (!$user->exists) {
                 // User doesn't exist, so create a new user
-                $user->full_name = $request->input('full_name');
+                $user->full_name = $request->input('business_name');
                 $user->email = $request->input('email');
               //  $user->address = $request->input('address');
                 $user->phone_number = $request->input('phone_number');
