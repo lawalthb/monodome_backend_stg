@@ -5,6 +5,9 @@
 /public/storage
 /storage/*.key
 /vendor
+/cpanel
+/cpanel.pub
+/database_dump.sql
 .env
 .env.backup
 .env.production
