@@ -126,6 +126,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/', [DriverController::class, 'index']);
         Route::post('/store', [DriverController::class, 'store']);
         Route::get('/search', [DriverController::class, 'search']);
+        Route::get('/pending', [DriverController::class, 'pending']);
         Route::post('/status/{id}', [DriverController::class, 'setStatus']);
         Route::get('/show/{id}', [DriverController::class, 'show']);
         Route::post('/update/{id}', [DriverController::class, 'update']);
@@ -134,12 +135,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
     });
 
-
     // driver route group
     Route::group(['prefix' => 'driver-manager'], function () {
         Route::get('/', [DriverManagerController::class, 'index']);
         Route::post('/store', [DriverManagerController::class, 'store']);
         Route::get('/search', [DriverManagerController::class, 'search']);
+        Route::get('/pending', [DriverManagerController::class, 'pending']);
         Route::post('/status/{id}', [DriverManagerController::class, 'setStatus']);
         Route::get('/show/{id}', [DriverManagerController::class, 'show']);
         Route::post('/update/{id}', [DriverManagerController::class, 'update']);

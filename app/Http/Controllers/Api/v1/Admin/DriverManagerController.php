@@ -28,13 +28,26 @@ class DriverManagerController extends Controller
                 $userQuery->where('full_name', 'like', "%{$key}%");
             })->orWhere('status', 'like', "%{$key}%")->orWhere('business_name', 'like', "%{$key}%");
         })
-        ->withCount('user_created_by') // Eager load the user_created_by relationship and count
+        ->withCount('user_created_by')
+        ->where('status','Confirmed') // Eager load the user_created_by relationship and count
         ->latest()
         ->paginate($perPage);
 
         return DriverMangerResource::collection($drivers);
     }
 
+
+    public function pending(Request $request){
+
+        $perPage = $request->input('per_page', 10);
+
+       $driver = DriverManger::query();
+
+
+       $driver = $driver->whereIn('status', ['Pending','Rejected'])->latest()->paginate($perPage);
+
+       return DriverMangerResource::collection($driver);
+   }
 
 
     public function search(Request $request)
