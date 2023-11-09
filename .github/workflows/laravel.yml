@@ -44,4 +44,6 @@ jobs:
         username: ${{ secrets.PAYLODR_USERNAME }}
         password: ${{ secrets.PAYLODR_PASSWORD }}
         port: ${{ secrets.PAYLODR_PORT }}
-        script: "cd /var/www/html && sh ./.scripts/deploy.sh"
+        script: |
+              "pwd"
+              "cd /var/www/html && sh ./.scripts/deploy.sh"
