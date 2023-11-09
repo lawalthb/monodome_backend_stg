@@ -10,19 +10,21 @@ jobs:
     name: 🚀 Deploy Website Every Commit
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get Latest Code
-      uses: actions/checkout@v3
+      - name: 🚚 Get Latest Code
+        uses: actions/checkout@v3
 
-    - name: 📂 Install Rsync
-      run: |
-        sudo apt update
-        sudo apt install rsync
-      #This step installs rsync on the runner
+      - name: 📂 Install Rsync
+        run: |
+          sudo apt update
 
-    # - name: 📂 Sync Files
-    #   uses: SamKirkland/web-deploy@v1
-    #   with:
-    #     target-server: "131.153.147.106"
-    #     remote-user: "kaysolak"
-    #     private-ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
-    #     destination-path: "/home/kaysolak/www/monolog.kaysolaknigventures.com/"
+          sudo apt install rsync
+        # This step installs rsync on the runner
+
+      - name: 📂 Sync Files
+        uses: SamKirkland/web-deploy@v1
+        with:
+          target-server: "162.0.209.232"
+          remote-user: "payljenl"
+          ssh-port : 21098
+          private-ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          destination-path: "/home/payljenl/sso.paylodr.com/"
