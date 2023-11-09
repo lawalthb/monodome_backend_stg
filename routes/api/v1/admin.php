@@ -120,7 +120,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/status/type', [AgentController::class, 'statusType']);
     });
 
-
       // driver route group
       Route::group(['prefix' => 'driver'], function () {
         Route::get('/', [DriverController::class, 'index']);
@@ -131,8 +130,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/show/{id}', [DriverController::class, 'show']);
         Route::post('/update/{id}', [DriverController::class, 'update']);
         Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
-
-
     });
 
     // driver route group
