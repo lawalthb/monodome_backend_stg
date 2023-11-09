@@ -45,7 +45,12 @@ jobs:
         password: ${{ secrets.PAYLODR_PASSWORD }}
         port: ${{ secrets.PAYLODR_PORT }}
         script: |
-              pwd
-              chmod +x deploy.sh
-              sh deploy.sh
+          pwd
+          ls -la
+          cd .scripts
+          pwd
+          ls -la
+          chmod +x deploy.sh
+          sh deploy.sh
+
 
