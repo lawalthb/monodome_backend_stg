@@ -46,4 +46,5 @@ jobs:
         port: ${{ secrets.PAYLODR_PORT }}
         script: |
               pwd
-              cd /var/www/html && sh /var/www/html/.scripts/deploy.sh
+              "cd /var/www/html && sh ./.scripts/deploy.sh"
+
