@@ -47,7 +47,7 @@ jobs:
         script: |
           pwd
           ls -la
-          cd mono.paylodr.com/
+          cd sso.paylodr.com/
           pwd
           ls -la
           chmod +x deploy.sh
