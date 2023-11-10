@@ -45,9 +45,8 @@ jobs:
         password: ${{ secrets.PAYLODR_PASSWORD }}
         port: ${{ secrets.PAYLODR_PORT }}
         script: |
-          pwd
-          ls -la
           cd sso.paylodr.com/
+          git pull
           pwd
           ls -la
           chmod +x deploy.sh
