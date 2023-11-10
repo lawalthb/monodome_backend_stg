@@ -47,7 +47,7 @@ jobs:
         script: |
           pwd
           ls -la
-          cd .scripts
+          cd mono.paylodr.com/
           pwd
           ls -la
           chmod +x deploy.sh
