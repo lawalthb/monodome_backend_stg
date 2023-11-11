@@ -91,6 +91,7 @@ class OrderController extends Controller
         }
         $load->user->wallet->amount =  $load->user->wallet->amount - $loadTotalAmount;
 
+        $load->status = 'Approved';
         $load->save();
         $order = Order::updateOrCreate(
             [

@@ -265,6 +265,9 @@ class AuthController extends Controller
 
             $user = auth()->user();
 
+
+            if($user->isPremium) return $this->success([ 'user' => new UserResource($user),],"This user is already a premium Customer!");
+
             $wallet = Wallet::where("user_id", $user->id)->first();
 
             if($wallet->amount > 500){
@@ -274,7 +277,10 @@ class AuthController extends Controller
                 $user->save();
                 $wallet->save();
 
-                return $this->success([],"Subscription is successful");
+                return $this->success([
+                    'user' => new UserResource($user),
+
+                ],"Subscription is successful");
 
             }else{
 
