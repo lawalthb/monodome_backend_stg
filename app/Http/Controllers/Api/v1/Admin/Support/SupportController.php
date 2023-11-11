@@ -7,13 +7,19 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SupportTicket;
 use App\Models\SupportMessage;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use App\Models\SupportAttachment;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SupportMessageResource;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\SupportTicketResource;
 
 class SupportController extends Controller
 {
+
+    use ApiStatusTrait,FileUploadTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -63,8 +69,8 @@ class SupportController extends Controller
 
         $getPaginate = request()->input('per_page', 15);
         $ticket = SupportTicket::with('user')->where('id', $id)->firstOrFail();
-        $supports = SupportMessage::with('ticket')->where('supportticket_id', $ticket->id)->latest()->get();
-        return $this->success(['supports' => SupportTicketResource::collection($supports)], 'Ticket Reply retrieved successfully');
+         $supports = SupportMessage::with('ticket')->where('supportticket_id', $ticket->id)->latest()->get();
+        return $this->success(['supports' => SupportMessageResource::collection($supports)], 'Ticket Reply retrieved successfully');
 
     }
 
