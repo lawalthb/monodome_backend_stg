@@ -66,19 +66,20 @@ class SupportController extends Controller
 
         $this->validate($request, [
             'attachments' => [
-                'max:4096',
-                function ($attribute, $value, $fail) use ($files, $allowedExts) {
-                    foreach ($files as $file) {
+                'array',
+                'max:5', // Maximum 5 files can be uploaded
+                function ($attribute, $value, $fail) use ($allowedExts) {
+                    foreach ($value as $file) {
+                        if (!($file instanceof \Illuminate\Http\UploadedFile)) {
+                            return $fail("Invalid file type");
+                        }
                         $ext = strtolower($file->getClientOriginalExtension());
                         if (($file->getSize() / 1000000) > 2) {
-                            return $fail("Images MAX  2MB ALLOW!");
+                            return $fail("Images MAX 2MB ALLOW!");
                         }
                         if (!in_array($ext, $allowedExts)) {
                             return $fail("Only png, jpg, jpeg, pdf, doc, docx files are allowed");
                         }
-                    }
-                    if (count($files) > 5) {
-                        return $fail("Maximum 5 files can be uploaded");
                     }
                 },
             ],
@@ -114,7 +115,7 @@ class SupportController extends Controller
                 try {
                     $attachment = new SupportAttachment();
                     $attachment->support_message_id = $message->id;
-                    $attachment->attachment =  $this->uploadFile('support/', $request->file('attachments'));
+                    $attachment->attachment =  $this->uploadFile('support', $file);
                     $attachment->save();
                 } catch (\Exception $exp) {
                     return $this->error('Could not upload your ' . $file);
@@ -137,8 +138,7 @@ class SupportController extends Controller
      */
     public function show(string $ticket)
     {
-    $page_title = "Support Tickets";
-    $my_ticket = SupportTicket::where('ticket', $ticket)->latest()->first();
+    $my_ticket = SupportTicket::where('ticket', $ticket)->with('supportMessage')->latest()->first();
 
     if (!$my_ticket) {
         return $this->error("Ticket not found");
@@ -148,9 +148,7 @@ class SupportController extends Controller
 
     return $this->success([
         'my_ticket' => new SupportTicketResource($my_ticket),
-        'messages' => SupportMessageResource::collection($messages),
-        'page_title' => $page_title,
-        'user' => auth()->user()
+      //  'message' => new SupportMessageResource($messages),
     ], 'Ticket details retrieved successfully');
     }
 
@@ -170,13 +168,12 @@ class SupportController extends Controller
         //
     }
 
-    public function replyTicket(Request $request, $id)
+    public function replyTicket(Request $request, $ticket)
     {
-        $ticket = SupportTicket::findOrFail($id);
+        $ticket =SupportTicket::where('ticket', $ticket)->first();
         $message = new SupportMessage();
 
         $notify = []; // Define $notify here
-
 
         if ($request->replayTicket == 1) {
             $imgs = $request->file('attachments');
@@ -184,21 +181,20 @@ class SupportController extends Controller
 
             $this->validate($request, [
                 'attachments' => [
-                    'max:4096',
-                    function ($attribute, $value, $fail) use ($imgs, $allowedExts) {
-                        foreach ($imgs as $img) {
-                            $ext = strtolower($img->getClientOriginalExtension());
-                            if (($img->getSize() / 1000000) > 2) {
-                                return $fail("Images MAX  2MB ALLOW!");
+                    'array',
+                    'max:5', // Maximum 5 files can be uploaded
+                    function ($attribute, $value, $fail) use ($allowedExts) {
+                        foreach ($value as $file) {
+                            if (!($file instanceof \Illuminate\Http\UploadedFile)) {
+                                return $fail("Invalid file type");
+                            }
+                            $ext = strtolower($file->getClientOriginalExtension());
+                            if (($file->getSize() / 1000000) > 2) {
+                                return $fail("Images MAX 2MB ALLOW!");
                             }
                             if (!in_array($ext, $allowedExts)) {
-
-                                        return $this->error("Only png, jpg, jpeg, pdf doc docx files are allowed");
-
+                                return $fail("Only png, jpg, jpeg, pdf, doc, docx files are allowed");
                             }
-                        }
-                        if (count($imgs) > 5) {
-                                        return $this->error("Maximum 5 files can be uploaded");
                         }
                     },
                 ],
@@ -218,7 +214,7 @@ class SupportController extends Controller
                     try {
                         $attachment = new SupportAttachment();
                         $attachment->support_message_id = $message->id;
-                        $attachment->attachment = $this->uploadFile('support/', $request->file('attachments'));
+                        $attachment->attachment = $this->uploadFile('support',  $file);
                         $attachment->save();
 
                     } catch (\Exception $exp) {
@@ -237,21 +233,22 @@ class SupportController extends Controller
             // ]);
 
             $notify[] = ['success', 'Support ticket replied successfully!'];
+            return $this->success(new SupportTicketResource($ticket), 'Support ticket replied successfully!!');
         } elseif ($request->replayTicket == 2) {
             $ticket->status = 3;
             $ticket->isClosed = 1;
             $ticket->last_reply = Carbon::now();
             $ticket->save();
             $notify[] = ['success', 'Support ticket closed successfully!'];
+            return $this->success(new SupportTicketResource($ticket), 'Support ticket closed successfully!');
         }
 
-        return $this->success(new SupportTicketResource($ticket), 'Ticket replied successfully!');
 
     }
 
     public function ticketDownload($ticket_id)
     {
-        $attachment = SupportAttachment::findOrFail(decrypt($ticket_id));
+        $attachment = SupportAttachment::findOrFail($ticket_id);
         $file = $attachment->attachment;
 
         $full_path = getImageFile($file);

@@ -137,10 +137,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     Route::group(['prefix' => 'support', 'middleware' => 'auth:api'], function () {
 
         Route::get('/get', [SupportController::class, 'index']);
+      //  Route::get('/get/{id}', [SupportController::class, 'index']);
         Route::post('/store', [SupportController::class, 'store']);
         Route::post('/reply/{id}', [SupportController::class, 'replyTicket']);
         Route::delete('/delete/{id}', [SupportController::class, 'destroy']);
         Route::get('/show/{id}', [SupportController::class, 'show']);
+        Route::get('/download/{ticket}', [SupportController::class, 'ticketDownload']);
 
     });
 
