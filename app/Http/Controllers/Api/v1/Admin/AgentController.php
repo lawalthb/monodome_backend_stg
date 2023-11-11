@@ -108,6 +108,7 @@ class AgentController extends Controller
     $fullName = $request->input('full_name');
     $startDate = $request->input('start_date');
     $endDate = $request->input('end_date');
+    $date = $request->input('date');
 
     // Apply filters to the Agent query
     $agents = Agent::query();
@@ -149,6 +150,10 @@ class AgentController extends Controller
     // Filter by date range
     if ($startDate) {
         $agents->whereDate('created_at', '>=', $startDate);
+    }
+
+    if ($date) {
+        $agents->whereDate('created_at', '=', $date);
     }
 
     if ($endDate) {
