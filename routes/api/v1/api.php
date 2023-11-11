@@ -132,6 +132,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
     });
 
+
+    Route::group(['prefix' => 'support', 'middleware' => 'auth:api'], function () {
+
+        Route::post('/get', [ChatController::class, 'index']);
+        Route::post('/store', [ChatController::class, 'store']);
+        Route::delete('/delete/{id}', [ChatController::class, 'destroy']);
+        Route::get('/show/{id}', [ChatController::class, 'show']);
+
+    });
+
     Route::group(['prefix' => 'order', 'middleware' => 'auth:api'], function () {
 
         //load type route

@@ -369,6 +369,84 @@ function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
 // 							));
 
 
+function notify($user, $type, $shortCodes = null)
+{
+
+    sendEmail($user, $type, $shortCodes);
+    sendSms($user, $type, $shortCodes);
+}
+function sendSms($user, $type, $shortCodes = [])
+{
+    // $general = GeneralSetting::first(['sn', 'sms_api']);
+    // $sms_template = SmsTemplate::where('act', $type)->where('sms_status', 1)->first();
+    // if ($general->sn == 1 && $sms_template) {
+
+    //     $template = $sms_template->sms_body;
+
+    //     foreach ($shortCodes as $code => $value) {
+    //         $template = shortCodeReplacer('{{' . $code . '}}', $value, $template);
+    //     }
+    //     $template = urlencode($template);
+
+    //     $message = shortCodeReplacer("{{number}}", $user->mobile, $general->sms_api);
+    //     $message = shortCodeReplacer("{{message}}", $template, $message);
+    //     $result = @file_get_contents($message);
+    // }
+}
+
+function shortCodeReplacer($shortCode, $replace_with, $template_string)
+{
+    return str_replace($shortCode, $replace_with, $template_string);
+}
+
+
+function sendEmail($user, $type = null, $shortCodes = [])
+{
+    // $general = GeneralSetting::first();
+
+    // $email_template = EmailTemplate::where('act', $type)->where('email_status', 1)->first();
+    // if ($general->en != 1 || !$email_template) {
+    //     return;
+    // }
+
+    // $username = $user->username ? $user->username : $user->firstname.' '.$user->lastname;
+
+    // $message = shortCodeReplacer("{{name}}", $username, $general->email_template);
+    // $message = shortCodeReplacer("{{message}}", $email_template->email_body, $message);
+
+    // if (empty($message)) {
+    //     $message = $email_template->email_body;
+    // }
+
+    // foreach ($shortCodes as $code => $value) {
+    //     $message = shortCodeReplacer('{{' . $code . '}}', $value, $message);
+    // }
+    // $config = $general->mail_config;
+
+    // if ($config->name == 'php') {
+    //     sendPhpMail($user->email, $username,$email_template->subj, $message);
+    // } else if ($config->name == 'smtp') {
+    //     sendSmtpMail($config, $user->email, $username, $email_template->subj, $message,$general);
+    // }
+}
+
+function sendPhpMail($receiver_email, $receiver_name, $subject, $message)
+{
+    $gnl = Setting::first();
+    $headers = "From: $gnl->sitename <$gnl->email_from>\r\n";
+    $headers .= "Reply-To: $gnl->sitename <$gnl->email_from>\r\n";
+    $headers .= "Return-Path: $gnl->sitename <$gnl->email_from>\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Organization: Bourseechange\r\n";
+    $headers .= "Content-Type: text/html; charset=utf-8\r\n";
+    $headers .= "X-Priority: 3\r\n";
+    $headers .= "X-Mailer: PHP". phpversion() ."\r\n" ;
+
+   @mail($receiver_email, $subject, $message, $headers);
+
+}
+
+
 
 ?>
 
