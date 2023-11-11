@@ -39,7 +39,7 @@ class ChatController extends Controller
             'sender_id' => 'required|integer',
             'receiver_id' => 'required|integer',
             'message' => 'required|string',
-            'file' => 'nullable|file|mimes:png,jpg,jpeg,pdf,doc,docx|min:5024', // Adjust the allowed file types as needed
+            'file' => 'nullable|file|mimes:png,jpg,jpeg,pdf,doc,docx|max:2024', // Adjust the allowed file types as needed
         ]);
 
         // Extract validated data
@@ -47,7 +47,7 @@ class ChatController extends Controller
 
         // If a file is provided, upload it and add the file path to the data
         if ($request->hasFile('file')) {
-            $validatedData['file_path'] = $this->uploadFile('chat/', $request->file('file'));
+            $validatedData['file_path'] = $this->uploadFile('chat', $request->file('file'));
         }
 
         // Use updateOrCreate directly with validated data
@@ -74,7 +74,16 @@ class ChatController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $chat = Chat::findOrFail($id);
+
+        if($chat->save()){
+
+            return $this->success(new ChatResource($chat), 'Single Chat successfully');
+        }else{
+            return $this->error('An error occurred while deleting the data.');
+
+        }
+
     }
 
     /**
