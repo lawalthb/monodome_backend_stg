@@ -39,7 +39,7 @@ class ChatController extends Controller
             'sender_id' => 'required|integer',
             'receiver_id' => 'required|integer',
             'message' => 'required|string',
-            'file' => 'nullable|file|mimes:pdf,doc,docx|min:1024', // Adjust the allowed file types as needed
+            'file' => 'nullable|file|mimes:png,jpg,jpeg,pdf,doc,docx|min:1024', // Adjust the allowed file types as needed
         ]);
 
         // Extract validated data
