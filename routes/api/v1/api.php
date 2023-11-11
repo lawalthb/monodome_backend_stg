@@ -10,6 +10,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Api\v1\CountryController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
+use App\Http\Controllers\Api\v1\Chat\ChatController;
 use App\Http\Controllers\Api\v1\Order\OrderController;
 use App\Http\Controllers\Api\v1\Truck\TruckController;
 use App\Http\Controllers\Api\v1\Wallet\CardController;
@@ -124,11 +125,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
     Route::group(['prefix' => 'chat', 'middleware' => 'auth:api'], function () {
 
-        Route::post('/get', [LoadBoardController::class, 'index']);
-        Route::post('/store', [LoadBoardController::class, 'store']);
-        Route::post('/deleteChat', [LoadBoardController::class, 'show']);
-        // Route::post('/load-board/{loadBulk}', [LoadBoardController::class, 'update']);
-        // Route::delete('/load-board/{id}', [LoadBoardController::class, 'destroy']);
+        Route::post('/get', [ChatController::class, 'index']);
+        Route::post('/store', [ChatController::class, 'store']);
+        Route::delete('/deleteChat', [ChatController::class, 'show']);
+        Route::post('/deleteChat', [ChatController::class, 'show']);
+        // Route::post('/load-board/{loadBulk}', [ChatController::class, 'update']);
+        // Route::delete('/load-board/{id}', [ChatController::class, 'destroy']);
 
     });
 

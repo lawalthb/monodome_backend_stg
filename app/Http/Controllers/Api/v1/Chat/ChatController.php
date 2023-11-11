@@ -79,11 +79,36 @@ class ChatController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+     */public function update(Request $request, string $id)
+{
+    $request->validate([
+        'message' => 'required|string',
+        'file' => 'nullable|file|mimes:pdf,doc,docx|min:1024', // Adjust the allowed file types and minimum size as needed
+    ]);
+
+    $chat = Chat::findOrFail($id);
+    // Update the message
+    $chat->message = $request->input('message');
+
+    // If a new file is provided, update the file path
+    if ($request->hasFile('file')) {
+        $this->validate($request, [
+            'file' => 'file|mimes:pdf,doc,docx|min:1024', // Validate the file separately
+        ]);
+
+        // Upload the new file and update the file path
+        $chat->file_path = $this->uploadFile('chat/', $request->file('file'));
     }
+
+    if($chat->save()){
+
+        return $this->success(new ChatResource($chat), 'Chat updated successfully');
+    }else{
+        return $this->error('An error occurred while deleting the data.');
+
+    }
+
+}
 
     /**
      * Remove the specified resource from storage.
