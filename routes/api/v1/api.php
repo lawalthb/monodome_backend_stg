@@ -122,6 +122,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     });
 
 
+    Route::group(['prefix' => 'chat', 'middleware' => 'auth:api'], function () {
+
+        Route::post('/get', [LoadBoardController::class, 'index']);
+        Route::post('/store', [LoadBoardController::class, 'store']);
+        Route::post('/deleteChat', [LoadBoardController::class, 'show']);
+        // Route::post('/load-board/{loadBulk}', [LoadBoardController::class, 'update']);
+        // Route::delete('/load-board/{id}', [LoadBoardController::class, 'destroy']);
+
+    });
+
     Route::group(['prefix' => 'order', 'middleware' => 'auth:api'], function () {
 
         //load type route
@@ -201,10 +211,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     });
 
 
-    Route::group(['prefix' => 'chat'], function(){
-
-
-    });
 
     // driver route group
     Route::group(['prefix' => 'driver'], function () {
