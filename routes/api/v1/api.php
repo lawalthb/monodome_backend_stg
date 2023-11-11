@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\v1\Wallet\WalletController;
 use App\Http\Controllers\Api\v1\Brokers\BrokerController;
 use App\Http\Controllers\Api\v1\Wallet\PaymentController;
 use App\Http\Controllers\Api\v1\Company\CompanyController;
+use App\Http\Controllers\Api\v1\Support\SupportController;
 use App\Http\Controllers\Api\v1\Customers\LoadBulkController;
 use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
 use App\Http\Controllers\Api\v1\Customers\LoadBoardController;
@@ -135,10 +136,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
     Route::group(['prefix' => 'support', 'middleware' => 'auth:api'], function () {
 
-        Route::post('/get', [ChatController::class, 'index']);
-        Route::post('/store', [ChatController::class, 'store']);
-        Route::delete('/delete/{id}', [ChatController::class, 'destroy']);
-        Route::get('/show/{id}', [ChatController::class, 'show']);
+        Route::get('/get', [SupportController::class, 'index']);
+        Route::post('/store', [SupportController::class, 'store']);
+        Route::post('/reply/{id}', [SupportController::class, 'replyTicket']);
+        Route::delete('/delete/{id}', [SupportController::class, 'destroy']);
+        Route::get('/show/{id}', [SupportController::class, 'show']);
 
     });
 

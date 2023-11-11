@@ -14,6 +14,18 @@ class SupportTicketResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "id"=> $this->id,
+            'ticket'=>$this->ticket,
+            'user_id' => $this->user_id,
+            'name'=>$this->name,
+            'email'=>$this->email,
+            'subject'=>$this->subject,
+            'status'=>$this->status,
+            'isClosed'=>$this->isClosed,
+            'last_reply'=>$this->last_reply,
+            'created_at'=>$this->created_at,
+            'updated_at'=>$this->updated_at,
+        ];
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('support_messages', function (Blueprint $table) {
             $table->id();
             $table->string('supportticket_id', 191);
-            $table->foreignId('admin_id');
+            $table->foreignId('admin_id')->default(1);
             $table->longText('message');
             $table->timestamps();
 
