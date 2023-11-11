@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Company;
 
 use App\Models\User;
-use App\Models\company;
+use App\Models\Company;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
