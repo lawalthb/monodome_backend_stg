@@ -124,7 +124,7 @@ class ChatController extends Controller
      */
     public function destroy(string $id)
     {
-       $chat = Chat::where('id',$id)->delete();
+       $chat = Chat::where('id',$id)->where("sender_id",auth()->user()->id)->delete();
 
        if($chat){
         return $this->success([], 'Chat Deleted');

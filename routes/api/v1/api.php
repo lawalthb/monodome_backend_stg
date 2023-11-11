@@ -127,10 +127,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
         Route::post('/get', [ChatController::class, 'index']);
         Route::post('/store', [ChatController::class, 'store']);
-        Route::delete('/deleteChat', [ChatController::class, 'show']);
-        Route::post('/deleteChat', [ChatController::class, 'show']);
-        // Route::post('/load-board/{loadBulk}', [ChatController::class, 'update']);
-        // Route::delete('/load-board/{id}', [ChatController::class, 'destroy']);
+        Route::delete('/delete/{id}', [ChatController::class, 'destroy']);
+        Route::get('/show/{id}', [ChatController::class, 'show']);
 
     });
 
