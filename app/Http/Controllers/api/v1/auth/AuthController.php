@@ -259,4 +259,32 @@ class AuthController extends Controller
         }
     }
 
+
+    public function bePremium(Request $request){
+        if(Auth::check()){
+
+            $user = auth()->user();
+
+            $wallet = Wallet::where("user_id", $user->id)->first();
+
+            if($wallet->amount > 500){
+                $wallet->amount -= 500;
+
+                $user->isPremium = true;
+                $user->save();
+                $wallet->save();
+
+                return $this->success([],"Subscription is successful",200);
+
+            }else{
+
+                return $this->error(false, 'Not enough money in the wallet', 422);
+            }
+
+
+        }else{
+            return $this->error(false, 'Session expired', 422);
+        }
+
+    }
 }

@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('imageUrl')->nullable();
             $table->string('user_type')->nullable();
             $table->string('role')->nullable();
+            $table->string('isPremium')->nullable();
             $table->text('location')->nullable();
             $table->text('user_agent')->nullable();
             // $table->enum('user_type', ['customer', 'broker', 'shipping_company_super', 'shipping_company_admin', 'agent', 'clearing_forwarding', 'driver', 'driver_manager', 'driver_manager_driver', 'company_transporter_super', 'company_transporter_admin', 'company_transporter_driver','super_admin','admin'])->default('customer');

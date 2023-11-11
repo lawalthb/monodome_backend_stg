@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,6 +33,16 @@ class CustomerController extends Controller
         ->paginate($perPage);
 
         return UserResource::collection($users);
+    }
+
+    public function totalOrder(Request $request, User $user){
+
+        $perPage = $request->input('per_page', 10);
+
+        $order = Order::where('user_id', $user->id) ->latest()
+        ->paginate($perPage);
+
+        return OrderResource::collection($order);
     }
 
 
