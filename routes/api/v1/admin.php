@@ -14,6 +14,7 @@ use App\Http\Controllers\api\v1\admin\ManageUserController;
 use App\Http\Controllers\api\v1\admin\PermissionController;
 use App\Http\Controllers\api\v1\admin\DriverManagerController;
 use App\Http\Controllers\api\v1\admin\ShippingCompanyController;
+use App\Http\Controllers\Api\v1\Admin\Support\SupportController;
 use App\Http\Controllers\api\v1\admin\SpecializedShipmentController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => 'return-json'], function () {
@@ -78,6 +79,23 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
             Route::post('/create-price', [SettingController::class, 'createPrice']);
             Route::post('/create-distance', [SettingController::class, 'storeDistance']);
             Route::post('/update/{id}', [SettingController::class, 'update']);
+
+        });
+
+
+        Route::group(['prefix' => 'support', 'middleware' => 'auth:api'], function () {
+
+            Route::get('/get', [SupportController::class, 'index']);
+            Route::get('/pending-ticket', [SupportController::class, 'pendingTicket']);
+            Route::get('/close-ticket', [SupportController::class, 'closeTicket']);
+            Route::get('/answered-ticket', [SupportController::class, 'answeredTicket']);
+          //  Route::get('/get/{id}', [SupportController::class, 'index']);
+        //    Route::post('/store', [SupportController::class, 'store']);
+            Route::get('/reply/{id}', [SupportController::class, 'ticketReply']);
+            Route::post('/create-reply/{id}', [SupportController::class, 'store']);
+            Route::delete('/delete/{id}', [SupportController::class, 'destroy']);
+            Route::get('/show/{id}', [SupportController::class, 'show']);
+            Route::get('/download/{ticket}', [SupportController::class, 'ticketDownload']);
 
         });
 

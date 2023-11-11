@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Admin\Support;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SupportTicket;
 use App\Models\SupportMessage;
@@ -165,8 +166,59 @@ class SupportController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $message_id)
     {
-        //
+        $message = SupportMessage::findOrFail($message_id);
+
+    if ($message->attachments()->count() > 0) {
+        foreach ($message->attachments as $attachment) {
+            @unlink(getImageFile($attachment->image));
+            $attachment->delete();
+        }
     }
+
+    $message->delete();
+    $notify[] = ['success', 'Delete Successfully'];
+
+    return $this->success($notify, 'Message deleted successfully');
+    }
+
+    public function ticketDownload($ticket_id)
+    {
+        $attachment = SupportAttachment::findOrFail($ticket_id);
+        $file = $attachment->attachment;
+
+        $full_path = getImageFile($file);
+
+        $title = Str::slug($attachment->supportMessage->ticket->subject);
+        $ext = pathinfo($file, PATHINFO_EXTENSION);
+        $mimetype = mime_content_type($full_path);
+
+
+        header('Content-Disposition: attachment; filename="' . $title . '.' . $ext . '";');
+        header("Content-Type: " . $mimetype);
+        return readfile($full_path);
+    }
+
+
+    public function searchTickets(Request $request)
+{
+
+    $perPage = request()->input('per_page', 15);
+
+    if (!$request->search) {
+        return $this->error('Invalid request');
+    }
+
+    $items = SupportTicket::where('ticket', 'LIKE', '%' . $request->search . '%')->paginate($perPage);
+
+    $page_title = 'Support Ticket';
+    $empty_message = 'No Result Found for the search ' . $request->search;
+
+    if ($items->count() <= 0) {
+        return $this->error($empty_message);
+    }
+
+    return $this->success(compact('page_title', 'items', 'empty_message'), 'Search results retrieved successfully');
+}
 }
