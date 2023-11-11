@@ -274,7 +274,7 @@ class AuthController extends Controller
                 $user->save();
                 $wallet->save();
 
-                return $this->success([],"Subscription is successful",200);
+                return $this->success([],"Subscription is successful");
 
             }else{
 
