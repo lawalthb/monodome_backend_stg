@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SupportAttachment extends Model
 {
     use HasFactory;
+    public $guarded = [];
 
 
     public function supportMessage()

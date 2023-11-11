@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SupportMessage extends Model
 {
     use HasFactory;
+    public $guarded = [];
 
 
     public function ticket(){
