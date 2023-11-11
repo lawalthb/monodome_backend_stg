@@ -18,7 +18,7 @@ return new class extends Migration
             $table->longText('message');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('admin_id')->references('id')->on('users');
         });
     }
 
