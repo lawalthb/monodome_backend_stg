@@ -1,21 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\v1\Admin\RoleController;
+use App\Http\Controllers\Api\v1\Admin\RoleController;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
 use App\Http\Controllers\Api\v1\Admin\BrokerController;
 use App\Http\Controllers\Api\v1\Admin\DriverController;
 use App\Http\Controllers\Api\v1\Admin\SettingController;
 use App\Http\Controllers\Api\v1\Admin\CustomerController;
 use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
-use App\Http\Controllers\api\v1\Admin\DashboardController;
+use App\Http\Controllers\Api\v1\Admin\DashboardController;
 use App\Http\Controllers\Api\v1\Admin\LoadBoardController;
-use App\Http\Controllers\api\v1\Admin\ManageUserController;
-use App\Http\Controllers\api\v1\Admin\PermissionController;
-use App\Http\Controllers\api\v1\Admin\DriverManagerController;
-use App\Http\Controllers\api\v1\Admin\ShippingCompanyController;
+use App\Http\Controllers\Api\v1\Admin\ManageUserController;
+use App\Http\Controllers\Api\v1\Admin\PermissionController;
+use App\Http\Controllers\Api\v1\Admin\DriverManagerController;
+use App\Http\Controllers\Api\v1\Admin\ShippingCompanyController;
 use App\Http\Controllers\Api\v1\Admin\Support\SupportController;
-use App\Http\Controllers\api\v1\Admin\SpecializedShipmentController;
+use App\Http\Controllers\Api\v1\Admin\SpecializedShipmentController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => 'return-json'], function () {
 
