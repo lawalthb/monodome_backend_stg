@@ -27,7 +27,7 @@ class DriverRequest extends FormRequest
               'email' => 'required|email',
               'phone_number' => 'required|numeric|min:10|unique:users,phone_number',
               'street' => 'required|string',
-              'vehicle_type_id' => 'required_if:have_motor,Yes|exists:vehicle_types,id',
+              'vehicle_type_id' => 'required_if:have_motor,Yes',
               'state_id' => 'required|exists:states,id',
               'lga' => 'required|string',
               'nin_number' => 'required|string',
