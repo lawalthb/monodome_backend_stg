@@ -216,10 +216,10 @@ class AgentController extends Controller
 
     public function update(Request $request, $id)
     {
-        try {
-            DB::beginTransaction();
+        // try {
+        //     DB::beginTransaction();
 
-            $agent = Agent::findOrFail($id);
+            $agent = Agent::find($id);
 
             // Update agent information
             $agent->phone_number = $request->input('phone_number');
@@ -241,12 +241,12 @@ class AgentController extends Controller
             DB::commit();
 
             return $this->success(new AgentResource($user->agent), 'Agent updated successfully');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error($e->getMessage());
+        // } catch (\Exception $e) {
+        //     DB::rollBack();
+        //     Log::error($e->getMessage());
 
-            return $this->error('An error occurred while updating the agent and user.');
-        }
+        //     return $this->error('An error occurred while updating the agent and user.');
+        // }
     }
 
 
