@@ -74,7 +74,7 @@ class OrderController extends Controller
             return $this->error('', 'order amount cant be zero', 404);
         }
 
-
+        Log::info($loadType->loadable_type);
 
         $loadTotalAmount = number_format($load->total_amount, 2, '.', ''); // Format as a string with 2 decimal places
         $userWalletAmount = number_format($load->user->wallet->amount, 2, '.', '');
@@ -83,7 +83,7 @@ class OrderController extends Controller
             return $this->error('', 'Insufficient funds in wallet!', 404);
         }
 
-        $order = Order::where(['user_id'=>Auth::id(),'loadable_id'=>$load->id,'loadable_type'=>$specificType,'status'=>'Paid'])->first();
+        $order = Order::where(['user_id'=>Auth::id(),'loadable_id'=>$load->id,'status'=>'Paid'])->first();
 
         if($order){
             return $this->error('', 'This Order has already been paid!', 404);
