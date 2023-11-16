@@ -83,7 +83,7 @@ class OrderController extends Controller
             return $this->error('', 'Insufficient funds in wallet!', 404);
         }
 
-        $order = Order::where(['user_id'=>Auth::id(),'loadable_id'=>$load->id,'status'=>'Paid'])->first();
+        $order = Order::where(['user_id'=>Auth::id(),'loadable_id'=>$load->id,'loadable_type'=>$specificType,'status'=>'Paid'])->first();
 
         if($order){
             return $this->error('', 'This Order has already been paid!', 404);
