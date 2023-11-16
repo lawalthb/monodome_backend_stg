@@ -61,8 +61,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::post('/change-password/{user}', [ManageUserController::class, 'change_password']);
 
         Route::get('/orders', [OrderController::class, 'index']);
-        Route::get('/orders/show/{id}', [OrderController::class, 'show']);
-        Route::get('/show/orders/{id}', [OrderController::class, 'all_user_order']);
+        Route::get('/orders/{id}', [OrderController::class, 'show']);
+        Route::get('/orders/show/{id}', [OrderController::class, 'all_user_orders']);
 
     });
 
