@@ -36,30 +36,59 @@ class BrokerController extends Controller
 
     public function search(Request $request)
     {
-        $terms = explode(" ", $request->input('search'));
-        $perPage = $request->input('per_page', 10);
+        // Get query parameters from the request
+        $sort = $request->input('sort');
+        $email = $request->input('email');
+        $phone_number = $request->input('phone_number');
+        $nin_number = $request->input('nin_number');
+        $status = $request->input('status');
+        $state_name = $request->input('state_name');
 
+        // Apply filters to the Broker query
         $brokers = Broker::query();
 
-        foreach ($terms as $term) {
-            $brokers->where(function ($query) use ($term) {
-                $query->orWhereHas('user', function ($userQuery) use ($term) {
-                    $userQuery->where('email', 'like', "%$term%")
-                        ->orWhere('full_name', 'like', "%$term%");
-                })
-                ->orWhere('phone_number', 'like', "%$term%")
-                ->orWhere('nin_number', 'like', "%$term%")
-                ->orWhere('status', 'like', "%$term%")
-                ->orWhereHas('state', function ($stateQuery) use ($term) {
-                    $stateQuery->where('name', 'like', "%$term%");
-                });
+        // Filter by 'sort' parameter
+        if ($sort) {
+            $brokers->orderBy($sort);
+        }
+
+        // Filter by 'email' parameter
+        if ($email) {
+            $brokers->whereHas('user', function ($userQuery) use ($email) {
+                $userQuery->where('email', 'like', "%$email%");
             });
         }
 
+        // Filter by 'phone_number' parameter
+        if ($phone_number) {
+            $brokers->where('phone_number', 'like', "%$phone_number%");
+        }
+
+        // Filter by 'nin_number' parameter
+        if ($nin_number) {
+            $brokers->where('nin_number', 'like', "%$nin_number%");
+        }
+
+        // Filter by 'status' parameter
+        if ($status) {
+            $brokers->where('status', 'like', "%$status%");
+        }
+
+        // Filter by 'state_name' parameter
+        if ($state_name) {
+            $brokers->whereHas('state', function ($stateQuery) use ($state_name) {
+                $stateQuery->where('name', 'like', "%$state_name%");
+            });
+        }
+
+        $perPage = $request->input('per_page', 10);
+
+        // Retrieve and paginate the results
         $brokers = $brokers->latest()->paginate($perPage);
 
         return BrokerResource::collection($brokers);
     }
+
 
     public function show($brokerId) {
         $broker = Broker::find($brokerId);
