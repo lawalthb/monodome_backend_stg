@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Admin;
 
+use App\Models\User;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
@@ -81,5 +82,20 @@ class OrderController extends Controller
         $order->delete();
 
         return response()->json(['message' => 'Order deleted successfully']);
+    }
+
+
+    public function all_user_orders($id)
+    {
+        $user = User::findOrFail($id); // Retrieve the authenticated user
+
+        if (!$user) {
+            return $this->error('', 'User not', 401);
+        }
+
+        // Retrieve all orders associated with the authenticated user
+        $userOrders = $user->orders()->get(); // Assuming 'orders' is the relationship method name
+
+        return OrderResource::collection($userOrders);
     }
 }
