@@ -203,6 +203,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/', [BrokerController::class, 'index']);
         Route::post('/store', [BrokerController::class, 'store']);
         Route::get('/search', [BrokerController::class, 'search']);
+        Route::get('/pending', [AgentController::class, 'pending']);
         Route::post('/status/{id}', [BrokerController::class, 'setStatus']);
         Route::get('/show/{id}', [BrokerController::class, 'show']);
         Route::post('/update/{id}', [BrokerController::class, 'update']);
