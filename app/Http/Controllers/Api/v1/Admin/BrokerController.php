@@ -74,6 +74,19 @@ class BrokerController extends Controller
     }
 
 
+    public function pending(Request $request){
+
+        $perPage = $request->input('per_page', 10);
+
+       $brokers = Broker::query();
+
+
+       $brokers = $brokers->whereIn('status', ['Pending','Rejected'])->latest()->paginate($perPage);
+
+       return BrokerResource::collection($brokers);
+   }
+
+
     public function update(Request $request, $id)
     {
         try {
