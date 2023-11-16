@@ -59,13 +59,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/user-with-role', [ManageUserController::class, 'user_role_auth']);
         Route::get('/user-with-role/{user}', [ManageUserController::class, 'user_role']);
         Route::post('/change-password/{user}', [ManageUserController::class, 'change_password']);
-
-        Route::get('/orders', [OrderController::class, 'index']);
-        Route::get('/orders/{id}', [OrderController::class, 'show']);
-        Route::get('/all-orders/{id}', [OrderController::class, 'all_user_orders']);
-
     });
-
+    Route::group(['prefix' => 'orders'], function () {
+        Route::get('/', [OrderController::class, 'index']);
+        Route::get('/{id}', [OrderController::class, 'show']);
+        Route::get('/orders/user/{id}', [OrderController::class, 'all_user_orders']);
+    });
         Route::group(['prefix' => 'setting'], function () {
             Route::get('/', [SettingController::class, 'index']);
             Route::get('/{id}', [SettingController::class, 'show']);

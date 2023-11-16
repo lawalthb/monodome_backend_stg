@@ -19,7 +19,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        return "okay";
+
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
