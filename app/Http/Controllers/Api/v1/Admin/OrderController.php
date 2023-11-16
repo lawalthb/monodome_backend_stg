@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -56,13 +57,20 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|in:Pending,Approved,Confirmed,Failed,Paid',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $order = Order::find($id);
 
         if (!$order) {
             return $this->error('', 'Order not found', 404);
         }
 
-        // Assuming 'status' is the field to update
         $order->status = $request->input('status');
         $order->save();
 

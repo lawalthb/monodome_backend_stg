@@ -60,11 +60,18 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/user-with-role/{user}', [ManageUserController::class, 'user_role']);
         Route::post('/change-password/{user}', [ManageUserController::class, 'change_password']);
     });
+
+
+    //for orders
     Route::group(['prefix' => 'orders'], function () {
         Route::get('/', [OrderController::class, 'index']);
         Route::get('/{id}', [OrderController::class, 'show']);
+        Route::post('/status', [OrderController::class, 'status']);
         Route::get('/orders/user/{id}', [OrderController::class, 'all_user_orders']);
     });
+
+
+    // for settings
         Route::group(['prefix' => 'setting'], function () {
             Route::get('/', [SettingController::class, 'index']);
             Route::get('/{id}', [SettingController::class, 'show']);
