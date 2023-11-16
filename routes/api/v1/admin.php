@@ -62,7 +62,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
         Route::get('/orders', [OrderController::class, 'index']);
         Route::get('/orders/{id}', [OrderController::class, 'show']);
-        Route::get('/orders/show/{id}', [OrderController::class, 'all_user_orders']);
+        Route::get('/all-orders/{id}', [OrderController::class, 'all_user_orders']);
 
     });
 
