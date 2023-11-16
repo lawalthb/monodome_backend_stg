@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Traits\ApiStatusTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {
+
+    use ApiStatusTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -58,6 +62,14 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order = Order::find($id);
+
+        if (!$order) {
+            return $this->error('', 'Order not found', 404);
+        }
+
+        $order->delete();
+
+        return response()->json(['message' => 'Order deleted successfully']);
     }
 }

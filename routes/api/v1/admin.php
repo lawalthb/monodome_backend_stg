@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\Admin\RoleController;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
+use App\Http\Controllers\Api\v1\Admin\OrderController;
 use App\Http\Controllers\Api\v1\Admin\BrokerController;
 use App\Http\Controllers\Api\v1\Admin\DriverController;
 use App\Http\Controllers\Api\v1\Admin\SettingController;
@@ -58,6 +59,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/user-with-role', [ManageUserController::class, 'user_role_auth']);
         Route::get('/user-with-role/{user}', [ManageUserController::class, 'user_role']);
         Route::post('/change-password/{user}', [ManageUserController::class, 'change_password']);
+
+        Route::get('/orders', [OrderController::class, 'index']);
+        Route::get('/orders/show/{id}', [OrderController::class, 'show']);
+        Route::get('/show/orders/{id}', [OrderController::class, 'all_user_order']);
+
     });
 
         Route::group(['prefix' => 'setting'], function () {
