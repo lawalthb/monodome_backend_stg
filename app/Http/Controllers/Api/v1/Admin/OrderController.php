@@ -54,7 +54,17 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $order = Order::find($id);
+
+        if (!$order) {
+            return $this->error('', 'Order not found', 404);
+        }
+
+        // Assuming 'status' is the field to update
+        $order->status = $request->input('status');
+        $order->save();
+
+        return new OrderResource($order);
     }
 
     /**
