@@ -109,6 +109,7 @@ class DriverController extends Controller
     $fullName = $request->input('full_name');
     $startDate = $request->input('start_date');
     $endDate = $request->input('end_date');
+    $date = $request->input('date');
 
     // Apply filters to the Agent query
     $driver = Driver::query();
@@ -157,6 +158,12 @@ class DriverController extends Controller
             $userQuery->where('full_name', 'like', "%$fullName%");
         });
     }
+
+     // Filter by 'date' parameter (created_at date)
+     if ($date) {
+        $driver->whereDate('created_at', $date);
+    }
+
 
     // Filter by date range
     if ($startDate) {

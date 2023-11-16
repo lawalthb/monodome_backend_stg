@@ -43,6 +43,10 @@ class BrokerController extends Controller
         $nin_number = $request->input('nin_number');
         $status = $request->input('status');
         $state_name = $request->input('state_name');
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+        $date = $request->input('date');
+
 
         // Apply filters to the Broker query
         $brokers = Broker::query();
@@ -80,6 +84,21 @@ class BrokerController extends Controller
                 $stateQuery->where('name', 'like', "%$state_name%");
             });
         }
+
+         // Filter by 'date' parameter (created_at date)
+    if ($date) {
+        $brokers->whereDate('created_at', $date);
+    }
+
+
+    // Filter by date range
+                if ($start_date) {
+                    $brokers->whereDate('created_at', '>=', $start_date);
+                }
+
+                if ($end_date) {
+                    $brokers->whereDate('created_at', '<=', $end_date);
+                }
 
         $perPage = $request->input('per_page', 10);
 
