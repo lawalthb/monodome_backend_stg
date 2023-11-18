@@ -59,6 +59,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/user-with-role', [ManageUserController::class, 'user_role_auth']);
         Route::get('/user-with-role/{user}', [ManageUserController::class, 'user_role']);
         Route::post('/change-password/{user}', [ManageUserController::class, 'change_password']);
+        Route::post('/status/{user}', [ManageUserController::class, 'status']);
     });
 
 
