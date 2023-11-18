@@ -33,7 +33,7 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             // $table->enum('user_type', ['customer', 'broker', 'shipping_company_super', 'shipping_company_admin', 'agent', 'clearing_forwarding', 'driver', 'driver_manager', 'driver_manager_driver', 'company_transporter_super', 'company_transporter_admin', 'company_transporter_driver','super_admin','admin'])->default('customer');
             // $table->enum('role', ['customer', 'broker', 'shipping_company', 'agent', 'clearing_forwarding', 'driver', 'driver_manager', 'company_transporter']);
-            $table->enum('status', ['Pending', 'Confirmed', 'Rejected','Failed'])->default('Pending');
+            $table->enum('status', ['Pending', 'Confirmed', 'Rejected','Banned'])->default('Pending');
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
