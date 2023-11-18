@@ -88,7 +88,10 @@ class AuthController extends Controller
 
         if($user->status == "Banned"){
 
-            return $this->error(['error' => "Your account has been Banned"],'Account Banned');
+            $message ="Your ".config('app.name'). " account has been Banned!. please contact ".config('app.name'). " admin for clarification ";
+            $user->notify(new SendNotification($user, $message));
+
+            return $this->error(['error' => "Your account has been Banned, and please contact admin for clarification"],'Account Banned');
         }
 
         if($user->status != "Confirmed"){
