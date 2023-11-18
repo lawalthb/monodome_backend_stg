@@ -39,7 +39,7 @@ return new class extends Migration
             $table->decimal('total_amount', 20)->nullable()->default(0);
 
             $table->text('description')->nullable();
-            $table->enum('status', ['Pending', 'Approved', 'Failed','Approved','Processing'])->default('Pending');
+            $table->enum('status', ['Pending', 'Approved', 'Failed','Processing'])->default('Pending');
             $table->timestamps();
         });
     }
