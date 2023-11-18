@@ -199,7 +199,7 @@ class BrokerController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'status' => ['required', 'string','in:Pending,Confirmed,Rejected,Failed'],
+            'status' => ['required', 'string','in:Pending,Confirmed,Rejected,Banned'],
         ]);
 
         if ($validator->fails()) {
