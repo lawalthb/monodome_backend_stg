@@ -81,6 +81,11 @@ class AuthController extends Controller
 
         $user = User::where("email",$request->email)->first();
 
+        if(! $user){
+
+            return $this->error(['error' => "Email address not found!"],'Not found');
+        }
+
         if($user->status != "Confirmed"){
 
             return $this->error(['error' => "Your account is yet to verify!"],'Account is not activated');
