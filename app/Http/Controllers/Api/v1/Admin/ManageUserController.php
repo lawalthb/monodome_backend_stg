@@ -122,6 +122,30 @@ class ManageUserController extends Controller
         //
     }
 
+    public function status(Request $request, User $user)
+    {
+        $this->validate($request,[
+            'status' => 'required|string|in:Pending,Confirmed,Confirmed,Rejected,Banned',
+
+        ]);
+        if ($user) {
+
+        $user->status = $request->status;
+        $user->save();
+
+        return $this->success(
+            [
+                "user" => new UserResource($user),
+            ],
+            "Status updated successfully"
+        );
+
+    } else {
+
+        return response()->json(['message' => 'User not found!'], 404);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
