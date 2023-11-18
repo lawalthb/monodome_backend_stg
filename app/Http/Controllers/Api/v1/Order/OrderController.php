@@ -85,13 +85,17 @@ class OrderController extends Controller
 
        // $order = Order::where(['user_id'=>Auth::id(),'loadable_id'=>$load->id,'status'=>'Paid'])->first();
 
-       $order = Order::where([
-        'user_id' => Auth::id(),
-        'loadable_id' => $load->id,
-        'loadable_type' => get_class($load), // Add loadable_type condition
-        'status' => 'Paid',
-    ])->first();
+       Log::info($load->id);
+       Log::info(get_class($load));
 
+       $order = Order::where([
+           'user_id' => Auth::id(),
+           'loadable_id' => $load->id,
+           'loadable_type' => get_class($load), // Add loadable_type condition
+           'status' => 'Paid',
+           ])->first();
+
+           Log::info($order);
         if($order){
             return $this->error('', 'This Order has already been paid!', 404);
 
