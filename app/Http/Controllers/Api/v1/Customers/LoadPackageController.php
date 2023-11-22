@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Customers;
 
+use App\Models\Order;
 use App\Models\LoadType;
 use App\Models\LoadPackage;
 use Illuminate\Http\Request;
@@ -32,30 +33,43 @@ use App\Http\Resources\LoadPackageResource;
 
     public function show($id)
     {
-        $loadPackage = LoadPackage::where('user_id', auth()->id())->find($id);
+        $loadPackage = LoadPackage::with('order')->find($id);
 
         if (!$loadPackage) {
-            return $this->error(null, "Load Package not found",404 );
+            return $this->error(null, "Load Package not found", 404);
         }
-        return $this->success(["loadPackage" => new LoadPackageResource($loadPackage),], "Successfully");
+
+        return $this->success([
+            "loadPackage" => new LoadPackageResource($loadPackage),
+        ], "Successfully");
     }
 
     public function store(LoadPackageRequest $request)
     {
-        $loadType=LoadType::find($request->load_type_id);
+        $loadType = LoadType::find($request->load_type_id);
 
-        $loadPackage = $loadType->loadPackages()->updateOrCreate($request->validated());
+        // Create a new LoadPackage instance
+        $loadPackage = $loadType->loadPackages()->create($request->validated());
 
-        //event(new LoadTypeCreated($loadPackage));
+        if (!$loadPackage->order) {
+            // Create an associated Order if it doesn't exist
+            $order = $loadPackage->order()->create([
+                'order_no' => getNumber(),
+                'driver_id' => 1, // Change this to the actual driver ID
+                'amount' => $request->total_amount, // Set the appropriate amount
+                'user_id' => $loadPackage->user_id,
+                'status' => "Pending",
+            ]);
+        } else {
+            $order = $loadPackage->order; // If an order already exists, use the existing one
+        }
 
-
-        return $this->success(
-            [
-                "loadPackage" => new LoadPackageResource($loadPackage),
-            ],
-            "Created Successfully"
-        );
+        return $this->success([
+            "loadPackage" => new LoadPackageResource($loadPackage),
+           // "order" => $order, // Include the order in the response
+        ], "Created Successfully");
     }
+
 
     public function update(LoadPackageRequest $request, $id)
     {

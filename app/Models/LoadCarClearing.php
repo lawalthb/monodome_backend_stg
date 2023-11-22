@@ -17,6 +17,11 @@ class LoadCarClearing extends Model
         return $this->belongsTo(LoadType::class);
     }
 
+    public function order()
+    {
+        return $this->morphOne(Order::class, 'loadable');
+    }
+
     public function loadBoard()
     {
         return $this->morphOne(LoadBoard::class, 'loadable');

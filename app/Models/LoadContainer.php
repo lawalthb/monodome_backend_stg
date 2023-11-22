@@ -23,6 +23,10 @@ class LoadContainer extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function order()
+    {
+        return $this->morphOne(Order::class, 'loadable');
+    }
 
     public function RLga()
         {

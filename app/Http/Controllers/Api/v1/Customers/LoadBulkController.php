@@ -46,21 +46,33 @@ class LoadBulkController extends Controller
     public function store(LoadBulkRequest $request)
     {
 
-        // Find the LoadType based on load_type_id
     $loadType = LoadType::find($request->load_type_id);
 
     if (!$loadType) {
         return response()->json(['message' => 'LoadType not found'], 404);
     }
 
-    // Create a new LoadBulk instance with validated data
     $loadBulk = LoadBulk::updateOrCreate($request->validated());
 
-    // Associate the LoadType
     $loadBulk->loadType()->associate($loadType);
 
     try {
         $loadBulk->save();
+
+
+        if (!$loadBulk->order) {
+            $order = $loadBulk->order()->create([
+                'order_no' => getNumber(),
+                'driver_id' => 1,
+                'amount' => $request->total_amount,
+                'user_id' => $loadBulk->user_id,
+                'status' => "Pending",
+            ]);
+        } else {
+            $order = $loadBulk->order;
+        }
+
+
     } catch (\Exception $e) {
         // Handle the error here
         return response()->json(['message' => 'Error creating LoadBulk', 'error' => $e->getMessage()], 500);

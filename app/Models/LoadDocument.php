@@ -25,6 +25,10 @@ class LoadDocument extends Model
         }
     }
 
+    public function order()
+    {
+        return $this->morphOne(Order::class, 'loadable');
+    }
 
     protected static function boot()
     {

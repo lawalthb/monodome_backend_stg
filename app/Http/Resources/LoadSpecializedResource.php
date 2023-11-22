@@ -17,6 +17,7 @@ class LoadSpecializedResource extends JsonResource
         return [
             "id" =>  $this->id,
             "uuid" =>  $this->uuid,
+            "order_no" => $this->order->order_no,
             'sender_location'=>$this->sender_location,
             'receiver_location'=>$this->receiver_location,
             'distance'=>$this->distance,

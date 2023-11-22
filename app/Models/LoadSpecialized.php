@@ -20,6 +20,11 @@ class LoadSpecialized extends Model
         return $this->belongsTo(LoadType::class);
     }
 
+    public function order()
+    {
+        return $this->morphOne(Order::class, 'loadable');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

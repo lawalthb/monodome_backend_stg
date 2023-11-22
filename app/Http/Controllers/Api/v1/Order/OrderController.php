@@ -112,7 +112,7 @@ class OrderController extends Controller
                 'loadable_type' => get_class($load),
             ],
             [
-                'order_no' => getNumber(),
+             //   'order_no' => getNumber(),
                 'driver_id' => 1,
                 'amount' => $loadTotalAmount,
                 'status' => "Paid",
