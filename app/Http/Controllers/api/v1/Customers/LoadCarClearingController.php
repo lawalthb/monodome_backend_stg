@@ -62,6 +62,17 @@ class LoadCarClearingController extends Controller
               // Associate the LoadType
              $carClearing->loadType()->associate($loadType);
 
+
+             if (!$carClearing->order) {
+                $order = $carClearing->order()->create([
+                    'order_no' => getNumber(),
+                    'driver_id' => 1,
+                    'amount' => $request->total_amount,
+                    'user_id' => $carClearing->user_id,
+                    'status' => "Pending",
+                ]);
+            }
+
                    // Handle document uploads (if any)
         if ($request->input('documents')) {
 

@@ -61,7 +61,18 @@ class LoadContainerController extends Controller
                   // Associate the LoadType
                  $carClearing->loadType()->associate($loadType);
 
+
                        // Handle document uploads (if any)
+                       if (!$carClearing->order) {
+                        $order = $carClearing->order()->create([
+                            'order_no' => getNumber(),
+                            'driver_id' => 1,
+                            'amount' => $request->total_amount,
+                            'user_id' => $carClearing->user_id,
+                            'status' => "Pending",
+                        ]);
+                    }
+
             if ($request->input('documents')) {
 
                 foreach ($request->input('documents') as $key => $fileData) {

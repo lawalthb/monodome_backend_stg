@@ -55,6 +55,17 @@ class LoadSpecializedController extends Controller
 
     try {
         $loadBulk->save();
+
+        if (!$loadBulk->order) {
+            $order = $loadBulk->order()->create([
+                'order_no' => getNumber(),
+                'driver_id' => 1,
+                'amount' => $request->total_amount,
+                'user_id' => $loadBulk->user_id,
+                'status' => "Pending",
+            ]);
+        }
+
     } catch (\Exception $e) {
         // Handle the error here
         return response()->json(['message' => 'Error creating LoadBulk', 'error' => $e->getMessage()], 500);
