@@ -21,7 +21,6 @@ class LoadBulkResource extends JsonResource
             'id'=>$this->id,
             'uuid'=>$this->uuid,
             "order" => $this->order,
-
             'sender_location'=>$this->sender_location,
             'receiver_location'=>$this->receiver_location,
             'distance'=>$this->distance,

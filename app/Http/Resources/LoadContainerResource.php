@@ -16,7 +16,7 @@ class LoadContainerResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "order_no" => $this->order->order_no,
+            "order" => $this->order,
             'sender_location'=>$this->sender_location,
             'receiver_location'=>$this->receiver_location,
             'distance'=>$this->distance,
