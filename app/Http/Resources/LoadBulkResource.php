@@ -20,7 +20,7 @@ class LoadBulkResource extends JsonResource
         return [
             'id'=>$this->id,
             'uuid'=>$this->uuid,
-            "order_no" => $this->order->order_no,
+            "order" => $this->order,
 
             'sender_location'=>$this->sender_location,
             'receiver_location'=>$this->receiver_location,
