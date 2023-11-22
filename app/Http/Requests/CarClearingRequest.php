@@ -26,7 +26,7 @@ class CarClearingRequest extends FormRequest
             'departure_country' => 'required|integer',
             'destination_country' => 'required|integer',
             'car_type' => 'required|integer',
-            'car_model' => 'required|string|max:30',
+            'car_model' => 'required|string',
             'car_value' => 'required|string',
             'car_year' => 'required|string',
             // 'documents' => 'required|array',
@@ -43,6 +43,7 @@ class CarClearingRequest extends FormRequest
             'street' => 'required_if:is_final,Yes|string|max:30',
             'add_info' => 'nullable|string',
             //'insure_it' => 'nullable|in:Yes,No',
+            'total_amount' => 'nullable|numeric',
             'suggested_amount' => 'nullable|integer',
             'status' => 'nullable|in:Pending,Approved,Failed',
         ];
