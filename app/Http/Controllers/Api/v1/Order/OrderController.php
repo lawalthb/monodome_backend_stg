@@ -216,7 +216,6 @@ class OrderController extends Controller
         ]);
     }
 
-
     // check the distance prices
     public function distancePrice()
     {
