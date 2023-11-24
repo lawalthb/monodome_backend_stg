@@ -66,9 +66,9 @@ class AuthController extends Controller
             $data = [
                 "amount" => 5,
                 "payment_type" => 'wallet',
-                "type" => '5',
+                "type" => 'credit',
                 "fee" => 0,
-                "description" => 'Bonus point for refer'
+                "description" => 'Bonus point for referring'. $user->full_name
             ];
 
             // check if ref_by exist and add the money to Bonus
