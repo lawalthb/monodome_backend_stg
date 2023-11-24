@@ -40,7 +40,7 @@ class AuthController extends Controller
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
                 'role_id' => $request->role_id,
-                'ref_by' => $ref_by->id,
+                'ref_by' => $ref_by ?? $ref_by->id,
                 'referral_code' => $request->referral_code ?? generateReferralCode(),
                 'location' => Location::get($request->ip()),
                 'user_agent' => $request->header('User-Agent'),
@@ -57,7 +57,6 @@ class AuthController extends Controller
 
             if($role->id==3){
                 $user->status = "Confirmed";
-
             }
 
             $user->save();
@@ -72,7 +71,7 @@ class AuthController extends Controller
             ];
 
             // check if ref_by exist and add the money to Bonus
-            $request->ref_by ?? WalletService::createWalletAndHistory($ref_by, $data);
+            $ref_by ?? WalletService::createWalletAndHistory($ref_by, $data);
 
             $message ="Thank you for Registering with ".config('app.name');
              $user->notify(new SendNotification($user, $message));
