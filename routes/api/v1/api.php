@@ -44,7 +44,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         //return "here is the user";
     });
 
-
     // user registration namespace
     Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
         Route::post('/register', [AuthController::class, 'register']);
