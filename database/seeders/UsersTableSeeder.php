@@ -39,6 +39,8 @@ class UsersTableSeeder extends Seeder
                 'provider' => NULL,
                 'address' => NULL,
                 'user_created_by' => NULL,
+                'ref_by' => NULL,
+                'referral_code' => generateReferralCode(),
                 'role_id' => NULL,
                 'imageUrl' => NULL,
                 'user_type' => 'super_admin',
@@ -63,6 +65,8 @@ class UsersTableSeeder extends Seeder
                 'provider' => NULL,
                 'address' => NULL,
                 'user_created_by' => NULL,
+                'ref_by' => 1,
+                'referral_code' => generateReferralCode(),
                 'role_id' => NULL,
                 'imageUrl' => NULL,
                 'user_type' => 'admin',
@@ -87,6 +91,8 @@ class UsersTableSeeder extends Seeder
                 'provider' => NULL,
                 'address' => NULL,
                 'user_created_by' => NULL,
+                'ref_by' => 1,
+                'referral_code' => generateReferralCode(),
                 'role_id' => NULL,
                 'imageUrl' => NULL,
                 'user_type' => 'customer',
@@ -111,6 +117,8 @@ class UsersTableSeeder extends Seeder
                 'provider' => NULL,
                 'address' => NULL,
                 'user_created_by' => NULL,
+                'ref_by' => 1,
+                'referral_code' => generateReferralCode(),
                 'role_id' => NULL,
                 'imageUrl' => NULL,
                 'user_type' => 'driver',
@@ -136,6 +144,8 @@ class UsersTableSeeder extends Seeder
                 'provider' => NULL,
                 'address' => NULL,
                 'user_created_by' => NULL,
+                'ref_by' => 1,
+                'referral_code' => generateReferralCode(),
                 'role_id' => NULL,
                 'imageUrl' => NULL,
                 'user_type' => 'driver_manager',
@@ -175,7 +185,9 @@ class UsersTableSeeder extends Seeder
             // Create a user
             $user = \App\Models\User::factory()->create([
                 'user_type' => "agent",
-                'role_id' => 6, // You can remove this line if you're not using it for other purposes
+                'role_id' => 6,
+                'ref_by' => rand(1,4),
+                'referral_code' => generateReferralCode(),
             ]);
 
             // Assign the "agent" role to the user
@@ -209,6 +221,8 @@ class UsersTableSeeder extends Seeder
                 'user_type' => "driver",
                 'role' => "driver",
                 'role_id' => 8,
+                'ref_by' => rand(1,5),
+                'referral_code' => generateReferralCode(),
             ]);
 
 
@@ -241,6 +255,8 @@ class UsersTableSeeder extends Seeder
                 'user_type' => "shipping_company",
                 'role' => "shipping_company",
                 'role_id' => 5,
+                'ref_by' => rand(1,5),
+                'referral_code' => generateReferralCode(),
             ]);
 
 

@@ -31,16 +31,19 @@ class AuthController extends Controller
         //https://beyondco.de/blog/a-guide-to-soft-delete-models-in-laravel
         try {
 
+            $ref_by = $request->ref_by ?? User::where("referral_code",$request->ref_by)->first();
+
             $user = new User([
                 'full_name' => $request->full_name,
                 'email' => $request->email,
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
                 'role_id' => $request->role_id,
+                'ref_by' => $ref_by->id,
+                'referral_code' => $request->referral_code ?? generateReferralCode(),
                 'location' => Location::get($request->ip()),
                 'user_agent' => $request->header('User-Agent'),
             ]);
-
 
             $role = Role::find($request->role_id);
             if ($role) {
@@ -308,4 +311,23 @@ class AuthController extends Controller
         }
 
     }
+
+    //get the person that refer someone
+    public function getUpLineUser($code)
+    {
+        $validator = Validator::make(['referral_code' => $code], [
+            'referral_code' => 'required|string|exists:users,referral_code'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error(false, 'Invalid referral code!', 422);
+        }
+
+        $user = User::where("referral_code", $code)->first();
+
+        return $this->success([
+            'user' => new UserResource($user),
+        ], "Your Up line is successful");
+    }
+
 }

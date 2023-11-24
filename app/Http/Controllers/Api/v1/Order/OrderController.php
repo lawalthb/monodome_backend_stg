@@ -53,8 +53,7 @@ class OrderController extends Controller
             return $this->error('', 'LoadType not found', 404);
         }
 
-        $specificType = $loadType->specificType; // This will return the related specific type (Package, Bulk, Container, or CarClearing)
-
+        $specificType = $loadType->specificType;
         if (!$specificType) {
             return $this->error('', 'Specific type not found', 404);
         }
@@ -84,10 +83,6 @@ class OrderController extends Controller
         }
 
        // $order = Order::where(['user_id'=>Auth::id(),'loadable_id'=>$load->id,'status'=>'Paid'])->first();
-
-       Log::info($load->id);
-       Log::info(get_class($load));
-
        $order = Order::where([
            'user_id' => Auth::id(),
            'loadable_id' => $load->id,
@@ -221,12 +216,14 @@ class OrderController extends Controller
         ]);
     }
 
+
+    // check the distance prices
     public function distancePrice()
     {
         $groupedDistanceSettings = DistanceSetting::with('loadable')
         ->get()
         ->groupBy(function ($item) {
-            return $item->loadable->name; // Assuming 'name' is the attribute you want to group by
+            return $item->loadable->name;
         });
 
     $result = [];

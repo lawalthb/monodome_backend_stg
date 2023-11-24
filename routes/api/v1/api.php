@@ -49,6 +49,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/get-upline/{code}', [AuthController::class, 'getUpLineUser']);
         Route::post('/social-login', [AuthController::class, 'handleProviderCallback']);
 
         Route::post('/forgot-password', [EmailVerificationController::class, 'reset_password_request']);

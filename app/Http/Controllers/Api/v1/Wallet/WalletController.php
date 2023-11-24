@@ -111,10 +111,10 @@ class WalletController extends Controller
         $request->validate([
           'pin' => 'required|numeric|digits:4'
         ]);
-        // Find the wallet by its ID
+        // Here Find the wallet by its ID
         $wallet = Wallet::where(['user_id' => auth()->user()->id, 'pin'=>$request->pin])->first();
 
-        // Check if the wallet exists and if the PIN is null
+        // Naso Check if the wallet exists and if the PIN is null
         if ($wallet) {
             // PIN is null
             return $this->success(['pin' =>$wallet->pin], "Correct pin code");

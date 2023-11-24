@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Models\Setting;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -446,6 +447,22 @@ function sendPhpMail($receiver_email, $receiver_name, $subject, $message)
 
 }
 
+
+function generateReferralCode($length = 8)
+{
+    $referralCode = Str::random($length); // Generate a random string
+
+    // Check if the generated code already exists in the database
+    $exists = User::where('referral_code', $referralCode)->exists();
+
+    // If the code already exists, regenerate until a unique code is found
+    while ($exists) {
+        $referralCode = Str::random($length);
+        $exists = User::where('referral_code', $referralCode)->exists();
+    }
+
+    return $referralCode;
+}
 
 
 ?>
