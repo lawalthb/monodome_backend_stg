@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api\v1\auth;
 
+use WalletService;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Log;
@@ -17,7 +19,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use App\Notifications\SendNotification;
-use Illuminate\Http\JsonResponse;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Validator;
 use Stevebauman\Location\Facades\Location;
@@ -45,12 +46,13 @@ class AuthController extends Controller
                 'user_agent' => $request->header('User-Agent'),
             ]);
 
+
             $role = Role::find($request->role_id);
             if ($role) {
-               $user->user_type = Str::slug($role->name, "_");// str_replace(' ', '_', $role->name);;
+                $user->user_type = Str::slug($role->name, "_");// str_replace(' ', '_', $role->name);;
                 $user->role_id = $role->id;
-               $user->role = $role->name;
-               $user->assignRole($role);
+                $user->role = $role->name;
+                $user->assignRole($role);
             }
 
             if($role->id==3){
@@ -60,7 +62,19 @@ class AuthController extends Controller
 
             $user->save();
 
-             $message ="Thank you for Registering with ".config('app.name');
+            // add to Bonus wallet
+            $data = [
+                "amount" => 5,
+                "payment_type" => 'wallet',
+                "type" => '5',
+                "fee" => 0,
+                "description" => 'Bonus point for refer'
+            ];
+
+            // check if ref_by exist and add the money to Bonus
+            $request->ref_by ?? WalletService::createWalletAndHistory($ref_by, $data);
+
+            $message ="Thank you for Registering with ".config('app.name');
              $user->notify(new SendNotification($user, $message));
              //Mail::to($event->user->email)->send(new NewUserMail($user));
 
@@ -104,15 +118,6 @@ class AuthController extends Controller
 
 
         try {
-
-            // Log::info(getUserIP());
-            // Log::info("---------------------------------------------------");
-            // Log::info(Location::get());
-            // Log::info("---------------------------------------------------");
-            // Log::info($request->ip());
-            // Log::info("---------------------------------------------------");
-            // Log::info($request->header('User-Agent'));
-
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user();
