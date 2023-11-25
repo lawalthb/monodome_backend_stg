@@ -179,6 +179,23 @@ class UsersTableSeeder extends Seeder
 
 
 
+
+             //customer
+             $customerRole = Role::find(3);
+             for ($i = 1; $i <= 100; $i++) {
+                // Create a user
+                $user = \App\Models\User::factory()->create([
+                    'user_type' => "Customer",
+                    'role_id' => 3,
+                    'ref_by' => rand(1,4),
+                    'referral_code' => generateReferralCode(),
+                ]);
+
+                // Assign the "agent" role to the user
+                $user->assignRole($customerRole);
+
+            }
+
         $agentRole = Role::find(6);
 
         for ($i = 1; $i <= 100; $i++) {
