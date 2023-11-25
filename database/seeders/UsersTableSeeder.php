@@ -177,9 +177,6 @@ class UsersTableSeeder extends Seeder
              User::find(4)->assignRole('Driver');
              User::find(5)->assignRole('Driver Manager');
 
-
-
-
              //customer
              $customerRole = Role::find(3);
              for ($i = 1; $i <= 100; $i++) {
