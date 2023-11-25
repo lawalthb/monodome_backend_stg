@@ -217,6 +217,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/', [CustomerController::class, 'index']);
         Route::post('/store', [CustomerController::class, 'store']);
         Route::get('/search', [CustomerController::class, 'search']);
+        Route::get('/pending', [CustomerController::class, 'pending']);
+        Route::get('/confirmed', [CustomerController::class, 'confirmed']);
+        Route::get('/banned', [CustomerController::class, 'banned']);
         Route::post('/status/{id}', [CustomerController::class, 'setStatus']);
         Route::get('/show/{id}', [CustomerController::class, 'show']);
         Route::post('/update/{id}', [CustomerController::class, 'update']);

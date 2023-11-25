@@ -124,6 +124,33 @@ class CustomerController extends Controller
     }
 
 
+    public function banned(){
+
+    $user = User::where("status","Banned")->get();
+
+    return $this->success(new UserResource($user), 'Banned customer successfully');
+
+    }
+
+
+    public function pending(){
+
+        $user = User::where("status","Pending")->get();
+
+        return $this->success(new UserResource($user), 'Pending customer successfully');
+
+    }
+
+
+    public function confirmed(){
+
+        $user = User::where("status","Confirmed")->get();
+
+        return $this->success(new UserResource($user), 'confirmed customer successfully');
+
+    }
+
+
     public function setStatus(Request $request, $userId) {
 
 
