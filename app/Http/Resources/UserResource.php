@@ -22,6 +22,7 @@ class UserResource extends JsonResource
             'isPremium' => $this->isPremium,
             "address" => $this->address,
             "admin_type" => $this->role,
+            "status" => $this->status,
             "user_type" => strtolower($this->user_type),
             "profile_url" => getImageFile($this->image_path),
             "referral_code" => $this->referral_code,
