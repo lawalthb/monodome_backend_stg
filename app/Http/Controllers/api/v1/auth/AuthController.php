@@ -32,15 +32,18 @@ class AuthController extends Controller
         //https://beyondco.de/blog/a-guide-to-soft-delete-models-in-laravel
         try {
 
-            $ref_by = $request->ref_by ?? User::where("referral_code",$request->ref_by)->first();
+            $ref_by = null;
 
+            if ($request->has('ref_by')) {
+                $ref_by = User::where("referral_code", $request->ref_by)->first();
+            }
             $user = new User([
                 'full_name' => $request->full_name,
                 'email' => $request->email,
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
                 'role_id' => $request->role_id,
-                'ref_by' => $ref_by ?? $ref_by->id,
+                'ref_by' => $ref_by ? $ref_by->id : null,
                 'referral_code' => $request->referral_code ?? generateReferralCode(),
                 'location' => Location::get($request->ip()),
                 'user_agent' => $request->header('User-Agent'),

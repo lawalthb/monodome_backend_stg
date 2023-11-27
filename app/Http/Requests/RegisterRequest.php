@@ -30,7 +30,7 @@ class RegisterRequest extends FormRequest
             'role_id' => [
                 'required',
                 'numeric',
-                Rule::notIn([1, 2]), // This rule ensures that the value is not 1 or 2
+                Rule::notIn([1, 2]),
             ],
             // 'role' => 'required|in:customer,broker,shipping_company,agent,clearing_forwarding,driver,driver_manager,company_transporter',
         ];
