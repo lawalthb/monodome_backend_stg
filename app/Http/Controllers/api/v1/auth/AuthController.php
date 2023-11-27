@@ -75,7 +75,10 @@ class AuthController extends Controller
             ];
 
             // check if ref_by exist and add the money to Bonus
-            $ref_by ?? WalletService::createWalletAndHistory($ref_by, $data);
+            if($ref_by !== null){
+
+                WalletService::createWalletAndHistory($ref_by, $data);
+            }
 
             $message ="Thank you for Registering with ".config('app.name');
              $user->notify(new SendNotification($user, $message));
