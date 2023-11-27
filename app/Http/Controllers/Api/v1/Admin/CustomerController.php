@@ -82,7 +82,8 @@ class CustomerController extends Controller
         try {
             DB::beginTransaction();
 
-            $user = User::role('customer')->findOrFail($id);
+            // $user = User::role('customer')->findOrFail($id);
+            $user = User::role('Customer')->findOrFail($id);
 
             if ($user) {
                 // If the user has an associated customer, update its information
