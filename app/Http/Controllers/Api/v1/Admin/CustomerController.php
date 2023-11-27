@@ -84,9 +84,8 @@ class CustomerController extends Controller
 
           //   $user = User::findOrFail($id);
            $user = User::role('Customer')->findOrFail($id);
-
+            Log::info($user);
             if ($user) {
-                // If the user has an associated customer, update its information
             $user->full_name = $request->input('full_name');
             $user->email = $request->input('email');
             $user->address = $request->input('address');
