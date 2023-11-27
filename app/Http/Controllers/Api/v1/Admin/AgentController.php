@@ -222,9 +222,9 @@ class AgentController extends Controller
             $agent = Agent::find($id);
 
             // Update agent information
-            $agent->phone_number = $request->input('phone_number');
-            $agent->street = $request->input('address');
-            $agent->business_name = $request->input('business_name');
+            $agent->phone_number = $request->phone_number;
+            $agent->street = $request->address;
+            $agent->business_name = $request->business_name;
             $agent->save();
 
             // Update agent information
