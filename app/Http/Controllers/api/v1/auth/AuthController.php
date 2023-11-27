@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\v1\auth;
 
-use WalletService;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Support\Str;
@@ -22,6 +21,8 @@ use App\Notifications\SendNotification;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Validator;
 use Stevebauman\Location\Facades\Location;
+use App\Services\WalletService;
+
 
 class AuthController extends Controller
 {
