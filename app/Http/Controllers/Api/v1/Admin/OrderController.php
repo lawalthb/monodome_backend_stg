@@ -103,7 +103,7 @@ class OrderController extends Controller
         }
 
         // Retrieve all orders associated with the authenticated user
-        $userOrders = $user->orders()->get(); // Assuming 'orders' is the relationship method name
+        $userOrders = $user->order()->get(); // Assuming 'orders' is the relationship method name
 
         return OrderResource::collection($userOrders);
     }
