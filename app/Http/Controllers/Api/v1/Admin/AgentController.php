@@ -231,10 +231,10 @@ class AgentController extends Controller
             if ($agent->user) {
                 // If the user has an associated agent, update its information
             $user = $agent->user;
-            $user->full_name = $request->input('full_name');
-            $user->email = $request->input('email');
-            $user->address = $request->input('address');
-            $user->phone_number = $request->input('phone_number');
+            $user->full_name = $request->full_name;
+            $user->email = $request->email;
+            $user->address = $request->address;
+            $user->phone_number = $request->phone_number;
             $user->save();
 
             }
