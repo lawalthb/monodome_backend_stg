@@ -149,7 +149,7 @@ class CustomerController extends Controller
 
     public function confirmed(){
 
-       return $user = User::where("status","Confirmed")->get();
+     $user = User::where("status","Confirmed")->get();
 
         return $this->success(new UserResource($user), 'confirmed customer successfully');
 

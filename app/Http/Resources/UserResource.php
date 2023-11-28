@@ -27,7 +27,7 @@ class UserResource extends JsonResource
             "profile_url" => getImageFile($this->image_path),
             "referral_code" => $this->referral_code,
             "user_created_by" => new UserResource($this->whenLoaded('user_created_by')),
-            "ref_by" => new UserResource($this->whenLoaded('ref_by')),
+            "ref_by" =>  new UserResource($this->whenLoaded('ref_by')),
             "role" => UserRoleResource::collection($this->roles),
             "updated_at" => $this->updated_at,
             "created_at" => $this->created_at,
