@@ -119,8 +119,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::post('/load-board/{loadBulk}', [LoadBoardController::class, 'update']);
         Route::delete('/load-board/{id}', [LoadBoardController::class, 'destroy']);
 
-
-        /// Route::get('load')
     });
 
 

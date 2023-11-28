@@ -48,9 +48,10 @@ class LoadBoardController extends Controller
      * @param  \App\Models\LoadBoard  $loadBoard
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(LoadBoard $loadBoard)
+    public function show($id)
     {
-        return $this->success(['loadBoard' => $loadBoard], 'Load board retrieved successfully');
+        $loadBoard =  LoadBoard::find($id);
+        return $this->success(['loadBoard' => new LoadBoardResource($loadBoard)], 'Load board retrieved successfully');
     }
 
 
