@@ -98,7 +98,7 @@ class OrderController extends Controller
         $load->user->wallet->amount =  $load->user->wallet->amount - $loadTotalAmount;
 
        // ,'Approved','Processing'
-        $load->status = 'Processing';
+        $load->status = 'waiting';
         $load->save();
         $order = Order::updateOrCreate(
             [
