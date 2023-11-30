@@ -45,23 +45,110 @@ class CustomerController extends Controller
         return OrderResource::collection($order);
     }
 
-
     public function search(Request $request)
     {
-        $searchTerm = $request->input('search');
+        // Get query parameters from the request
+        $sort = $request->input('sort');
+        $email = $request->input('email');
+        $businessName = $request->input('business_name');
+        $license_number = $request->input('license_number');
+        $address = $request->input('address');
+        $have_motor = $request->input('have_motor');
+        $phone_number = $request->input('phone_number');
+        $status = $request->input('status');
+        $fullName = $request->input('full_name');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $date = $request->input('date');
+
+        // Apply filters to the Agent query
+        $user = User::query();
+
+        // Filter by 'sort' parameter
+        if ($sort) {
+            $user->orderBy($sort);
+        }
+
+        // Filter by 'email' parameter
+        // if ($email) {
+        //     $user->whereHas('user', function ($userQuery) use ($email) {
+        //         $userQuery->where('email', 'like', "%$email%");
+        //     });
+        // }
+
+        // Filter by 'business_name' parameter
+        if ($email) {
+            $user->where('email', 'like', "%$email%");
+        }
+
+        if ($fullName) {
+            $user->where('full_name', 'like', "%$fullName%");
+        }
+
+        if ($address) {
+            $user->where('address', 'like', "%$address%");
+        }
+
+        // if ($have_motor) {
+        //     $user->where('have_motor', 'like', "%$have_motor%");
+        // }
+
+        if ($phone_number) {
+            $user->where('phone_number', 'like', "%$phone_number%");
+        }
+
+        // Filter by 'status' parameter
+        if ($status) {
+            $user->where('status', $status);
+        }
+
+        // Filter by 'full_name' parameter
+        // if ($fullName) {
+        //     $user->whereHas('user', function ($userQuery) use ($fullName) {
+        //         $userQuery->where('full_name', 'like', "%$fullName%");
+        //     });
+        // }
+
+         // Filter by 'date' parameter (created_at date)
+         if ($date) {
+            $user->whereDate('created_at', $date);
+        }
+
+
+        // Filter by date range
+        if ($startDate) {
+            $user->whereDate('created_at', '>=', $startDate);
+        }
+
+        if ($endDate) {
+            $user->whereDate('created_at', '<=', $endDate);
+        }
+
         $perPage = $request->input('per_page', 10);
 
-        $users = User::role('customer')
-            ->where(function ($query) use ($searchTerm) {
-                $query->where('email', 'like', "%$searchTerm%")
-                    ->orWhere('full_name', 'like', "%$searchTerm%")
-                    ->orWhere('phone_number', 'like', "%$searchTerm%");
-            })
-            ->latest()
-            ->paginate($perPage);
+        // Retrieve and paginate the results
+        $user = $user->latest()->paginate($perPage);
 
-        return UserResource::collection($users);
+        return UserResource::collection($user);
     }
+
+
+    // public function search(Request $request)
+    // {
+    //     $searchTerm = $request->input('search');
+    //     $perPage = $request->input('per_page', 10);
+
+    //     $users = User::role('customer')
+    //         ->where(function ($query) use ($searchTerm) {
+    //             $query->where('email', 'like', "%$searchTerm%")
+    //                 ->orWhere('full_name', 'like', "%$searchTerm%")
+    //                 ->orWhere('phone_number', 'like', "%$searchTerm%");
+    //         })
+    //         ->latest()
+    //         ->paginate($perPage);
+
+    //     return UserResource::collection($users);
+    // }
 
 
     public function show($userId) {
