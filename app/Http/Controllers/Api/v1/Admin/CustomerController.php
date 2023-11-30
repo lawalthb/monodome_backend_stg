@@ -62,7 +62,7 @@ class CustomerController extends Controller
         $date = $request->input('date');
 
         // Apply filters to the Agent query
-        $user = User::query();
+        $user = User::where("user_type","customer")->query();
 
         // Filter by 'sort' parameter
         if ($sort) {
