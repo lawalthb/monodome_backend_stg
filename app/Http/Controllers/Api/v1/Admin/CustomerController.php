@@ -62,7 +62,7 @@ class CustomerController extends Controller
         $date = $request->input('date');
 
         // Apply filters to the Agent query
-        $user = User::where("user_type","customer")->query();
+        $user = User::query();
 
         // Filter by 'sort' parameter
         if ($sort) {
@@ -127,7 +127,7 @@ class CustomerController extends Controller
         $perPage = $request->input('per_page', 10);
 
         // Retrieve and paginate the results
-        $user = $user->latest()->paginate($perPage);
+        $user = $user->where("user_type","customer")->latest()->paginate($perPage);
 
         return UserResource::collection($user);
     }
