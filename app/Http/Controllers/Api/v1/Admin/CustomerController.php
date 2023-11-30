@@ -50,10 +50,7 @@ class CustomerController extends Controller
         // Get query parameters from the request
         $sort = $request->input('sort');
         $email = $request->input('email');
-        $businessName = $request->input('business_name');
-        $license_number = $request->input('license_number');
         $address = $request->input('address');
-        $have_motor = $request->input('have_motor');
         $phone_number = $request->input('phone_number');
         $status = $request->input('status');
         $fullName = $request->input('full_name');
@@ -69,13 +66,6 @@ class CustomerController extends Controller
             $user->orderBy($sort);
         }
 
-        // Filter by 'email' parameter
-        // if ($email) {
-        //     $user->whereHas('user', function ($userQuery) use ($email) {
-        //         $userQuery->where('email', 'like', "%$email%");
-        //     });
-        // }
-
         // Filter by 'business_name' parameter
         if ($email) {
             $user->where('email', 'like', "%$email%");
@@ -89,10 +79,6 @@ class CustomerController extends Controller
             $user->where('address', 'like', "%$address%");
         }
 
-        // if ($have_motor) {
-        //     $user->where('have_motor', 'like', "%$have_motor%");
-        // }
-
         if ($phone_number) {
             $user->where('phone_number', 'like', "%$phone_number%");
         }
@@ -101,13 +87,6 @@ class CustomerController extends Controller
         if ($status) {
             $user->where('status', $status);
         }
-
-        // Filter by 'full_name' parameter
-        // if ($fullName) {
-        //     $user->whereHas('user', function ($userQuery) use ($fullName) {
-        //         $userQuery->where('full_name', 'like', "%$fullName%");
-        //     });
-        // }
 
          // Filter by 'date' parameter (created_at date)
          if ($date) {
