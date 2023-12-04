@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api\v1\Customers;
 
+use App\Models\User;
 use App\Models\LoadBoard;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\LoadBoardRequest;
 use App\Http\Resources\LoadBoardResource;
 
@@ -89,6 +91,44 @@ class LoadBoardController extends Controller
     }
 
 
-    
+    public function accept(LoadBoard $loadBoard)
+    {
+        $orderNo = 'YOUR_ORDER_NO_HERE'; // Replace with the order number you want to update
+
+     //   $loadBoard = LoadBoard::where('order_no', $orderNo)->first();
+
+        if ($loadBoard) {
+            $order = $loadBoard->order;
+
+            // Get the user who accepts the order (in this case, assuming it's a user with an ID of 1)
+            $acceptedUser = User::find(Auth::user()->id); // Replace 1 with the ID of the accepting user
+
+            if ($acceptedUser) {
+                // Update the order and associate it with the accepting user
+                $order->accepted = 'Yes';
+                $order->acceptable_id = $acceptedUser->id;
+                $order->acceptable_type = get_class($acceptedUser); // Assuming it's User model
+
+                $order->save();
+
+                // Optionally, you can update the LoadBoard status or perform other actions if needed
+                $loadBoard->status = 'Completed';
+                $loadBoard->save();
+
+                // Order updated and associated with the accepting user
+                return $this->success(['loadBoard' => new LoadBoardResource($loadBoard)], 'Load accepted successfully');
+            } else {
+                // User who accepts the order not found
+                return $this->success(null, 'User who accepts the order not found');
+
+            }
+        } else {
+            // Order with the specified order number not found in load boards
+
+            return $this->success(null, 'rder with the specified order number not found in load boards');
+
+        }
+    }
+
 
 }

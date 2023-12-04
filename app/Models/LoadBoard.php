@@ -49,4 +49,9 @@ class LoadBoard extends Model
     {
         return $this->hasOne(LoadPackage::class, 'load_board_id');
     }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_no', 'order_no');
+    }
 }
