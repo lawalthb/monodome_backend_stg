@@ -29,7 +29,6 @@ return new class extends Migration
             $table->enum('status', ['Pending', 'Confirmed', 'Failed', 'Paid','Approved','Processing'])->default('Pending');
             $table->timestamps();
 
-
             // Define foreign key constraint
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

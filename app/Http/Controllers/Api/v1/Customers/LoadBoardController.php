@@ -88,4 +88,7 @@ class LoadBoardController extends Controller
         return $this->success(null, 'Load board deleted successfully');
     }
 
+
+    
+
 }
