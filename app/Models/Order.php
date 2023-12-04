@@ -17,6 +17,11 @@ class Order extends Model
     return $this->morphTo('loadable');
     }
 
+    public function acceptable()
+    {
+        return $this->morphTo();
+    }
+
     public function user(){
 
         return $this->belongsTo(User::class);
