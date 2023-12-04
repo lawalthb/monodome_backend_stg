@@ -225,6 +225,41 @@ class UsersTableSeeder extends Seeder
 
 
 
+        //clearing
+
+
+        $clearingRole = Role::find(6);
+
+        for ($i = 1; $i <= 100; $i++) {
+            // Create a user
+            $user = \App\Models\User::factory()->create([
+                'user_type' => "clearing",
+                'role_id' => 7,
+                'ref_by' => rand(1,4),
+                'referral_code' => generateReferralCode(),
+            ]);
+
+            // Assign the "agent" role to the user
+            $user->assignRole($clearingRole);
+
+            // Create an agent and associate it with the user
+            $agent = Agent::factory()->create([
+                'user_id' => $user->id,
+                'type' => "clearing",
+            ]);
+
+            $guarantor1 = Guarantor::factory()->create([
+                'loadable_id' => $agent->id,
+                'loadable_type' => 'App\\Models\\Agent',
+            ]);
+
+            $guarantor2 = Guarantor::factory()->create([
+                'loadable_id' => $agent->id,
+                'loadable_type' => 'App\\Models\\Agent',
+            ]);
+        }
+
+
          //driver
          $driverRole = Role::find(8);
 
