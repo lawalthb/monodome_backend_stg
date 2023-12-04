@@ -22,6 +22,8 @@ return new class extends Migration
             $table->enum('accepted', ['Yes', 'No', 'Rejected'])->default('No');
             $table->decimal('amount',38, 18)->default(0);
             $table->decimal('fee',38, 18)->default(0);
+            $table->unsignedBigInteger('acceptable_id')->nullable();
+            $table->string('acceptable_type')->nullable();
             $table->unsignedBigInteger('loadable_id'); // Foreign key to the associated load
             $table->string('loadable_type'); // Type of load (e.g., 'load_packages', 'load_specialized', etc.)
             $table->enum('status', ['Pending', 'Confirmed', 'Failed', 'Paid','Approved','Processing'])->default('Pending');
