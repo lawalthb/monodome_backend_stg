@@ -75,6 +75,11 @@ class User extends Authenticatable implements Auditable
         return $this->hasMany(Order::class);
     }
 
+    public function acceptedOrders()
+    {
+        return $this->morphMany(Order::class, 'acceptable');
+    }
+
     public function loadBulk()
     {
 
