@@ -30,7 +30,7 @@ class LoadContainerResource extends JsonResource
             "suggested_amount" => $this->suggested_amount,
             "deliver_from_city" => $this->DFromCity ? $this->DFromCity->name : null,
             "deliver_to_city" => $this->DToCity ? $this->DToCity->name : null,
-            "load_type_id" => new LoadTypeResource($this->loadType),
+            "loadType" => new LoadTypeResource($this->loadType),
             "document" => LoadDocumentResource::collection($this->loadDocuments),
             "receiver_name" => $this->receiver_name,
             "receiver_email" => $this->receiver_email,
