@@ -199,7 +199,7 @@ class CustomerController extends Controller
 
     $user = User::where("status","Banned")->get();
 
-    return $this->success(new UserResource($user), 'Banned customer successfully');
+    return $this->success(UserResource::collection($user), 'Banned customer successfully');
 
     }
 
@@ -208,7 +208,7 @@ class CustomerController extends Controller
 
         $user = User::where("status","Pending")->get();
 
-        return $this->success(new UserResource($user), 'Pending customer successfully');
+        return $this->success(UserResource::collection($user), 'Pending customer successfully');
 
     }
 
@@ -217,7 +217,7 @@ class CustomerController extends Controller
 
      $user = User::where("status","Confirmed")->get();
 
-        return $this->success(new UserResource($user), 'confirmed customer successfully');
+        return $this->success(UserResource::collection($user), 'confirmed customer successfully');
 
     }
 
