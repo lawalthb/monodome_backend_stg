@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Agents;
 
 use App\Models\User;
 use App\Models\Agent;
+use App\Models\Order;
 use App\Models\Guarantor;
 use App\Models\LoadBoard;
 use Illuminate\Support\Str;
@@ -15,12 +16,31 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\AgentResource;
+use App\Http\Resources\OrderResource;
 use App\Http\Requests\AgentFormRequest;
 use App\Http\Resources\LoadBoardResource;
 
 class ClearingAgentController extends Controller
 {
     //
+
+        /**
+     * Display the specified resource.
+     */
+    public function my_order()
+    {
+
+        $order = Order::where("user_id",auth()->user()->id)->get();
+
+        if (!$order) {
+
+            return $this->error('', 'No order not found', 422);
+
+        }
+
+        return OrderResource::collection($order);
+    }
+
 
     public function broadcast(Request $request)
     {
