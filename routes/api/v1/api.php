@@ -252,6 +252,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::post('/order-reassign', [ClearingAgentController::class, 'orderReAssign']);
         Route::get('/broadcast', [ClearingAgentController::class, 'broadcast']);
         Route::get('/broadcast/{id}', [ClearingAgentController::class, 'singleBroadcast']);
+        Route::get('/accept-order/{id}', [ClearingAgentController::class, 'accept_order']);
 
     });
 
