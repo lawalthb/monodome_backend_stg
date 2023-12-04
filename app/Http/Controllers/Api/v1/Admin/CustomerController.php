@@ -197,27 +197,31 @@ class CustomerController extends Controller
 
     public function banned(){
 
-    $user = User::where("status","Banned")->get();
+    $user = User::where("status","Banned")->role('customer')->paginate();
 
-    return $this->success(UserResource::collection($user), 'Banned customer successfully');
+    return UserResource::collection($user);
+    // return $this->success(UserResource::collection($user), 'Banned customer successfully');
 
     }
 
 
     public function pending(){
 
-        $user = User::where("status","Pending")->get();
+        $user = User::where("status","Pending")->role('customer')->paginate();
 
-        return $this->success(UserResource::collection($user), 'Pending customer successfully');
+
+        return UserResource::collection($user);
+        // return $this->success(UserResource::collection($user), 'Pending customer successfully');
 
     }
 
 
     public function confirmed(){
 
-     $user = User::where("status","Confirmed")->get();
+        $user = User::where("status","Confirmed")->role('customer')->paginate();
 
-        return $this->success(UserResource::collection($user), 'confirmed customer successfully');
+        return UserResource::collection($user);
+        // return $this->success(UserResource::collection($user), 'confirmed customer successfully');
 
     }
 
