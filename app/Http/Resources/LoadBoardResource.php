@@ -9,6 +9,7 @@ use App\Models\LoadContainer;
 use App\Models\LoadSpecialized;
 use App\Http\Resources\LoadBulkResource;
 use App\Http\Resources\LoadContainerResource;
+use App\Models\LoadCarClearing;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LoadBoardResource extends JsonResource
@@ -41,7 +42,7 @@ protected function loadableResource()
     } elseif ($this->loadable instanceof LoadSpecialized) {
         return new LoadSpecializedResource($this->loadable);
 
-    } elseif ($this->loadable instanceof LoadCarClearingResource) {
+    } elseif ($this->loadable instanceof LoadCarClearing) {
         return new LoadCarClearingResource($this->loadable);
 
     }elseif ($this->loadable instanceof LoadBulk) {
