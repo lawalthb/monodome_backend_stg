@@ -24,7 +24,7 @@ class LoadPackageRequest extends FormRequest
         return [
             'load_type_id' => 'required|integer|exists:load_types,id',
             'load_type_type' => 'nullable|string|max:30',
-            'deliver_from' => 'nullable|in:address,office',
+            'deliver_from' => 'nullable|in:address,office,map',
             'to_office_id' => 'sometimes|required_if:deliver_to,office|nullable|integer',
             'receiver_location' => 'required|string',
             'distance' => 'required|string',
@@ -37,7 +37,7 @@ class LoadPackageRequest extends FormRequest
             'sender_apartment_no' => 'required|string|max:50',
             'sender_state' => 'required|integer|max:50',
             'sender_email' => 'required|email|max:50',
-            'deliver_to' => 'required|in:address,office',
+            'deliver_to' => 'required|in:address,office,map',
             'from_office_id' => 'sometimes|required_if:deliver_from,office|nullable|integer',
            'receiver_name' => 'nullable|string|max:50',
            'receiver_phone' => 'nullable|string|max:50',
