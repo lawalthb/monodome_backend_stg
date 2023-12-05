@@ -119,6 +119,7 @@ class ClearingAgentController extends Controller
                     'phone_number' => $request->input('phone_number'),
                     'state_id' => $request->input('state_id'),
                     'street' => $request->input('street'),
+                    'custom_license_number' => $request->input('custom_license_number'),
                     'status' => 'Pending',
                     'type' => 'clearing',
                     'nin_number' => $request->input('nin_number'),
@@ -128,6 +129,8 @@ class ClearingAgentController extends Controller
                 ]
             );
 
+            $agent->cac_certificate = $this->uploadFile('agent/agent_images', $request->file('cac_certificate'));
+            $agent->other_documents = $this->uploadFile('agent/agent_images', $request->file('other_documents'));
             $agent->store_front_image = $this->uploadFile('agent/agent_images', $request->file('store_front_image'));
             $agent->inside_store_image = $this->uploadFile('agent/agent_images', $request->file('inside_store_image'));
             $agent->registration_documents = $this->uploadFile('agent/agent_documents', $request->file('registration_documents'));

@@ -34,7 +34,7 @@ class AgentFormRequest extends FormRequest
                 'type' => 'required|string',
                 // 'state_of_residence' => 'required|string',
                 // 'city_of_residence' => 'required|string',
-                'custom_license_number' => 'required_if:type,clearing|',
+                'custom_license_number' => 'required_if:type,clearing',
                 'cac_certificate' => 'required_if:type,clearing',
                 'other_documents' => 'required_if:type,clearing',
                 'store_front_image' => 'required_if:type:agent|image|mimes:jpeg,png,jpg|max:2048',
