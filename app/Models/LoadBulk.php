@@ -16,6 +16,16 @@ class LoadBulk extends Model
         return $this->belongsTo(LoadType::class);
     }
 
+    public function officeTo()
+    {
+        return $this->belongsTo(Agent::class, 'to_office_id');
+    }
+
+    public function officeFrom()
+    {
+        return $this->belongsTo(Agent::class, 'from_office_id');
+    }
+
     public function order()
     {
         return $this->morphOne(Order::class, 'loadable');

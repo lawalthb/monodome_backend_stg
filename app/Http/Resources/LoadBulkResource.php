@@ -32,7 +32,8 @@ class LoadBulkResource extends JsonResource
             'sender_apartment'=>$this->sender_apartment,
             'sender_apartment_no'=>$this->sender_apartment_no,
             'sender_email'=>$this->sender_email,
-            'office' => ($this->deliver_to =="office") ? new AgentResource($this->office) :  null,
+            'deliver_to' =>   ($this->deliver_to == "office") ? new AgentResource($this->officeTo) :  null,            // "from_office_id" => $this->from_office_id,load
+            'deliver_from' =>($this->deliver_from == "office") ? new AgentResource($this->officeFrom) :  null,            // "from_office_id" => $this->from_office_id,load
             'receiver_name'=>$this->receiver_name,
             'receiver_phone'=>$this->receiver_phone,
             'receiver_lga'=> new LocalGovernmentResource($this->RLga),
