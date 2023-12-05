@@ -18,14 +18,14 @@ class LoadPackage extends Model
             return $this->belongsTo(LoadType::class);
         }
 
-        public function toOffice()
+        public function officeTo()
         {
-            return $this->belongsTo(Agent::class,"to_office_id");
+            return $this->belongsTo(Agent::class,'to_office_id');
         }
 
-        public function fromOffice()
+        public function officeFrom()
         {
-            return $this->belongsTo(Agent::class,"from_office_id");
+            return $this->belongsTo(Agent::class,'from_office_id');
         }
 
 
