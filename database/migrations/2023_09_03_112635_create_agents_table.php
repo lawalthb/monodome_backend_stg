@@ -24,11 +24,14 @@ return new class extends Migration
         $table->string('lga')->nullable();
         $table->string('business_name')->nullable();
         $table->string('phone_number')->nullable();
-        $table->string('state_of_residence')->nullable();
+        $table->string('state_of_residence')->nullable(); 
         $table->string('city_of_residence')->nullable();
         $table->string('store_front_image')->nullable();
         $table->string('inside_store_image')->nullable();
         $table->string('registration_documents')->nullable();
+        $table->string('cac_documents')->nullable();
+        $table->string('other_documents')->nullable();
+        $table->string('custom_license_number')->nullable();
         $table->enum('type', ['agent', 'clearing'])->default('agent');
         $table->enum('status', ['Pending', 'Confirmed', 'Rejected','Failed'])->default('Pending');
         $table->timestamps();
