@@ -117,7 +117,7 @@ class ClearingAgentController extends Controller
                     'state_id' => $request->input('state_id'),
                     'street' => $request->input('street'),
                     'status' => 'Pending',
-                    'type' => 'agent',
+                    'type' => 'clearing',
                     'nin_number' => $request->input('nin_number'),
                     'business_name' => $request->input('business_name'),
                     'lga' => $request->input('lga'),
