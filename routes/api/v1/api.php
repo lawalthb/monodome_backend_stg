@@ -248,7 +248,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     Route::group(['prefix' => 'clearing-agent','middleware' => 'auth:api'], function () {
 
         Route::get('/order', [ClearingAgentController::class, 'my_order']);
-        Route::post('/store', [ClearingAgentController::class, 'store'])->withoutMiddleware("auth");
+        Route::post('/store', [ClearingAgentController::class, 'store'])->withoutMiddleware("auth:api");
         Route::post('/order-assign', [ClearingAgentController::class, 'orderAssign']);
         Route::post('/order-reassign', [ClearingAgentController::class, 'orderReAssign']);
         Route::get('/broadcast', [ClearingAgentController::class, 'broadcast']);
