@@ -32,8 +32,6 @@ class AgentFormRequest extends FormRequest
                 'state_id' => 'required|exists:states,id',
                 'lga' => 'required|numeric',
                 'type' => 'required|string',
-                // 'state_of_residence' => 'required|string',
-                // 'city_of_residence' => 'required|string',
                 'custom_license_number' => 'required_if:type,clearing',
                 'cac_certificate' => 'required_if:type,clearing',
                 'other_documents' => 'required_if:type,clearing',
