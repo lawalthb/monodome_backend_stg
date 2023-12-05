@@ -20,7 +20,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->index('user_id');
             $table->unsignedBigInteger('load_type_id');
             $table->string('load_type_name')->default("package")->nullable();
-            $table->enum('deliver_from', ['address', 'office'])->nullable();
+            $table->enum('deliver_from', ['address', 'office','map'])->nullable();
             $table->integer('to_office_id')->nullable();
             $table->string('sender_location')->nullable();
             $table->string('receiver_location')->nullable();
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sender_state')->nullable();
             $table->string('sender_apartment', 30)->nullable();
             $table->string('sender_apartment_no', 30)->nullable();
-            $table->enum('deliver_to', ['address', 'office'])->nullable();
+            $table->enum('deliver_to', ['address', 'office','map'])->nullable();
             $table->integer('from_office_id')->nullable()->default(1);
             $table->string('receiver_name', 30)->nullable();
             $table->string('receiver_email', 30)->nullable();
