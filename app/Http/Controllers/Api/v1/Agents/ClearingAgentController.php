@@ -128,12 +128,25 @@ class ClearingAgentController extends Controller
                     // Add other agent fields here
                 ]
             );
+            if ($request->hasFile('cac_certificate') && $request->file('cac_certificate')->isValid()) {
+                $agent->cac_certificate = $this->uploadFile('agent/agent_images', $request->file('cac_certificate'));
+            }
 
-            $agent->cac_certificate = $this->uploadFile('agent/agent_images', $request->file('cac_certificate'));
-            $agent->other_documents = $this->uploadFile('agent/agent_images', $request->file('other_documents'));
-            $agent->store_front_image = $this->uploadFile('agent/agent_images', $request->file('store_front_image'));
-            $agent->inside_store_image = $this->uploadFile('agent/agent_images', $request->file('inside_store_image'));
-            $agent->registration_documents = $this->uploadFile('agent/agent_documents', $request->file('registration_documents'));
+            if ($request->hasFile('other_documents') && $request->file('other_documents')->isValid()) {
+                $agent->other_documents = $this->uploadFile('agent/agent_images', $request->file('other_documents'));
+            }
+
+            if ($request->hasFile('store_front_image') && $request->file('store_front_image')->isValid()) {
+                $agent->store_front_image = $this->uploadFile('agent/agent_images', $request->file('store_front_image'));
+            }
+
+            if ($request->hasFile('inside_store_image') && $request->file('inside_store_image')->isValid()) {
+                $agent->inside_store_image = $this->uploadFile('agent/agent_images', $request->file('inside_store_image'));
+            }
+
+            if ($request->hasFile('registration_documents') && $request->file('registration_documents')->isValid()) {
+                $agent->registration_documents = $this->uploadFile('agent/agent_documents', $request->file('registration_documents'));
+            }
 
             $agent->save();
 

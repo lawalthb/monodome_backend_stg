@@ -24,7 +24,7 @@ return new class extends Migration
         $table->string('lga')->nullable();
         $table->string('business_name')->nullable();
         $table->string('phone_number')->nullable();
-        $table->string('state_of_residence')->nullable(); 
+        $table->string('state_of_residence')->nullable();
         $table->string('city_of_residence')->nullable();
         $table->string('store_front_image')->nullable();
         $table->string('inside_store_image')->nullable();
