@@ -23,6 +23,8 @@ class Agent extends Model
         return $this->morphTo('loadable');
     }
 
+
+
     public function user()
     {
         return $this->belongsTo(User::class);

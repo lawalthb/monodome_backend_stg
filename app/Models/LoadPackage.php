@@ -18,6 +18,17 @@ class LoadPackage extends Model
             return $this->belongsTo(LoadType::class);
         }
 
+        public function toOffice()
+        {
+            return $this->belongsTo(Agent::class,"to_office_id");
+        }
+
+        public function fromOffice()
+        {
+            return $this->belongsTo(Agent::class,"from_office_id");
+        }
+
+
         public function loadBoard()
     {
         return $this->morphOne(LoadBoard::class, 'loadable');

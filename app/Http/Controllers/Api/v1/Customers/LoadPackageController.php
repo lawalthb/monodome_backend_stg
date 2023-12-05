@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api\v1\Customers;
 
 use App\Models\Order;
