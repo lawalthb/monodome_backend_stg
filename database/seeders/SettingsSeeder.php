@@ -139,7 +139,7 @@ class SettingsSeeder extends Seeder
 
             [
                 'name' => 'Map Api Server Key',
-                'value' => 'AIzaSyAvHCgdqlX55-kjQ5ZMwEAevkV2jc7Kxl8',
+                'value' => 'AIzaSyDMl9gMhFdQ8yel_p9EREkl-i9ocbBf178',
                 'slug' => 'map_api_key_server',
                 'created_at' => '2020-01-07 18:30:00',
                 'updated_at' => null,
