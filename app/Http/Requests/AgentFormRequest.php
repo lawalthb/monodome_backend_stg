@@ -31,7 +31,7 @@ class AgentFormRequest extends FormRequest
                 // 'country_id' => 'required|exists:countries,id',
                 'state_id' => 'required|exists:states,id',
                 'lga' => 'required|numeric',
-                'type' => 'required|string',
+                'type' => 'nullable|string',
                 // 'state_of_residence' => 'required|string',
                 // 'city_of_residence' => 'required|string',
                 'store_front_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
