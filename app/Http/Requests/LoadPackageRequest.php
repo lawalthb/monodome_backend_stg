@@ -38,7 +38,7 @@ class LoadPackageRequest extends FormRequest
             'sender_state' => 'required|integer|max:50',
             'sender_email' => 'required|email|max:50',
             'deliver_to' => 'required|in:address,office',
-           // 'from_office_id' => 'required|integer',
+            'from_office_id' => 'required|integer',
            'receiver_name' => 'nullable|string|max:50',
            'receiver_phone' => 'nullable|string|max:50',
            'receiver_lga' => 'nullable|integer',
