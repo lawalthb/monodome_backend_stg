@@ -18,12 +18,12 @@ return new class extends Migration
             $table->id();
             $table->string('uuid')->default(Str::uuid()->toString());
             $table->bigInteger('user_id')->index('user_id');
-            $table->unsignedBigInteger('load_type_id')->default(2);
+            $table->unsignedBigInteger('load_type_id')->nullable();
             $table->string('load_type_name')->default('bulk');
             $table->string('sender_location')->nullable();
             $table->string('receiver_location')->nullable();
             $table->string('distance')->nullable();
-            $table->enum('deliver_from', ['address', 'office'])->nullable();
+            $table->enum('deliver_from', ['address', 'office','map'])->nullable();
             $table->integer('to_office_id')->nullable();
             $table->string('sender_email', 100)->nullable();
             $table->string('sender_name', 100)->nullable();
@@ -34,8 +34,8 @@ return new class extends Migration
             $table->string('sender_apartment', 100)->nullable();
             $table->string('sender_apartment_no', 100)->nullable();
             //  $table->string('sender_city', 100)->nullable();
-            $table->enum('deliver_to', ['address', 'office'])->nullable();
-            $table->integer('from_office_id')->nullable()->default(1);
+            $table->enum('deliver_to', ['address', 'office','map'])->nullable();
+            $table->integer('from_office_id')->nullable();
             $table->string('receiver_name', 100)->nullable();
             $table->string('receiver_email', 100)->nullable();
             $table->string('receiver_phone', 100)->nullable();
