@@ -17,10 +17,10 @@ class AgentResource extends JsonResource
     {
         return [
              'id' => $this->id,
-            'uuid' => $this->uuid,
-            'agent_code' => $this->agent_code,
-            'name' => $this->user->full_name,
-            'nin_number' => $this->nin_number,
+          'uuid' => $this->uuid,
+          'agent_code' => $this->agent_code,
+           'name' => $this->user->full_name,
+          'nin_number' => $this->nin_number,
           'street' => $this->street,
           'business_name' => $this->business_name,
          // 'phone_number' => $this->phone_number,
@@ -28,6 +28,8 @@ class AgentResource extends JsonResource
           'created_at' => $this->created_at,
           'updated_at' => $this->updated_at,
           'registration_documents' =>  getImageFile($this->registration_documents),
+          'cac_certificate' =>  getImageFile($this->cac_certificate),
+          'other_documents' =>  getImageFile($this->other_documents),
           'store_front_image' => getImageFile($this->store_front_image),
           'inside_store_image' => getImageFile($this->inside_store_image),
           'user' => new UserResource($this->user),
