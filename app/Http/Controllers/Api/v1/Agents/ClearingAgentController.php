@@ -10,6 +10,8 @@ use App\Models\LoadBoard;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
@@ -22,7 +24,8 @@ use App\Http\Resources\LoadBoardResource;
 
 class ClearingAgentController extends Controller
 {
-    //
+    use ApiStatusTrait,FileUploadTrait;
+
 
         /**
      * Display the specified resource.
