@@ -24,8 +24,8 @@ class LoadBulkRequest extends FormRequest
     {
         return [
             'load_type_id' => 'required|integer',
-            'deliver_from' => 'nullable|in:address,office',
-            'to_office_id' => 'required_if:deliver_to,office|nullable|integer', // Make it required if 'deliver_to' is 'office'
+            'deliver_from' => 'nullable|in:address,office,map',
+            'to_office_id' => 'sometimes|required_if:deliver_to,office|nullable|integer',
             'sender_name' => 'required|string|max:50',
             'sender_phone' => 'required|string|max:50',
             'sender_street' => 'required|string|max:20',
@@ -37,7 +37,8 @@ class LoadBulkRequest extends FormRequest
             'sender_apartment_no' => 'nullable|string|max:50',
             'sender_state' => 'required|integer',
             'sender_email' => 'required|email|max:50',
-            'deliver_to' => 'nullable|in:address,office',
+            'deliver_to' => 'nullable|in:address,office,map',
+            'from_office_id' => 'sometimes|required_if:deliver_from,office|nullable|integer',
             'receiver_name' => 'nullable|string|max:50',
             'receiver_phone' => 'nullable|string|max:50',
             'receiver_lga' => 'nullable|integer',
