@@ -24,6 +24,7 @@ class AgentFactory extends Factory
         'state_id' => rand(1, 20),
         'street' => fake()->streetAddress(),
         'nin_number' => fake()->creditCardNumber(),
+        'custom_license_number' => fake()->creditCardNumber(),
         'lga' => rand(1, 15),
         'business_name' => fake()->company(),
         'phone_number' => fake()->e164PhoneNumber(),

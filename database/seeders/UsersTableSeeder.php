@@ -228,7 +228,7 @@ class UsersTableSeeder extends Seeder
         //clearing
 
 
-        $clearingRole = Role::find(6);
+        $clearingRole = Role::find(7);
 
         for ($i = 1; $i <= 100; $i++) {
             // Create a user
@@ -246,6 +246,8 @@ class UsersTableSeeder extends Seeder
             $agent = Agent::factory()->create([
                 'user_id' => $user->id,
                 'type' => "clearing",
+                'cac_certificate' => "uploads/agent/agent_images/1698664133vL1g5t1Kfs.png",
+                'other_documents' => "uploads/agent/agent_images/1698664133vL1g5t1Kfs.png",
             ]);
 
             $guarantor1 = Guarantor::factory()->create([
