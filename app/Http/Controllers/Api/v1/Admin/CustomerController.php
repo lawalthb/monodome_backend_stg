@@ -150,7 +150,7 @@ class CustomerController extends Controller
 
           //   $user = User::findOrFail($id);
            $user = User::role('Customer')->findOrFail($id);
-            Log::info($user);
+        //    Log::info($user);
             if ($user) {
             // $user->full_name = $request->input('full_name');
             // $user->email = $request->input('email');

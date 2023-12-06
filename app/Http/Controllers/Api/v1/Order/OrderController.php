@@ -73,7 +73,7 @@ class OrderController extends Controller
             return $this->error('', 'order amount cant be zero', 404);
         }
 
-        Log::info($loadType->loadable_type);
+       // Log::info($loadType->loadable_type);
 
         $loadTotalAmount = number_format($load->total_amount, 2, '.', ''); // Format as a string with 2 decimal places
         $userWalletAmount = number_format($load->user->wallet->amount, 2, '.', '');
@@ -90,7 +90,7 @@ class OrderController extends Controller
            'status' => 'Paid',
            ])->first();
 
-           Log::info($order);
+         //  Log::info($order);
         if($order){
             return $this->error('', 'This Order has already been paid!', 404);
 
