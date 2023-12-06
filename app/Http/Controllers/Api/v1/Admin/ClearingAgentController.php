@@ -40,7 +40,14 @@ class ClearingAgentController extends Controller
             });
         }
 
-        $agents = $agents->where('status','Confirmed')->latest()->paginate($perPage);
+        $agents->whereHas('user', function ($userQuery) {
+            $userQuery->whereHas('roles', function ($roleQuery) {
+                $roleQuery->where('id', 7);
+            });
+        });
+
+        // $agents = $agents->where('status','Pending')->latest()->paginate($perPage);
+        $agents = $agents->latest()->paginate($perPage);
 
         return AgentResource::collection($agents);
     }
