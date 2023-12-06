@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\v1\Admin\DashboardController;
 use App\Http\Controllers\Api\v1\Admin\LoadBoardController;
 use App\Http\Controllers\Api\v1\Admin\ManageUserController;
 use App\Http\Controllers\Api\v1\Admin\PermissionController;
+use App\Http\Controllers\Api\v1\Admin\ClearingAgentController;
 use App\Http\Controllers\Api\v1\Admin\DriverManagerController;
 use App\Http\Controllers\Api\v1\Admin\ShippingCompanyController;
 use App\Http\Controllers\Api\v1\Admin\Support\SupportController;
@@ -149,6 +150,21 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::post('/update/{id}', [AgentController::class, 'update']);
         Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
         Route::get('/status/type', [AgentController::class, 'statusType']);
+    });
+
+
+      // agent route group
+      Route::group(['prefix' => 'clearing-agent'], function () {
+
+        Route::get('/', [ClearingAgentController::class, 'index']);
+        Route::post('/store', [ClearingAgentController::class, 'store']);
+        Route::get('/search', [ClearingAgentController::class, 'search']);
+        Route::get('/pending', [ClearingAgentController::class, 'pending']);
+        Route::post('/status/{id}', [ClearingAgentController::class, 'setStatus']);
+        Route::get('/show/{id}', [ClearingAgentController::class, 'show']);
+        Route::post('/update/{id}', [ClearingAgentController::class, 'update']);
+        Route::delete('/destroy/{id}', [ClearingAgentController::class, 'destroy']);
+        Route::get('/status/type', [ClearingAgentController::class, 'statusType']);
     });
 
       // driver route group
