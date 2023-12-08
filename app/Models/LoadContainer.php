@@ -25,7 +25,7 @@ class LoadContainer extends Model
 
     public function containerCarrier(){
 
-        return $this->belongsTo(Container::class);
+        return $this->belongsTo(LoadContainer::class);
     }
 
     public function order()
