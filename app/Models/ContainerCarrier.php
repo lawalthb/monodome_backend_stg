@@ -13,6 +13,6 @@ class ContainerCarrier extends Model
 
     public function loadContainer()
 {
-    return $this->hasOne(LoadContainer::class);
+    return $this->belongsTo(LoadContainer::class);
 }
 }

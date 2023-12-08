@@ -28,6 +28,8 @@ class LoadContainerShipmentRequest extends FormRequest
             'container_height' => 'required|string',
             'container_carrier' => 'required|integer',
             'container_value' => 'required|string',
+            'cars_in_container' => 'required',
+            'other_contents_in_container' => 'required',
             // 'documents' => 'required|array',
             // '*.documents' => 'required|string',
             'content_description' => 'nullable|string',

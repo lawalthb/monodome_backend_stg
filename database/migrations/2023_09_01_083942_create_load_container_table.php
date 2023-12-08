@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('departure_country');
             $table->integer('destination_country');
             $table->string('container_height', 10)->nullable();
-            $table->string('container_carrier', 10)->nullable();
+            $table->integer('container_carrier_id')->nullable();
             $table->string('container_value', 20)->nullable();
             $table->string('cars_in_container')->nullable();
             $table->string('other_contents_in_container')->nullable();

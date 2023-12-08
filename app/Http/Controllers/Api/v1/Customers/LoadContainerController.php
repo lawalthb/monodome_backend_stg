@@ -56,19 +56,50 @@ class LoadContainerController extends Controller
                 }
 
                 // Create a new Container Shipment record
-                $carClearing = LoadContainer::create($request->validated());
+                $carContainer = LoadContainer::create($request->validated());
+                $carsInContainer = json_decode($request->cars_in_container, true);
+                $otherInContainer = json_decode($request->other_contents_in_container, true);
+
+                $totalAmount = 0;
+
+                if (is_array($carsInContainer)) {
+                    foreach ($carsInContainer as $car) {
+                        $totalAmount += $car['amount'] ?? 0;
+                    }
+
+
+                    foreach ($otherInContainer as $other) {
+                        $totalAmount += $other['amount'] ?? 0;
+                    }
+
+                    // Assign total amount to the 'container_value' attribute
+                    $carContainer->container_value = $totalAmount;
+                    $carContainer->save();
+
+                } else {
+                    throw new \Exception('Invalid format for cars in container data');
+                }
+
+                // $totalAmount = 0;
+                // foreach (json_decode( $request->cars_in_container) as $car) {
+                //     $totalAmount += $car['amount'];
+                // }
+
+                // $carContainer->container_value = $totalAmount;
+                // $carContainer->save();
+
 
                   // Associate the LoadType
-                 $carClearing->loadType()->associate($loadType);
+                 $carContainer->loadType()->associate($loadType);
 
 
                        // Handle document uploads (if any)
-                       if (!$carClearing->order) {
-                        $order = $carClearing->order()->create([
+                       if (!$carContainer->order) {
+                        $order = $carContainer->order()->create([
                             'order_no' => getNumber(),
                             'driver_id' => 1,
                             'amount' => $request->total_amount,
-                            'user_id' => $carClearing->user_id,
+                            'user_id' => $carContainer->user_id,
                             'status' => "Pending",
                         ]);
                     }
@@ -88,17 +119,17 @@ class LoadContainerController extends Controller
                     ]);
 
                     // Associate the document with the LoadBulk
-                    $carClearing->loadDocuments()->save($document);
+                    $carContainer->loadDocuments()->save($document);
                 }
             }else{
                 return $this->error("Number of document files should equals to number of document name", 'Error creating Container Shipment', 500);
 
             }
-            //event(new LoadTypeCreated($carClearing));
+            //event(new LoadTypeCreated($carContainer));
 
                 DB::commit();
 
-                return $this->success( new LoadContainerResource($carClearing) , 'Container Shipment record created successfully');
+                return $this->success( new LoadContainerResource($carContainer) , 'Container Shipment record created successfully');
             } catch (\Exception $e) {
                 DB::rollBack();
 

@@ -11,6 +11,8 @@ class LoadContainer extends Model
 {
     use HasFactory;
 
+    protected $casts = [ ];
+
     public $guarded = [];
 
     public function loadType()
@@ -25,7 +27,7 @@ class LoadContainer extends Model
 
     public function containerCarrier(){
 
-        return $this->belongsTo(LoadContainer::class);
+        return $this->hasOne(ContainerCarrier::class,'id');
     }
 
     public function order()
