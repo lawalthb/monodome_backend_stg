@@ -26,7 +26,7 @@ class LoadContainerShipmentRequest extends FormRequest
             'departure_country' => 'required|integer',
             'destination_country' => 'required|integer',
             'container_height' => 'required|string',
-            'container_carrier' => 'required|string',
+            'container_carrier' => 'required|integer',
             'container_value' => 'required|string',
             // 'documents' => 'required|array',
             // '*.documents' => 'required|string',
