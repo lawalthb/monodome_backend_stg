@@ -90,6 +90,9 @@ class LoadContainerController extends Controller
                     // Associate the document with the LoadBulk
                     $carClearing->loadDocuments()->save($document);
                 }
+            }else{
+                return $this->error("empty files founds", 'Error creating Container Shipment', 500);
+
             }
             //event(new LoadTypeCreated($carClearing));
 
