@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('container_height', 10)->nullable();
             $table->string('container_carrier', 10)->nullable();
             $table->string('container_value', 20)->nullable();
+            $table->string('cars_in_container')->nullable();
+            $table->string('other_contents_in_container')->nullable();
             $table->string('document')->nullable();
             $table->text('content_description')->nullable();
             $table->enum('is_final', ['Yes', 'No'])->default('No');
