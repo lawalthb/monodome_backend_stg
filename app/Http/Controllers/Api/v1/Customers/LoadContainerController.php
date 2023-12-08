@@ -73,7 +73,7 @@ class LoadContainerController extends Controller
                         ]);
                     }
 
-            if ($request->input('documents')) {
+            if ($request->input('documents')  && count($request->file('documents')) == count($request->input('documents'))) {
 
                 foreach ($request->input('documents') as $key => $fileData) {
 
@@ -91,7 +91,7 @@ class LoadContainerController extends Controller
                     $carClearing->loadDocuments()->save($document);
                 }
             }else{
-                return $this->error("empty files founds", 'Error creating Container Shipment', 500);
+                return $this->error("Number of document files should equals to number of document name", 'Error creating Container Shipment', 500);
 
             }
             //event(new LoadTypeCreated($carClearing));
