@@ -11,7 +11,7 @@ class ContainerCarrier extends Model
 
     protected $fillable = ['name'];
 
-    public function shipments()
+    public function loadContainer()
 {
     return $this->hasOne(LoadContainer::class);
 }
