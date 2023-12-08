@@ -23,7 +23,7 @@ class LoadContainerResource extends JsonResource
             "destination_country" => new CountryResource($this->DesCountry),
             "departure_country" => new CountryResource($this->DepCountry),
             "container_height" => $this->container_height,
-            "container_carrier" => $this->container_carrier,
+            "container_carrier" => $this->containerCarrier,
             "container_value" => $this->container_value,
             "content_description" => $this->content_description,
             "is_final" => $this->is_final,

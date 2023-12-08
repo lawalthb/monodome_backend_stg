@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('container_carriers', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 191);
             $table->timestamps();
         });
 

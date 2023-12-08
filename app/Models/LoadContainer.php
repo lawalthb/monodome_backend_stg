@@ -23,6 +23,11 @@ class LoadContainer extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function containerCarrier(){
+
+        return $this->belongsTo(Container::class);
+    }
+
     public function order()
     {
         return $this->morphOne(Order::class, 'loadable');
