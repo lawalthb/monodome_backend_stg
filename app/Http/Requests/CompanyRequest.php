@@ -33,8 +33,8 @@ class CompanyRequest extends FormRequest
             'number_of_trucks' => 'required|numeric',
             'number_of_drivers' => 'required|numeric',
             'type_of_truck' => 'required|numeric',
-            'state_of_residence' => 'required|string',
-            'city_of_residence' => 'required|string',
+            'state_of_residence' => 'nullable|string',
+            'city_of_residence' => 'nullable|string',
             'cac_documents' => 'required|file|mimes:pdf|max:2048',
         ];
     }
