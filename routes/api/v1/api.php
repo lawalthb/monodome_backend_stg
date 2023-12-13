@@ -62,6 +62,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/profile', [AuthController::class, 'me']);
         Route::get('/logout', [AuthController::class, 'logout']);
         Route::post('/update-profile', [AuthController::class, 'updateProfile']);
+
+        Route::post('update-delete',[AuthController::class,'delete-delete']);
     });
 
     // customer Route
