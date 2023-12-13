@@ -127,10 +127,11 @@ class AuthController extends Controller
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user();
-                $user->location =  Location::get();
+                if (app()->environment('production')) {
+                    $user->location = Location::get();
+                }
                 $user->user_agent = $request->header('User-Agent');
                 $user->save();
-
 
                 if(!$user->wallet){
                     $wallet = new Wallet;
