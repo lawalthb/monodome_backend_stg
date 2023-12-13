@@ -24,7 +24,7 @@ class CreateLoadBoardEntry
      */
     public function handle(LoadTypeCreated $event)
     {
-     //   Log::info($event->loadType);
+    //    Log::info($event->loadType);
 
          $loadTypeId = $event->loadType->load_type_id;
          $userId = Auth::user()->id; // Adjust this according to your LoadType model
@@ -34,7 +34,7 @@ class CreateLoadBoardEntry
          $load_board->loadable()->associate($event->loadType);
          $load_board->load_type_id = $loadTypeId;
          $load_board->load_type_name = $event->loadType->loadType->slug; // You may need to define this method
-         $load_board->order_no = getNumber();
+         $load_board->order_no = $event->loadType->order->order_no; //getNumber();
          $load_board->status = 'Paid'; // Set the initial status
          $load_board->save();
     }

@@ -97,7 +97,7 @@ class LoadBoardController extends Controller
      //   $loadBoard = LoadBoard::where('order_no', $orderNo)->first();
       //  return $loadBoard;
         if ($loadBoard) {
-            $order = $loadBoard->order;
+          $order = $loadBoard->order;
 
             // Get the user who accepts the order (in this case, assuming it's a user with an ID of 1)
             $acceptedUser = User::find(Auth::user()->id); // Replace 1 with the ID of the accepting user

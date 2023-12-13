@@ -64,7 +64,7 @@ use App\Http\Resources\LoadPackageResource;
             );
 
 
-            Log::info($loadPackage);
+            // Log::info($loadPackage);
 
             if (!$loadPackage->order) {
                 // Create an associated Order if it doesn't exist
