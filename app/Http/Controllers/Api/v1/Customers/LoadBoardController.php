@@ -105,14 +105,16 @@ class LoadBoardController extends Controller
 
             if ($acceptedUser) {
                 // Update the order and associate it with the accepting user
-                $order->accepted = 'Yes';
+                $order->accepted ="Yes";
                 $order->acceptable_id = $acceptedUser->id;
                 $order->acceptable_type = get_class($acceptedUser); // Assuming it's User model
 
                 $order->save();
 
                 // Optionally, you can update the LoadBoard status or perform other actions if needed
-                $loadBoard->status = 'Completed';
+                $loadBoard->status = 'out_for_delivery';
+                $order->acceptable_id = $acceptedUser->id;
+                $order->acceptable_type = get_class($acceptedUser); // Assuming it's User model
                 $loadBoard->save();
 
                 // Order updated and associated with the accepting user

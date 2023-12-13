@@ -78,6 +78,7 @@ class LoadPackage extends Model
         static::creating(function ($LoadPackage) {
             $LoadPackage->uuid = Str::uuid()->toString();
             $LoadPackage->user_id = auth()->id();
+
         });
     }
 }

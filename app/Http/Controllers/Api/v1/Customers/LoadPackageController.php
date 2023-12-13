@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Events\LoadTypeCreated;
 use App\Traits\FileUploadTrait;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadPackageRequest;
 use App\Http\Resources\LoadPackageResource;
@@ -45,29 +47,45 @@ use App\Http\Resources\LoadPackageResource;
 
     public function store(LoadPackageRequest $request)
     {
-        $loadType = LoadType::find($request->load_type_id);
+        return DB::transaction(function () use ($request) {
+            $loadType = LoadType::find($request->load_type_id);
 
-        // Create a new LoadPackage instance
-        $loadPackage = $loadType->loadPackages()->create($request->validated());
+            // Create a new LoadPackage instance
+            // $loadPackage = $loadType->loadPackages()->create($request->validated());
 
-        if (!$loadPackage->order) {
-            // Create an associated Order if it doesn't exist
-            $order = $loadPackage->order()->create([
-                'order_no' => getNumber(),
-                'driver_id' => 1, // Change this to the actual driver ID
-                'amount' => $request->total_amount, // Set the appropriate amount
-                'user_id' => $loadPackage->user_id,
-                'status' => "Pending",
-            ]);
-        } else {
-            $order = $loadPackage->order; // If an order already exists, use the existing one
-        }
+            $loadPackage = LoadPackage::firstOrCreate(
+                [
+                    'load_type_id' => $request->load_type_id,
+                    'user_id' => $request->user()->id ,
+                    'total_amount' => $request->total_amount,
+                    'weight' => $request->weight,
+                ],
+                $request->validated()
+            );
 
-        return $this->success([
-            "loadPackage" => new LoadPackageResource($loadPackage),
-           // "order" => $order, // Include the order in the response
-        ], "Created Successfully");
+
+            Log::info($loadPackage);
+
+            if (!$loadPackage->order) {
+                // Create an associated Order if it doesn't exist
+                $order = $loadPackage->order()->create([
+                    'order_no' => getNumber(),
+                  //  'driver_id' => 1, // Change this to the actual driver ID
+                    'amount' => $request->total_amount, // Set the appropriate amount
+                    'user_id' => $loadPackage->user_id,
+                    'status' => "Pending",
+                ]);
+            } else {
+                $order = $loadPackage->order; // If an order already exists, use the existing one
+            }
+
+            return $this->success([
+                "loadPackage" => new LoadPackageResource($loadPackage),
+                // "order" => $order, // Include the order in the response
+            ], "Created Successfully");
+        });
     }
+
 
 
     public function update(LoadPackageRequest $request, $id)
