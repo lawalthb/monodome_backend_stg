@@ -120,7 +120,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/load-board/{id}', [LoadBoardController::class, 'show']);
         Route::post('/load-board/{loadBulk}', [LoadBoardController::class, 'update']);
         Route::delete('/load-board/{id}', [LoadBoardController::class, 'destroy']);
-        Route::get('/load-board/accept/{order_no}', [LoadBoardController::class, 'accept']);
+        Route::get('/load-board/accept/{loadBoard}', [LoadBoardController::class, 'accept']);
 
     });
 

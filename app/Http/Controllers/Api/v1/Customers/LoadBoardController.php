@@ -93,10 +93,9 @@ class LoadBoardController extends Controller
 
     public function accept(LoadBoard $loadBoard)
     {
-        $orderNo = 'YOUR_ORDER_NO_HERE'; // Replace with the order number you want to update
 
      //   $loadBoard = LoadBoard::where('order_no', $orderNo)->first();
-
+        return $loadBoard;
         if ($loadBoard) {
             $order = $loadBoard->order;
 

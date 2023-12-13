@@ -95,6 +95,8 @@ class OrderController extends Controller
              }
 
              $load->user->wallet->amount -= $loadTotalAmount;
+             $load->user->wallet->save();
+
              $load->status = 'Waiting';
              $load->save();
 
