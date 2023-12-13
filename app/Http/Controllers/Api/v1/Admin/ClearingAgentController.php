@@ -66,6 +66,19 @@ class ClearingAgentController extends Controller
     }
 
 
+    public function confirmed(Request $request){
+
+        $perPage = $request->input('per_page', 10);
+
+       $agents = Agent::query();
+
+
+       $agents = $agents->whereIn('status', ['Confirmed'])->latest()->paginate($perPage);
+
+       return AgentResource::collection($agents);
+   }
+
+
     public function statusType(Request $request)
     {
 

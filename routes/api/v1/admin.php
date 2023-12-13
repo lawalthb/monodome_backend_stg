@@ -160,6 +160,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::post('/store', [ClearingAgentController::class, 'store']);
         Route::get('/search', [ClearingAgentController::class, 'search']);
         Route::get('/pending', [ClearingAgentController::class, 'pending']);
+        Route::get('/confirmed', [ClearingAgentController::class, 'confirmed']);
         Route::post('/status/{id}', [ClearingAgentController::class, 'setStatus']);
         Route::get('/show/{id}', [ClearingAgentController::class, 'show']);
         Route::post('/update/{id}', [ClearingAgentController::class, 'update']);
