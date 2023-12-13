@@ -162,6 +162,7 @@ class UsersTableSeeder extends Seeder
         ));
 
 
+
         //driver
        Driver::factory()->create([
             'user_id' => 4,
@@ -194,13 +195,17 @@ class UsersTableSeeder extends Seeder
             }
 
         $agentRole = Role::find(6);
+        $statuses = ['Pending', 'Confirmed', 'Rejected', 'Banned'];
 
         for ($i = 1; $i <= 100; $i++) {
             // Create a user
+            $randomStatus = $statuses[array_rand($statuses)];
+
             $user = \App\Models\User::factory()->create([
                 'user_type' => "agent",
                 'role_id' => 6,
                 'ref_by' => rand(1,4),
+                'status' => $randomStatus,
                 'referral_code' => generateReferralCode(),
             ]);
 
@@ -210,6 +215,7 @@ class UsersTableSeeder extends Seeder
             // Create an agent and associate it with the user
             $agent = Agent::factory()->create([
                 'user_id' => $user->id,
+                'status' => $user->status,
             ]);
 
             $guarantor1 = Guarantor::factory()->create([
@@ -226,16 +232,17 @@ class UsersTableSeeder extends Seeder
 
 
         //clearing
-
-
         $clearingRole = Role::find(7);
 
         for ($i = 1; $i <= 100; $i++) {
+            $randomStatus = $statuses[array_rand($statuses)];
+
             // Create a user
             $user = \App\Models\User::factory()->create([
                 'user_type' => "clearing",
                 'role_id' => 7,
                 'ref_by' => rand(1,4),
+                'status' => $randomStatus,
                 'referral_code' => generateReferralCode(),
             ]);
 
@@ -245,6 +252,7 @@ class UsersTableSeeder extends Seeder
             // Create an agent and associate it with the user
             $agent = Agent::factory()->create([
                 'user_id' => $user->id,
+                'status' => $user->status,
                 'type' => "clearing",
                 'cac_certificate' => "uploads/agent/agent_images/1698664133vL1g5t1Kfs.png",
                 'other_documents' => "uploads/agent/agent_images/1698664133vL1g5t1Kfs.png",
