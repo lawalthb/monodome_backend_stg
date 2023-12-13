@@ -95,7 +95,7 @@ class LoadBoardController extends Controller
     {
 
      //   $loadBoard = LoadBoard::where('order_no', $orderNo)->first();
-        return $loadBoard;
+      //  return $loadBoard;
         if ($loadBoard) {
             $order = $loadBoard->order;
 
