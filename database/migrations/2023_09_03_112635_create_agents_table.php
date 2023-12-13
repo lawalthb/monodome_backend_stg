@@ -33,7 +33,7 @@ return new class extends Migration
         $table->string('custom_license_number')->nullable();
         $table->string('cac_certificate')->nullable();
         $table->enum('type', ['agent', 'clearing'])->default('agent');
-        $table->enum('status', ['Pending', 'Confirmed', 'Rejected','Failed'])->default('Pending');
+        $table->enum('status', ['Pending', 'Confirmed', 'Rejected','Banned'])->default('Pending');
         $table->timestamps();
         $table->softDeletes();
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
