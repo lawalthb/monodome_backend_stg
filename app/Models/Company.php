@@ -20,7 +20,7 @@ class Company extends Model
 
     public function trucks(){
 
-        return $this->hasMany(VehicleType::class,'truck_type');
+        return $this->hasMany(VehicleType::class,'id','truck_type');
     }
 
 

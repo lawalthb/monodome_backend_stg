@@ -23,7 +23,7 @@ class CompanyResource extends JsonResource
           'phone_number' => $this->phone_number,
           'number_of_drivers' => $this->number_of_drivers,
           'number_of_trucks' => $this->number_of_trucks,
-          'trucks' => $this->trucks,
+          'trucks' => new VehicleTypeResource($this->trucks),
           "lga" => new LocalGovernmentResource($this->SLga),
           'company_logo' =>  getImageFile($this->company_logo),
           'status' => $this->status,
