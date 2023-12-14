@@ -23,6 +23,11 @@ class Company extends Model
         return $this->hasMany(VehicleType::class,'id','truck_type');
     }
 
+    public function SLga(){
+
+        return $this->hasOne(LocalGovernment::class,'id','lga');
+    }
+
 
     public function user(){
         return $this->belongsTo(User::class);
