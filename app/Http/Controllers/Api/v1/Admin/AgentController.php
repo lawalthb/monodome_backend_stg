@@ -296,6 +296,9 @@ class AgentController extends Controller
         }
 
         // Update the status
+        $agent->user->status = $request->status;
+        $agent->user->save();
+
         $agent->status = $request->status;
         $agent->save();
 

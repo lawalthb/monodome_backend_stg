@@ -276,6 +276,10 @@ class DriverController extends Controller
         }
 
         // Update the status
+        $driver->user->status = $request->status;
+        $driver->user->save();
+
+
         $driver->status = $request->status;
         $driver->save();
 

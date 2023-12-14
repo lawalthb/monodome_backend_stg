@@ -215,6 +215,9 @@ class BrokerController extends Controller
         }
 
         // Update the status
+        $broker->user->status = $request->status;
+        $broker->user->save();
+
         $broker->status = $request->status;
         $broker->save();
 
