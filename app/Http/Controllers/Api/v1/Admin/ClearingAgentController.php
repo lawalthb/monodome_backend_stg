@@ -315,6 +315,7 @@ class ClearingAgentController extends Controller
         // Update the status
         $agent->status = $request->status;
         $agent->user->status = $request->status;
+        $agent->user->save();
         $agent->save();
 
         return $this->success(['agent'=> new AgentResource($agent)], 'Clearing Agent status updated successfully');
