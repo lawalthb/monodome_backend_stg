@@ -10,6 +10,7 @@ use App\Traits\ApiStatusTrait;
 use App\Events\LoadTypeCreated;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LoadContainerResource;
 use App\Http\Requests\LoadContainerShipmentRequest;
@@ -43,6 +44,7 @@ class LoadContainerController extends Controller
         }
     }
 
+        // store function for cantainerShipping
         public function store(LoadContainerShipmentRequest $request)
         {
             try {
@@ -55,30 +57,39 @@ class LoadContainerController extends Controller
                     return response()->json(['message' => 'LoadType not found'], 404);
                 }
 
-                // Create a new Container Shipment record
-                $carContainer = LoadContainer::create($request->validated());
-                $carsInContainer = json_decode($request->cars_in_container, true);
-                $otherInContainer = json_decode($request->other_contents_in_container, true);
+                // Retrieve the validated data from the request
+                $validatedData = $request->validated();
 
+                // Decode cars_in_container and other_contents_in_container arrays
+                $carsInContainerData = array_map(function ($item) {
+                    return json_decode($item, true);
+                }, $validatedData['cars_in_container']);
+
+                $otherInContainerData = array_map(function ($item) {
+                    return json_decode($item, true);
+                }, $validatedData['other_contents_in_container']);
+
+                // Encode the decoded data back to JSON strings
+                $validatedData['cars_in_container'] = json_encode($carsInContainerData);
+                $validatedData['other_contents_in_container'] = json_encode($otherInContainerData);
+
+                // Create a new Container Shipment record
+                $carContainer = LoadContainer::create($validatedData);
+
+                // Calculate total amount from cars and other contents in the container
                 $totalAmount = 0;
 
-                if (is_array($carsInContainer)) {
-                    foreach ($carsInContainer as $car) {
-                        $totalAmount += $car['amount'] ?? 0;
-                    }
-
-
-                    foreach ($otherInContainer as $other) {
-                        $totalAmount += $other['amount'] ?? 0;
-                    }
-
-                    // Assign total amount to the 'container_value' attribute
-                    $carContainer->container_value = $totalAmount;
-                    $carContainer->save();
-
-                } else {
-                    throw new \Exception('Invalid format for cars in container data');
+                foreach ($carsInContainerData as $car) {
+                    $totalAmount += $car['amount'] ?? 0;
                 }
+
+                foreach ($otherInContainerData as $other) {
+                    $totalAmount += $other['amount'] ?? 0;
+                }
+
+                // Assign total amount to the 'container_value' attribute
+                $carContainer->container_value = $totalAmount;
+                $carContainer->save();
 
                 // $totalAmount = 0;
                 // foreach (json_decode( $request->cars_in_container) as $car) {
@@ -137,7 +148,7 @@ class LoadContainerController extends Controller
             }
         }
 
-        public function show($id)
+    public function show($id)
     {
         try {
             $carClearingRecord = LoadContainer::findOrFail($id);
