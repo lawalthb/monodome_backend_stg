@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Customers;
 use App\Models\Order;
 use App\Models\LoadType;
 use App\Models\LoadPackage;
+use App\Models\LoadDocument;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Events\LoadTypeCreated;
@@ -63,9 +64,6 @@ use App\Http\Resources\LoadPackageResource;
                 $request->validated()
             );
 
-
-            // Log::info($loadPackage);
-
             if (!$loadPackage->order) {
                 // Create an associated Order if it doesn't exist
                 $order = $loadPackage->order()->create([
@@ -78,6 +76,29 @@ use App\Http\Resources\LoadPackageResource;
             } else {
                 $order = $loadPackage->order; // If an order already exists, use the existing one
             }
+
+
+
+        // Handle document uploads (if any)
+        if ($request->hasFile('documents')) {
+            $documents = [];
+
+            foreach ($request->file('documents') as $file) {
+
+                $file = $this->uploadFileWithDetails('load_documents', $file);
+                $path = $file['path'];
+                $name = $file['file_name'];
+
+                // Create a record in the load_documents table
+                $document = new LoadDocument([
+                    'name' => $name,
+                    'path' => $path,
+                ]);
+
+                // Associate the document with the LoadBulk
+                $loadPackage->loadDocuments()->save($document);
+            }
+        }
 
             return $this->success([
                 "loadPackage" => new LoadPackageResource($loadPackage),

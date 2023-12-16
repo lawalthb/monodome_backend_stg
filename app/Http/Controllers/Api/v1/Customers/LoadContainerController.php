@@ -19,7 +19,6 @@ class LoadContainerController extends Controller
 {
     use FileUploadTrait, ApiStatusTrait;
 
-
     public function index()
     {
         try {
