@@ -117,10 +117,10 @@ class AuthController extends Controller
             return $this->error(['error' => "Your account has been Banned, and please contact admin for clarification"],'Account Banned');
         }
 
-        if($user->status != "Confirmed"){
+        // if($user->status != "Confirmed"){
 
-            return $this->error(['error' => "Your account is yet to verify!"],'Account is not activated');
-        }
+        //     return $this->error(['error' => "Your account is yet to verify!"],'Account is not activated');
+        // }
 
 
         try {
