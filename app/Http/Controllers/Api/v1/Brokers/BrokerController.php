@@ -67,7 +67,6 @@ class BrokerController extends Controller
                 $ref_by = User::where("referral_code", $request->ref_by)->first();
             }
 
-
             if (!$user->exists) {
                 // User doesn't exist, so create a new user
                 $user->full_name = $request->input('full_name');
