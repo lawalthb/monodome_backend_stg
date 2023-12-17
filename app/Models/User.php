@@ -131,7 +131,7 @@ class User extends Authenticatable implements Auditable
         if ($this->imageUrl) {
             return $this->imageUrl;
         } else {
-            return 'uploads/default/user.png';
+            return 'uploads/default.jpg';
         }
     }
 }

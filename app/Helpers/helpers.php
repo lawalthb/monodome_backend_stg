@@ -138,21 +138,21 @@ function getPublicImageFile($file)
 }
 
 
-function getImageFile($file)
-{
-    if (!$file) {
-        return asset('default.jpg'); // Return the default image path if $file is null or empty
-    }
-
-    return asset('storage/' . $file); // Return the asset path for the provided file
-}
-
-
 // function getImageFile($file)
 // {
-//   //  return asset($file);
-//   return asset('storage/' . $file);
+//     if (!$file) {
+//         return asset('default.jpg'); // Return the default image path if $file is null or empty
+//     }
+
+//     return asset('storage/' . $file); // Return the asset path for the provided file
 // }
+
+
+function getImageFile($file)
+{
+  //  return asset($file);
+  return asset('storage/' . $file);
+}
 
 function getVideoFile($file)
 {
