@@ -225,7 +225,7 @@ class AuthController extends Controller
         // Update user profile data
         $user->update([
             'full_name' => $validatedData['full_name'],
-            'email' => $validatedData['email'],
+         //   'email' => $validatedData['email'],
             'address' => $validatedData['address'],
         ]);
 
