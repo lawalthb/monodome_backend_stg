@@ -47,7 +47,7 @@ class LoadPackageRequest extends FormRequest
            'receiver_street' => 'nullable|string|max:50',
            'receiver_state' => 'nullable|integer|max:50',
            'receiver_email' => 'nullable|email|max:50',
-            'document' => 'nullable',
+            'is_document' => 'required|in:No,Yes',
             'description' => 'nullable|string',
             'weight' => 'required|numeric',
             'width' => 'required|numeric',

@@ -53,6 +53,7 @@ class LoadPackageResource extends JsonResource
             "insure_amount" => $this->insure_amount,
             "is_fragile" => $this->is_fragile,
             "loadType" => new LoadTypeResource($this->loadType),
+            "document" => LoadDocumentResource::collection($this->loadDocuments),
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
         ];
