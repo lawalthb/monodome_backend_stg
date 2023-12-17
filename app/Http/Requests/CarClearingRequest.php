@@ -39,6 +39,8 @@ class CarClearingRequest extends FormRequest
            // 'deliver_apartment' => 'required_if:is_final,Yes|string|max:30',
             'receiver_email' => 'required_if:is_final,Yes|email',
             'receiver_phone' => 'required_if:is_final,Yes|string|max:30',
+            'receiver_final_dt_state' => 'required_if:is_final,Yes|string|max:30',
+            'receiver_state' => 'required_if:is_final,Yes|string|max:30',
           //  'zip_code' => 'required_if:is_final,Yes|string|max:30',
             'street' => 'required_if:is_final,Yes|string|max:30',
             'add_info' => 'nullable|string',

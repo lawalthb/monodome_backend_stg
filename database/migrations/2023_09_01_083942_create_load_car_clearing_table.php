@@ -34,6 +34,8 @@ return new class extends Migration
             $table->enum('is_final', ['Yes', 'No'])->default('No');
             $table->string('receiver_name', 100)->nullable();
             $table->string('receiver_email', 100)->nullable();
+            $table->string('receiver_state', 100)->nullable();
+            $table->string('receiver_final_dt_state', 100)->nullable();
             $table->string('receiver_phone', 100)->nullable();
             $table->string('deliver_apartment', 100)->nullable();
             $table->string('deliver_from_city', 100)->nullable();
