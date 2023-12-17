@@ -53,10 +53,19 @@ class CompanyController extends Controller
 
             $user = User::firstOrNew(['email' => $request->input('email')]);
 
+            $ref_by = null;
+
+            if ($request->has('ref_by')) {
+                $ref_by = User::where("referral_code", $request->ref_by)->first();
+            }
+
+
             if (!$user->exists) {
                 $user->full_name = $request->input('full_name');
                 $user->email = $request->input('email');
                 $user->address = $request->input('address');
+                $user->ref_by = $ref_by ? $ref_by->id : null;
+                $user->referral_code = $request->referral_code ?? generateReferralCode();
                 $user->phone_number = $request->input('phone_number');
                 $password  = Str::random(16);
                 $user->password = Hash::make($password);
