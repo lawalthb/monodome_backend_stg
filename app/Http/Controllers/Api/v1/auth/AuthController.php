@@ -59,9 +59,9 @@ class AuthController extends Controller
                 $user->assignRole($role);
             }
 
-          //  if($role->id==3){
-                $user->status = "Confirmed";
-           // }
+           if($role->id==3){
+               $user->status = "Confirmed";
+           }
 
             $user->save();
 
