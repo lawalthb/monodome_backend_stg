@@ -31,6 +31,8 @@ class LoadCarClearingResource extends JsonResource
             "car_model" => new VehicleModelResource($this->carModel),
             "deliver_from_city" => $this->DFromCity ? $this->DFromCity->name : null,
             "deliver_to_city" => $this->DToCity ? $this->DToCity->name : null,
+            "receiver_state" => $this->LState ? $this->LState->name : null,
+            "receiver_final_dt_state" => $this->LFState ? $this->LFState->name : null,
             "loadType" => new LoadTypeResource($this->loadType),
             "document" => LoadDocumentResource::collection($this->loadDocuments),
             "receiver_name" => $this->receiver_name,

@@ -73,6 +73,20 @@ class LoadCarClearing extends Model
         return  $this->belongsTo(State::class, 'deliver_to_city');
     }
 
+
+    //local state
+    public function LState()
+    {
+        return  $this->belongsTo(LocalState::class, 'receiver_state');
+    }
+
+
+    public function LFState()
+    {
+        return  $this->belongsTo(LocalState::class, 'receiver_final_dt_state');
+    }
+
+
     protected static function boot()
     {
         parent::boot();
