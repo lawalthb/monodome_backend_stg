@@ -342,4 +342,28 @@ class AuthController extends Controller
         ], "Your Up line is successful");
     }
 
+
+    public function delete_user(){
+
+
+        if(Auth::check()){
+            $user = auth()->user(); // Assuming you are using authentication
+
+            $user->update([
+                'status' =>"Banned"
+            ]);
+
+            return $this->success([
+                'user' => new UserResource($user),
+
+            ],"deleted successful");
+
+
+
+        }else{
+            return $this->error(false, 'Session expired', 422);
+        }
+
+    }
+
 }
