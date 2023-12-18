@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('bids', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id'); // Foreign key to relate bids to orders
-            $table->unsignedBigInteger('driver_id'); // Foreign key to relate bids to drivers
-            $table->unsignedBigInteger('user_id'); // Foreign key to relate bids to drivers
+            $table->unsignedBigInteger('order_id');
+            $table->string('order_id')->nullable();
+            $table->unsignedBigInteger('driver_id');
+            $table->unsignedBigInteger('user_id');
             $table->decimal('amount', 10, 2); // The bid amount
             $table->decimal('old_amount', 10, 2); //
             $table->timestamps();

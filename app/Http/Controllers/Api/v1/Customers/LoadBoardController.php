@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\BidResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -169,6 +170,7 @@ class LoadBoardController extends Controller
         $bid = Bid::updateOrCreate(
             [
                 'order_id' => $loadBoard->order->id,
+                'order_no' => $loadBoard->order_no,
                 'driver_id' => auth()->id(),
                 'user_id' => $loadBoard->user_id,
             ],
@@ -191,6 +193,23 @@ class LoadBoardController extends Controller
 
 
     public function acceptBidByCustomer(Request $request){
+
+        return DB::transaction(function () use ($request) {
+
+
+        $bids = Bid::where('order_id', $request->order_no)->where('user', auth()->id())->first();
+
+        if($bids){
+
+
+
+
+
+        }else{
+
+        }
+
+    });
 
     }
 
