@@ -21,9 +21,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\TruckResource;
 use App\Http\Resources\DriverResource;
+use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;
 use App\Http\Requests\DriverMangerRequest;
 use App\Http\Resources\DriverMangerResource;
+use App\Http\Resources\OrderResource;
 
 class DriverMangerController extends Controller
 {
@@ -250,8 +252,6 @@ class DriverMangerController extends Controller
             $query->where('order_no', $request->input('order_no'));
         }
 
-        // Add more filters as needed
-
         $perPage = $request->input('per_page', 10); // Number of items per page, defaulting to 10.
 
         // Use the paginate method to paginate the results
@@ -276,10 +276,27 @@ class DriverMangerController extends Controller
         ]);
 
         $driver = Driver::find($request->driver_id);
-        $order =  Order::find($request->order_id);
-        $order->driver_id = $driver->id;
-        $order->placed_by_id = auth()->user()->id;
-        $order->save();
+        $order =  Order::where("id",$request->order_id)->where("driver_id",null)->first();
+
+        if($order){
+         //   return $order->loadable->state;
+            $order->driver_id = $driver->id;
+            $order->acceptable_id = $driver->id;
+            $order->acceptable_type = get_class($driver) ;
+            $order->placed_by_id = auth()->user()->id;
+            $order->save();
+            $message ="You have been assign an order with number ". $order->order_no. " to delivery from ".$order->loadable->sender_location." to ".$order->loadable->receiver_location;
+            $driver->user->notify(new SendNotification($driver->user, $message));
+
+            return $this->success([
+                new OrderResource($order),
+            ]);
+
+
+        }else{
+             return $this->error([
+            ], "Order already assign or doesn't exist!");
+        }
 
     });
 
