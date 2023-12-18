@@ -147,6 +147,14 @@ class LoadBoardController extends Controller
             "amount" => ['required','numeric'],
         ]);
 
+
+        $acceptedLoad = $loadBoard->where('acceptable_id',"!=", null)->where("acceptable_type","!=",null)->first();
+
+        if ($acceptedLoad) {
+            return $this->error(null, 'This load has already been accepted by another driver.');
+        }
+
+
         if($request->amount <= $loadBoard->order->amount){
             return $this->error(null, 'You can bid lower then amount');
 
