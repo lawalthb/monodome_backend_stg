@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Customers;
 
 use App\Models\Bid;
 use App\Models\User;
+use App\Models\Driver;
 use App\Models\LoadBoard;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use App\Http\Resources\BidResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\LoadBoardRequest;
+use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;
 
 class LoadBoardController extends Controller
@@ -180,6 +182,9 @@ class LoadBoardController extends Controller
             ]
         );
 
+        $message ="You have a new bid ". $acceptedLoad->order_no. " to delivery from: ".$acceptedLoad->loadable->sender_location." To: ".$acceptedLoad->loadable->receiver_location;
+        $acceptedLoad->user->notify(new SendNotification($acceptedLoad->user, $message));
+
         return new BidResource($bid);
 
     }
@@ -220,7 +225,18 @@ class LoadBoardController extends Controller
 
         // Update the total amount of the order with the accepted bid price
         $bid->order->amount = $bid->amount;
-        $bid->order->save();
+
+        if($bid->order->save()){
+            $driver = Driver::find($bid->driver_id);
+            $bid->order->driver_id = $bid->driver_id;
+            $bid->order->acceptable_id = $bid->driver_id;
+            $bid->order->acceptable_type =get_class($driver);
+            $bid->order->save();
+
+            $message ="Your bid has been accepted ". $bid->order->order_no. " to delivery from: ".$bid->order->loadable->sender_location." To: ".$bid->order->loadable->receiver_location;
+            $driver->user->notify(new SendNotification($driver->user, $message));
+
+        }
 
         return $this->success('Bid accepted successfully!');
     });

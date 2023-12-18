@@ -324,7 +324,9 @@ class DriverController extends Controller
                 $loadBoards->order->acceptable_id = $driver->id;
                 $loadBoards->order->acceptable_type = get_class($driver) ;
               //  $loadBoards->order->placed_by_id = auth()->user()->id;
+              $loadBoards->loadable->status = "Processing";
                 $loadBoards->order->save();
+
                 $message ="You have been accept order with number ". $loadBoards->order->order_no.
                 " to delivery FROM: ".$loadBoards->order->loadable->sender_location.", TO: ".$loadBoards->order->loadable->receiver_location;
                 $driver->user->notify(new SendNotification($driver->user, $message));

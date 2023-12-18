@@ -328,6 +328,7 @@ class DriverMangerController extends Controller
             $loadBoards->acceptable_id = $driverManger->id;
             $loadBoards->acceptable_type = get_class($driverManger) ;
 
+            $loadBoards->loadable->status = "Processing";
             $loadBoards->save();
 
             return new LoadBoardResource($loadBoards);
