@@ -191,26 +191,72 @@ class LoadBoardController extends Controller
         return BidResource::collection($bids);
     }
 
+    public function acceptBidByCustomer(Request $request)
+{
+    return DB::transaction(function () use ($request) {
+        $bid = Bid::where('order_no', $request->order_no)
+            ->where('user_id', auth()->id())
+            ->first();
 
-    public function acceptBidByCustomer(Request $request){
-
-        return DB::transaction(function () use ($request) {
-
-
-        $bids = Bid::where('order_id', $request->order_no)->where('user', auth()->id())->first();
-
-        if($bids){
-
-
-
-
-
-        }else{
-
+        if (!$bid) {
+            return $this->error(null, 'No bid or load found.');
         }
 
-    });
+        $totalAmountIncrease = $bid->amount - $bid->order->total_amount;
 
-    }
+        if ($totalAmountIncrease <= 0) {
+            return $this->error(null, 'Bid price should be higher than the total amount.');
+        }
+
+        $userWalletAmount = $bid->user->wallet->amount;
+
+        if ($totalAmountIncrease > $userWalletAmount) {
+            return $this->error('', 'Insufficient funds in wallet!', 404);
+        }
+
+        // Deduct the difference from the user's wallet
+        $bid->user->wallet->decrement('amount', $totalAmountIncrease);
+
+        // Update the total amount of the order with the accepted bid price
+        $bid->order->total_amount = $bid->amount;
+        $bid->order->save();
+
+        return $this->success('Bid accepted successfully!');
+    });
+}
+
+
+
+    // public function acceptBidByCustomer(Request $request){
+
+    //     return DB::transaction(function () use ($request) {
+
+    //     $bids = Bid::where('order_null', $request->order_no)->where('user', auth()->id())->first();
+
+    //     if($bids){
+
+    //     $TotalAmountIncrease =  $bids->amount - $bids->order->total_amount;
+
+    //     $loadTotalAmount = number_format($TotalAmountIncrease, 2, '.', '');
+    //     $userWalletAmount = number_format($bids->user->wallet->amount, 2, '.', '');
+
+    //     if ($loadTotalAmount >= $userWalletAmount) {
+    //         return $this->error('', 'Insufficient funds in wallet!', 404);
+    //     }
+    //     $bids->user->wallet->amount -= $TotalAmountIncrease;
+    //     $bids->user->wallet->save();
+
+    //     $bids->order->total_amount += $loadTotalAmount;
+
+    //     $bids->order->save();
+
+    //     }else{
+    //         return $this->error(null, 'no bid or load found.');
+
+    //     }
+
+    // });
+
+    // }
 
 }
