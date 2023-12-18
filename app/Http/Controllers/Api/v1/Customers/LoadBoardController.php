@@ -143,7 +143,7 @@ class LoadBoardController extends Controller
      */
     public function bidStore(Request $request, LoadBoard $loadBoard){
 
-        $request->validated([
+        $request->validate([
             "amount" => ['required','numeric'],
         ]);
 
@@ -160,11 +160,20 @@ class LoadBoardController extends Controller
 
         }
 
-        $bid = Bid::create([
-            'order_id' => $loadBoard->order->id,
-            'driver_id' => auth()->id(),
-            'amount' => $request->amount,
-        ]);
+        // $bid = Bid::create([
+        //     'order_id' => $loadBoard->order->id,
+        //     'driver_id' => auth()->id(),
+        //     'amount' => $request->amount,
+        // ]);
+
+        $bid = Bid::updateOrCreate(
+            [
+                'order_id' => $loadBoard->order->id,
+                'driver_id' => auth()->id(),
+            ],
+            ['amount' => $request->amount]
+        );
+
         return new BidResource($bid);
 
     }

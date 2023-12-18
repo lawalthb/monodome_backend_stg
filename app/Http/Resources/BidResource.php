@@ -16,10 +16,11 @@ class BidResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'order_id' => new OrderResource($this->order),
+            'order' => new OrderResource($this->order),
             'driver' => new DriverResource( $this->driver),
             'amount' => $this->amount,
-            // Add other fields as needed
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
