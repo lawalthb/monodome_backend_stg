@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Api\v1\Customers;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Models\LoadType;
 use App\Models\LoadPackage;
@@ -65,7 +66,6 @@ use App\Http\Resources\LoadPackageResource;
             );
 
             if (!$loadPackage->order) {
-                // Create an associated Order if it doesn't exist
                 $order = $loadPackage->order()->create([
                     'order_no' => getNumber(),
                   //  'driver_id' => 1, // Change this to the actual driver ID
