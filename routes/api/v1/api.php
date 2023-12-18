@@ -243,6 +243,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
             Route::get('/broadcast', [DriverController::class, 'broadcast']);
             Route::post('/profile/change-image', [DriverController::class, 'changeImage']);
             Route::post('/profile/update-details', [DriverController::class, 'updateProfile']);
+            Route::get('/order', [DriverController::class, 'order']);
+            Route::post('/accept-order', [DriverController::class, 'acceptOrder']);
 
         });
     });

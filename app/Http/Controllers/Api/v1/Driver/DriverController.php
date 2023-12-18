@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\AgentResource;
 use App\Http\Resources\DriverResource;
 use App\Http\Requests\AgentFormRequest;
+use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;
 
 class DriverController extends Controller
@@ -72,7 +73,6 @@ class DriverController extends Controller
 
     public function singleBroadcast(Request $request,$id)
     {
-
 
         $query = LoadBoard::where("id",$id)->whereIn('load_type_id', [1, 2])->orderBy('created_at', 'desc');
 
@@ -290,4 +290,53 @@ class DriverController extends Controller
 
     }
 
+     /**
+     * acceptOrder
+     *  this function is for driver manager to accept
+     *  order from loadboard or loadbrocast
+     * @param  mixed $request
+     * @return void
+     */
+    public function acceptOrder(Request $request){
+
+        return DB::transaction(function () use ($request) {
+
+        $request->validate([
+            'load_board_id' => 'required',
+            //'driver_id' => 'required',
+        ]);
+
+        $loadBoards = LoadBoard::where("id",$request->load_board_id)->whereNull('acceptable_id')
+        ->whereNull('acceptable_type')->first();
+
+        if($loadBoards){
+
+            $driver = Driver::where("user_id",auth()->id())->first();
+
+            $loadBoards->acceptable_id = $driver->id;
+            $loadBoards->acceptable_type = get_class($driver) ;
+
+            if($loadBoards->save()){
+                $loadBoards->order->driver_id = $driver->id;
+                $loadBoards->order->accepted = "Yes";
+                $loadBoards->order->acceptable_id = $driver->id;
+                $loadBoards->order->acceptable_type = get_class($driver) ;
+                $loadBoards->order->placed_by_id = auth()->user()->id;
+                $loadBoards->order->save();
+                $message ="You have been accept order with number ". $loadBoards->order->order_no.
+                " to delivery FROM: ".$loadBoards->order->loadable->sender_location.", TO: ".$loadBoards->order->loadable->receiver_location;
+                $driver->user->notify(new SendNotification($driver->user, $message));
+
+            }
+
+            return new LoadBoardResource($loadBoards);
+        }else{
+
+            return $this->error([
+            ], "This load has already been taken!");
+        }
+
+    });
+
+    }
 }
