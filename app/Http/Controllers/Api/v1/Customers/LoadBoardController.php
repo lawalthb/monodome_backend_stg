@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Customers;
 
+use App\Models\Bid;
 use App\Models\User;
 use App\Models\LoadBoard;
 use Illuminate\Support\Str;
@@ -129,6 +130,27 @@ class LoadBoardController extends Controller
             return $this->success(null, 'rder with the specified order number not found in load boards');
 
         }
+    }
+
+
+    public function bidStore(Request $request, LoadBoard $loadBoard){
+
+        $request->validated([
+            "amount" => ['required','numeric'],
+        ]);
+
+        if($request->amount <= $loadBoard->order->amount){
+            return $this->error(null, 'You can bid lower then amount');
+
+        }
+
+        $bid = Bid::create([
+            'order_id' => $loadBoard->order->id,
+            'driver_id' => auth()->id(),
+            'amount' => $request->amount,
+        ]);
+
+
     }
 
 
