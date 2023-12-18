@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use App\Http\Resources\BidResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\LoadBoardRequest;
@@ -149,7 +150,7 @@ class LoadBoardController extends Controller
             'driver_id' => auth()->id(),
             'amount' => $request->amount,
         ]);
-
+        return new BidResource($bid);
 
     }
 
