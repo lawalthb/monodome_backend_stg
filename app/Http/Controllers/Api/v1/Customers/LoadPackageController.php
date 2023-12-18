@@ -77,8 +77,6 @@ use App\Http\Resources\LoadPackageResource;
                 $order = $loadPackage->order; // If an order already exists, use the existing one
             }
 
-
-
         // Handle document uploads (if any)
         if ($request->hasFile('documents')) {
             $documents = [];
@@ -106,8 +104,6 @@ use App\Http\Resources\LoadPackageResource;
             ], "Created Successfully");
         });
     }
-
-
 
     public function update(LoadPackageRequest $request, $id)
     {
