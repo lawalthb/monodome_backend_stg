@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('bids', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->string('order_id')->nullable();
+            $table->string('order_no')->nullable();
             $table->unsignedBigInteger('driver_id');
             $table->unsignedBigInteger('user_id');
             $table->decimal('amount', 10, 2); // The bid amount
