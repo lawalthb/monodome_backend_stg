@@ -261,16 +261,59 @@ class DriverMangerController extends Controller
         return LoadBoardResource::collection($loadBoards);
     }
 
+    /**
+     * orderAssign
+     * this function assign order to driver
+     * @param  mixed $request
+     * @return void
+     */
     public function orderAssign(Request $request){
+
+        return DB::transaction(function () use ($request) {
 
         $request->validate([
             'order_id' => 'required',
             'driver_id' => 'required',
         ]);
 
+        $driver = Driver::find($request->driver_id);
+        $order =  Order::find($request->order_id);
+        $order->driver_id = $driver->id;
+        $order->placed_by_id = auth()->user()->id;
+        $order->save();
 
-        return Order::find($request->order_id);
+    });
 
-        Driver::find($request->driver_id);
+    }
+
+    /**
+     * acceptOrder
+     *  this function is for driver manager to accept
+     *  order from loadboard or loadbrocast
+     * @param  mixed $request
+     * @return void
+     */
+    public function acceptOrder(Request $request){
+
+        return DB::transaction(function () use ($request) {
+
+        $request->validate([
+            'load_board_id' => 'required',
+            //'driver_id' => 'required',
+        ]);
+
+        $loadBoards = LoadBoard::where("id",$request->load_board_id)->first();
+
+        $driverManger = DriverManger::where("user_id",auth()->id())->first();
+
+        $loadBoards->acceptable_id = $driverManger->id() ;
+        $loadBoards->acceptable_type = get_class($driverManger) ;
+
+        $loadBoards->save();
+
+        return new LoadBoardResource($loadBoards);
+
+    });
+
     }
 }

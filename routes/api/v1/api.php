@@ -271,6 +271,7 @@ Route::group(['prefix' => 'driver-manager'], function () {
                 Route::get('/drivers', [DriverMangerController::class, 'index']);
                 Route::get('/truck', [TruckController::class, 'truck']);
                 Route::get('/order', [DriverMangerController::class, 'order']);
+                Route::post('/accept-order', [DriverMangerController::class, 'acceptOrder']);
                 Route::post('/order-assign', [DriverMangerController::class, 'orderAssign']);
                 Route::post('/order-reassign', [DriverMangerController::class, 'orderReAssign']);
                 Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
