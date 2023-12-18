@@ -170,6 +170,7 @@ class LoadBoardController extends Controller
             [
                 'order_id' => $loadBoard->order->id,
                 'driver_id' => auth()->id(),
+                'user_id' => $loadBoard->user_id,
             ],
             [
                 'amount' => $request->amount,
@@ -182,10 +183,15 @@ class LoadBoardController extends Controller
     }
 
     public function getAllBidsByLoadBoard(LoadBoard $loadBoard)
-{
-    $bids = Bid::where('order_id', $loadBoard->order->id)->get();
+    {
+        $bids = Bid::where('order_id', $loadBoard->order->id)->get();
 
-    return BidResource::collection($bids);
-}
+        return BidResource::collection($bids);
+    }
+
+
+    public function acceptBidByCustomer(Request $request){
+
+    }
 
 }
