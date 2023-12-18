@@ -20,8 +20,8 @@ return new class extends Migration
             $table->bigInteger('driver_id')->unsigned()->nullable();
             $table->bigInteger('placed_by_id')->unsigned()->nullable();
             $table->enum('accepted', ['Yes', 'No', 'Rejected'])->default('No');
-            $table->decimal('amount',38, 18)->default(0);
-            $table->decimal('fee',38, 18)->default(0);
+            $table->decimal('amount', 10, 2)->default(0);
+            $table->decimal('fee',38, 2)->default(0);
             $table->unsignedBigInteger('acceptable_id')->nullable();
             $table->string('acceptable_type')->nullable();
             $table->unsignedBigInteger('loadable_id'); // Foreign key to the associated load
