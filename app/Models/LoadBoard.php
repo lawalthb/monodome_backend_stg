@@ -32,7 +32,7 @@ class LoadBoard extends Model
 
     public function acceptable()
     {
-        return $this->morphTo();
+        return $this->morphTo('acceptable');
     }
 
     // Define relationships with specific load types

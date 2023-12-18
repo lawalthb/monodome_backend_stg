@@ -2,14 +2,19 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Driver;
 use App\Models\LoadBulk;
 use App\Models\LoadPackage;
 use Illuminate\Http\Request;
 use App\Models\LoadContainer;
+use App\Models\LoadCarClearing;
 use App\Models\LoadSpecialized;
 use App\Http\Resources\LoadBulkResource;
 use App\Http\Resources\LoadContainerResource;
-use App\Models\LoadCarClearing;
+use App\Models\Agent;
+use App\Models\Company;
+use App\Models\DriverManger;
+use App\Models\ShippingCompany;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LoadBoardResource extends JsonResource
@@ -27,7 +32,7 @@ class LoadBoardResource extends JsonResource
             "order_no" => $this->order_no,
             "load_date" => $this->load_date,
             "status" => $this->status,
-            "accept_user" => $this->acceptable(),
+            "accept_user" => $this->acceptableResource(),
             "package" => $this->loadableResource(),
             "user" => new UserResource($this->user),
         ];
@@ -55,6 +60,29 @@ protected function loadableResource()
 
     return null; // Handle other cases or return null if loadable is not recognized
 }
+
+
+protected function acceptableResource()
+{
+    if ($this->acceptable instanceof Driver) {
+        return new DriverResource($this->acceptable);
+
+    } elseif ($this->acceptable instanceof DriverManger) {
+        return new DriverMangerResource($this->acceptable);
+
+    } elseif ($this->acceptable instanceof Company) {
+        return new CompanyResource($this->acceptable);
+
+    }elseif ($this->acceptable instanceof Agent) {
+        return new AgentResource($this->acceptable);
+
+    } elseif ($this->acceptable instanceof ShippingCompany) {
+        return new ShippingCompanyResource($this->acceptable);
+    }
+
+    return null; // Handle other cases or return null if acceptable is not recognized
+}
+
 
 
 
