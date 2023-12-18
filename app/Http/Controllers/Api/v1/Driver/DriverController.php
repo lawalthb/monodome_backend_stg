@@ -26,6 +26,7 @@ use App\Http\Resources\DriverResource;
 use App\Http\Requests\AgentFormRequest;
 use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;
+use App\Http\Resources\OrderResource;
 
 class DriverController extends Controller
 {
@@ -329,7 +330,7 @@ class DriverController extends Controller
 
             }
 
-            return new LoadBoardResource($loadBoards);
+            return new OrderResource($loadBoards->order);
         }else{
 
             return $this->error([
