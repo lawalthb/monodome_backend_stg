@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Driver;
 
 use App\Models\User;
 use App\Models\Agent;
+use App\Models\Order;
 use App\Models\Driver;
 use App\Models\Guarantor;
 use App\Models\LoadBoard;
@@ -22,11 +23,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\AgentResource;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\DriverResource;
 use App\Http\Requests\AgentFormRequest;
 use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;
-use App\Http\Resources\OrderResource;
 
 class DriverController extends Controller
 {
@@ -322,7 +323,7 @@ class DriverController extends Controller
                 $loadBoards->order->accepted = "Yes";
                 $loadBoards->order->acceptable_id = $driver->id;
                 $loadBoards->order->acceptable_type = get_class($driver) ;
-                $loadBoards->order->placed_by_id = auth()->user()->id;
+              //  $loadBoards->order->placed_by_id = auth()->user()->id;
                 $loadBoards->order->save();
                 $message ="You have been accept order with number ". $loadBoards->order->order_no.
                 " to delivery FROM: ".$loadBoards->order->loadable->sender_location.", TO: ".$loadBoards->order->loadable->receiver_location;
@@ -338,6 +339,21 @@ class DriverController extends Controller
         }
 
     });
+
+    }
+
+
+    public function order(Request $request)
+    {
+
+        $perPage = $request->input('per_page', 10);
+         $driver = Driver::where("user_id",auth()->id())->first();
+
+         $order =  Order::where('acceptable_id', $driver->id)
+        ->where('acceptable_type', get_class($driver))
+        ->paginate($perPage);
+
+        return  OrderResource::collection($order);
 
     }
 }
