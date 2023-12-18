@@ -16,9 +16,9 @@ class BidResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'amount' => $this->amount,
             'order' => new OrderResource($this->order),
             'driver' => new DriverResource( $this->driver),
-            'amount' => $this->amount,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
