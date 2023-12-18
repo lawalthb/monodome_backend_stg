@@ -285,7 +285,7 @@ class DriverMangerController extends Controller
             $order->acceptable_type = get_class($driver) ;
             $order->placed_by_id = auth()->user()->id;
             $order->save();
-            $message ="You have been assign an order with number ". $order->order_no. " to delivery from ".$order->loadable->sender_location." to ".$order->loadable->receiver_location;
+            $message ="You have been assign an order with number ". $order->order_no. " to delivery from: ".$order->loadable->sender_location." To: ".$order->loadable->receiver_location;
             $driver->user->notify(new SendNotification($driver->user, $message));
 
             return $this->success([

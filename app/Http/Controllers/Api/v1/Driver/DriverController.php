@@ -124,12 +124,12 @@ class DriverController extends Controller
                 ];
 
                 //only send password to drivers that doesnt have motor
-                if($request->input('full_name') =="Yes"){
+            //    if($request->input('have_motor') =="Yes"){
                 Mail::to($user->email)->send(
                     new SendPasswordMail($data)
                 );
 
-            }
+           // }
 
                 $role = Role::where('name', 'Driver')->first();
 
