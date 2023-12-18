@@ -306,7 +306,7 @@ class DriverMangerController extends Controller
 
         $driverManger = DriverManger::where("user_id",auth()->id())->first();
 
-        $loadBoards->acceptable_id = $driverManger->id() ;
+        $loadBoards->acceptable_id = $driverManger->id;
         $loadBoards->acceptable_type = get_class($driverManger) ;
 
         $loadBoards->save();
