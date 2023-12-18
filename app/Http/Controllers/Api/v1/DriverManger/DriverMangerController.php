@@ -223,7 +223,7 @@ class DriverMangerController extends Controller
 
     public function broadcast(Request $request)
     {
-        $query = LoadBoard::orderBy('created_at', 'desc');;
+        $query = LoadBoard::orWhere("acceptable_id", auth()->id())->orWhere("acceptable_id", null)->orderBy('created_at', 'desc');
 
         // Filter by Order Number
         if ($request->has('order_no')) {
@@ -243,8 +243,7 @@ class DriverMangerController extends Controller
     public function singleBroadcast(Request $request,$id)
     {
 
-
-        $query = LoadBoard::where("id",$id)->orderBy('created_at', 'desc');
+        $query = LoadBoard::where("id",$id)->orWhere("acceptable_id", auth()->id())->orWhere("acceptable_id", null)->orderBy('created_at', 'desc');
 
         // Filter by Order Number
         if ($request->has('order_no')) {
@@ -302,16 +301,24 @@ class DriverMangerController extends Controller
             //'driver_id' => 'required',
         ]);
 
-        $loadBoards = LoadBoard::where("id",$request->load_board_id)->first();
+        $loadBoards = LoadBoard::where("id",$request->load_board_id)->whereNull('acceptable_id')
+        ->whereNull('acceptable_type')->first();
 
-        $driverManger = DriverManger::where("user_id",auth()->id())->first();
+        if($loadBoards){
 
-        $loadBoards->acceptable_id = $driverManger->id;
-        $loadBoards->acceptable_type = get_class($driverManger) ;
+            $driverManger = DriverManger::where("user_id",auth()->id())->first();
 
-        $loadBoards->save();
+            $loadBoards->acceptable_id = $driverManger->id;
+            $loadBoards->acceptable_type = get_class($driverManger) ;
 
-        return new LoadBoardResource($loadBoards);
+            $loadBoards->save();
+
+            return new LoadBoardResource($loadBoards);
+        }else{
+
+            return $this->error([
+            ], "This load has already been taken!");
+        }
 
     });
 
