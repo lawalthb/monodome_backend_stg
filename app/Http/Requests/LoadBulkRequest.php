@@ -23,7 +23,7 @@ class LoadBulkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'load_type_id' => 'required|integer',
+            'load_type_id' => 'required|integer|exists:load_types,id|in:2',
             'deliver_from' => 'nullable|in:address,office,map',
             'to_office_id' => 'sometimes|required_if:deliver_to,office|nullable|integer',
             'sender_name' => 'nullable|string|max:50',
