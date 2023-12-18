@@ -202,7 +202,7 @@ class LoadBoardController extends Controller
             return $this->error(null, 'No bid or load found.');
         }
 
-        $totalAmountIncrease = $bid->amount - $bid->order->total_amount;
+        $totalAmountIncrease = $bid->amount - $bid->order->amount;
 
         if ($totalAmountIncrease <= 0) {
             return $this->error(null, 'Bid price should be higher than the total amount.');
@@ -218,7 +218,7 @@ class LoadBoardController extends Controller
         $bid->user->wallet->decrement('amount', $totalAmountIncrease);
 
         // Update the total amount of the order with the accepted bid price
-        $bid->order->total_amount = $bid->amount;
+        $bid->order->amount = $bid->amount;
         $bid->order->save();
 
         return $this->success('Bid accepted successfully!');
