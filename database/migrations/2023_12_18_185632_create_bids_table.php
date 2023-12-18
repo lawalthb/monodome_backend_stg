@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id'); // Foreign key to relate bids to orders
             $table->unsignedBigInteger('driver_id'); // Foreign key to relate bids to drivers
             $table->decimal('amount', 10, 2); // The bid amount
+            $table->decimal('old_amount', 10, 2); //
             $table->timestamps();
 
             // Define foreign key constraints

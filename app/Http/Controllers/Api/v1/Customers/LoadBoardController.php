@@ -171,7 +171,10 @@ class LoadBoardController extends Controller
                 'order_id' => $loadBoard->order->id,
                 'driver_id' => auth()->id(),
             ],
-            ['amount' => $request->amount]
+            [
+                'amount' => $request->amount,
+                'old_amount' =>$loadBoard->order->amount,
+            ]
         );
 
         return new BidResource($bid);
