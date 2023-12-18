@@ -134,6 +134,13 @@ class LoadBoardController extends Controller
     }
 
 
+    /**
+     * bidStore
+     *  this create bid for a load in loadboard
+     * @param  mixed $request
+     * @param  mixed $loadBoard
+     *
+     */
     public function bidStore(Request $request, LoadBoard $loadBoard){
 
         $request->validated([
@@ -154,5 +161,11 @@ class LoadBoardController extends Controller
 
     }
 
+    public function getAllBidsByLoadBoard(LoadBoard $loadBoard)
+{
+    $bids = Bid::where('order_id', $loadBoard->order->id)->get();
+
+    return BidResource::collection($bids);
+}
 
 }
