@@ -148,10 +148,10 @@ class LoadBoardController extends Controller
             "amount" => ['required','numeric'],
         ]);
 
+     //   return $loadBoard;
+        $acceptedLoad = $loadBoard->where('acceptable_id',"=", null)->where("acceptable_type","=",null)->first();
 
-        $acceptedLoad = $loadBoard->where('acceptable_id',"!=", null)->where("acceptable_type","!=",null)->first();
-
-        if ($acceptedLoad) {
+        if (!$acceptedLoad) {
             return $this->error(null, 'This load has already been accepted by another driver.');
         }
 
@@ -166,7 +166,7 @@ class LoadBoardController extends Controller
         //     'driver_id' => auth()->id(),
         //     'amount' => $request->amount,
         // ]);
-
+         //   return $loadBoard->order->amount;
         $bid = Bid::updateOrCreate(
             [
                 'order_id' => $loadBoard->order->id,
@@ -176,7 +176,7 @@ class LoadBoardController extends Controller
             ],
             [
                 'amount' => $request->amount,
-                'old_amount' =>$loadBoard->order->amount,
+                'old_amount' => $loadBoard->order->amount,
             ]
         );
 
@@ -194,6 +194,7 @@ class LoadBoardController extends Controller
     public function acceptBidByCustomer(Request $request)
 {
     return DB::transaction(function () use ($request) {
+
         $bid = Bid::where('order_no', $request->order_no)
             ->where('user_id', auth()->id())
             ->first();
