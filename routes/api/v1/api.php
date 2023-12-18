@@ -124,7 +124,10 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
     });
 
-
+    Route::group(['prefix' => 'bid', 'middleware' => 'auth:api'], function () {
+        Route::post('/load-board/{loadBoard}', [LoadBoardController::class, 'bidStore']);
+        Route::get('/load-board/{loadBoard}', [LoadBoardController::class, 'getAllBidsByLoadBoard']);
+    });
     Route::group(['prefix' => 'chat', 'middleware' => 'auth:api'], function () {
 
         Route::post('/get', [ChatController::class, 'index']);
