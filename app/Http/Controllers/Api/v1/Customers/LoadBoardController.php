@@ -195,7 +195,7 @@ class LoadBoardController extends Controller
 {
     return DB::transaction(function () use ($request) {
 
-        $bid = Bid::where('order_no', $request->order_no)
+        $bid = Bid::where('id', $request->bid_id)
             ->where('user_id', auth()->id())
             ->first();
 
