@@ -122,6 +122,19 @@ class ManageUserController extends Controller
         //
     }
 
+
+    public function pending(Request $request){
+
+        $perPage = $request->input('per_page', 10);
+
+       $users = User::query();
+
+
+       $users = $users->whereIn('status', ['Pending','Rejected'])->latest()->paginate($perPage);
+
+       return UserResource::collection($users);
+   }
+
     public function status(Request $request, User $user)
     {
         $this->validate($request,[

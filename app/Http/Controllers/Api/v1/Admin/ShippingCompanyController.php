@@ -74,6 +74,19 @@ class ShippingCompanyController extends Controller
         return new ShippingCompanyResource($shippingCompany);
     }
 
+    public function pending(Request $request){
+
+        $perPage = $request->input('per_page', 10);
+
+       $shippingCompany = ShippingCompany::query();
+
+
+       $shippingCompany = $shippingCompany->whereIn('status', ['Pending','Rejected'])->latest()->paginate($perPage);
+
+       return ShippingCompanyResource::collection($shippingCompany);
+   }
+
+
 
     public function update(Request $request, $id)
     {
@@ -133,6 +146,8 @@ class ShippingCompanyController extends Controller
             return $this->error('', 'Unable to delete shippingCompany and user', 500);
         }
     }
+
+
 
 
     public function setStatus(Request $request, $shippingCompanyId) {

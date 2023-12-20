@@ -54,6 +54,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
         Route::get('/', [ManageUserController::class, 'index']);
         Route::post('/', [ManageUserController::class, 'store']);
+        Route::get('/pending', [ManageUserController::class, 'pending']);
         Route::get('/{id}', [ManageUserController::class, 'show']);
         Route::delete('/{id}', [ManageUserController::class, 'delete']);
         Route::post('/update/{id}', [ManageUserController::class, 'update']);
@@ -197,6 +198,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/', [ShippingCompanyController::class, 'index']);
         Route::post('/store', [ShippingCompanyController::class, 'store']);
         Route::get('/search', [ShippingCompanyController::class, 'search']);
+        Route::get('/pending', [ShippingCompanyController::class, 'pending']);
         Route::post('/status/{id}', [ShippingCompanyController::class, 'setStatus']);
         Route::get('/show/{id}', [ShippingCompanyController::class, 'show']);
         Route::post('/update/{id}', [ShippingCompanyController::class, 'update']);
