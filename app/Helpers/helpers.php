@@ -448,7 +448,7 @@ function sendPhpMail($receiver_email, $receiver_name, $subject, $message)
     $headers .= "Reply-To: $gnl->sitename <$gnl->email_from>\r\n";
     $headers .= "Return-Path: $gnl->sitename <$gnl->email_from>\r\n";
     $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Organization: Bourseechange\r\n";
+    $headers .= "Organization: monodome\r\n";
     $headers .= "Content-Type: text/html; charset=utf-8\r\n";
     $headers .= "X-Priority: 3\r\n";
     $headers .= "X-Mailer: PHP". phpversion() ."\r\n" ;
