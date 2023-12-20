@@ -172,11 +172,11 @@ class UsersTableSeeder extends Seeder
          //  DriverManger::factory()->create([
              // 'user_id' => 5,
              //  ]);
-             User::find(1)->assignRole('Super Admin');
-             User::find(2)->assignRole('admin');
-             User::find(3)->assignRole('Customer');
-             User::find(4)->assignRole('Driver');
-             User::find(5)->assignRole('Driver Manager');
+        User::find(1)->assignRole('Super Admin');
+        User::find(2)->assignRole('admin');
+        User::find(3)->assignRole('Customer');
+        User::find(4)->assignRole('Driver');
+        User::find(5)->assignRole('Driver Manager');
 
              //customer
              $customerRole = Role::find(3);
@@ -332,8 +332,6 @@ class UsersTableSeeder extends Seeder
                'loadable_type' => 'App\\Models\\ShippingCompany',
            ]);
         }
-
-
      }
 
 }
