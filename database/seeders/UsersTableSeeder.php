@@ -161,8 +161,6 @@ class UsersTableSeeder extends Seeder
 
         ));
 
-
-
         //driver
        Driver::factory()->create([
             'user_id' => 4,

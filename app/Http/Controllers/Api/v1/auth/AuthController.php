@@ -211,6 +211,38 @@ class AuthController extends Controller
 
 
 
+
+    /**
+     * updatePassword
+     *
+     * @param  mixed $request
+     *
+     */
+    public function updatePassword(Request $request)
+    {
+        $user = auth()->user();
+
+        $validatedData = $request->validate([
+            'old_password' => 'required|string',
+            'password' => 'required|string|confirmed|min:6',
+        ]);
+
+        // Check if the old password matches the current password
+        if (!Hash::check($validatedData['old_password'], $user->password)) {
+            return $this->error(null, 'The old password is incorrect.', 422);
+        }
+
+        // Update user password
+        $user->update([
+            'password' => bcrypt($validatedData['password']),
+        ]);
+
+        return $this->success(['user' => new UserResource($user)], "Password updated successfully");
+    }
+
+
+
+
     public function updateProfile(Request $request)
     {
         $user = auth()->user(); // Assuming you are using authentication
