@@ -61,7 +61,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/is-login', [AuthController::class, 'isLogin']);
         Route::get('/profile', [AuthController::class, 'me']);
         Route::get('/logout', [AuthController::class, 'logout']);
-        Route::post('/update-password', [AuthController::class, 'reset_password_request']);
+        Route::post('/update-password', [AuthController::class, 'updatePassword']);
         Route::post('/update-profile', [AuthController::class, 'updateProfile']);
 
         Route::get('user-delete',[AuthController::class,'delete_user']);
