@@ -57,6 +57,7 @@ class LoadPackageRequest extends FormRequest
             'insure_it' => 'nullable|in:No,Yes',
             'insure_amount' => 'nullable|numeric|',
             'is_fragile' => 'nullable|in:No,Yes',
+            'documents.*' => 'required|file|max:2048'
         ];
     }
 }
