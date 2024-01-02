@@ -87,9 +87,6 @@ use App\Http\Resources\LoadPackageResource;
                 $path = $file['path'];
                 $name = $file['file_name'];
 
-                Log::info($path);
-                Log::info($name);
-
                 // Create a record in the load_documents table
                 $document = new LoadDocument([
                     'name' => $name,
