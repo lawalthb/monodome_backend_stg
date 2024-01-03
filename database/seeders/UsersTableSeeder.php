@@ -394,9 +394,44 @@ class UsersTableSeeder extends Seeder
 
            $guarantor1 = Guarantor::factory()->create([
               'loadable_id' => $agent->id,
-              'loadable_type' => 'App\\Models\\ShippingCompany',
+              'loadable_type' => 'App\\Models\\DriverManger',
           ]);
        }
+
+
+
+         // driver manager
+         $company = Role::find(10);
+
+         for ($i = 1; $i <= 50; $i++) {
+
+             $randomStatus = $statuses[array_rand($statuses)];
+
+            // Create a user
+            $user = \App\Models\User::factory()->create([
+
+                'user_type' => "company",
+               // 'role' => "driver_manager",
+                'role_id' => 10,
+                'ref_by' => rand(1,5),
+                'status' => $randomStatus,
+                'referral_code' => generateReferralCode(),
+            ]);
+
+
+            // Create an driver manager and associate it with the user
+            $agent = DriverManger::factory()->create([
+                'user_id' => $user->id,
+               // 'status' => $user->status,
+            ]);
+
+            $user->assignRole($company);
+
+            $guarantor1 = Guarantor::factory()->create([
+               'loadable_id' => $agent->id,
+               'loadable_type' => 'App\\Models\\Company',
+           ]);
+        }
 
 
     }
