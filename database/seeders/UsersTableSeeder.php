@@ -201,11 +201,15 @@ class UsersTableSeeder extends Seeder
         //broker
         $brokerRole = Role::find(4);
         for ($i = 1; $i <= 50; $i++) {
+
+            $randomStatus = $statuses[array_rand($statuses)];
+
         // Create a user
         $user = \App\Models\User::factory()->create([
             'user_type' => "broker",
             'role_id' => 4,
             'ref_by' => rand(1,3),
+            'status' => $randomStatus,
             'referral_code' => generateReferralCode(),
         ]);
 
@@ -218,7 +222,6 @@ class UsersTableSeeder extends Seeder
         $user->assignRole($brokerRole);
 
         }
-
 
         $agentRole = Role::find(6);
 
@@ -333,6 +336,9 @@ class UsersTableSeeder extends Seeder
         $ShippingCompanyRole = Role::find(5);
 
          for ($i = 1; $i <= 50; $i++) {
+
+            $randomStatus = $statuses[array_rand($statuses)];
+
             // Create a user
             $user = \App\Models\User::factory()->create([
 
@@ -340,6 +346,7 @@ class UsersTableSeeder extends Seeder
                 'role' => "shipping_company",
                 'role_id' => 5,
                 'ref_by' => rand(1,5),
+                'status' => $randomStatus,
                 'referral_code' => generateReferralCode(),
             ]);
 
@@ -347,6 +354,7 @@ class UsersTableSeeder extends Seeder
             // Create an shipping company and associate it with the user
             $agent = ShippingCompany::factory()->create([
                 'user_id' => $user->id,
+                'status' => $user->status,
             ]);
 
             $user->assignRole($ShippingCompanyRole);
@@ -361,6 +369,9 @@ class UsersTableSeeder extends Seeder
         $driverManager = Role::find(9);
 
         for ($i = 1; $i <= 50; $i++) {
+
+            $randomStatus = $statuses[array_rand($statuses)];
+
            // Create a user
            $user = \App\Models\User::factory()->create([
 
@@ -368,6 +379,7 @@ class UsersTableSeeder extends Seeder
               // 'role' => "driver_manager",
                'role_id' => 9,
                'ref_by' => rand(1,5),
+               'status' => $randomStatus,
                'referral_code' => generateReferralCode(),
            ]);
 
@@ -375,6 +387,7 @@ class UsersTableSeeder extends Seeder
            // Create an driver manager and associate it with the user
            $agent = ShippingCompany::factory()->create([
                'user_id' => $user->id,
+               'status' => $user->status,
            ]);
 
            $user->assignRole($driverManager);
