@@ -59,7 +59,8 @@ class BrokerController extends Controller
         try {
             DB::beginTransaction();
 
-            $user = User::firstOrNew(['email' => $request->input('email')]);
+            $user = User::where(['email' => $request->input('email')])->first();
+            // $user = User::firstOrNew(['email' => $request->input('email')]);
 
             $ref_by = null;
 
