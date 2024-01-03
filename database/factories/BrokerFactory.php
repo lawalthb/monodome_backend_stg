@@ -17,8 +17,7 @@ class BrokerFactory extends Factory
     public function definition(): array
     {
         return [
-
-            'id' => 2,
+            // 'id' => 2,
             'uuid' => '00028732-7976-4b75-9f9f-adc2dd15c5f0',
             'user_id' => 10,
             'state_id' => 23,
