@@ -149,7 +149,7 @@ class UsersTableSeeder extends Seeder
                 'role_id' => NULL,
                 'imageUrl' => NULL,
                 'user_type' => 'driver_manager',
-                'role' => NULL,
+                'role' => 'super_admin',
                 'location' => NULL,
                 'user_agent' => NULL,
                 'status' => 'Confirmed',
@@ -340,7 +340,7 @@ class UsersTableSeeder extends Seeder
            $user = \App\Models\User::factory()->create([
 
                'user_type' => "driver_manager",
-               'role' => "driver_manager",
+              // 'role' => "driver_manager",
                'role_id' => 9,
                'ref_by' => rand(1,5),
                'referral_code' => generateReferralCode(),
