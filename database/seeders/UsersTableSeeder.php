@@ -330,8 +330,6 @@ class UsersTableSeeder extends Seeder
            ]);
         }
 
-
-
        // driver manager
         $driverManager = Role::find(9);
 
