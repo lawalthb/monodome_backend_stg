@@ -249,6 +249,7 @@ class AuthController extends Controller
         // Validate the incoming request data
         $validatedData = $request->validate([
             'full_name' => 'required|string',
+            'phone_number' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $user->id, // Ignore the current user's email
             'address' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Example validation for image upload

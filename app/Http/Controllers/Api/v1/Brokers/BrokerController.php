@@ -59,41 +59,50 @@ class BrokerController extends Controller
         try {
             DB::beginTransaction();
 
-            $user = User::where(['email' => $request->input('email')])->first();
-            // $user = User::firstOrNew(['email' => $request->input('email')]);
-
+            $user = User::where('email', $request->input('email'))->first();
             $ref_by = null;
 
             if ($request->has('ref_by')) {
-                $ref_by = User::where("referral_code", $request->ref_by)->first();
+                $ref_by = User::where('referral_code', $request->input('ref_by'))->first();
             }
 
-            if (!$user->exists) {
+            if (!$user) {
                 // User doesn't exist, so create a new user
+                $user = new User();
                 $user->full_name = $request->input('full_name');
                 $user->email = $request->input('email');
                 $user->ref_by = $ref_by ? $ref_by->id : null;
-                $user->referral_code = $request->referral_code ?? generateReferralCode();
+                $user->referral_code = $request->input('referral_code') ?? generateReferralCode();
                 $user->address = $request->input('address');
-                $user->phone_number  = $request->input('phone_number');
-                $password  = Str::random(16);
+                $user->phone_number = $request->input('phone_number');
+                $password = Str::random(16);
                 $user->password = Hash::make($password);
                 $user->user_type = 'broker';
                 $user->save();
 
+                // Sending password via email
                 $data = [
                     "full_name" => $request->input('full_name'),
                     "password" => $password,
                     "message" => "",
                 ];
-                Mail::to($user->email)->send(
-                    new SendPasswordMail($data)
-                );
-                $role = Role::where('name', 'Broker')->first();
+                Mail::to($user->email)->send(new SendPasswordMail($data));
 
+                $role = Role::where('name', 'Broker')->first();
                 if ($role) {
                     $user->assignRole($role);
                 }
+            } else {
+                // User already exists, update the user
+                $user->full_name = $request->input('full_name');
+                $user->ref_by = $ref_by ? $ref_by->id : null;
+                $user->referral_code = $request->input('referral_code') ?? generateReferralCode();
+                $user->phone_number = $request->input('phone_number');
+                // Check if 'password' exists in the request, then update password
+                if ($request->has('password')) {
+                    $user->password = Hash::make($request->input('password'));
+                }
+                $user->save();
             }
 
             $broker = new Broker([
@@ -103,16 +112,14 @@ class BrokerController extends Controller
                 'lga' => $request->input('lga'),
                 'nin_number' => $request->input('nin_number'),
                 'status' => 'Waiting',
-                // Add other agent fields here
             ]);
 
-            //Log::info($request);
             $broker->profile_picture = $this->uploadFile('broker/broker_images', $request->file('profile_picture'));
             $broker->save();
 
             DB::commit();
 
-            return $this->success( new BrokerResource($broker), 'broker registered successfully');
+            return $this->success(new BrokerResource($broker), 'Broker registered successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
@@ -120,6 +127,7 @@ class BrokerController extends Controller
             return $this->error('An error occurred while registering the broker.');
         }
     }
+
 
     /**
      * Display the specified resource.

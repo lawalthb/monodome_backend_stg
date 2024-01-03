@@ -21,7 +21,7 @@ class BrokersRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'full_name' => 'required|string',
             'email' => 'required|email',
             'phone_number' => 'required|numeric|min:10',
@@ -31,5 +31,12 @@ class BrokersRequest extends FormRequest
             'nin_number' => 'required|string',
             'profile_picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ];
+
+        // Check if 'password' exists in the request, then add the validation rule
+        if ($this->has('password')) {
+            $rules['password'] = 'required|string|min:8|confirmed';
+        }
+
+        return $rules;
     }
 }
