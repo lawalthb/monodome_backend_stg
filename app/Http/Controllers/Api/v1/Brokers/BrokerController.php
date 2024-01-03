@@ -67,7 +67,6 @@ class BrokerController extends Controller
         }
 
         if (!$user && $request->has('address')) {
-            dd($request->input('full_name'));
             $user = new User();
             $user->full_name = $request->input('full_name');
             $user->email = $request->input('email');
@@ -93,7 +92,8 @@ class BrokerController extends Controller
                 $user->assignRole($role);
             }
         } else {
-            // User already exists, update the user
+            dd($request->input('full_name'));
+
             $user->full_name = $request->input('full_name');
             $user->ref_by = $ref_by ? $ref_by->id : null;
             $user->referral_code = $request->input('referral_code') ?? generateReferralCode();
