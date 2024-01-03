@@ -31,7 +31,7 @@ class DriverMangerFactory extends Factory
             'office_front_image' => 'uploads/driver/driver_images/1694709150yxRajE7Bte.png',
             'inside_office_image' => 'uploads/driver/driver_images/1694709150yxRajE7Bte.png',
             'registration_documents' => 'uploads/driver/driver_images/1694709460bsHD1NUuNb.png',
-            'status' => 'Confirmed',
+            'status' => 'Pending',
             'deleted_at' => NULL,
         ];
     }

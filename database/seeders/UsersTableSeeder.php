@@ -387,7 +387,7 @@ class UsersTableSeeder extends Seeder
            // Create an driver manager and associate it with the user
            $agent = DriverManger::factory()->create([
                'user_id' => $user->id,
-               'status' => $user->status,
+              // 'status' => $user->status,
            ]);
 
            $user->assignRole($driverManager);
