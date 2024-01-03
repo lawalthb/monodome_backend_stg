@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Agent;
+use App\Models\Broker;
 use App\Models\Driver;
 use App\Models\Guarantor;
 use App\Models\DriverManger;
@@ -176,7 +177,11 @@ class UsersTableSeeder extends Seeder
         User::find(4)->assignRole('Driver');
         User::find(5)->assignRole('Driver Manager');
 
-             //customer
+
+        $statuses = ['Pending', 'Confirmed', 'Rejected', 'Banned'];
+
+
+        //customer
         $customerRole = Role::find(3);
         for ($i = 1; $i <= 50; $i++) {
         // Create a user
@@ -192,8 +197,30 @@ class UsersTableSeeder extends Seeder
 
           }
 
+
+        //broker
+        $brokerRole = Role::find(4);
+        for ($i = 1; $i <= 50; $i++) {
+        // Create a user
+        $user = \App\Models\User::factory()->create([
+            'user_type' => "broker",
+            'role_id' => 4,
+            'ref_by' => rand(1,3),
+            'referral_code' => generateReferralCode(),
+        ]);
+
+        $broker = Broker::factory()->create([
+            'user_id' => $user->id,
+            'status' => $user->status,
+        ]);
+
+        // Assign the "broker" role to the user
+        $user->assignRole($brokerRole);
+
+        }
+
+
         $agentRole = Role::find(6);
-        $statuses = ['Pending', 'Confirmed', 'Rejected', 'Banned'];
 
         for ($i = 1; $i <= 50; $i++) {
             // Create a user

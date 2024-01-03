@@ -25,7 +25,7 @@ class BrokerFactory extends Factory
             'street' => 'Orville Mission',
             'lga' => '2',
             'phone_number' => NULL,
-            'nin_number' => '5',
+            'nin_number' => '322223425',
             'profile_picture' => 'uploads/broker/broker_images/1698664133o7Je1um3DM.png',
             'status' => 'Waiting',
             'created_at' => '2023-10-30 13:28:16',
