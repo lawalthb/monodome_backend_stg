@@ -178,7 +178,7 @@ class UsersTableSeeder extends Seeder
 
              //customer
         $customerRole = Role::find(3);
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
         // Create a user
         $user = \App\Models\User::factory()->create([
             'user_type' => "Customer",
@@ -195,7 +195,7 @@ class UsersTableSeeder extends Seeder
         $agentRole = Role::find(6);
         $statuses = ['Pending', 'Confirmed', 'Rejected', 'Banned'];
 
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
             // Create a user
             $randomStatus = $statuses[array_rand($statuses)];
 
@@ -232,7 +232,7 @@ class UsersTableSeeder extends Seeder
         //Clearing and Forwarding Agent
         $clearingRole = Role::find(7);
 
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
             $randomStatus = $statuses[array_rand($statuses)];
 
             // Create a user
@@ -271,7 +271,7 @@ class UsersTableSeeder extends Seeder
          //driver
          $driverRole = Role::find(8);
 
-         for ($i = 1; $i <= 100; $i++) {
+         for ($i = 1; $i <= 50; $i++) {
             // Create a user
             $user = \App\Models\User::factory()->create([
 
@@ -305,7 +305,7 @@ class UsersTableSeeder extends Seeder
         // for Shipping Company
         $ShippingCompanyRole = Role::find(5);
 
-         for ($i = 1; $i <= 100; $i++) {
+         for ($i = 1; $i <= 50; $i++) {
             // Create a user
             $user = \App\Models\User::factory()->create([
 
@@ -332,9 +332,10 @@ class UsersTableSeeder extends Seeder
 
 
 
+       // driver manager
         $driverManager = Role::find(9);
 
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
            // Create a user
            $user = \App\Models\User::factory()->create([
 
@@ -346,7 +347,7 @@ class UsersTableSeeder extends Seeder
            ]);
 
 
-           // Create an shipping company and associate it with the user
+           // Create an driver manager and associate it with the user
            $agent = ShippingCompany::factory()->create([
                'user_id' => $user->id,
            ]);
