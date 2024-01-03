@@ -177,20 +177,20 @@ class UsersTableSeeder extends Seeder
         User::find(5)->assignRole('Driver Manager');
 
              //customer
-             $customerRole = Role::find(3);
-             for ($i = 1; $i <= 100; $i++) {
-                // Create a user
-                $user = \App\Models\User::factory()->create([
-                    'user_type' => "Customer",
-                    'role_id' => 3,
-                    'ref_by' => rand(1,4),
-                    'referral_code' => generateReferralCode(),
-                ]);
+        $customerRole = Role::find(3);
+        for ($i = 1; $i <= 100; $i++) {
+        // Create a user
+        $user = \App\Models\User::factory()->create([
+            'user_type' => "Customer",
+            'role_id' => 3,
+            'ref_by' => rand(1,4),
+            'referral_code' => generateReferralCode(),
+        ]);
 
-                // Assign the "agent" role to the user
-                $user->assignRole($customerRole);
+        // Assign the "agent" role to the user
+        $user->assignRole($customerRole);
 
-            }
+          }
 
         $agentRole = Role::find(6);
         $statuses = ['Pending', 'Confirmed', 'Rejected', 'Banned'];
@@ -229,7 +229,7 @@ class UsersTableSeeder extends Seeder
 
 
 
-        //clearing
+        //Clearing and Forwarding Agent
         $clearingRole = Role::find(7);
 
         for ($i = 1; $i <= 100; $i++) {
@@ -302,9 +302,9 @@ class UsersTableSeeder extends Seeder
 
         }
 
-        $driverRole = Role::find(5);
+        // for Shipping Company
+        $ShippingCompanyRole = Role::find(5);
 
-         // for shipping company
          for ($i = 1; $i <= 100; $i++) {
             // Create a user
             $user = \App\Models\User::factory()->create([
@@ -322,14 +322,44 @@ class UsersTableSeeder extends Seeder
                 'user_id' => $user->id,
             ]);
 
-            $user->assignRole($driverRole);
-
+            $user->assignRole($ShippingCompanyRole);
 
             $guarantor1 = Guarantor::factory()->create([
                'loadable_id' => $agent->id,
                'loadable_type' => 'App\\Models\\ShippingCompany',
            ]);
         }
-     }
+
+
+
+        $driverManager = Role::find(9);
+
+        for ($i = 1; $i <= 100; $i++) {
+           // Create a user
+           $user = \App\Models\User::factory()->create([
+
+               'user_type' => "driver_manager",
+               'role' => "driver_manager",
+               'role_id' => 9,
+               'ref_by' => rand(1,5),
+               'referral_code' => generateReferralCode(),
+           ]);
+
+
+           // Create an shipping company and associate it with the user
+           $agent = ShippingCompany::factory()->create([
+               'user_id' => $user->id,
+           ]);
+
+           $user->assignRole($driverManager);
+
+           $guarantor1 = Guarantor::factory()->create([
+              'loadable_id' => $agent->id,
+              'loadable_type' => 'App\\Models\\ShippingCompany',
+          ]);
+       }
+
+
+    }
 
 }
