@@ -67,7 +67,7 @@ class BrokerController extends Controller
         }
 
         if (!$user && $request->has('address')) {
-            // User doesn't exist, so create a new user
+            dd($request->input('full_name'));
             $user = new User();
             $user->full_name = $request->input('full_name');
             $user->email = $request->input('email');
