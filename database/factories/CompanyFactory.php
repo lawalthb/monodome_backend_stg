@@ -17,7 +17,7 @@ class CompanyFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => 4,
+        //    'id' => 4,
             'uuid' => '0f2a8ea8-d267-4923-949c-0a6514088c43',
             'user_id' => 19,
             'state_id' => rand(1, 30),
@@ -32,7 +32,7 @@ class CompanyFactory extends Factory
             'company_logo' => 'uploads/company/company_images/1698672864XN29Pev1B0.png',
             'company_name' => NULL,
             'cac_documents' => 'uploads/company/company_documents/1698672864oY8xxvqKC5.pdf',
-            'status' => 'Pending',
+        //    'status' => 'Pending',
             'created_at' => '2023-10-30 13:34:24',
             'updated_at' => '2023-10-30 13:34:24',
             'deleted_at' => NULL,

@@ -6,11 +6,12 @@ use App\Models\User;
 use App\Models\Agent;
 use App\Models\Broker;
 use App\Models\Driver;
+use App\Models\Company;
 use App\Models\Guarantor;
 use App\Models\DriverManger;
 use App\Models\ShippingCompany;
-use Illuminate\Database\Seeder;
 //use Doctrine\DBAL\DriverManager;
+use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Database\Factories\DriverManagerFactory;
 
@@ -420,7 +421,7 @@ class UsersTableSeeder extends Seeder
 
 
             // Create an driver manager and associate it with the user
-            $agent = DriverManger::factory()->create([
+            $agent = Company::factory()->create([
                 'user_id' => $user->id,
                // 'status' => $user->status,
             ]);
