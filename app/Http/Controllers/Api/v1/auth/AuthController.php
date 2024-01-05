@@ -50,7 +50,6 @@ class AuthController extends Controller
                 'user_agent' => $request->header('User-Agent'),
             ]);
 
-
             $role = Role::find($request->role_id);
             if ($role) {
                 $user->user_type = Str::slug($role->name, "_");// str_replace(' ', '_', $role->name);;

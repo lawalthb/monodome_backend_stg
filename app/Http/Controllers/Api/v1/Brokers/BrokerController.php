@@ -54,68 +54,147 @@ class BrokerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BrokersRequest $request)
-    {
-        try {
-            DB::beginTransaction();
 
-            $user = User::firstOrNew(['email' => $request->input('email')]);
+     public function store(BrokersRequest $request)
+     {
+         try {
+             DB::beginTransaction();
 
-            $ref_by = null;
+             $user = User::firstOrNew(['email' => $request->input('email')]);
+             $isNewUser = !$user->exists;
 
-            if ($request->has('ref_by')) {
-                $ref_by = User::where("referral_code", $request->ref_by)->first();
-            }
+             $ref_by = null;
+             if ($request->has('ref_by')) {
+                 $ref_by = User::where("referral_code", $request->ref_by)->first();
+             }
 
-            if (!$user->exists) {
-                $user->full_name = $request->input('full_name');
-                $user->email = $request->input('email');
-                $user->ref_by = $ref_by ? $ref_by->id : null;
-                $user->referral_code = $request->referral_code ?? generateReferralCode();
-                $user->address = $request->input('address');
-                $user->phone_number  = $request->input('phone_number');
-                $password  = Str::random(16);
-                $user->password = Hash::make($password);
-                $user->user_type = 'broker';
-                $user->save();
+             if ($isNewUser) {
+                 $password = Str::random(16);
 
-                $data = [
-                    "full_name" => $request->input('full_name'),
-                    "password" => $password,
-                    "message" => "",
-                ];
-                Mail::to($user->email)->send(
-                    new SendPasswordMail($data)
-                );
-                $role = Role::where('name', 'Broker')->first();
+                 $user->fill([
+                     'full_name' => $request->input('full_name'),
+                     'ref_by' => $ref_by ? $ref_by->id : null,
+                     'referral_code' => $request->referral_code ?? generateReferralCode(),
+                     'address' => $request->input('address'),
+                     'phone_number' => $request->input('phone_number'),
+                     'password' => Hash::make($password),
+                     'user_type' => 'broker',
+                 ])->save();
 
-                if ($role) {
-                    $user->assignRole($role);
-                }
-            }
+                 $data = [
+                     "full_name" => $request->input('full_name'),
+                     "password" => $password,
+                     "message" => "",
+                 ];
+                 Mail::to($user->email)->send(new SendPasswordMail($data));
 
-            $broker = new Broker([
-                'user_id' => $user->id,
-                'state_id' => $request->input('state_id'),
-                'street' => $request->input('street'),
-                'lga' => $request->input('lga'),
-                'nin_number' => $request->input('nin_number'),
-                'status' => 'Waiting',
-            ]);
+                 $role = Role::where('name', 'Broker')->first();
+                 if ($role) {
+                     $user->assignRole($role);
+                 }
+             }
 
-            $broker->profile_picture = $this->uploadFile('broker/broker_images', $request->file('profile_picture'));
-            $broker->save();
+             $broker = new Broker([
+                 'user_id' => $user->id,
+                 'state_id' => $request->input('state_id'),
+                 'street' => $request->input('street'),
+                 'lga' => $request->input('lga'),
+                 'nin_number' => $request->input('nin_number'),
+                 'status' => 'Waiting',
+             ]);
 
-            DB::commit();
+             $broker->profile_picture = $this->uploadFile('broker/broker_images', $request->file('profile_picture'));
+             $broker->save();
 
-            return $this->success( new BrokerResource($broker), 'broker registered successfully');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error($e->getMessage());
+             DB::commit();
 
-            return $this->error('An error occurred while registering the broker.');
-        }
-    }
+             return $this->success(new BrokerResource($broker), 'Broker registered successfully');
+         } catch (\Exception $e) {
+             DB::rollBack();
+             Log::error($e->getMessage());
+
+             return $this->error('An error occurred while registering the broker.');
+         }
+     }
+
+
+    // public function store(BrokersRequest $request)
+    // {
+    //     try {
+    //         DB::beginTransaction();
+
+    //         $user = User::where(['email' => $request->input('email')])->first();
+
+    //         $ref_by = null;
+
+    //         if ($request->has('ref_by')) {
+    //             $ref_by = User::where("referral_code", $request->ref_by)->first();
+    //         }
+
+    //         if (!$user) {
+    //             $user = new User();
+    //             $user->full_name = $request->input('full_name');
+    //             $user->email = $request->input('email');
+    //             $user->ref_by = $ref_by ? $ref_by->id : null;
+    //             $user->referral_code = $request->referral_code ?? generateReferralCode();
+    //             $user->address = $request->input('address');
+    //             $user->phone_number  = $request->input('phone_number');
+    //             $password  = Str::random(16);
+    //             $user->password = Hash::make($password);
+    //             $user->user_type = 'broker';
+    //             $user->save();
+
+    //             $data = [
+    //                 "full_name" => $request->input('full_name'),
+    //                 "password" => $password,
+    //                 "message" => "",
+    //             ];
+    //             Mail::to($user->email)->send(
+    //                 new SendPasswordMail($data)
+    //             );
+    //             $role = Role::where('name', 'Broker')->first();
+
+    //             if ($role) {
+    //                 $user->assignRole($role);
+    //             }
+
+    //             $broker = new Broker([
+    //                 'user_id' => $user->id,
+    //                 'state_id' => $request->input('state_id'),
+    //                 'street' => $request->input('street'),
+    //                 'lga' => $request->input('lga'),
+    //                 'nin_number' => $request->input('nin_number'),
+    //                 'status' => 'Waiting',
+    //             ]);
+
+    //             $broker->profile_picture = $this->uploadFile('broker/broker_images', $request->file('profile_picture'));
+    //             $broker->save();
+
+    //         }else{
+
+    //             $broker = new Broker([
+    //                 'user_id' => $user->id,
+    //                 'state_id' => $request->input('state_id'),
+    //                 'street' => $request->input('street'),
+    //                 'lga' => $request->input('lga'),
+    //                 'nin_number' => $request->input('nin_number'),
+    //                 'status' => 'Waiting',
+    //             ]);
+
+    //             $broker->profile_picture = $this->uploadFile('broker/broker_images', $request->file('profile_picture'));
+    //             $broker->save();
+    //         }
+
+    //         DB::commit();
+
+    //         return $this->success( new BrokerResource($broker), 'broker registered successfully');
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         Log::error($e->getMessage());
+
+    //         return $this->error('An error occurred while registering the broker.');
+    //     }
+    // }
 
     /**
      * Display the specified resource.
