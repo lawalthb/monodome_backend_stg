@@ -33,6 +33,21 @@ class Company extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function country(){
+
+        return $this->belongsTo(Country::class);
+    }
+
+    public function state(){
+
+        return $this->belongsTo(State::class);
+    }
+
+    public function RLga()
+    {
+        return $this->belongsTo(LocalGovernment::class,'receiver_lga');
+    }
+
     protected static function boot()
     {
         parent::boot();
