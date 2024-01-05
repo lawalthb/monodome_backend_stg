@@ -24,6 +24,7 @@ class BrokersRequest extends FormRequest
         $rules = [
             'full_name' => 'required|string',
             'email' => 'required|email',
+            'isNew' => 'required|in:Yes,No',
             'phone_number' => 'required|numeric|min:10',
             'street' => 'required|string',
             'state_id' => 'required|exists:states,id',
