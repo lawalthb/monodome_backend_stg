@@ -114,7 +114,7 @@ class ClearingAgentController extends Controller
 
 
 
-    public function search(Request $request)
+public function search(Request $request)
 {
     // Get query parameters from the request
     $sort = $request->input('sort');

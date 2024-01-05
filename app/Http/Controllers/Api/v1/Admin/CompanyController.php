@@ -38,32 +38,103 @@ class CompanyController extends Controller
 
     public function search(Request $request)
     {
-        $terms = explode(" ", $request->input('search'));
-        $perPage = $request->input('per_page', 10);
+        // Get query parameters from the request
+        $sort = $request->input('sort');
+        $email = $request->input('email');
+        $businessName = $request->input('company_name');
+        $phone = $request->input('phone_number');
+        $status = $request->input('status');
+        $fullName = $request->input('full_name');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $date = $request->input('date');
 
+        // Apply filters to the Agent query
         $company = Company::query();
 
-        foreach ($terms as $term) {
-            $company->where(function ($query) use ($term) {
-                $query->orWhereHas('user', function ($userQuery) use ($term) {
-                    $userQuery->where('email', 'like', "%$term%")
-                        ->orWhere('full_name', 'like', "%$term%");
-                })
-                ->orWhere('phone_number', 'like', "%$term%")
-                ->orWhere('number_of_drivers', 'like', "%$term%")
-                ->orWhere('company_name', 'like', "%$term%")
-                ->orWhere('number_of_trucks', 'like', "%$term%")
-                ->orWhere('status', 'like', "%$term%")
-                ->orWhereHas('state', function ($stateQuery) use ($term) {
-                    $stateQuery->where('name', 'like', "%$term%");
-                });
+        // Filter by 'sort' parameter
+        if ($sort) {
+            $company->orderBy($sort);
+        }
+
+        // Filter by 'email' parameter
+        if ($email) {
+            $company->whereHas('user', function ($userQuery) use ($email) {
+                $userQuery->where('email', 'like', "%$email%");
             });
         }
 
+        // Filter by 'business_name' parameter
+        if ($businessName) {
+            $company->where('company_name', 'like', "%$businessName%");
+        }
+
+        // Filter by 'phone_number' parameter
+        if ($phone) {
+            $company->where('phone_number', 'like', "%$phone%");
+        }
+
+        // Filter by 'status' parameter
+        if ($status) {
+            $company->where('status', $status);
+        }
+
+        // Filter by 'full_name' parameter
+        if ($fullName) {
+            $company->whereHas('user', function ($userQuery) use ($fullName) {
+                $userQuery->where('full_name', 'like', "%$fullName%");
+            });
+        }
+
+        // Filter by date range
+        if ($startDate) {
+            $company->whereDate('created_at', '>=', $startDate);
+        }
+
+        if ($date) {
+            $company->whereDate('created_at', '=', $date);
+        }
+
+        if ($endDate) {
+            $company->whereDate('created_at', '<=', $endDate);
+        }
+
+        $perPage = $request->input('per_page', 10);
+
+        // Retrieve and paginate the results
         $company = $company->latest()->paginate($perPage);
 
         return CompanyResource::collection($company);
     }
+
+    // public function search(Request $request)
+    // {
+    //     $terms = explode(" ", $request->input('search'));
+    //     $perPage = $request->input('per_page', 10);
+
+    //     $company = Company::query();
+
+    //     foreach ($terms as $term) {
+    //         $company->where(function ($query) use ($term) {
+    //             $query->orWhereHas('user', function ($userQuery) use ($term) {
+    //                 $userQuery->where('email', 'like', "%$term%")
+    //                     ->orWhere('full_name', 'like', "%$term%");
+    //             })
+    //             ->orWhere('phone_number', 'like', "%$term%")
+    //             ->orWhere('number_of_drivers', 'like', "%$term%")
+    //             ->orWhere('company_name', 'like', "%$term%")
+    //             ->orWhere('number_of_trucks', 'like', "%$term%")
+    //             ->orWhere('status', 'like', "%$term%")
+    //             ->orWhereHas('state', function ($stateQuery) use ($term) {
+    //                 $stateQuery->where('name', 'like', "%$term%");
+    //             });
+    //         });
+    //     }
+
+    //     $company = $company->latest()->paginate($perPage);
+
+    //     return CompanyResource::collection($company);
+    // }
 
     public function show($companyId) {
         $company = Company::find($companyId);
