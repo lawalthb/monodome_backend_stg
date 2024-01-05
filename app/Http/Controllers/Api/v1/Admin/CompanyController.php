@@ -88,6 +88,10 @@ class CompanyController extends Controller
             // Update company information
             $company->phone_number = $request->input('phone_number');
             $company->street = $request->input('address');
+            $company->company_name = $request->input('company_name');
+            $company->number_of_drivers = $request->input('number_of_drivers');
+            $company->number_of_drivers = $request->input('number_of_drivers');
+            $company->number_of_trucks = $request->input('number_of_trucks');
             $company->save();
 
             // Update company information
