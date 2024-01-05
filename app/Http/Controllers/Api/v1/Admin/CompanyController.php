@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Admin;
 
-use App\Models\company;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
