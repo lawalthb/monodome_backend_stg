@@ -21,7 +21,7 @@ class CompanyController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $company = company::where(function ($q) use ($key) {
+        $company = Company::where(function ($q) use ($key) {
             // Assuming there's a relationship between Company and User
             $q->whereHas('user', function ($userQuery) use ($key) {
                 $userQuery->where('full_name', 'like', "%{$key}%");
@@ -39,7 +39,7 @@ class CompanyController extends Controller
         $terms = explode(" ", $request->input('search'));
         $perPage = $request->input('per_page', 10);
 
-        $company = company::query();
+        $company = Company::query();
 
         foreach ($terms as $term) {
             $company->where(function ($query) use ($term) {
@@ -62,7 +62,7 @@ class CompanyController extends Controller
     }
 
     public function show($companyId) {
-        $company = company::find($companyId);
+        $company = Company::find($companyId);
 
         if (!$company) {
 
@@ -79,7 +79,7 @@ class CompanyController extends Controller
         try {
             DB::beginTransaction();
 
-            $company = company::findOrFail($id);
+            $company = Company::findOrFail($id);
 
             // Update company information
             $company->phone_number = $request->input('phone_number');
@@ -109,12 +109,27 @@ class CompanyController extends Controller
         }
     }
 
+    public function pending(Request $request){
+
+        $perPage = $request->input('per_page', 10);
+
+       $shippingCompany = Company::query();
+
+
+       $shippingCompany = $shippingCompany->whereIn('status', ['Pending','Rejected'])->latest()->paginate($perPage);
+
+       return CompanyResource::collection($shippingCompany);
+   }
+
+
+
+
 
     public function destroy($companyId)
     {
         try {
             // Find the driver by ID
-            $company = company::with('user')->find($companyId);
+            $company = Company::with('user')->find($companyId);
 
         if (!$company) {
                 return $this->error('', 'company not found', 404);
@@ -145,7 +160,7 @@ class CompanyController extends Controller
             return $this->error('', $validator->errors()->first(), 422);
         }
 
-        $company = company::find($companyId);
+        $company = Company::find($companyId);
 
         if (!$company) {
 
