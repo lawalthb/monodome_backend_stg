@@ -25,7 +25,9 @@ class CompanyController extends Controller
             // Assuming there's a relationship between Company and User
             $q->whereHas('user', function ($userQuery) use ($key) {
                 $userQuery->where('full_name', 'like', "%{$key}%");
-            })->orWhere('status', 'like', "%{$key}%")->orWhere('nin_number', 'like', "%{$key}%");
+            })->orWhere('status', 'like', "%{$key}%")
+            ->orWhere('number_of_drivers', 'like', "%{$key}%")
+            ->orWhere('number_of_trucks', 'like', "%{$key}%");
         })
             ->latest()
             ->paginate($perPage);
@@ -48,7 +50,9 @@ class CompanyController extends Controller
                         ->orWhere('full_name', 'like', "%$term%");
                 })
                 ->orWhere('phone_number', 'like', "%$term%")
-                ->orWhere('nin_number', 'like', "%$term%")
+                ->orWhere('number_of_drivers', 'like', "%$term%")
+                ->orWhere('company_name', 'like', "%$term%")
+                ->orWhere('number_of_trucks', 'like', "%$term%")
                 ->orWhere('status', 'like', "%$term%")
                 ->orWhereHas('state', function ($stateQuery) use ($term) {
                     $stateQuery->where('name', 'like', "%$term%");
@@ -66,7 +70,7 @@ class CompanyController extends Controller
 
         if (!$company) {
 
-            return $this->error('', 'shipping Company not found', 422);
+            return $this->error('', 'Company transporter not found', 422);
 
         }
 
