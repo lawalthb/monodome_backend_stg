@@ -408,9 +408,6 @@ Route::group(['prefix' => 'driver-manager'], function () {
 
     Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
 
-        // Route::apiResource('categories', CategoryController::class);
-
-
         Route::get('/', [BlogController::class, 'index']);
         Route::post('/', [BlogController::class, 'store']);
         Route::get('/{id}', [BlogController::class, 'show']);
@@ -423,8 +420,8 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::put('/comment/{id}', [BlogController::class, 'updateComment']);
         Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);
 
-        Route::get('/blog/pending', [BlogController::class, 'pendingBlog']);
-        Route::delete('/blog/{category_id}/', [BlogController::class, 'getRelatedBlogs']);
+        Route::get('/pending', [BlogController::class, 'pendingBlog']);
+        Route::get('/{category_id}/related', [BlogController::class, 'getRelatedBlogs']);
     });
 
 
