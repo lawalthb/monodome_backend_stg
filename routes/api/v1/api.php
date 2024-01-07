@@ -424,6 +424,7 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);
 
         Route::get('/blog/pending', [BlogController::class, 'pendingBlog']);
+        Route::delete('/blog/{category_id}/', [BlogController::class, 'getRelatedBlogs']);
     });
 
 

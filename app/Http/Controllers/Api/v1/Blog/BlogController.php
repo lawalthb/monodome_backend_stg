@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Blog;
 
 use App\Models\Blog;
 use App\Models\Comment;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
@@ -123,6 +124,19 @@ class BlogController extends Controller
 
         return response()->json(['message' => 'Blog deleted successfully']);
     }
+
+
+    public function getRelatedBlogs(Request $request,Category $category)
+{
+
+    $key = $request->input('search');
+    $perPage = $request->input('per_page', 10);
+
+    $blogs = $category->blogs()->inRandomOrder()->paginate($perPage); // Change pagination as per your requirement
+
+    return BlogResource::collection($blogs);
+
+}
 
     public function getComments(Request $request,$blogId)
     {
