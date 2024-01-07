@@ -126,17 +126,20 @@ class BlogController extends Controller
     }
 
 
-    public function getRelatedBlogs(Request $request,Category $category)
-{
+    public function getRelatedBlogs(Request $request, Category $category)
+    {
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
 
-    $key = $request->input('search');
-    $perPage = $request->input('per_page', 10);
+         $blogs = $category->blogs()->inRandomOrder()->paginate($perPage);
 
-    $blogs = $category->blogs()->inRandomOrder()->paginate($perPage); // Change pagination as per your requirement
+        if ($blogs->isEmpty()) {
+            $blogs = Blog::latest()->paginate($perPage);
+        }
 
-    return BlogResource::collection($blogs);
+        return BlogResource::collection($blogs);
+    }
 
-}
 
     public function getComments(Request $request,$blogId)
     {
