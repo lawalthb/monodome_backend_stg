@@ -20,8 +20,6 @@ class BlogsTableSeeder extends Seeder
         for ($i = 0; $i < 50; $i++) {
 
         \DB::table('blogs')->insert(array (
-            0 =>
-            array (
                 'title' => fake()->sentences(),
                 'body' => fake()->paragraphs(),
                 'image' => 'uploads/blog/1704623533OnXAgrptnA.jpg',
@@ -29,7 +27,6 @@ class BlogsTableSeeder extends Seeder
                 'status' => rand(1, 0),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ),
         ));
 
     }
