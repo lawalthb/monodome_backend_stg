@@ -10,11 +10,13 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Api\v1\CountryController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
+use App\Http\Controllers\Api\v1\Blog\BlogController;
 use App\Http\Controllers\Api\v1\Chat\ChatController;
 use App\Http\Controllers\Api\v1\Order\OrderController;
 use App\Http\Controllers\Api\v1\Truck\TruckController;
 use App\Http\Controllers\Api\v1\Wallet\CardController;
 use App\Http\Controllers\Api\v1\Agents\AgentController;
+use App\Http\Controllers\Api\v1\Blog\CategoryController;
 use App\Http\Controllers\Api\v1\Driver\DriverController;
 use App\Http\Controllers\Api\v1\Wallet\WalletController;
 use App\Http\Controllers\Api\v1\Brokers\BrokerController;
@@ -29,7 +31,6 @@ use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
 use App\Http\Controllers\Api\v1\Customers\VehicleMakeController;
 use App\Http\Controllers\Api\v1\Customers\VehicleTypeController;
 use App\Http\Controllers\Api\v1\auth\EmailVerificationController;
-use App\Http\Controllers\Api\v1\Blog\BlogController;
 use App\Http\Controllers\Api\v1\Customers\VehicleModelController;
 use App\Http\Controllers\Api\v1\Customers\LoadContainerController;
 use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
@@ -395,7 +396,11 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::post('place-api-details', [MapApiController::class,'place_api_details']);
         Route::post('geocode-api', [MapApiController::class,'geocode_api']);
     });
+    Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
 
+        Route::apiResource('categories', CategoryController::class);
+
+    });
     Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
         Route::get('/', [BlogController::class, 'index']);
         Route::post('/', [BlogController::class, 'store']);
