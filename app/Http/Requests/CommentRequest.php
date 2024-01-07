@@ -26,7 +26,7 @@ class CommentRequest extends FormRequest
             'full_name' => 'required|max:255',
             'email' => 'required|email|max:255',
             'comment' => 'required|max:1000',
-            'status' => 'nullable|integer', // You might have specific validation rules for status
+            //'status' => '|integer', // You might have specific validation rules for status
         ];
     }
 }

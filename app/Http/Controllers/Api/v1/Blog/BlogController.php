@@ -134,7 +134,6 @@ class BlogController extends Controller
     // Store a new comment
     public function storeComment(CommentRequest $request)
     {
-        dd("okay");
         $comment = Comment::create($request->validated());
         return new CommentResource($comment);
     }

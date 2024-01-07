@@ -11,7 +11,7 @@ class Comment extends Model
 
     protected $guarded = [];
 
-    public function post()
+    public function blog()
     {
         return $this->belongsTo(Blog::class);
     }
