@@ -68,6 +68,7 @@ class BlogController extends Controller
             'user_id' => auth()->user()->id,
             'title'   => $request->get('title'),
             'body'   => $request->get('body'),
+            'slug' => getSlug($request->name),
             'image' => $this->uploadFile('blog', $request->file('image'))
         ]);
 
@@ -134,6 +135,7 @@ class BlogController extends Controller
     // Store a new comment
     public function storeComment(CommentRequest $request)
     {
+
         $comment = Comment::create($request->validated());
         return new CommentResource($comment);
     }

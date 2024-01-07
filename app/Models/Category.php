@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
+    // Define relationships if any, for example:
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
+
 }
