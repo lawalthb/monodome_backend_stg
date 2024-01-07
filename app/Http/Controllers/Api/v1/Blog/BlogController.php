@@ -34,8 +34,6 @@ class BlogController extends Controller
 
         return BlogResource::collection($blog);
     }
-
-
     public function pendingBlog(Request $request)
     {
         $key = $request->input('search');
@@ -86,8 +84,6 @@ class BlogController extends Controller
             "Article has Successfully been posted"
         );
     }
-
-
     public function update(BlogRequest $request, $id)
     {
         $blog = Blog::findOrFail($id);
