@@ -22,7 +22,7 @@ class BlogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:50',
+            'title' => 'required|max:80',
             'body' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
            // 'status' => 'required|integer',

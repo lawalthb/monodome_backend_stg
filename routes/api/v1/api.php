@@ -29,6 +29,7 @@ use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
 use App\Http\Controllers\Api\v1\Customers\VehicleMakeController;
 use App\Http\Controllers\Api\v1\Customers\VehicleTypeController;
 use App\Http\Controllers\Api\v1\auth\EmailVerificationController;
+use App\Http\Controllers\Api\v1\Blog\BlogController;
 use App\Http\Controllers\Api\v1\Customers\VehicleModelController;
 use App\Http\Controllers\Api\v1\Customers\LoadContainerController;
 use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
@@ -387,14 +388,22 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::get('/nigeria/lga/{state_id}',  [CountryController::class, 'getLgaByState']);
     });
 
-
-        //map api
+    //map api
     Route::group(['prefix' => 'mapapi'], function () {
         Route::post('place-api-autocomplete', [MapApiController::class,'place_api_autocomplete']);
         Route::post('distance-api', [MapApiController::class, 'distance_api']);
         Route::post('place-api-details', [MapApiController::class,'place_api_details']);
         Route::post('geocode-api', [MapApiController::class,'geocode_api']);
     });
+
+    Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
+        Route::get('/', [BlogController::class, 'index']);
+        Route::post('/', [BlogController::class, 'store']);
+        Route::get('/{id}', [BlogController::class, 'show']);
+        Route::put('/update/{id}', [BlogController::class, 'update']);
+        Route::delete('/destroy/{id}', [BlogController::class, 'destroy']);
+    });
+
 
     Route::group(['prefix' => 'wipe'], function () {
         Route::get('/', function(){
