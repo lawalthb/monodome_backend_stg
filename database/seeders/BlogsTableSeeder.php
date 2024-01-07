@@ -1,0 +1,38 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+
+class BlogsTableSeeder extends Seeder
+{
+
+    /**
+     * Auto generated seed file
+     *
+     * @return void
+     */
+    public function run()
+    {
+
+        \DB::table('blogs')->delete();
+
+        for ($i = 0; $i < 50; $i++) {
+
+        \DB::table('blogs')->insert(array (
+            0 =>
+            array (
+                'title' => fake()->sentences(),
+                'body' => fake()->paragraphs(),
+                'image' => 'uploads/blog/1704623533OnXAgrptnA.jpg',
+                'user_id' => rand(1, 4),
+                'status' => rand(1, 0),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ),
+        ));
+
+    }
+
+    }
+}

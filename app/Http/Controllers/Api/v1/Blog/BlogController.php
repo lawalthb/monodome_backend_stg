@@ -68,7 +68,7 @@ class BlogController extends Controller
             'user_id' => auth()->user()->id,
             'title'   => $request->get('title'),
             'body'   => $request->get('body'),
-            'image' => $this->uploadFile('blog/', $request->file('image'))
+            'image' => $this->uploadFile('blog', $request->file('image'))
         ]);
 
         $user = auth()->user();
