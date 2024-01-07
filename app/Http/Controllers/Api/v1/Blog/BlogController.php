@@ -66,6 +66,7 @@ class BlogController extends Controller
     {
         $blog = Blog::create([
             'user_id' => auth()->user()->id,
+            'category_id' => $request->get('category_id'),
             'title'   => $request->get('title'),
             'body'   => $request->get('body'),
             'slug' => getSlug($request->name),
