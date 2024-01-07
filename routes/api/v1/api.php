@@ -400,8 +400,15 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::get('/', [BlogController::class, 'index']);
         Route::post('/', [BlogController::class, 'store']);
         Route::get('/{id}', [BlogController::class, 'show']);
-        Route::put('/update/{id}', [BlogController::class, 'update']);
-        Route::delete('/destroy/{id}', [BlogController::class, 'destroy']);
+        Route::put('/{id}', [BlogController::class, 'update']);
+        Route::delete('/{id}', [BlogController::class, 'destroy']);
+
+        Route::get('/comment', [BlogController::class, 'getComments']);
+        Route::post('/comment', [BlogController::class, 'storeComment']);
+        Route::put('/comment/{id}', [BlogController::class, 'updateComment']);
+        Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);
+
+        Route::get('/blog/pending', [BlogController::class, 'pendingBlog']);
     });
 
 
