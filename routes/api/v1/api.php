@@ -404,6 +404,7 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::delete('/{id}', [BlogController::class, 'destroy']);
 
         Route::get('/comment', [BlogController::class, 'getComments']);
+        Route::get('/comment/{id}', [BlogController::class, 'getComments']);
         Route::post('/comment', [BlogController::class, 'storeComment']);
         Route::put('/comment/{id}', [BlogController::class, 'updateComment']);
         Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);

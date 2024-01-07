@@ -122,9 +122,12 @@ class BlogController extends Controller
         return response()->json(['message' => 'Blog deleted successfully']);
     }
 
-    public function getComments($blogId)
+    public function getComments(Request $request,$blogId)
     {
-        $comments = Comment::where('blog_id', $blogId)->get();
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $comments = Comment::where('blog_id', $blogId)->latest()->paginate($perPage);
         return CommentResource::collection($comments);
     }
 
