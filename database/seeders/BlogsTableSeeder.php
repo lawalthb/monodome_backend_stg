@@ -17,19 +17,33 @@ class BlogsTableSeeder extends Seeder
 
         \DB::table('blogs')->delete();
 
-        for ($i = 0; $i < 50; $i++) {
 
-        \DB::table('blogs')->insert(array (
+        for ($i = 0; $i < 50; $i++) {
+            DB::table('blogs')->insert([
                 'title' => fake()->sentences(),
                 'body' => fake()->paragraphs(),
                 'image' => 'uploads/blog/1704623533OnXAgrptnA.jpg',
                 'user_id' => rand(1, 4),
                 'status' => rand(1, 0),
                 'created_at' => now(),
-                'updated_at' => now(),
-        ));
+                'updated_at' => now()
+            ]);
+        }
 
-    }
+
+    //     for ($i = 0; $i < 50; $i++) {
+
+    //     \DB::table('blogs')->insert(array (
+    //             'title' => fake()->sentences(),
+    //             'body' => fake()->paragraphs(),
+    //             'image' => 'uploads/blog/1704623533OnXAgrptnA.jpg',
+    //             'user_id' => rand(1, 4),
+    //             'status' => rand(1, 0),
+    //             'created_at' => now(),
+    //             'updated_at' => now(),
+    //     ));
+
+    // }
 
     }
 }
