@@ -62,7 +62,6 @@ class BlogController extends Controller
         );
     }
 
-
     public function store(BlogRequest $request)
     {
         $blog = Blog::create([
@@ -123,7 +122,6 @@ class BlogController extends Controller
         return response()->json(['message' => 'Blog deleted successfully']);
     }
 
-
     public function getComments($blogId)
     {
         $comments = Comment::where('blog_id', $blogId)->get();
@@ -133,6 +131,7 @@ class BlogController extends Controller
     // Store a new comment
     public function storeComment(CommentRequest $request)
     {
+        dd("okay");
         $comment = Comment::create($request->validated());
         return new CommentResource($comment);
     }
