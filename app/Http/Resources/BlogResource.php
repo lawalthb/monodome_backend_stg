@@ -20,6 +20,7 @@ class BlogResource extends JsonResource
             'body' => $this->body,
             'image' =>  getImageFile($this->image),
             'status' => $this->status,
+            'category' => new CategoryResource($this->category),
             'user' => new UserResource($this->user),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

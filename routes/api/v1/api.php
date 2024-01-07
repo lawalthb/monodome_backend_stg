@@ -396,12 +396,21 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::post('place-api-details', [MapApiController::class,'place_api_details']);
         Route::post('geocode-api', [MapApiController::class,'geocode_api']);
     });
-    Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
 
-        Route::apiResource('categories', CategoryController::class);
-
+    //categories
+    Route::prefix('categories')->middleware('auth:api')->group(function () {
+        Route::get('/', [CategoryController::class, 'index']);          // GET /categories
+        Route::post('/', [CategoryController::class, 'store']);         // POST /categories
+        Route::get('/{category}', [CategoryController::class, 'show']); // GET /categories/{category}
+        Route::put('/{category}', [CategoryController::class, 'update']);// PUT /categories/{category}
+        Route::delete('/{category}', [CategoryController::class, 'destroy']); // DELETE /categories/{category}
     });
+
     Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
+
+        // Route::apiResource('categories', CategoryController::class);
+
+
         Route::get('/', [BlogController::class, 'index']);
         Route::post('/', [BlogController::class, 'store']);
         Route::get('/{id}', [BlogController::class, 'show']);
