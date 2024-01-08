@@ -134,18 +134,24 @@ class OrderController extends Controller
                  event(new LoadTypeCreated($load));
 
                  return $this->success(new OrderResource($order), 'Wallet Order payment was successful');
-                }else if($request->payment_status == "offline"){
+                }
+
+                if($request->payment_status == "offline"){
 
                     $order->user->notify(new SendNotification($order->user, 'Your offline order order was successful!'));
                     return $this->success(new OrderResource($order), 'Offline Order was successful');
-             }else if($request->payment_status == "offline"){
+                }
 
 
+                if($request->payment_status == "gateway"){
 
-             }
-             else {
+                  //  $order->user->notify(new SendNotification($order->user, 'Your offline order order was successful!'));
+                    return $this->success(new OrderResource($order), 'Offline Order was successful');
+                }
+
+
                  return $this->error([], 'Error placing order', 500);
-             }
+
          });
      }
 
