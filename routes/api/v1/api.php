@@ -400,10 +400,10 @@ Route::group(['prefix' => 'driver-manager'], function () {
     //categories
     Route::prefix('categories')->middleware('auth:api')->group(function () {
         Route::get('/', [CategoryController::class, 'index']);
-        Route::post('/', [CategoryController::class, 'store']);
+      //  Route::post('/', [CategoryController::class, 'store']);
         Route::get('/{category}', [CategoryController::class, 'show']);
-        Route::put('/{category}', [CategoryController::class, 'update']);
-        Route::delete('/{category}', [CategoryController::class, 'destroy']);
+     //   Route::put('/{category}', [CategoryController::class, 'update']);
+       // Route::delete('/{category}', [CategoryController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
@@ -416,8 +416,8 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::get('/comment', [BlogController::class, 'getComments']);
         Route::get('/comment/{id}', [BlogController::class, 'getComments']);
         Route::post('/comment', [BlogController::class, 'storeComment']);
-        Route::put('/comment/{id}', [BlogController::class, 'updateComment']);
-        Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);
+      //  Route::put('/comment/{id}', [BlogController::class, 'updateComment']);
+       // Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);
 
         Route::get('/pending', [BlogController::class, 'pendingBlog']);
         Route::get('/{category}/related', [BlogController::class, 'getRelatedBlogs']);

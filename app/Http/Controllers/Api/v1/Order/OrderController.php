@@ -45,8 +45,6 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-
-
      public function store(OrderRequest $request)
      {
          return DB::transaction(function () use ($request) {
@@ -68,7 +66,7 @@ class OrderController extends Controller
                  return $this->error('', 'Load not found', 404);
              }
 
-             if (!$load->user->wallet) {
+             if ($request->payment_type == "wallet" && !$load->user->wallet) {
                  return $this->error('', 'Wallet not set up', 404);
              }
 
@@ -79,7 +77,7 @@ class OrderController extends Controller
              $loadTotalAmount = number_format($load->total_amount, 2, '.', '');
              $userWalletAmount = number_format($load->user->wallet->amount, 2, '.', '');
 
-             if ($loadTotalAmount >= $userWalletAmount) {
+             if ($request->payment_status == "wallet" && $loadTotalAmount >= $userWalletAmount) {
                  return $this->error('', 'Insufficient funds in wallet!', 404);
              }
 
@@ -94,8 +92,12 @@ class OrderController extends Controller
                  return $this->error('', 'This order has already been paid!', 404);
              }
 
-             $load->user->wallet->amount -= $loadTotalAmount;
-             $load->user->wallet->save();
+             //remove money from wallet of users
+             if($request->payment_status == "wallet"){
+
+                 $load->user->wallet->amount -= $loadTotalAmount;
+                 $load->user->wallet->save();
+            }
 
              $load->status = 'Waiting';
              $load->save();
@@ -110,13 +112,13 @@ class OrderController extends Controller
                   //   'driver_id' => 1,
                      'amount' => $loadTotalAmount,
                      'payment_type' => $request->payment_type,
-                     'status' => 'Paid',
+                     'status' => $request->payment_type =="wallet" ? 'Paid' : 'Pending',
                  ]
              );
 
              $order->loadable()->associate($load);
 
-             if ($order->save()) {
+             if ($request->payment_status == "wallet" && $order->save()) {
                  $walletHistory = new WalletHistory;
                  $walletHistory->wallet_id = $load->user->wallet->id;
                  $walletHistory->user_id = $load->user->id;
@@ -128,14 +130,37 @@ class OrderController extends Controller
                  $walletHistory->description = "Payment for Order with the follow ID: " . $order->order_no . " !";
                  $walletHistory->save();
 
-                 $order->user->notify(new SendNotification($order->user, 'Your order was successful!'));
+                 $order->user->notify(new SendNotification($order->user, 'Your wallet payment order was successful!'));
                  event(new LoadTypeCreated($load));
 
-                 return $this->success(new OrderResource($order), 'Order payment was successful');
-             } else {
+                 return $this->success(new OrderResource($order), 'Wallet Order payment was successful');
+                }else if($request->payment_status == "offline"){
+
+                    $order->user->notify(new SendNotification($order->user, 'Your offline order order was successful!'));
+                    return $this->success(new OrderResource($order), 'Offline Order was successful');
+             }else if($request->payment_status == "offline"){
+
+
+
+             }
+             else {
                  return $this->error([], 'Error placing order', 500);
              }
          });
+     }
+
+
+     public function paywithWallet(){
+
+     }
+
+     public function payWithOffline(){
+
+     }
+
+     public function payWithGateway(){
+
+
      }
 
 
