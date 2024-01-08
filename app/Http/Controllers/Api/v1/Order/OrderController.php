@@ -113,7 +113,7 @@ class OrderController extends Controller
                   //   'driver_id' => 1,
                      'amount' => $loadTotalAmount,
                      'payment_type' => $request->payment_type,
-                     'status' => $request->payment_type =="wallet" ? 'Paid' : 'Paid',
+                     'status' => $request->payment_type =="wallet" ? 'Paid' : 'Pending',
                  ]
              );
 
