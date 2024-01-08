@@ -86,7 +86,7 @@ class BlogController extends Controller
     }
     public function update(BlogRequest $request, $id)
     {
-        $blog = Blog::findOrFail($id);
+        $blog = Blog::where('user_id',auth()->user()->id)->findOrFail($id);
 
 
         if ($request->hasFile('image') && $blog->image !== null) {
@@ -115,7 +115,7 @@ class BlogController extends Controller
 
     public function destroy($id)
     {
-        $blog = Blog::findOrFail($id);
+        $blog = Blog::where('user_id',auth()->user()->id)->findOrFail($id);
         $blog->delete();
 
         return response()->json(['message' => 'Blog deleted successfully']);
@@ -149,7 +149,6 @@ class BlogController extends Controller
     // Store a new comment
     public function storeComment(CommentRequest $request)
     {
-
         $comment = Comment::create($request->validated());
         return new CommentResource($comment);
     }
