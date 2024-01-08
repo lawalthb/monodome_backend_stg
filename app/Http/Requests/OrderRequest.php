@@ -24,6 +24,7 @@ class OrderRequest extends FormRequest
         return [
             'load_type_id' => 'required|integer|exists:load_types,id',
             'load_id' => 'required|integer',
+            'payment_type' => 'required|in:wallet,offline,gateway',
         ];
     }
 }

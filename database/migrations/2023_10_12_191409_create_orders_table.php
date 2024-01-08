@@ -24,10 +24,11 @@ return new class extends Migration
             $table->decimal('fee',38, 2)->default(0);
             $table->unsignedBigInteger('acceptable_id')->nullable();
             $table->string('acceptable_type')->nullable();
+            $table->string('payment_type')->default('wallet');
             $table->unsignedBigInteger('loadable_id'); // Foreign key to the associated load
             $table->string('loadable_type'); // Type of load (e.g., 'load_packages', 'load_specialized', etc.)
             $table->enum('status', ['Pending', 'Confirmed', 'Failed', 'Paid','Processing','Waiting','out_for_delivery','canceled','returned','Delivered','awaiting_confirmation'])->default('Pending');
-            $table->timestamps();   
+            $table->timestamps();
 
             // Define foreign key constraint
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
