@@ -230,8 +230,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/{category}/related', [BlogController::class, 'getRelatedBlogs']);
     });
 
-
-       // company-transporter route group
+    // company-transporter route group
     Route::group(['prefix' => 'company-transporter'], function () {
     Route::get('/', [CompanyController::class, 'index']);
     Route::post('/store', [CompanyController::class, 'store']);
@@ -242,7 +241,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
     Route::post('/update/{id}', [CompanyController::class, 'update']);
     Route::delete('/destroy/{id}', [CompanyController::class, 'destroy']);
     });
-
 
     // load-board route group
     Route::group(['prefix' => 'load-board'], function () {
