@@ -115,8 +115,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
         });
 
-
-
     //roles and permission Route group
     Route::group(['prefix' => 'roles'], function () {
 

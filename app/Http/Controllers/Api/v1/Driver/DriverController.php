@@ -343,8 +343,6 @@ class DriverController extends Controller
     });
 
     }
-
-
     public function order(Request $request)
     {
 
@@ -356,6 +354,10 @@ class DriverController extends Controller
         ->paginate($perPage);
 
         return  OrderResource::collection($order);
+    }
 
+    public function acceptLoad(Request  $request){
+
+        
     }
 }
