@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\v1\Admin\BlogController;
 use App\Http\Controllers\Api\v1\Admin\RoleController;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
 use App\Http\Controllers\Api\v1\Admin\OrderController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Api\v1\Admin\BrokerController;
 use App\Http\Controllers\Api\v1\Admin\DriverController;
 use App\Http\Controllers\Api\v1\Admin\CompanyController;
 use App\Http\Controllers\Api\v1\Admin\SettingController;
+use App\Http\Controllers\Api\v1\Blog\CategoryController;
 use App\Http\Controllers\Api\v1\Admin\CustomerController;
 use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
 use App\Http\Controllers\Api\v1\Admin\DashboardController;
@@ -152,7 +154,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/status/type', [AgentController::class, 'statusType']);
     });
 
-
       // agent route group
       Route::group(['prefix' => 'clearing-agent'], function () {
 
@@ -204,17 +205,42 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::delete('/destroy/{id}', [ShippingCompanyController::class, 'destroy']);
     });
 
+    Route::prefix('categories')->middleware('auth:api')->group(function () {
+        Route::get('/', [CategoryController::class, 'index']);
+        Route::post('/', [CategoryController::class, 'store']);
+        Route::get('/{category}', [CategoryController::class, 'show']);
+        Route::put('/{category}', [CategoryController::class, 'update']);
+        Route::delete('/{category}', [CategoryController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
+        Route::get('/', [BlogController::class, 'index']);
+        Route::post('/', [BlogController::class, 'store']);
+        Route::get('/{id}', [BlogController::class, 'show']);
+        Route::put('/{id}', [BlogController::class, 'update']);
+        Route::delete('/{id}', [BlogController::class, 'destroy']);
+
+        Route::get('/comment', [BlogController::class, 'getComments']);
+        Route::get('/comment/{id}', [BlogController::class, 'getComments']);
+        Route::post('/comment', [BlogController::class, 'storeComment']);
+        Route::put('/comment/{id}', [BlogController::class, 'updateComment']);
+        Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);
+
+        Route::get('/pending', [BlogController::class, 'pendingBlog']);
+        Route::get('/{category}/related', [BlogController::class, 'getRelatedBlogs']);
+    });
+
 
        // company-transporter route group
-       Route::group(['prefix' => 'company-transporter'], function () {
-        Route::get('/', [CompanyController::class, 'index']);
-        Route::post('/store', [CompanyController::class, 'store']);
-        Route::get('/search', [CompanyController::class, 'search']);
-        Route::get('/pending', [CompanyController::class, 'pending']);
-        Route::post('/status/{id}', [CompanyController::class, 'setStatus']);
-        Route::get('/show/{id}', [CompanyController::class, 'show']);
-        Route::post('/update/{id}', [CompanyController::class, 'update']);
-        Route::delete('/destroy/{id}', [CompanyController::class, 'destroy']);
+    Route::group(['prefix' => 'company-transporter'], function () {
+    Route::get('/', [CompanyController::class, 'index']);
+    Route::post('/store', [CompanyController::class, 'store']);
+    Route::get('/search', [CompanyController::class, 'search']);
+    Route::get('/pending', [CompanyController::class, 'pending']);
+    Route::post('/status/{id}', [CompanyController::class, 'setStatus']);
+    Route::get('/show/{id}', [CompanyController::class, 'show']);
+    Route::post('/update/{id}', [CompanyController::class, 'update']);
+    Route::delete('/destroy/{id}', [CompanyController::class, 'destroy']);
     });
 
 

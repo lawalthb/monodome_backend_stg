@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\Blog;
 use App\Models\Comment;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
@@ -135,6 +136,10 @@ class BlogController extends Controller
         return BlogResource::collection($blogs);
     }
 
+
+    public function setStatus(){
+
+    }
 
     public function getComments(Request $request,$blogId)
     {

@@ -399,15 +399,14 @@ Route::group(['prefix' => 'driver-manager'], function () {
 
     //categories
     Route::prefix('categories')->middleware('auth:api')->group(function () {
-        Route::get('/', [CategoryController::class, 'index']);          // GET /categories
-        Route::post('/', [CategoryController::class, 'store']);         // POST /categories
-        Route::get('/{category}', [CategoryController::class, 'show']); // GET /categories/{category}
-        Route::put('/{category}', [CategoryController::class, 'update']);// PUT /categories/{category}
-        Route::delete('/{category}', [CategoryController::class, 'destroy']); // DELETE /categories/{category}
+        Route::get('/', [CategoryController::class, 'index']);
+        Route::post('/', [CategoryController::class, 'store']);
+        Route::get('/{category}', [CategoryController::class, 'show']);
+        Route::put('/{category}', [CategoryController::class, 'update']);
+        Route::delete('/{category}', [CategoryController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
-
         Route::get('/', [BlogController::class, 'index']);
         Route::post('/', [BlogController::class, 'store']);
         Route::get('/{id}', [BlogController::class, 'show']);
@@ -423,7 +422,6 @@ Route::group(['prefix' => 'driver-manager'], function () {
         Route::get('/pending', [BlogController::class, 'pendingBlog']);
         Route::get('/{category}/related', [BlogController::class, 'getRelatedBlogs']);
     });
-
 
     Route::group(['prefix' => 'wipe'], function () {
         Route::get('/', function(){
