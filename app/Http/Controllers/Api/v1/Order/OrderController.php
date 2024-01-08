@@ -78,7 +78,7 @@ class OrderController extends Controller
              $loadTotalAmount = number_format($load->total_amount, 2, '.', '');
              $userWalletAmount = number_format($load->user->wallet->amount, 2, '.', '');
 
-             if ($request->payment_status == "wallet" && $loadTotalAmount >= $userWalletAmount) {
+             if (($request->payment_type == "wallet") && ($loadTotalAmount >= $userWalletAmount)) {
                  return $this->error('', 'Insufficient funds in wallet!', 404);
              }
 
@@ -152,8 +152,8 @@ class OrderController extends Controller
                     return $this->success(["public_key"=>$publickey], 'Gateway Order was successful');
                 }
 
-
-                 return $this->error([], 'Error placing order', 500);
+                return $this->success(null, 'Order was successful');
+                // return $this->error([], 'Error placing order', 500);
 
          });
      }
