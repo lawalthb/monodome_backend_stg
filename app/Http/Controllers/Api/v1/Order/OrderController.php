@@ -94,7 +94,7 @@ class OrderController extends Controller
              }
 
              //remove money from wallet of users
-             if($request->payment_status == "wallet"){
+             if($request->payment_type == "wallet"){
 
                  $load->user->wallet->amount -= $loadTotalAmount;
                  $load->user->wallet->save();
@@ -119,7 +119,7 @@ class OrderController extends Controller
 
              $order->loadable()->associate($load);
 
-             if ($request->payment_status == "wallet" && $order->save()) {
+             if ($request->payment_type == "wallet" && $order->save()) {
                  $walletHistory = new WalletHistory;
                  $walletHistory->wallet_id = $load->user->wallet->id;
                  $walletHistory->user_id = $load->user->id;
@@ -138,14 +138,14 @@ class OrderController extends Controller
                 }
 
                 //this for offline payment
-                if($request->payment_status == "offline"){
+                if($request->payment_type == "offline"){
 
                     $order->user->notify(new SendNotification($order->user, 'Your offline order order was successful!'));
                     return $this->success(new OrderResource($order), 'Offline Order was successful');
                 }
 
                 // this for payment gateway
-                if($request->payment_status == "gateway"){
+                if($request->payment_type == "gateway"){
                     $publickey = Setting::where(['slug' => 'publickey'])->first()->value;
 
                   //  $order->user->notify(new SendNotification($order->user, 'Your offline order order was successful!'));
