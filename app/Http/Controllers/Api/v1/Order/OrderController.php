@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Order;
 
 use App\Models\Order;
+use App\Models\Setting;
 use App\Models\LoadType;
 use App\Models\PriceSetting;
 use Illuminate\Http\Request;
@@ -136,17 +137,19 @@ class OrderController extends Controller
                  return $this->success(new OrderResource($order), 'Wallet Order payment was successful');
                 }
 
+                //this for offline payment
                 if($request->payment_status == "offline"){
 
                     $order->user->notify(new SendNotification($order->user, 'Your offline order order was successful!'));
                     return $this->success(new OrderResource($order), 'Offline Order was successful');
                 }
 
-
+                // this for payment gateway
                 if($request->payment_status == "gateway"){
+                    $publickey = Setting::where(['slug' => 'publickey'])->first()->value;
 
                   //  $order->user->notify(new SendNotification($order->user, 'Your offline order order was successful!'));
-                    return $this->success(new OrderResource($order), 'Offline Order was successful');
+                    return $this->success(["public_key"=>$publickey], 'Gateway Order was successful');
                 }
 
 
