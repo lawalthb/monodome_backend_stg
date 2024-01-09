@@ -63,6 +63,16 @@ class User extends Authenticatable implements Auditable
         return $this->hasOne(Driver::class);
     }
 
+    public function company()
+    {
+        return $this->hasOne(Company::class);
+    }
+
+    public function shippingCompany()
+    {
+        return $this->hasOne(ShippingCompany::class);
+    }
+
 
     public function broker()
     {

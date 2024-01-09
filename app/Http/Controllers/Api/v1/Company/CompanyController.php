@@ -149,9 +149,10 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(company $company)
+    public function destroy(Request $request)
     {
-        //
+        $request->user()->delete();
+        $request->user()->company()->delete();
     }
 
 
