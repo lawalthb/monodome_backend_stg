@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CompanyRequest;
@@ -149,5 +150,108 @@ class CompanyController extends Controller
     public function destroy(company $company)
     {
         //
+    }
+
+
+    public function createUser(Request $request)
+    {
+
+        if (!Auth::user()->hasRole('Company Transport')) {
+
+            return response()->json(['message' => 'You dont have permission to create or updated user'], 422);
+        }
+
+        // Validate the request data
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+            'full_name' => 'required|string',
+            'phone_number' => 'required|numeric',
+            'role' => 'required|in:super_admin,admin', // 1 for super admin, 2 for admin
+        ]);
+
+        // Check if the user already exists by email
+        $user = User::where('email', $request->input('email'))->first();
+
+        $role = $role = Role::find(10);
+        if ($user) {
+            // User already exists; update their role
+            $user->syncRoles([$role]);
+
+            return response()->json(['message' => 'User role updated successfully'], 200);
+        }
+
+        // Create a new user
+        $user = new User();
+        $user->email = $request->input('email');
+        $user->full_name = $request->input('full_name');
+        $user->address = $request->input('address');
+        $user->phone_number = $request->input('phone_number');
+        $user->user_created_by = Auth::user()->id;
+        $user->role =$request->input('role');
+        $user->user_type = Str::slug($role->name, "_"); //str_replace(' ', '_', $role->name);
+        $password  = Str::random(16);
+        $user->password = Hash::make($password);
+        //$user->user_type = 'company_transporter_super';
+        $user->save();
+
+        $role =  $role = Role::find(5); //$request->input('role') == 1 ? 'super-admin' : 'admin';
+        $data = [
+            "full_name" => $request->input('full_name'),
+            "password" => $password,
+            "message" => "Your account as a/an ".$role->name." has been created",
+        ];
+        Mail::to($user->email)->send(
+            new SendPasswordMail($data)
+        );
+        // Assign the user's role
+        $user->assignRole($role);
+
+        return response()->json(['message' => 'User created successfully', 'user' => new UserResource($user)], 201);
+    }
+
+
+    public function myUsers()
+    {
+        // Check if the logged-in user has the 'Shipping Company' role
+        if (!Auth::user()->hasRole('Shipping Company')) {
+            return response()->json(['message' => 'You do not have permission to access this resource'], 403);
+        }
+
+        // Fetch the list of users registered under the logged-in user
+        $myUsers = User::where('user_created_by', Auth::user()->id)->get();
+
+        return response()->json(['message' => 'List of users registered under ' . Auth::user()->full_name, 'users' => UserResource::collection($myUsers)], 200);
+    }
+
+
+    public function changeRole(Request $request)
+    {
+        // Check if the logged-in user has the 'Shipping Company' role
+        if (!Auth::user()->hasRole('Shipping Company')) {
+            return response()->json(['message' => 'You do not have permission to access this resource'], 403);
+        }
+
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'role' => 'required|in:5,2', // 1 for super admin, 2 for admin
+        ]);
+
+        // Fetch the list of users registered under the logged-in user
+        $user = User::where(['user_created_by' => Auth::user()->id,'email'=>$request->email])->first();
+
+        $role = $role = Role::find($request->input('role')); //$request->input('role') == 1 ? 'super-admin' : 'admin';
+        if ($user) {
+            // User already exists; update their role
+            $user->user_type = Str::slug($role->name, "_");
+            $user->save();
+            $user->syncRoles([$role]);
+            $message ="Your Role has been changed to ".$role->name;
+             $user->notify(new SendNotification($user, $message));
+
+            return response()->json(['message' => 'User role updated successfully','user'=> new UserResource($user)], 200);
+        }else{
+
+            return response()->json(['message' => 'User not found!'], 404);
+        }
     }
 }

@@ -6,11 +6,12 @@ use App\Models\User;
 use App\Models\Agent;
 use App\Models\Broker;
 use App\Models\Driver;
+use App\Models\Wallet;
 use App\Models\Company;
 use App\Models\Guarantor;
 use App\Models\DriverManger;
-use App\Models\ShippingCompany;
 //use Doctrine\DBAL\DriverManager;
+use App\Models\ShippingCompany;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Database\Factories\DriverManagerFactory;
@@ -163,6 +164,14 @@ class UsersTableSeeder extends Seeder
             ),
 
         ));
+
+        // adding money to customer
+        $wallet = new Wallet;
+        $wallet->amount = 100000;
+        $wallet->status = 'active';
+        $wallet->user_id = 3;
+        $wallet->save();
+
 
         //driver
        Driver::factory()->create([
