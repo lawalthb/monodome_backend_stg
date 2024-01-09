@@ -129,6 +129,7 @@ class UsersTableSeeder extends Seeder
                 'role' => NULL,
                 'location' => NULL,
                 'user_agent' => NULL,
+                'isPremium' => 1,
                 'status' => 'Confirmed',
                 'remember_token' => NULL,
                 'deleted_at' => NULL,
