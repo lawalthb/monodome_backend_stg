@@ -182,16 +182,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
     Route::get('/', [CompanyController::class, 'index']);
         Route::post('/store', [CompanyController::class, 'store']);
-        Route::get('/show/{id}', [CompanyController::class, 'show']);
         Route::post('/update/{id}', [CompanyController::class, 'update']);
         Route::delete('/destroy/{id}', [CompanyController::class, 'destroy']);
 
 
         Route::group(['middleware' => 'auth:api' ,'role:Company Transport'], function(){
 
-            Route::post('/addUser', [ShippingCompanyController::class, 'createUser']);
-            Route::get('/myUsers', [ShippingCompanyController::class, 'myUsers']);
-            Route::post('/changeRole', [ShippingCompanyController::class, 'changeRole']);
+            Route::get('/info', [CompanyController::class, 'show']);
+            Route::post('/addUser', [CompanyController::class, 'createUser']);
+            Route::get('/myUsers', [CompanyController::class, 'myUsers']);
+            Route::post('/changeRole', [CompanyController::class, 'changeRole']);
 
         });
     });

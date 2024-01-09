@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CompanyRequest;
 use App\Http\Resources\CompanyResource;
+use App\Notifications\SendNotification;
 
 
 class CompanyController extends Controller
@@ -32,7 +34,7 @@ class CompanyController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $agents = company::where(function ($q) use ($key) {
+        $company = Company::where(function ($q) use ($key) {
             // Assuming there's a relationship between Agent and User
             $q->whereHas('user', function ($userQuery) use ($key) {
                 $userQuery->where('full_name', 'like', "%{$key}%");
@@ -41,7 +43,7 @@ class CompanyController extends Controller
             ->latest()
             ->paginate($perPage);
 
-        return CompanyResource::collection($agents);
+        return CompanyResource::collection($company);
     }
 
     /**
