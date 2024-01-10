@@ -12,14 +12,10 @@ use App\CPU\Helpers;
 class MapApiController extends Controller
 {
 
-
-
     public function getKey()
     {
-
         $api_key = get_business_settings('map_api_key_server');
-        $response = Http::get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' . $request['search_text'] . '&key=' . $api_key);
-        return response()->json(['message' => 'successfully','key'=>$api_key], 403);
+        return response()->json(['message' => 'successfully','key'=>$api_key], 200);
     }
 
     public function place_api_autocomplete(Request $request)
