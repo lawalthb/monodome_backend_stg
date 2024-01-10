@@ -401,6 +401,7 @@ Route::group(['prefix' => 'driver-manager'], function () {
 
     //map api
     Route::group(['prefix' => 'mapapi'], function () {
+        Route::get('get-api-key', [MapApiController::class,'getKey']);
         Route::post('place-api-autocomplete', [MapApiController::class,'place_api_autocomplete']);
         Route::post('distance-api', [MapApiController::class, 'distance_api']);
         Route::post('place-api-details', [MapApiController::class,'place_api_details']);
