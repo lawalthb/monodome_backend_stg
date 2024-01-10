@@ -152,6 +152,8 @@ class OrderController extends Controller
                     return $this->success(["public_key"=>$publickey], 'Gateway Order was successful');
                 }
 
+                event(new LoadTypeCreated($load));
+
                 return $this->success(null, 'Order was successful');
                 // return $this->error([], 'Error placing order', 500);
 
