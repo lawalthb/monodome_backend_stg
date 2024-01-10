@@ -11,6 +11,22 @@ use App\CPU\Helpers;
 
 class MapApiController extends Controller
 {
+
+
+
+    public function getKey(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'search_text' => 'required',
+        ]);
+        if ($validator->errors()->count() > 0) {
+            return response()->json(['errors' => error_processor($validator)], 403);
+        }
+        $api_key = get_business_settings('map_api_key_server');
+        $response = Http::get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' . $request['search_text'] . '&key=' . $api_key);
+        return $response->json();
+    }
+
     public function place_api_autocomplete(Request $request)
     {
         $validator = Validator::make($request->all(), [
