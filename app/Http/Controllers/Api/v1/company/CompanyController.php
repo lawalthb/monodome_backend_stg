@@ -211,8 +211,6 @@ class CompanyController extends Controller
 
         return response()->json(['message' => 'User created successfully', 'user' => new UserResource($user)], 201);
     }
-
-
     public function myUsers()
     {
         // Check if the logged-in user has the 'Shipping Company' role
