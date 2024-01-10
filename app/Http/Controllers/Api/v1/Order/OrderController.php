@@ -118,7 +118,8 @@ class OrderController extends Controller
              );
 
              $order->loadable()->associate($load);
-
+             event(new LoadTypeCreated($load));
+           //     return;
              if ($request->payment_type == "wallet" && $order->save()) {
                  $walletHistory = new WalletHistory;
                  $walletHistory->wallet_id = $load->user->wallet->id;
@@ -132,7 +133,7 @@ class OrderController extends Controller
                  $walletHistory->save();
 
                  $order->user->notify(new SendNotification($order->user, 'Your wallet payment order was successful!'));
-                 event(new LoadTypeCreated($load));
+               //  event(new LoadTypeCreated($load));
 
                  return $this->success(new OrderResource($order), 'Wallet Order payment was successful');
                 }
@@ -141,18 +142,20 @@ class OrderController extends Controller
                 if($request->payment_type == "offline"){
 
                     $order->user->notify(new SendNotification($order->user, 'Your offline order order was successful!'));
+                  //  event(new LoadTypeCreated($load));
+
                     return $this->success(new OrderResource($order), 'Offline Order was successful');
                 }
 
                 // this for payment gateway
                 if($request->payment_type == "gateway"){
                     $publickey = Setting::where(['slug' => 'publickey'])->first()->value;
+                  //  event(new LoadTypeCreated($load));
 
                   //  $order->user->notify(new SendNotification($order->user, 'Your offline order order was successful!'));
                     return $this->success(["public_key"=>$publickey], 'Gateway Order was successful');
                 }
 
-                event(new LoadTypeCreated($load));
 
                 return $this->success(null, 'Order was successful');
                 // return $this->error([], 'Error placing order', 500);
