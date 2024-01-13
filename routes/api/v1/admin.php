@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\v1\Admin\BrokerController;
 use App\Http\Controllers\Api\v1\Admin\DriverController;
 use App\Http\Controllers\Api\v1\Admin\CompanyController;
 use App\Http\Controllers\Api\v1\Admin\SettingController;
-use App\Http\Controllers\Api\v1\Blog\CategoryController;
+use App\Http\Controllers\Api\v1\Admin\CategoryController;
 use App\Http\Controllers\Api\v1\Admin\CustomerController;
 use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
 use App\Http\Controllers\Api\v1\Admin\DashboardController;
@@ -205,15 +205,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::delete('/destroy/{id}', [ShippingCompanyController::class, 'destroy']);
     });
 
-    Route::prefix('categories')->middleware('auth:api')->group(function () {
-        Route::get('/', [CategoryController::class, 'index']);
-        Route::post('/', [CategoryController::class, 'store']);
-        Route::get('/{category}', [CategoryController::class, 'show']);
-        Route::put('/{category}', [CategoryController::class, 'update']);
-        Route::delete('/{category}', [CategoryController::class, 'destroy']);
-    });
 
     Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
+
         Route::get('/', [BlogController::class, 'index']);
         Route::post('/', [BlogController::class, 'store']);
         Route::get('/{id}', [BlogController::class, 'show']);
@@ -228,6 +222,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
         Route::get('/pending', [BlogController::class, 'pendingBlog']);
         Route::get('/{category}/related', [BlogController::class, 'getRelatedBlogs']);
+
+
+        Route::prefix('categories')->group(function () {
+            Route::get('/', [CategoryController::class, 'index']);
+            Route::post('/', [CategoryController::class, 'store']);
+            Route::get('/{category}', [CategoryController::class, 'show']);
+            Route::put('/{category}', [CategoryController::class, 'update']);
+            Route::delete('/{category}', [CategoryController::class, 'destroy']);
+        });
+
     });
 
     // company-transporter route group
