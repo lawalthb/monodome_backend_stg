@@ -206,7 +206,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
     });
 
 
-    Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'blog', 'middleware' => 'auth:api'], function () {
 
         Route::get('/', [BlogController::class, 'index']);
         Route::post('/', [BlogController::class, 'store']);
@@ -226,13 +226,13 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::prefix('categories')->group(function () {
             Route::get('/', [CategoryController::class, 'index']);
             Route::post('/', [CategoryController::class, 'store']);
-            dd("okay");
             Route::get('/{category}', [CategoryController::class, 'show']);
             Route::put('/{category}', [CategoryController::class, 'update']);
             Route::delete('/{category}', [CategoryController::class, 'destroy']);
         });
 
     });
+
 
     // company-transporter route group
     Route::group(['prefix' => 'company-transporter'], function () {
