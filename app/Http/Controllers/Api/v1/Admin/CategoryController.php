@@ -12,7 +12,6 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        dd('okay');
         $categories = Category::all();
         return CategoryResource::collection($categories);
     }
