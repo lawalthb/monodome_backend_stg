@@ -17,8 +17,10 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('full_name');
             $table->string('email')->unique();
-            $table->string('phone_number')->unique()->nullable();
+            // $table->string('is_email_verified')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('phone_number')->unique()->nullable();
+            // $table->string('is_phone_verified')->unique();
             $table->string('password');
             $table->string('provider_id')->nullable();
             $table->string('provider')->nullable();

@@ -257,7 +257,7 @@ class AuthController extends Controller
         // Update user profile data
         $user->update([
             'full_name' => $validatedData['full_name'],
-         //   'email' => $validatedData['email'],
+            'phone_number' => $validatedData['phone_number'],
             'address' => $validatedData['address'],
         ]);
 
@@ -267,7 +267,6 @@ class AuthController extends Controller
            $imagePath =  $request->image ? $this->saveImage('profile', $request->image, 500, 500) : null;
             $user->update(['imageUrl' => $imagePath]);
         }
-
 
         $message ="Your Profile details was updated successfully";
         $user->notify(new SendNotification($user, $message));
