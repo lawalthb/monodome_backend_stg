@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('full_name');
             $table->text('email');
             $table->text('comment');
-            $table->tinyInteger('status')->default(0);
+            $table->enum('status', ['draft', 'confirmed', 'approved', 'rejected','failed','published'])->default('draft');
             $table->timestamps();
             $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
         });

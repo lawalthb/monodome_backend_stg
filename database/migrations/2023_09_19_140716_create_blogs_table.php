@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->text('body');
             $table->text('image');
-            $table->enum('status', ['draft', 'confirmed', 'approved', 'Rejected','Failed','published'])->default('draft');
+            $table->enum('status', ['draft', 'confirmed', 'approved', 'rejected','failed','published'])->default('draft');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
