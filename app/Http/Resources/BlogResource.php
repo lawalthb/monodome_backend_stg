@@ -19,7 +19,7 @@ class BlogResource extends JsonResource
             'title' => $this->title,
             'body' => $this->body,
             'image' =>  getImageFile($this->image),
-            'status' => $this->status,
+            'status' => $this->status ==0 ? 'Pending' : 'Confirmed',
             'category' => new CategoryResource($this->category),
             'user' => new UserResource($this->user),
             'created_at' => $this->created_at,
