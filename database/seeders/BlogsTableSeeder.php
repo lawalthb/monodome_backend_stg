@@ -37,7 +37,7 @@ class BlogsTableSeeder extends Seeder
                 'image' => 'uploads/blog/1704623533OnXAgrptnA.jpg',
                 'user_id' => rand(1, 4),
                 'category_id' => rand(1, 50),
-                'status' => rand(1, 0),
+                'status' => rand(1, 3),
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
