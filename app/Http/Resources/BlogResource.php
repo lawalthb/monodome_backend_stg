@@ -14,12 +14,13 @@ class BlogResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        //draft , confirmed , Published
         return [
             'id' => $this->id,
             'title' => $this->title,
             'body' => $this->body,
             'image' =>  getImageFile($this->image),
-            'status' => $this->status ==0 ? 'Pending' : 'Confirmed',
+            'status' => $this->status ==0 ? 'Pending' : 'Published',
             'category' => new CategoryResource($this->category),
             'user' => new UserResource($this->user),
             'created_at' => $this->created_at,
