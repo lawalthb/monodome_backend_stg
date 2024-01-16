@@ -25,6 +25,7 @@ class BlogRequest extends FormRequest
             'title' => 'required|max:80',
             'category_id' => 'required|integer',
             'body' => 'required',
+            'status' => 'required|in:1,2,3',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
            // 'status' => 'required|integer',
         ];
