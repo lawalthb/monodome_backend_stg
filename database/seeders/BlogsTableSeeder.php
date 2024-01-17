@@ -52,6 +52,8 @@ class BlogsTableSeeder extends Seeder
 
 
         for ($i = 0; $i < 50; $i++) {
+            $randomStatus = $statuses[array_rand($statuses)];
+
             \DB::table('comments')->insert([
                 'blog_id' =>rand(1, 49),
                 'full_name' => $faker->name(),
