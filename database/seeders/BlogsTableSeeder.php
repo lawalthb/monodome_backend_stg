@@ -55,7 +55,7 @@ class BlogsTableSeeder extends Seeder
             \DB::table('comments')->insert([
                 'blog_id' =>rand(1, 49),
                 'full_name' => $faker->name(),
-                'email' => 'uploads/blog/17047151138T6QD3nofY.png',
+                'email' => $faker->email(),
                 'comment' => $faker->sentence(),
                 'status' => $randomStatus,
                 'created_at' => now(),
