@@ -237,7 +237,6 @@ class CompanyController extends Controller
 
     }
 
-
     public function driver(Request $request)
     {
         $key = $request->input('search');
