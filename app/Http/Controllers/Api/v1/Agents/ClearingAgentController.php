@@ -252,7 +252,7 @@ class ClearingAgentController extends Controller
 
         if($loadBoards){
 
-            $driverManger = Company::where("user_id",auth()->id())->first();
+            $driverManger = Agent::where("user_id",auth()->id())->first();
 
             $loadBoards->acceptable_id = $driverManger->id;
             $loadBoards->acceptable_type = get_class($driverManger) ;
