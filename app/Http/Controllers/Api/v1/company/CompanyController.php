@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Api\v1\Company;
 
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Truck;
+use App\Models\Driver;
 use App\Models\Company;
+use App\Models\LoadBoard;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
@@ -18,8 +22,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CompanyRequest;
+use App\Http\Resources\OrderResource;
+use App\Http\Resources\TruckResource;
+use App\Http\Resources\DriverResource;
 use App\Http\Resources\CompanyResource;
 use App\Notifications\SendNotification;
+use App\Http\Resources\LoadBoardResource;
 
 
 class CompanyController extends Controller
@@ -122,28 +130,131 @@ class CompanyController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(company $company)
+
+    public function order(Request $request)
     {
-        //
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $drivers = Driver::where(function ($q) use ($key) {
+            $q->where('have_motor', 'like', "%{$key}%");
+            $q->orWhere('nin_number', 'like', "%{$key}%");
+            $q->orWhereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('full_name', 'like', "%{$key}%");
+            });
+        })->where("have_motor", "No")
+            ->whereHas('acceptedOrders', function ($orderQuery) use ($key) {
+                $orderQuery->where('amount', '>=', "%{$key}%");
+                $orderQuery->orWhere('order_no', 'like', "%{$key}%");
+
+            })
+            ->latest()
+            ->paginate($perPage);
+
+        return DriverResource::collection($drivers);
+    }
+
+
+     /**
+     * orderAssign
+     * this function assign order to driver
+     * @param  mixed $request
+     * @return void
+     */
+    public function orderAssign(Request $request){
+
+        return DB::transaction(function () use ($request) {
+
+        $request->validate([
+            'order_id' => 'required',
+            'driver_id' => 'required',
+        ]);
+
+        $driver = Driver::find($request->driver_id);
+        $order =  Order::where("id",$request->order_id)->where("driver_id",null)->first();
+
+        if($order){
+         //   return $order->loadable->state;
+            $order->driver_id = $driver->id;
+            $order->acceptable_id = $driver->id;
+            $order->acceptable_type = get_class($driver) ;
+            $order->placed_by_id = auth()->user()->id;
+            $order->save();
+            $message ="You have been assign an order with number ". $order->order_no. " to delivery from: ".$order->loadable->sender_location." To: ".$order->loadable->receiver_location;
+            $driver->user->notify(new SendNotification($driver->user, $message));
+
+            return $this->success([
+                new OrderResource($order),
+            ]);
+
+
+        }else{
+             return $this->error([
+            ], "Order already assign or doesn't exist!");
+        }
+
+    });
+
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * acceptOrder
+     *  this function is for driver manager to accept
+     *  order from loadboard or loadbrocast
+     * @param  mixed $request
+     * @return void
      */
-    public function edit(company $company)
-    {
-        //
+    public function acceptOrder(Request $request){
+
+        return DB::transaction(function () use ($request) {
+
+        $request->validate([
+            'load_board_id' => 'required',
+            //'driver_id' => 'required',
+        ]);
+
+        $loadBoards = LoadBoard::where("id",$request->load_board_id)->whereNull('acceptable_id')
+        ->whereNull('acceptable_type')->first();
+
+        if($loadBoards){
+
+            $driverManger = Company::where("user_id",auth()->id())->first();
+
+            $loadBoards->acceptable_id = $driverManger->id;
+            $loadBoards->acceptable_type = get_class($driverManger) ;
+
+            $loadBoards->loadable->status = "Processing";
+            $loadBoards->save();
+
+            return new LoadBoardResource($loadBoards);
+        }else{
+
+            return $this->error([
+            ], "This load has already been taken!");
+        }
+
+    });
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, company $company)
+
+    public function truck(Request $request)
     {
-        //
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $truck = Truck::where(function ($q) use ($key) {
+            // Assuming there's a relationship between Agent and User
+            $q->whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('email', 'like', "%{$key}%");
+            })->orWhere('plate_number', 'like', "%{$key}%")
+            ->orWhere('truck_location', 'like', "%{$key}%")
+            ->orWhere('truck_name', 'like', "%{$key}%");
+        })
+            ->latest()
+            ->paginate($perPage);
+
+        return TruckResource::collection($truck);
     }
 
     /**
@@ -197,7 +308,7 @@ class CompanyController extends Controller
         //$user->user_type = 'company_transporter_super';
         $user->save();
 
-        $role =  $role = Role::find(5); //$request->input('role') == 1 ? 'super-admin' : 'admin';
+        $role =  $role = Role::find(10); //$request->input('role') == 1 ? 'super-admin' : 'admin';
         $data = [
             "full_name" => $request->input('full_name'),
             "password" => $password,
@@ -213,8 +324,8 @@ class CompanyController extends Controller
     }
     public function myUsers()
     {
-        // Check if the logged-in user has the 'Shipping Company' role
-        if (!Auth::user()->hasRole('Shipping Company')) {
+        // Check if the logged-in user has the 'Company Transport' role
+        if (!Auth::user()->hasRole('Company Transport')) {
             return response()->json(['message' => 'You do not have permission to access this resource'], 403);
         }
 
@@ -227,14 +338,14 @@ class CompanyController extends Controller
 
     public function changeRole(Request $request)
     {
-        // Check if the logged-in user has the 'Shipping Company' role
-        if (!Auth::user()->hasRole('Shipping Company')) {
+        // Check if the logged-in user has the 'Company Transport' role
+        if (!Auth::user()->hasRole('Company Transport')) {
             return response()->json(['message' => 'You do not have permission to access this resource'], 403);
         }
 
         $request->validate([
             'email' => 'required|email|exists:users,email',
-            'role' => 'required|in:5,2', // 1 for super admin, 2 for admin
+            'role' => 'required|in:10,2', // 1 for super admin, 2 for admin
         ]);
 
         // Fetch the list of users registered under the logged-in user

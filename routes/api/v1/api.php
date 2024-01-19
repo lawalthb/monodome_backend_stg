@@ -185,10 +185,19 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
       ///  Route::post('/update/{id}', [CompanyController::class, 'update']);
      //   Route::delete('/destroy/{id}', [CompanyController::class, 'destroy']);
 
-
         Route::group(['middleware' => 'auth:api' ,'role:Company Transport'], function(){
 
             Route::get('/info', [CompanyController::class, 'show']);
+
+            Route::get('/drivers', [CompanyController::class, 'index']);
+            Route::get('/truck', [TruckController::class, 'truck']);
+            Route::get('/order', [CompanyController::class, 'order']);
+            Route::post('/accept-order', [CompanyController::class, 'acceptOrder']);
+            Route::post('/order-assign', [CompanyController::class, 'orderAssign']);
+            Route::post('/order-reassign', [CompanyController::class, 'orderReAssign']);
+            Route::get('/broadcast', [CompanyController::class, 'broadcast']);
+            Route::get('/broadcast/{id}', [CompanyController::class, 'singleBroadcast']);
+
             Route::delete('/delete', [CompanyController::class, 'destroy']);
             Route::post('/addUser', [CompanyController::class, 'createUser']);
             Route::get('/myUsers', [CompanyController::class, 'myUsers']);
