@@ -264,7 +264,7 @@ class ClearingAgentController extends Controller
         }else{
 
             return $this->error([
-            ], "This load has already been taken!");
+            ], "This load has is empty or been taken!");
         }
 
     });
