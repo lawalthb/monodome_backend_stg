@@ -280,10 +280,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/order', [ClearingAgentController::class, 'my_order']);
         Route::post('/store', [ClearingAgentController::class, 'store'])->withoutMiddleware("auth:api");
         Route::post('/order-assign', [ClearingAgentController::class, 'orderAssign']);
+        Route::post('/accept-order', [ClearingAgentController::class, 'acceptOrder']);
         Route::post('/order-reassign', [ClearingAgentController::class, 'orderReAssign']);
         Route::get('/broadcast', [ClearingAgentController::class, 'broadcast']);
         Route::get('/broadcast/{id}', [ClearingAgentController::class, 'singleBroadcast']);
-        Route::get('/accept-order/{id}', [ClearingAgentController::class, 'accept_order']);
+
+        // Route::get('/accept-order/{id}', [ClearingAgentController::class, 'accept_order']);
 
     });
 
