@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\v1\Agents;
 use App\Models\User;
 use App\Models\Agent;
 use App\Models\Order;
+use App\Models\Driver;
+use App\Models\Company;
 use App\Models\Guarantor;
 use App\Models\LoadBoard;
 use Illuminate\Support\Str;
@@ -20,6 +22,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\AgentResource;
 use App\Http\Resources\OrderResource;
 use App\Http\Requests\AgentFormRequest;
+use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;
 
 class ClearingAgentController extends Controller
@@ -184,5 +187,89 @@ class ClearingAgentController extends Controller
             return $this->error('An error occurred while registering the Clearing Agent  and guarantors.');
         }
     }
+
+
+      /**
+     * orderAssign
+     * this function assign order to driver
+     * @param  mixed $request
+     * @return void
+     */
+    public function orderAssign(Request $request){
+
+        return DB::transaction(function () use ($request) {
+
+        $request->validate([
+            'order_id' => 'required',
+            'driver_id' => 'required',
+        ]);
+
+        $driver = Driver::find($request->driver_id);
+        $order =  Order::where("id",$request->order_id)->where("driver_id",null)->first();
+
+        if($order){
+         //   return $order->loadable->state;
+            $order->driver_id = $driver->id;
+            $order->acceptable_id = $driver->id;
+            $order->acceptable_type = get_class($driver) ;
+            $order->placed_by_id = auth()->user()->id;
+            $order->save();
+            $message ="You have been assign an order with number ". $order->order_no. " to delivery from: ".$order->loadable->sender_location." To: ".$order->loadable->receiver_location;
+            $driver->user->notify(new SendNotification($driver->user, $message));
+
+            return $this->success([
+                new OrderResource($order),
+            ]);
+
+
+        }else{
+             return $this->error([
+            ], "Order already assign or doesn't exist!");
+        }
+
+    });
+
+    }
+
+    /**
+     * acceptOrder
+     *  this function is for driver manager to accept
+     *  order from loadboard or loadbrocast
+     * @param  mixed $request
+     * @return void
+     */
+    public function acceptOrder(Request $request){
+
+        return DB::transaction(function () use ($request) {
+
+        $request->validate([
+            'load_board_id' => 'required',
+            //'driver_id' => 'required',
+        ]);
+
+        $loadBoards = LoadBoard::where("id",$request->load_board_id)->whereNull('acceptable_id')
+        ->whereNull('acceptable_type')->first();
+
+        if($loadBoards){
+
+            $driverManger = Company::where("user_id",auth()->id())->first();
+
+            $loadBoards->acceptable_id = $driverManger->id;
+            $loadBoards->acceptable_type = get_class($driverManger) ;
+
+            $loadBoards->loadable->status = "Processing";
+            $loadBoards->save();
+
+            return new LoadBoardResource($loadBoards);
+        }else{
+
+            return $this->error([
+            ], "This load has already been taken!");
+        }
+
+    });
+
+    }
+
 
 }
