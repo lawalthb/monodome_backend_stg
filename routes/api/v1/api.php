@@ -189,7 +189,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
             Route::get('/info', [CompanyController::class, 'show']);
 
-            Route::get('/drivers', [CompanyController::class, 'index']);
+            Route::get('/drivers', [CompanyController::class, 'driver']);
             Route::get('/truck', [TruckController::class, 'truck']);
             Route::get('/order', [CompanyController::class, 'order']);
             Route::post('/accept-order', [CompanyController::class, 'acceptOrder']);

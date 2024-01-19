@@ -238,6 +238,24 @@ class CompanyController extends Controller
     }
 
 
+    public function driver(Request $request)
+    {
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $driver = Driver::where(function ($q) use ($key) {
+            // Assuming there's a relationship between Agent and User
+            $q->whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('full_name', 'like', "%{$key}%");
+                $userQuery->where('address', 'like', "%{$key}%");
+            })->orWhere('license_number', 'like', "%{$key}%");
+        })->where("have_motor","No")
+            ->latest()
+            ->paginate($perPage);
+
+        return DriverResource::collection($driver);
+    }
+
     public function truck(Request $request)
     {
         $key = $request->input('search');
