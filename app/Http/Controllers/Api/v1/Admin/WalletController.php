@@ -30,8 +30,9 @@ class WalletController extends Controller
 
             $totalAmount = $wallet->sum('amount');
              return $this->success([
+                 'total_amount' => $totalAmount,
                  'wallet' => WalletResource::collection($wallet),
-                 'total_amount' => $totalAmount],
+             ],
                  "Wallet Dashboard details"
                 );
     }
@@ -44,7 +45,7 @@ class WalletController extends Controller
         $walletHistory = WalletHistory::where(function ($q) use ($key) {
             $q->whereHas('user', function ($userQuery) use ($key) {
                 $userQuery->where('full_name', 'like', "%{$key}%")->orWhere('phone_number', 'like', "%{$key}%");
-            })->orWhere('status', 'like', "%{$key}%");
+            });
         })
             ->latest()
             ->paginate($perPage);
@@ -54,10 +55,10 @@ class WalletController extends Controller
             $totalCloseBalance = $walletHistory->sum('closing_balance');
 
         return $this->success([
-            'walletHistory' => WalletHistoryResource::collection($walletHistory),
             'total_walletHistory_amount' => $totalAmount,
             'total_walletHistory_fee' => $totalFee,
             'total_walletHistory_closeBalance' => $totalCloseBalance,
+            'walletHistory' => WalletHistoryResource::collection($walletHistory),
             ],
             "Wallet History details");
 
