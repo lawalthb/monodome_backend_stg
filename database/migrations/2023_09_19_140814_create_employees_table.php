@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('uuid');
             $table->string('full_name');
-            $table->string('city_of_residence');
-            $table->string('nin_number');
-            $table->string('license_number');
+            $table->string('address');
+            $table->string('phone_number');
+            $table->string('email');
             $table->string('department');
             $table->enum('status', ['Pending', 'Confirmed', 'Approved', 'Rejected','Failed'])->default('Pending');
             $table->timestamps();

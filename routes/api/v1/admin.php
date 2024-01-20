@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\v1\Admin\CompanyController;
 use App\Http\Controllers\Api\v1\Admin\SettingController;
 use App\Http\Controllers\Api\v1\Admin\CategoryController;
 use App\Http\Controllers\Api\v1\Admin\CustomerController;
+use App\Http\Controllers\Api\v1\Admin\EmployeeController;
 use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
 use App\Http\Controllers\Api\v1\Admin\DashboardController;
 use App\Http\Controllers\Api\v1\Admin\LoadBoardController;
@@ -67,6 +68,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::post('/status/{user}', [ManageUserController::class, 'status']);
     });
 
+
+      //for employee
+      Route::group(['prefix' => 'employee'], function () {
+        Route::get('/', [EmployeeController::class, 'index']);
+        Route::get('/{id}', [EmployeeController::class, 'show']);
+        Route::post('/{id}', [EmployeeController::class, 'show']);
+        Route::delete('/{id}', [EmployeeController::class, 'show']);
+        Route::post('/status/{id}', [EmployeeController::class, 'update']);
+        Route::get('/user/{id}', [EmployeeController::class, 'all_user_orders']);
+    });
 
     //for orders
     Route::group(['prefix' => 'orders'], function () {
