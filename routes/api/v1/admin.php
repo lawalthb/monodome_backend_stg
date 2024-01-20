@@ -84,8 +84,10 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::post('/status/{id}', [OrderController::class, 'update']);
         Route::get('/user/{id}', [OrderController::class, 'all_user_orders']);
-        Route::get('/transactions', [OrderController::class, 'all_transactions']);
-        Route::get('/transactions/{id}', [OrderController::class, 'single_transactions']);
+    });
+        Route::group(['prefix' => 'transactions'], function () {
+        Route::get('/', [OrderController::class, 'all_transactions']);
+        Route::get('/{id}', [OrderController::class, 'single_transactions']);
     });
 
 

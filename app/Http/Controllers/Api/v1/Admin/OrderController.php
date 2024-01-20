@@ -112,7 +112,6 @@ class OrderController extends Controller
 
 
     public function all_transactions(Request $request){
-
         $sort = $request->input('sort');
         $email = $request->input('email');
         $payment_type = $request->input('phone_number');
