@@ -28,8 +28,8 @@ class UserResource extends JsonResource
             "referral_code" => $this->referral_code,
             "user_created_by" => $this->user_created_by ?? new UserResource($this->whenLoaded('user_created_by')),
             "ref_by" =>  $this->ref_by ?? new UserResource($this->whenLoaded('ref_by')),
-            "permission" => $this->getAllPermissions(),
-            "role" => $this->ref_by ?? UserRoleResource::collection($this->roles),
+            "permission" => UserPermissionResource::collection($this->permissions),
+            "role" => UserRoleResource::collection($this->roles),
             "updated_at" => $this->updated_at,
             "created_at" => $this->created_at,
         ];
