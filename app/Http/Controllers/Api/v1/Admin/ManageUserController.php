@@ -122,9 +122,63 @@ class ManageUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'full_name' => 'required|string',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'address' => 'nullable|string',
+            'phone_number' => 'nullable|string|unique:users,phone_number,' . $user->id,
+            'password' => 'nullable|string',
+            'permission_ids' => 'required|array',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error('', $validator->errors()->first(), 422);
+        }
+
+        // Update user details
+        $user->full_name = $request->full_name;
+        $user->email = $request->email;
+        $user->address = $request->address;
+        $user->phone_number = $request->phone_number;
+
+        // Update password if provided
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        // Sync permissions
+        $permissions = Permission::whereIn('id', $request->permission_ids)->get();
+        $user->syncPermissions($permissions);
+
+        // Notify the user about the update
+        $message = "Your profile at " . config('app.name') . " has been updated.";
+        $user->notify(new SendNotification($user, $message));
+
+        $data = [
+            "full_name" => $request->input('full_name'),
+            "password" => $request->password,
+            "message" => "",
+        ];
+
+        //only send password to drivers that doesnt have motor
+        if ($request->input('full_name') == "Yes") {
+            Mail::to($user->email)->send(
+                new SendPasswordMail($data)
+            );
+        }
+
+        return $this->success(
+            [
+                "user" => new UserResource($user),
+            ],
+            "Admin profile updated successfully"
+        );
     }
 
 
