@@ -24,12 +24,14 @@ class TransactionsResource extends JsonResource
             "uuid" =>  $this->uuid,
             "order_no" =>  $this->order_no,
             "amount" =>  $this->amount,
+            "payment_type" =>  $this->payment_type,
             "fee" =>  $this->fee,
             "total_amount" =>  $this->fee +$this->amount,
             "status" =>  $this->status,
             "updated_at" =>  $this->updated_at,
             "created_at" =>  $this->created_at,
             "user" =>  new UserResource($this->user),
+            "deliver" =>  new UserResource($this->driver),
             "package" => $this->loadableResource(),
         ];
     }

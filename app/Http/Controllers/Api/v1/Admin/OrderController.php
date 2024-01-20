@@ -115,7 +115,7 @@ class OrderController extends Controller
 
         $sort = $request->input('sort');
         $email = $request->input('email');
-        $phone = $request->input('phone_number');
+        $payment_type = $request->input('phone_number');
         $status = $request->input('status');
         $fullName = $request->input('full_name');
         $startDate = $request->input('start_date');
@@ -137,8 +137,8 @@ class OrderController extends Controller
     }
 
 
-    if ($phone) {
-        $order->where('phone_number', 'like', "%$phone%");
+    if ($payment_type) {
+        $order->where('payment_type', 'like', "%$payment_type%");
     }
 
     if ($status) {
@@ -176,4 +176,15 @@ class OrderController extends Controller
     ]);
 
     }
+
+
+    public function single_transaction($id)
+{
+    $order = Order::findOrFail($id);
+
+    return response()->json([
+        'data' => new TransactionsResource($order),
+    ]);
+}
+
 }
