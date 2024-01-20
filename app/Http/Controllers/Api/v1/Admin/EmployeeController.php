@@ -32,13 +32,11 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'uuid' => 'required|string',
             'full_name' => 'required|string',
             'address' => 'required|string',
             'phone_number' => 'required|string',
             'email' => 'required|email|unique:employees,email',
             'department' => 'required|string',
-            'status' => 'required|in:Pending,Confirmed,Approved,Rejected,Failed',
         ]);
 
         if ($validator->fails()) {
@@ -55,7 +53,6 @@ class EmployeeController extends Controller
         $employee = Employee::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'uuid' => 'required|string',
             'full_name' => 'required|string',
             'address' => 'required|string',
             'phone_number' => 'required|string',

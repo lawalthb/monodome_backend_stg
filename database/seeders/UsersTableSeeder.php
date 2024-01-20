@@ -413,8 +413,6 @@ class UsersTableSeeder extends Seeder
           ]);
        }
 
-
-
          // driver manager
          $company = Role::find(10);
 
@@ -448,6 +446,26 @@ class UsersTableSeeder extends Seeder
            ]);
         }
 
+
+        \DB::table('employees')->delete();
+
+        for ($i = 1; $i <= 50; $i++) {
+
+            $randomStatus = $statuses[array_rand($statuses)];
+
+        \DB::table('employees')->insert(array (
+            0 =>
+            array (
+                'uuid' => fake()->uuid(),
+                'full_name' => fake()->name(),
+                'address' =>  fake()->streetAddress(),
+                'phone_number' => fake()->e164PhoneNumber(),
+                'email' => fake()->unique()->safeEmail(),
+                'department' => fake()->company(),
+           //     'status' => $randomStatus,
+            ),
+        ));
+    }
 
     }
 
