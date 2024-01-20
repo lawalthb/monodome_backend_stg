@@ -5,8 +5,10 @@ use App\Http\Controllers\Api\v1\Admin\BlogController;
 use App\Http\Controllers\Api\v1\Admin\RoleController;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
 use App\Http\Controllers\Api\v1\Admin\OrderController;
+use App\Http\Controllers\Api\v1\Wallet\CardController;
 use App\Http\Controllers\Api\v1\Admin\BrokerController;
 use App\Http\Controllers\Api\v1\Admin\DriverController;
+use App\Http\Controllers\Api\v1\Admin\WalletController;
 use App\Http\Controllers\Api\v1\Admin\CompanyController;
 use App\Http\Controllers\Api\v1\Admin\SettingController;
 use App\Http\Controllers\Api\v1\Admin\CategoryController;
@@ -90,6 +92,23 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/{id}', [OrderController::class, 'single_transactions']);
     });
 
+    Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {
+
+        Route::get('/', [WalletController::class, 'index']);
+        Route::get('/check-pin', [WalletController::class, 'checkPinExists']);
+        Route::post('/validate-pin', [WalletController::class, 'validate_pin']);
+        Route::post('/update-pin', [WalletController::class, 'update_pin']);
+        Route::get('/wallet-history', [WalletController::class, 'wallet_history']);
+
+
+        //card endpoint here
+        Route::post('/cards', [CardController::class, 'store']);
+        Route::get('/cards', [CardController::class, 'index']);
+        Route::get('/cards/{id}', [CardController::class, 'show']);
+        Route::put('/cards/{id}', [CardController::class, 'update']);
+        Route::delete('/cards/{id}', [CardController::class, 'destroy']);
+
+    });
 
     // for settings
         Route::group(['prefix' => 'setting'], function () {
