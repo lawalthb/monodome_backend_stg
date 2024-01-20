@@ -72,10 +72,10 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
       Route::group(['prefix' => 'employee'], function () {
         Route::get('/', [EmployeeController::class, 'index']);
         Route::get('/{id}', [EmployeeController::class, 'show']);
-        Route::post('/', [EmployeeController::class, 'show']);
-        Route::PUT ('/{id}', [EmployeeController::class, 'show']);
-        Route::delete('/{id}', [EmployeeController::class, 'show']);
-        Route::post('/status/{id}', [EmployeeController::class, 'update']);
+        Route::post('/', [EmployeeController::class, 'store']);
+        Route::PUT ('/{id}', [EmployeeController::class, 'update']);
+        Route::delete('/{id}', [EmployeeController::class, 'destroy']);
+        Route::post('/status/{id}', [EmployeeController::class, 'status']);
     });
 
     //for orders
