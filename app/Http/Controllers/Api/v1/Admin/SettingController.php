@@ -191,8 +191,6 @@ class SettingController extends Controller
         );
     }
 
-
-
     public function distance()
     {
         $groupedDistanceSettings = DistanceSetting::with('loadable')

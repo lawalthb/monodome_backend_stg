@@ -180,7 +180,27 @@ class DriverMangerController extends Controller
     }
 
 
-    public function truck(Request $request)
+    public function available_truck(Request $request)
+    {
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $truck = Truck::where(function ($q) use ($key) {
+            $q->whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('email', 'like', "%{$key}%");
+            })->orWhere('plate_number', 'like', "%{$key}%")
+            ->orWhere('truck_location', 'like', "%{$key}%")
+            ->orWhere('truck_name', 'like', "%{$key}%");
+        })
+            ->latest()
+            ->paginate($perPage);
+
+        return TruckResource::collection($truck);
+    }
+
+
+
+    public function my_truck(Request $request)
     {
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
@@ -188,7 +208,7 @@ class DriverMangerController extends Controller
         $truck = Truck::where(function ($q) use ($key) {
             // Assuming there's a relationship between Agent and User
             $q->whereHas('user', function ($userQuery) use ($key) {
-                $userQuery->where('email', 'like', "%{$key}%");
+                $userQuery->where('email', 'like', "%{$key}%")->where('user_created_by', auth()->id());
             })->orWhere('plate_number', 'like', "%{$key}%")
             ->orWhere('truck_location', 'like', "%{$key}%")
             ->orWhere('truck_name', 'like', "%{$key}%");
