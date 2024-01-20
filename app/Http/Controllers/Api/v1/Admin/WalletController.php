@@ -5,20 +5,25 @@ namespace App\Http\Controllers\Api\v1\Admin;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use App\Models\WalletHistory;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WalletResource;
 use App\Http\Resources\WalletHistoryResource;
 
 class WalletController extends Controller
 {
+
+    use ApiStatusTrait,FileUploadTrait;
+
     public function index(Request $request)
     {
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
         $wallet = Wallet::where(function ($q) use ($key) {
             $q->whereHas('user', function ($userQuery) use ($key) {
-                $userQuery->where('full_name', 'like', "%{$key}%");
-            })->orWhere('status', 'like', "%{$key}%")->orWhere('nin_number', 'like', "%{$key}%");
+                $userQuery->where('full_name', 'like', "%{$key}%")->orWhere('phone_number', 'like', "%{$key}%");
+            })->orWhere('status', 'like', "%{$key}%");
         })
             ->latest()
             ->paginate($perPage);
@@ -31,7 +36,6 @@ class WalletController extends Controller
                 );
     }
 
-
     public function wallet_history(Request $request){
 
         $key = $request->input('search');
@@ -39,8 +43,8 @@ class WalletController extends Controller
 
         $walletHistory = WalletHistory::where(function ($q) use ($key) {
             $q->whereHas('user', function ($userQuery) use ($key) {
-                $userQuery->where('full_name', 'like', "%{$key}%");
-            })->orWhere('status', 'like', "%{$key}%")->orWhere('nin_number', 'like', "%{$key}%");
+                $userQuery->where('full_name', 'like', "%{$key}%")->orWhere('phone_number', 'like', "%{$key}%");
+            })->orWhere('status', 'like', "%{$key}%");
         })
             ->latest()
             ->paginate($perPage);
