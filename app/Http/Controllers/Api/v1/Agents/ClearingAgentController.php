@@ -277,8 +277,8 @@ class ClearingAgentController extends Controller
 
     public function uploadDocs(Request $request){
 
-        
         if ($request->hasFile('documents')) {
+            $agent = Agent::find(auth()->id());
             $documents = [];
 
             foreach ($request->file('documents') as $file) {
@@ -293,9 +293,16 @@ class ClearingAgentController extends Controller
                     'path' => $path,
                 ]);
 
-                // Associate the document with the LoadBulk
-                $loadBulk->loadDocuments()->save($document);
+                // Associate the document with the clearing Agent
+                $agent->loadDocuments()->save($document);
             }
+
+
+            return $this->success( new AgentResource($agent), 'Clearing Agent  and guarantors registered successfully');
+
+        }else{
+            return $this->error([
+            ], "Document File is empty!");
         }
     }
 
