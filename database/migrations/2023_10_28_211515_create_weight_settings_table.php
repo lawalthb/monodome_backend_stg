@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('distance_settings', function (Blueprint $table) {
+        Schema::create('weight_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('min')->comment('in KM');
-            $table->string('max')->comment('in KM');
+            $table->string('min')->comment('in kg');
+            $table->string('max')->comment('in kg');
             $table->string('price');
             $table->unsignedBigInteger('loadable_id');
             $table->string('loadable_type');
