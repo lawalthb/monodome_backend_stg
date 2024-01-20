@@ -19,7 +19,7 @@ class WalletHistoryResource extends JsonResource
             "uuid" => $this->uuid,
             "wallet_type" => $this->wallet_type,
             "payment_type" => $this->payment_type,
-            "paystack_reference" => $this->paystack_reference,
+            "reference" => $this->paystack_reference,
             "description" => $this->description,
             "fee" => $this->fee,
             "amount" => $this->amount,

@@ -45,7 +45,17 @@ class WalletController extends Controller
             ->latest()
             ->paginate($perPage);
 
-        return $this->success(['walletHistory' => WalletHistoryResource::collection($walletHistory)], "Wallet History details");
+            $totalAmount = $walletHistory->sum('amount');
+            $totalFee = $walletHistory->sum('fee');
+            $totalCloseBalance = $walletHistory->sum('closing_balance');
+
+        return $this->success([
+            'walletHistory' => WalletHistoryResource::collection($walletHistory),
+            'total_walletHistory_amount' => $totalAmount,
+            'total_walletHistory_fee' => $totalFee,
+            'total_walletHistory_closeBalance' => $totalCloseBalance,
+            ],
+            "Wallet History details");
 
     }
 }
