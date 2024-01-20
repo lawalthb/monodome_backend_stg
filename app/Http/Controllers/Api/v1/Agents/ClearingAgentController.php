@@ -52,20 +52,23 @@ class ClearingAgentController extends Controller
     {
         $query = LoadBoard::orderBy('created_at', 'desc');
 
-        // Filter by Order Number
         if ($request->has('order_no')) {
             $query->where('order_no', $request->input('order_no'));
         }
-        $perPage = $request->input('per_page', 10); // Number of items per page, defaulting to 10.
+        $perPage = $request->input('per_page', 10);
 
-        $loadBoards = $query->whereIn('load_type_id',[3,4])->latest()->paginate($perPage);
+        $loadBoards = $query->whereIn('load_type_id',[3,4])
+        ->where('acceptable_id', auth()->user()->id)
+        ->where('acceptable_type', Agent::class)->latest()->paginate($perPage);
 
         return LoadBoardResource::collection($loadBoards);
     }
 
     public function singleBroadcast(Request $request, $id)
     {
-        $query = LoadBoard::where("id", $id)->whereIn('load_type_id',[3,4]);
+        $query = LoadBoard::where("id", $id)
+        ->where('acceptable_id', auth()->user()->id)
+        ->where('acceptable_type', Agent::class)->whereIn('load_type_id',[3,4]);
 
         if ($request->has('order_no')) {
             $query->where('order_no', $request->input('order_no'));
