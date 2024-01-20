@@ -10,9 +10,14 @@ use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::all();
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+
+        $employees = Employee::latest()
+        ->paginate($perPage);
 
         return response()->json(['data' => EmployeeResource::collection($employees)], 200);
     }
@@ -72,6 +77,20 @@ class EmployeeController extends Controller
     {
         $employee = Employee::findOrFail($id);
         $employee->delete();
+
+        return response()->json(['message' => 'Employee deleted successfully'], 200);
+    }
+
+
+    public function status(Request $request,$id)
+    {
+        $employee = Employee::findOrFail($id);
+        $employee->delete();
+
+
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|in:Pending,Confirmed,Approved,Rejected,Failed',
+        ]);
 
         return response()->json(['message' => 'Employee deleted successfully'], 200);
     }
