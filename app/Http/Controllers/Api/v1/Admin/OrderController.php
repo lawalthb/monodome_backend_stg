@@ -9,6 +9,7 @@ use App\Traits\ApiStatusTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\TransactionsResource;
 
 class OrderController extends Controller
 {
@@ -103,8 +104,76 @@ class OrderController extends Controller
         }
 
         // Retrieve all orders associated with the authenticated user
-        $userOrders = $user->order()->get(); // Assuming 'orders' is the relationship method name
+        $userOrders = $user->order()->latest()->paginate(10); // Assuming 'orders' is the relationship method name
 
         return OrderResource::collection($userOrders);
+    }
+
+
+
+    public function all_transactions(Request $request){
+
+        $sort = $request->input('sort');
+        $email = $request->input('email');
+        $phone = $request->input('phone_number');
+        $status = $request->input('status');
+        $fullName = $request->input('full_name');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $date = $request->input('date');
+
+        $order = Order::query();
+
+
+    // Filter by 'sort' parameter
+    if ($sort) {
+        $order->orderBy($sort);
+    }
+
+    if ($email) {
+        $order->whereHas('user', function ($userQuery) use ($email) {
+            $userQuery->where('email', 'like', "%$email%");
+        });
+    }
+
+
+    if ($phone) {
+        $order->where('phone_number', 'like', "%$phone%");
+    }
+
+    if ($status) {
+        $order->where('status', $status);
+    }
+
+    if ($fullName) {
+        $order->whereHas('user', function ($userQuery) use ($fullName) {
+            $userQuery->where('full_name', 'like', "%$fullName%");
+        });
+    }
+
+    if ($startDate) {
+        $order->whereDate('created_at', '>=', $startDate);
+    }
+
+    if ($date) {
+        $order->whereDate('created_at', '=', $date);
+    }
+
+    if ($endDate) {
+        $order->whereDate('created_at', '<=', $endDate);
+    }
+
+    $perPage = $request->input('per_page', 10);
+
+    $order = $order->latest()->paginate($perPage);
+    $totalAmount = $order->sum('amount');
+    $totalFee = $order->sum('fee');
+
+    return response()->json([
+        'data' => TransactionsResource::collection($order),
+        'total_transaction_amount' => $totalAmount,
+        'total_transaction_fee' => $totalFee,
+    ]);
+
     }
 }
