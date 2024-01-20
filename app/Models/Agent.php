@@ -47,6 +47,11 @@ class Agent extends Model
         return $this->belongsTo(LocalGovernment::class, 'lga');
     }
 
+    public function loadDocuments()
+    {
+        return $this->morphMany(LoadDocument::class, 'loadable');
+    }
+
 
     protected static function boot()
     {
