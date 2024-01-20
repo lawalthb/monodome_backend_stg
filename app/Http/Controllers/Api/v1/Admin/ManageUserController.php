@@ -47,7 +47,7 @@ class ManageUserController extends Controller
             'full_name' => 'required|string',
             'email' => 'required|email|unique:users,email,', // Ignore the current user's email
             'address' => 'nullable|string',
-            'phone_number' => 'nullable|string',
+            'phone_number' => 'nullable|string|unique:users,phone_number',
             'password' => 'nullable|string',
             'permission_ids' => 'required|array',
         ]);
@@ -63,22 +63,27 @@ class ManageUserController extends Controller
             'address' => $request->address,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($password),
+            'ref_by' => auth()->user()->id,
+            'referral_code' => generateReferralCode(),
             'role_id' => 2,
             'user_agent' => $request->header('User-Agent'),
             // 'location' => Location::get($request->ip()),
         ]);
 
-        $role = Role::find(2);
-        if ($role) {
-            $user->user_type = Str::slug($role->name, "_"); // str_replace(' ', '_', $role->name);;
-            $user->role_id = $role->id;
-            $user->role = $role->name;
-            $user->assignRole($role);
+        // $role = Role::find(2);
+        // if ($role) {
+        //     $user->user_type = Str::slug($role->name, "_"); // str_replace(' ', '_', $role->name);;
+        //     $user->role_id = $role->id;
+        //     $user->role = $role->name;
+        //     $user->assignRole($role);
 
-            $permissions = Permission::whereIn('id', $request->permission_ids)->get();
+        //     $permissions = Permission::whereIn('id', $request->permission_ids)->get();
 
-            $role->syncPermissions($permissions);
-        }
+        //     $role->syncPermissions($permissions);
+        // }
+
+        $permissions = Permission::whereIn('id', $request->permission_ids)->get();
+        $user->syncPermissions($permissions);
         $user->save();
 
         $message = "You are now an admin at " . config('app.name') . " Thank you for Registering with " . config('app.name');
