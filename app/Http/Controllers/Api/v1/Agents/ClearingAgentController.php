@@ -298,7 +298,7 @@ class ClearingAgentController extends Controller
             }
 
 
-            return $this->success( new AgentResource($agent), 'Clearing Agent  and guarantors registered successfully');
+            return $this->success( new AgentResource($agent), 'Document uploaded successfully');
 
         }else{
             return $this->error([
