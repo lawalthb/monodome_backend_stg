@@ -27,6 +27,7 @@ class AgentResource extends JsonResource
           'status' => $this->status,
           'created_at' => $this->created_at,
           'updated_at' => $this->updated_at,
+          "document" => LoadDocumentResource::collection($this->loadDocuments),
           'registration_documents' =>  getImageFile($this->registration_documents),
           'cac_certificate' =>  getImageFile($this->cac_certificate),
           'other_documents' =>  getImageFile($this->other_documents),

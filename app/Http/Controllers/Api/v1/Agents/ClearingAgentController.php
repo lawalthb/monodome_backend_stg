@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\Guarantor;
 use App\Models\LoadBoard;
 use Illuminate\Support\Str;
+use App\Models\LoadDocument;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
@@ -272,6 +273,30 @@ class ClearingAgentController extends Controller
 
     });
 
+    }
+
+    public function uploadDocs(Request $request){
+
+        
+        if ($request->hasFile('documents')) {
+            $documents = [];
+
+            foreach ($request->file('documents') as $file) {
+
+                $file = $this->uploadFileWithDetails('load_documents', $file);
+                $path = $file['path'];
+                $name = $file['file_name'];
+
+                // Create a record in the load_documents table
+                $document = new LoadDocument([
+                    'name' => $name,
+                    'path' => $path,
+                ]);
+
+                // Associate the document with the LoadBulk
+                $loadBulk->loadDocuments()->save($document);
+            }
+        }
     }
 
 
