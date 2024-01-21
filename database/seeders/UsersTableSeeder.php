@@ -413,7 +413,7 @@ class UsersTableSeeder extends Seeder
           ]);
        }
 
-         // driver manager
+         // Company Transport
          $company = Role::find(10);
 
          for ($i = 1; $i <= 50; $i++) {
@@ -432,7 +432,7 @@ class UsersTableSeeder extends Seeder
             ]);
 
 
-            // Create an driver manager and associate it with the user
+            // Create an Company Transport and associate it with the user
             $agent = Company::factory()->create([
                 'user_id' => $user->id,
                // 'status' => $user->status,
@@ -445,6 +445,44 @@ class UsersTableSeeder extends Seeder
                'loadable_type' => 'App\\Models\\Company',
            ]);
         }
+
+
+
+
+        // Truck
+
+        $company = Role::find(10);
+
+        for ($i = 1; $i <= 50; $i++) {
+
+            $randomStatus = $statuses[array_rand($statuses)];
+
+           // Create a user
+           $user = \App\Models\User::factory()->create([
+
+               'user_type' => "company",
+              // 'role' => "driver_manager",
+               'role_id' => 10,
+               'ref_by' => rand(1,5),
+               'status' => $randomStatus,
+               'referral_code' => generateReferralCode(),
+           ]);
+
+
+           // Create an Company Transport and associate it with the user
+           $agent = Company::factory()->create([
+               'user_id' => $user->id,
+              // 'status' => $user->status,
+           ]);
+
+           $user->assignRole($company);
+
+           $guarantor1 = Guarantor::factory()->create([
+              'loadable_id' => $agent->id,
+              'loadable_type' => 'App\\Models\\Company',
+          ]);
+       }
+
 
 
         \DB::table('employees')->delete();

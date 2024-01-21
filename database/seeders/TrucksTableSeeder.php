@@ -14,12 +14,12 @@ class TrucksTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('trucks')->delete();
-        
+
         \DB::table('trucks')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'uuid' => 'f4f4beb3-5a71-4edf-bb10-156cce22a48e',
@@ -45,7 +45,7 @@ class TrucksTableSeeder extends Seeder
                 'updated_at' => '2023-10-30 13:39:26',
             ),
         ));
-        
-        
+
+
     }
 }
