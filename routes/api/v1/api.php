@@ -180,12 +180,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
      // company route group
     Route::group(['prefix' => 'company'], function () {
 
-    Route::get('/', [CompanyController::class, 'index']);
         Route::post('/store', [CompanyController::class, 'store']);
-      ///  Route::post('/update/{id}', [CompanyController::class, 'update']);
-     //   Route::delete('/destroy/{id}', [CompanyController::class, 'destroy']);
+        ///  Route::post('/update/{id}', [CompanyController::class, 'update']);
+        //   Route::delete('/destroy/{id}', [CompanyController::class, 'destroy']);
 
         Route::group(['middleware' => 'auth:api' ,'role:Company Transport'], function(){
+            Route::get('/', [CompanyController::class, 'index']);
 
             Route::get('/info', [CompanyController::class, 'show']);
 

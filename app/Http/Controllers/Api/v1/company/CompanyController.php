@@ -46,7 +46,7 @@ class CompanyController extends Controller
         $company = Company::where(function ($q) use ($key) {
             // Assuming there's a relationship between Agent and User
             $q->whereHas('user', function ($userQuery) use ($key) {
-                $userQuery->where('full_name', 'like', "%{$key}%");
+                $userQuery->where('full_name', 'like', "%{$key}%")->where('user_created_by', auth()->id());
             })->orWhere('street', 'like', "%{$key}%");
         })
             ->latest()
