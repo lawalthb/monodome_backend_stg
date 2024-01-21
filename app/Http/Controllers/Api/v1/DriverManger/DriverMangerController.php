@@ -198,15 +198,11 @@ class DriverMangerController extends Controller
             $userQuery->where('full_name', 'like', "%{$key}%")
             ->whereNull('user_created_by');
         })
-            ->orWhere('plate_number', 'like', "%{$key}%")
-            ->orWhere('truck_location', 'like', "%{$key}%")
-            ->orWhere('truck_name', 'like', "%{$key}%")
             ->latest()
             ->paginate($perPage);
 
         return TruckResource::collection($truck);
     }
-
 
 
     public function my_truck(Request $request)
@@ -218,9 +214,6 @@ class DriverMangerController extends Controller
             $userQuery->where('full_name', 'like', "%{$key}%")
             ->where('user_created_by', auth()->id());
             })
-            ->orWhere('plate_number', 'like', "%{$key}%")
-            ->orWhere('truck_location', 'like', "%{$key}%")
-            ->orWhere('truck_name', 'like', "%{$key}%")
             ->latest()
             ->paginate($perPage);
 

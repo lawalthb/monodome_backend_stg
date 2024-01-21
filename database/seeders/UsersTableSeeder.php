@@ -447,9 +447,6 @@ class UsersTableSeeder extends Seeder
            ]);
         }
 
-
-
-
         // Truck
 
         $role = Role::find(11);
