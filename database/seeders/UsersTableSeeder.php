@@ -4,13 +4,14 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Agent;
+use App\Models\Truck;
 use App\Models\Broker;
 use App\Models\Driver;
 use App\Models\Wallet;
 use App\Models\Company;
 use App\Models\Guarantor;
-use App\Models\DriverManger;
 //use Doctrine\DBAL\DriverManager;
+use App\Models\DriverManger;
 use App\Models\ShippingCompany;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -451,7 +452,7 @@ class UsersTableSeeder extends Seeder
 
         // Truck
 
-        $company = Role::find(10);
+        $role = Role::find(11);
 
         for ($i = 1; $i <= 50; $i++) {
 
@@ -460,26 +461,26 @@ class UsersTableSeeder extends Seeder
            // Create a user
            $user = \App\Models\User::factory()->create([
 
-               'user_type' => "company",
+               'user_type' => "Truck",
               // 'role' => "driver_manager",
-               'role_id' => 10,
+               'role_id' => 11,
                'ref_by' => rand(1,5),
                'status' => $randomStatus,
                'referral_code' => generateReferralCode(),
            ]);
 
 
-           // Create an Company Transport and associate it with the user
-           $agent = Company::factory()->create([
+           // Create an truck  and associate it with the user
+           $agent = Truck::factory()->create([
                'user_id' => $user->id,
               // 'status' => $user->status,
            ]);
 
-           $user->assignRole($company);
+           $user->assignRole($role);
 
            $guarantor1 = Guarantor::factory()->create([
               'loadable_id' => $agent->id,
-              'loadable_type' => 'App\\Models\\Company',
+              'loadable_type' => 'App\\Models\\Truck',
           ]);
        }
 

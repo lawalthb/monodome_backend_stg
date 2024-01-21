@@ -34,7 +34,7 @@ class TruckFactory extends Factory
                 'truck_make' => fake()->company(),
                 'plate_number' => fake()->creditCardNumber(),
                 'cac_number' => fake()->creditCardNumber(),
-                'truck_description' => 'Shirt Spring card disintermediate',
+                'truck_description' => fake()->words(),
                 'outside_truck_picture' => 'uploads/broker/broker_images/1694596427Cndhetfsv8.jpg',
                 'truck_document' => NULL,
 
