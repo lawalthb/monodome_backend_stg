@@ -435,7 +435,6 @@ Route::group(['prefix' => 'driver-manager'], function () {
        // Route::delete('/{category}', [CategoryController::class, 'destroy']);
     });
 
-
     Route::group(['prefix' => 'blog'], function () {
 
         Route::get('/', [BlogController::class, 'index']);
