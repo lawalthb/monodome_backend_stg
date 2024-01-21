@@ -57,9 +57,9 @@ class DistanceSeeder extends Seeder
 
             DB::table('distance_settings')->insert([
                 [
-                    'weight' => '0kg to 20kg',
-                    'from' => $fromDistance,
-                    'to' => $toDistance,
+                   // 'weight' => '0kg to 20kg',
+                    'min' => $fromDistance,
+                    'max' => $toDistance,
                     'price' => $price,
                     'loadable_id' => $loadableId,
                     'loadable_type' => $loadableType,

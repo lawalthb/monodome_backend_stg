@@ -23,21 +23,20 @@ class TruckFactory extends Factory
                 'street' => fake()->streetAddress(),
                 'lga' => rand(1, 50),
                 'phone_number' => fake()->e164PhoneNumber(),
-                'nin_number' => fake()->creditCardNumber(),
+               // 'nin_number' => fake()->creditCardNumber(),
                 'profile_picture' => 'uploads/broker/broker_images/1694596427Cndhetfsv8.jpg',
-                'status' => 'Waiting',
+                'status' => 'Pending',
                 'business_name' => fake()->company(),
-                'country_id' => NULL,
-                'truck_name' => 'Borders',
-                'truck_type' => rand(1, 5),
+                'country_id' => rand(1, 29),
+                'truck_name' =>  fake()->jobTitle(),
+                'truck_type' =>  fake()->jobTitle(),
                 'truck_location' => fake()->streetAddress(),
                 'truck_make' => fake()->company(),
                 'plate_number' => fake()->creditCardNumber(),
                 'cac_number' => fake()->creditCardNumber(),
-                'truck_description' => fake()->words(),
+                'truck_description' => fake()->text(),
                 'outside_truck_picture' => 'uploads/broker/broker_images/1694596427Cndhetfsv8.jpg',
                 'truck_document' => NULL,
-
         ];
     }
 }
