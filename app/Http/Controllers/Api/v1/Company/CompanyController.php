@@ -25,6 +25,7 @@ use App\Http\Requests\CompanyRequest;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\TruckResource;
 use App\Http\Resources\DriverResource;
+use App\Jobs\SendLoginNotificationJob;
 use App\Http\Resources\CompanyResource;
 use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;

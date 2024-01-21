@@ -18,6 +18,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendLoginNotificationJob;
 use App\Notifications\SendNotification;
 use App\Http\Requests\ShippingCompanyRequest;
 use App\Http\Resources\ShippingCompanyResource;
