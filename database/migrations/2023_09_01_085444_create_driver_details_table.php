@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('proof_of_license');
             $table->unsignedBigInteger('vehicle_type_id')->nullable();
             $table->string('profile_picture');
-            $table->tinyInteger('manager_request')->default(1);
             $table->enum('status', ['Pending', 'Confirmed', 'Approved', 'Rejected','Failed'])->default('Pending');
             $table->timestamps();
             $table->softDeletes();

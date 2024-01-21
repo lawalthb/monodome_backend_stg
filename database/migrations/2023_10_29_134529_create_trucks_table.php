@@ -30,7 +30,6 @@ return new class extends Migration
             $table->text('truck_description')->nullable();
             $table->string('profile_picture')->nullable();
             $table->string('outside_truck_picture')->nullable();
-            $table->tinyInteger('manager_request')->default(1);
             $table->string('truck_document')->nullable();
             $table->enum('status', ['Pending', 'Confirmed', 'Approved', 'Rejected','Failed'])->default('Pending');
 

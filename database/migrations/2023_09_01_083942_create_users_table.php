@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone_number')->unique()->nullable();
             // $table->string('is_phone_verified')->unique();
+            $table->tinyInteger('manager_request')->default(1);
             $table->string('password');
             $table->string('provider_id')->nullable();
             $table->string('provider')->nullable();
