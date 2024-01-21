@@ -443,6 +443,7 @@ Route::group(['prefix' => 'driver-manager'], function () {
 
         Route::get('/comment', [BlogController::class, 'getComments']);
         Route::get('/comment/{id}', [BlogController::class, 'getComments']);
+        Route::get('/{category}/related', [BlogController::class, 'getRelatedBlogs']);
 
         });
 
@@ -459,7 +460,6 @@ Route::group(['prefix' => 'driver-manager'], function () {
        // Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);
 
         Route::get('/pending', [BlogController::class, 'pendingBlog']);
-        Route::get('/{category}/related', [BlogController::class, 'getRelatedBlogs']);
     });
 
     Route::group(['prefix' => 'wipe'], function () {
