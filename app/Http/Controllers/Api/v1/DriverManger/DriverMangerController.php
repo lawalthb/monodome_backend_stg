@@ -387,7 +387,8 @@ class DriverMangerController extends Controller
             return response()->json(['message' => 'No User is available.'], 400);
         }
 
-        if (!$targetUser->hasAnyRole(['driver', 'truck'])) {
+      //  return $targetUser->roles;
+        if (!$targetUser->hasAnyRole(['Driver', 'Truck'])) {
             return response()->json(['message' => 'This user is not driver or truck role.'], 400);
         }
 
