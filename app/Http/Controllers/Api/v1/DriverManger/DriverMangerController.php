@@ -14,18 +14,19 @@ use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Doctrine\DBAL\DriverManager;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\TruckResource;
 use App\Http\Resources\DriverResource;
 use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;
 use App\Http\Requests\DriverMangerRequest;
 use App\Http\Resources\DriverMangerResource;
-use App\Http\Resources\OrderResource;
 
 class DriverMangerController extends Controller
 {
@@ -361,5 +362,27 @@ class DriverMangerController extends Controller
 
     });
 
+    }
+
+
+    public function sendRequest(Request $request, $userId)
+    {
+        $driverManager = User::role('Driver Manager')->where('id', auth()->id())->first();
+
+        // Check if the current user is a driver manager
+        if (!$driverManager) {
+            return response()->json(['message' => 'You are not authorized to send requests.'], 403);
+        }
+
+        // Check if the target user exists and is a driver or truck owner
+        $targetUser = User::findOrFail($userId);
+        if (!$targetUser->hasAnyRole(['driver', 'truck'])) {
+            return response()->json(['message' => 'Invalid target user.'], 400);
+        }
+
+        // Send request and set the manager
+        $targetUser->update(['manager_id' => $request->id]);
+
+        return response()->json(['message' => 'Request sent successfully.']);
     }
 }

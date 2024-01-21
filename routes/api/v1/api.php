@@ -303,6 +303,7 @@ Route::group(['prefix' => 'driver-manager'], function () {
                 Route::get('/available-drivers', [DriverMangerController::class, 'available_drivers']);
                 Route::get('/my-truck', [DriverMangerController::class, 'my_truck']);
                 Route::get('/available-truck', [DriverMangerController::class, 'available_truck']);
+                Route::post('/send-request', [DriverMangerController::class, 'sendRequest']);
 
                 Route::get('/order', [DriverMangerController::class, 'order']);
                 Route::post('/accept-order', [DriverMangerController::class, 'acceptOrder']);
