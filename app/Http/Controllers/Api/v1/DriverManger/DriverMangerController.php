@@ -365,8 +365,13 @@ class DriverMangerController extends Controller
     }
 
 
-    public function sendRequest(Request $request, $userId)
+    public function sendRequest(Request $request)
     {
+        $request->validate([
+            "user_id" => "required|exists:users,id",
+            "role_id" => "required|exists:roles,id"
+        ]);
+
         $driverManager = User::role('Driver Manager')->where('id', auth()->id())->first();
 
         // Check if the current user is a driver manager
@@ -375,14 +380,21 @@ class DriverMangerController extends Controller
         }
 
         // Check if the target user exists and is a driver or truck owner
-        $targetUser = User::findOrFail($userId);
-        if (!$targetUser->hasAnyRole(['driver', 'truck'])) {
-            return response()->json(['message' => 'Invalid target user.'], 400);
+        $targetUser = User::where('id', $request->user_id)->whereNull('user_created_by')->first();
+
+        // Ensure $targetUser is not null before accessing its properties
+        if (!$targetUser) {
+            return response()->json(['message' => 'No User is available.'], 400);
         }
 
-        // Send request and set the manager
-        $targetUser->update(['manager_id' => $request->id]);
+        if (!$targetUser->hasAnyRole(['driver', 'truck'])) {
+            return response()->json(['message' => 'This user is not driver or truck role.'], 400);
+        }
+
+        // Send request and set the manager_request flag
+        $targetUser->update(['manager_request' => 1]);
 
         return response()->json(['message' => 'Request sent successfully.']);
     }
+
 }

@@ -7,6 +7,7 @@ use App\Models\Wallet;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
+use App\Services\WalletService;
 use App\Traits\FileUploadTrait;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
@@ -17,11 +18,11 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
+use App\Jobs\SendLoginNotificationJob;
 use App\Notifications\SendNotification;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Validator;
 use Stevebauman\Location\Facades\Location;
-use App\Services\WalletService;
 
 
 class AuthController extends Controller
@@ -111,7 +112,9 @@ class AuthController extends Controller
         if($user->status == "Banned"){
 
             $message ="Your ".config('app.name'). " account has been Banned!. please contact ".config('app.name'). " admin for clarification ";
-            $user->notify(new SendNotification($user, $message));
+          //  $user->notify(new SendNotification($user, $message));
+              dispatch(new SendLoginNotificationJob($user, $message));
+
 
             return $this->error(['error' => "Your account has been Banned, and please contact admin for clarification"],'Account Banned');
         }
