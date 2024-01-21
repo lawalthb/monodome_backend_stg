@@ -427,7 +427,7 @@ Route::group(['prefix' => 'driver-manager'], function () {
     });
 
     //categories
-    Route::prefix('categories')->middleware('auth:api')->group(function () {
+    Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index']);
       //  Route::post('/', [CategoryController::class, 'store']);
         Route::get('/{category}', [CategoryController::class, 'show']);
@@ -449,12 +449,9 @@ Route::group(['prefix' => 'driver-manager'], function () {
 
     Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
 
-
         Route::post('/', [BlogController::class, 'store']);
         Route::put('/{id}', [BlogController::class, 'update']);
         Route::delete('/{id}', [BlogController::class, 'destroy']);
-
-
         Route::post('/comment', [BlogController::class, 'storeComment']);
       //  Route::put('/comment/{id}', [BlogController::class, 'updateComment']);
        // Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);
