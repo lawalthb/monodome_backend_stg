@@ -194,13 +194,13 @@ class DriverMangerController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $truck = Truck::where(function ($q) use ($key) {
-            $q->whereHas('user', function ($userQuery) use ($key) {
-                $userQuery->where('email', 'like', "%{$key}%");
-            })->orWhere('plate_number', 'like', "%{$key}%")
-            ->orWhere('truck_location', 'like', "%{$key}%")
-            ->orWhere('truck_name', 'like', "%{$key}%");
+        $truck = Truck::whereHas('user', function ($userQuery) use ($key) {
+            $userQuery->where('full_name', 'like', "%{$key}%")
+            ->whereNull('user_created_by');
         })
+            ->orWhere('plate_number', 'like', "%{$key}%")
+            ->orWhere('truck_location', 'like', "%{$key}%")
+            ->orWhere('truck_name', 'like', "%{$key}%")
             ->latest()
             ->paginate($perPage);
 
@@ -214,14 +214,13 @@ class DriverMangerController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $truck = Truck::where(function ($q) use ($key) {
-            // Assuming there's a relationship between Agent and User
-            $q->whereHas('user', function ($userQuery) use ($key) {
-                $userQuery->where('email', 'like', "%{$key}%")->where('user_created_by', auth()->id());
-            })->orWhere('plate_number', 'like', "%{$key}%")
+        $truck = Truck::whereHas('user', function ($userQuery) use ($key) {
+            $userQuery->where('full_name', 'like', "%{$key}%")
+            ->where('user_created_by', auth()->id());
+            })
+            ->orWhere('plate_number', 'like', "%{$key}%")
             ->orWhere('truck_location', 'like', "%{$key}%")
-            ->orWhere('truck_name', 'like', "%{$key}%");
-        })
+            ->orWhere('truck_name', 'like', "%{$key}%")
             ->latest()
             ->paginate($perPage);
 
