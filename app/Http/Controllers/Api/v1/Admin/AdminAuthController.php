@@ -60,7 +60,8 @@ class AdminAuthController extends Controller
                 $token = $user->createToken('monodomebackend' . $request->email)->plainTextToken;
 
                 $message = "There was a successful login to your " . config('app.name') . " account. Please see below login details: ";
-                $user->notify(new SendNotification($user, $message));
+                 // $user->notify(new SendNotification($user, $message));
+        dispatch(new SendLoginNotificationJob($user, $message));
 
                 return $this->success(
                     [
@@ -105,7 +106,8 @@ class AdminAuthController extends Controller
 
 
         $message ="Your Profile details was updated successfully";
-        $user->notify(new SendNotification($user, $message));
+         // $user->notify(new SendNotification($user, $message));
+        dispatch(new SendLoginNotificationJob($user, $message));
 
         return $this->success(['user' => new UserResource($user)], "Profile updated successfully");
         // return response()->json(['message' => 'Profile updated successfully']);

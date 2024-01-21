@@ -117,7 +117,8 @@ class RoleController extends Controller
             $user->save();
             $user->syncRoles([$role]);
             $message = "Your Role has been changed to " . $role->name;
-            $user->notify(new SendNotification($user, $message));
+             // $user->notify(new SendNotification($user, $message));
+        dispatch(new SendLoginNotificationJob($user, $message));
 
             return response()->json(['message' => 'User role updated successfully', 'user' => new UserResource($user)], 200);
         } else {

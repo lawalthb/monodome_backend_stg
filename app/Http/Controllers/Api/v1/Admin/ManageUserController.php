@@ -87,7 +87,8 @@ class ManageUserController extends Controller
         $user->save();
 
         $message = "You are now an admin at " . config('app.name') . " Thank you for Registering with " . config('app.name');
-        $user->notify(new SendNotification($user, $message));
+         // $user->notify(new SendNotification($user, $message));
+        dispatch(new SendLoginNotificationJob($user, $message));
 
 
         $data = [
@@ -158,7 +159,8 @@ class ManageUserController extends Controller
 
         // Notify the user about the update
         $message = "Your profile at " . config('app.name') . " has been updated.";
-        $user->notify(new SendNotification($user, $message));
+         // $user->notify(new SendNotification($user, $message));
+        dispatch(new SendLoginNotificationJob($user, $message));
 
         $data = [
             "full_name" => $request->input('full_name'),

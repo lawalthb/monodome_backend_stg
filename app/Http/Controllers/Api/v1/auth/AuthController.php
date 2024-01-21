@@ -81,7 +81,8 @@ class AuthController extends Controller
             }
 
             $message ="Thank you for Registering with ".config('app.name');
-             $user->notify(new SendNotification($user, $message));
+              // $user->notify(new SendNotification($user, $message));
+        dispatch(new SendLoginNotificationJob($user, $message));
              //Mail::to($event->user->email)->send(new NewUserMail($user));
 
             $token = $user->createToken("monodomebackend". $request->email)->plainTextToken;
@@ -112,8 +113,9 @@ class AuthController extends Controller
         if($user->status == "Banned"){
 
             $message ="Your ".config('app.name'). " account has been Banned!. please contact ".config('app.name'). " admin for clarification ";
-          //  $user->notify(new SendNotification($user, $message));
+          //   // $user->notify(new SendNotification($user, $message));
               dispatch(new SendLoginNotificationJob($user, $message));
+              //dispatch(new SendLoginNotificationJob($user, $message));
 
 
             return $this->error(['error' => "Your account has been Banned, and please contact admin for clarification"],'Account Banned');
@@ -147,7 +149,8 @@ class AuthController extends Controller
 
 
              $message ="There was a successful login to your ".config('app.name'). " account. Please see below login details: ";
-             $user->notify(new SendNotification($user, $message));
+              // $user->notify(new SendNotification($user, $message));
+             dispatch(new SendLoginNotificationJob($user, $message));
 
                 return $this->success(
                     [
@@ -272,7 +275,10 @@ class AuthController extends Controller
         }
 
         $message ="Your Profile details was updated successfully";
-        $user->notify(new SendNotification($user, $message));
+        //  // $user->notify(new SendNotification($user, $message));
+        dispatch(new SendLoginNotificationJob($user, $message));
+     //   dispatch(new SendLoginNotificationJob($user, $message));
+
 
         return $this->success(['user' => new UserResource($user)], "Profile updated successfully");
         // return response()->json(['message' => 'Profile updated successfully']);

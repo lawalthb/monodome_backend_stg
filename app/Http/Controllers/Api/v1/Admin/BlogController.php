@@ -75,7 +75,8 @@ class BlogController extends Controller
         $user = auth()->user();
 
         $message = "Your Blog article has been posted, awaiting for admin for approval";
-        $user->notify(new SendNotification($user, $message));
+         // $user->notify(new SendNotification($user, $message));
+        dispatch(new SendLoginNotificationJob($user, $message));
 
         return $this->success(
             [
