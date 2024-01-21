@@ -154,29 +154,38 @@ class DriverMangerController extends Controller
     }
 
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function my_drivers(Request $request)
     {
-        //
+
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $drivers = Driver::whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('full_name', 'like', "%{$key}%")
+                           ->where('user_created_by', auth()->id());
+            })
+            ->where("have_motor", "No")
+            ->latest()
+            ->paginate($perPage);
+
+        return DriverResource::collection($drivers);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function available_drivers(Request $request)
     {
-        //
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $drivers = Driver::whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('full_name', 'like', "%{$key}%")
+                           ->whereNull('user_created_by');
+            })
+            ->where("have_motor", "No")
+            ->latest()
+            ->paginate($perPage);
+
+        return DriverResource::collection($drivers);
     }
 
 
