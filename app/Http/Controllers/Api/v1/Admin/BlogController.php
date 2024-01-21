@@ -12,6 +12,7 @@ use App\Http\Requests\BlogRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BlogResource;
 use App\Http\Requests\CommentRequest;
+use App\Jobs\SendLoginNotificationJob;
 use App\Http\Resources\CommentResource;
 use App\Notifications\SendNotification;
 

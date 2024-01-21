@@ -358,6 +358,10 @@ class DriverController extends Controller
 
     public function acceptLoad(Request  $request){
 
-        
+
+    }
+
+    public function  (){
+
     }
 }

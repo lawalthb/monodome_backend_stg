@@ -11,6 +11,7 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
+use App\Jobs\SendLoginNotificationJob;
 use App\Notifications\SendNotification;
 use App\Http\Resources\UserRoleResource;
 use Spatie\Permission\Models\Permission;

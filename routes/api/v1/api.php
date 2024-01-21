@@ -266,6 +266,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
         Route::group(['middleware' => 'auth:api','role:Driver'], function () {
 
+            Route::get('/request', [DriverController::class, 'pendingRequest']);
+            Route::post('/request', [DriverController::class, 'acceptRequest']);
             Route::get('/broadcast', [DriverController::class, 'broadcast']);
             Route::post('/profile/change-image', [DriverController::class, 'changeImage']);
             Route::post('/profile/update-details', [DriverController::class, 'updateProfile']);
