@@ -47,9 +47,9 @@ jobs:
         script: |
           cd /home/kaysolak/www/monolog.kaysolaknigventures.com/
           git pull
-          pwd
-          ls -la
-          #php artisan migrate:refresh --seed --force
+          #pwd
+          #ls -la
+          php artisan migrate:refresh --seed --force
           chmod +x deploy.sh
           sh deploy.sh
 
