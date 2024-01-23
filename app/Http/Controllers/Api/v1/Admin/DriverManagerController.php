@@ -170,12 +170,14 @@ class DriverManagerController extends Controller
 
         if (!$driver) {
 
-            return $this->error('', 'Agent not found', 422);
+            return $this->error('', 'Driver not found', 422);
 
         }
 
         // Update the status
         $driver->status = $request->status;
+        $driver->user->status = $request->status;
+        $driver->user->save();
         $driver->save();
 
         return $this->success(['driver'=> new DriverMangerResource($driver)], 'Driver status updated successfully');
