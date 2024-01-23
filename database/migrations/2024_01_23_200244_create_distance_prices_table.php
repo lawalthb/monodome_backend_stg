@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('distance_prices', function (Blueprint $table) {
             $table->id();
-            $table->decimal('min_km', 5, 2);
-            $table->decimal('max_km', 5, 2);
+            $table->decimal('min_km');
+            $table->decimal('max_km');
             $table->integer('load_type_id');
             $table->integer('price');
             $table->timestamps();
 
             // Foreign key constraint
-            $table->foreign('load_type_id')->references('id')->on('load_types');
+            // $table->foreign('load_type_id')->references('id')->on('load_types');
         });
     }
 

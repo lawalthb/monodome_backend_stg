@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\LoadType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -42,60 +41,78 @@ class DistanceSeeder extends Seeder
     //     }
     // }
 
-    public function run()
+//     public function run()
+// {
+//     $loadableType = 'App\Models\PriceSetting';
+
+//     for ($loadableId = 1; $loadableId <= 4; $loadableId++) {
+//         $fromDistance = 1;
+//         $toDistance = 100;
+//         $price = 1000.00;
+
+//         while ($toDistance <= 20000) {
+
+//             // $randomIncrement = [100, 200, 500][array_rand([100, 200, 500])];
+//             // $price += $randomIncrement;
+
+//             DB::table('distance_settings')->insert([
+//                 [
+//                    // 'weight' => '0kg to 20kg',
+//                     'min' => $fromDistance,
+//                     'max' => $toDistance,
+//                     'price' => $price,
+//                     'loadable_id' => $loadableId,
+//                     'loadable_type' => $loadableType,
+//                     'created_at' => now(),
+//                     'updated_at' => now(),
+//                 ]
+//             ]);
+
+//             // Update values for the next record
+//             $fromDistance = $toDistance + 1;
+//             $toDistance += 50;
+//             $price += $toDistance; // Adjust the price increment as needed
+//         }
+//     }
+// }
+
+
+
+public function run()
 {
+    $loadTypeIds = [1, 6];
     $loadableType = 'App\Models\PriceSetting';
 
-    for ($loadableId = 1; $loadableId <= 2; $loadableId++) {
+    foreach ($loadTypeIds as $loadTypeId) {
         $fromDistance = 1;
         $toDistance = 100;
         $price = 1000.00;
 
         while ($toDistance <= 20000) {
 
-            // $randomIncrement = [100, 200, 500][array_rand([100, 200, 500])];
-            // $price += $randomIncrement;
-
-            // DB::table('distance_settings')->insert([
-            //     [
-            //        // 'weight' => '0kg to 20kg',
-            //         'min' => $fromDistance,
-            //         'max' => $toDistance,
-            //         'price' => $price,
-            //         'loadable_id' => $loadableId,
-            //         'loadable_type' => $loadableType,
-            //         'created_at' => now(),
-            //         'updated_at' => now(),
-            //     ]
-            // ]);
-
+            // Seed data for distance_prices table
             DB::table('distance_prices')->insert([
                 [
-                   // 'weight' => '0kg to 20kg',
                     'min_km' => $fromDistance,
                     'max_km' => $toDistance,
                     'price' => $price,
-                    'load_type_id' => LoadType::inRandomOrder()->first()->id,
-                    // 'load_type_id' => 1,
+                    'load_type_id' => $loadTypeId,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]
             ]);
 
-
+            // Seed data for weight_prices table
             DB::table('weight_prices')->insert([
                 [
-                   // 'weight' => '0kg to 20kg',
                     'min_weight' => $fromDistance,
                     'max_weight' => $toDistance,
                     'price' => $price,
-                    'load_type_id' => LoadType::inRandomOrder()->first()->id,
-                    // 'load_type_id' => 6,
+                    'load_type_id' => $loadTypeId,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]
             ]);
-
 
             // Update values for the next record
             $fromDistance = $toDistance + 1;
@@ -103,6 +120,6 @@ class DistanceSeeder extends Seeder
             $price += $toDistance; // Adjust the price increment as needed
         }
     }
-}
 
+}
 }
