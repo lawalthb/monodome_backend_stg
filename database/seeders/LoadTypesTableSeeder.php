@@ -61,6 +61,15 @@ class LoadTypesTableSeeder extends Seeder
                 'slug' => 'specialize-shipment',
                 'is_active' => 'Yes',
             ),
+
+            5 =>
+            array (
+                'id' => 6,
+                'uuid' => Str::uuid()->toString(),
+                'name' => 'Document',
+                'slug' => 'document',
+                'is_active' => 'Yes',
+            ),
         ));
 
 
