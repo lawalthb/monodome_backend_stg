@@ -40,16 +40,16 @@ jobs:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.0
       with:
-        host: ${{ secrets.PAYLODR_HOST }}
-        username: ${{ secrets.PAYLODR_USERNAME }}
-        password: ${{ secrets.PAYLODR_PASSWORD }}
-        port: ${{ secrets.PAYLODR_PORT }}
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        password: ${{ secrets.REMOTE_PASSWORD }}
+        port: ${{ secrets.REMOTE_PORT }}
         script: |
-          cd sso.paylodr.com/
+          cd /home/kaysolak/www/monolog.kaysolaknigventures.com/
           git pull
           pwd
           ls -la
-          chmod +x deploy.sh
-          sh deploy.sh
+          #chmod +x deploy.sh
+          #sh deploy.sh
 
 
