@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\v1\Admin\DashboardController;
 use App\Http\Controllers\Api\v1\Admin\LoadBoardController;
 use App\Http\Controllers\Api\v1\Admin\ManageUserController;
 use App\Http\Controllers\Api\v1\Admin\PermissionController;
+use App\Http\Controllers\Api\v1\Admin\WeightPriceController;
 use App\Http\Controllers\Api\v1\Admin\ClearingAgentController;
 use App\Http\Controllers\Api\v1\Admin\DriverManagerController;
 use App\Http\Controllers\Api\v1\Admin\ShippingCompanyController;
@@ -131,6 +132,14 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
             Route::post('/create-distance', [SettingController::class, 'storeDistance']);
             Route::post('/update/{id}', [SettingController::class, 'update']);
 
+        });
+
+        Route::group(['prefix' => 'weight-prices', 'middleware' => 'auth:api'], function () {
+            Route::get('/', [WeightPriceController::class, 'index']);
+            Route::get('/{id}', [WeightPriceController::class, 'show']);
+            Route::post('/', [WeightPriceController::class, 'store']);
+            Route::put('/{id}', [WeightPriceController::class, 'update']);
+            Route::delete('/{id}', [WeightPriceController::class, 'destroy']);
         });
 
 
