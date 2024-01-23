@@ -12,6 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if(!Schema::hasTable('local_states')){
+
         Schema::create('local_states', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
@@ -26,6 +28,9 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+    }
+
     }
 
     /**
