@@ -14,6 +14,9 @@ return new class extends Migration
      */
     public function up()
     {
+
+        if(!Schema::hasTable('load_car_clearings')){
+
         Schema::create('load_car_clearings', function (Blueprint $table) {
             $table->bigInteger('id', true);
             $table->string('uuid')->default(Str::uuid()->toString());
@@ -48,8 +51,9 @@ return new class extends Migration
             $table->enum('status', ['Pending', 'Confirmed', 'Rejected','Failed','Approved','Processing','Waiting'])->default('Pending');
             $table->timestamps();
         });
-    }
 
+    }
+    }
     /**
      * Reverse the migrations.
      *
