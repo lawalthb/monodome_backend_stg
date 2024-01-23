@@ -65,10 +65,10 @@ class DriverManagerController extends Controller
                         ->orWhere('full_name', 'like', "%$term%");
                 })
                 ->orWhere('street', 'like', "%$term%")
-                ->orWhere('have_motor', 'like', "%$term%")
-                ->orWhere('type', 'like', "%$term%")
-                ->orWhere('license_number', 'like', "%$term%")
-                ->orWhere('nin_number', 'like', "%$term%")
+             //   ->orWhere('have_motor', 'like', "%$term%")
+              //  ->orWhere('type', 'like', "%$term%")
+           //     ->orWhere('license_number', 'like', "%$term%")
+             //   ->orWhere('nin_number', 'like', "%$term%")
                 ->orWhere('status', 'like', "%$term%")
                 ->orWhereHas('state', function ($stateQuery) use ($term) {
                     $stateQuery->where('name', 'like', "%$term%");
