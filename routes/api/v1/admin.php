@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DistancePriceController;
 use App\Http\Controllers\Api\v1\Admin\BlogController;
 use App\Http\Controllers\Api\v1\Admin\RoleController;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
@@ -20,6 +19,7 @@ use App\Http\Controllers\Api\v1\Admin\DashboardController;
 use App\Http\Controllers\Api\v1\Admin\LoadBoardController;
 use App\Http\Controllers\Api\v1\Admin\ManageUserController;
 use App\Http\Controllers\Api\v1\Admin\PermissionController;
+use App\Http\Controllers\Api\v1\Admin\DistancePriceController;
 use App\Http\Controllers\Api\v1\Admin\WeightPriceController;
 use App\Http\Controllers\Api\v1\Admin\ClearingAgentController;
 use App\Http\Controllers\Api\v1\Admin\DriverManagerController;
@@ -132,6 +132,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
             Route::post('/create-price', [SettingController::class, 'createPrice']);
             Route::post('/create-distance', [SettingController::class, 'storeDistance']);
             Route::post('/update/{id}', [SettingController::class, 'update']);
+
+            Route::get('/get-distance-prices/{loadTypeId}', [SettingController::class, 'getDistancePricesByLoadType']);
+            Route::get('/get-weight-prices/{loadTypeId}', [SettingController::class, 'getWeightPricesByLoadType']);
+
+
 
         });
 

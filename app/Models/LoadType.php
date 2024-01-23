@@ -49,6 +49,20 @@ class LoadType extends Model
     }
 
 
+    public function distancePrices()
+    {
+        return $this->hasMany(DistancePrice::class, 'load_type_id');
+    }
+
+
+
+    public function weightPrices()
+    {
+        return $this->hasMany(WeightPrice::class, 'load_type_id');
+    }
+
+
+
     public function specificType()
     {
         // Define a relationship to the specific type (Package, Bulk, or Container)

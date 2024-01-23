@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\DistancePrice;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\DistancePriceRequest;
 use App\Http\Resources\DistancePriceResource;
 

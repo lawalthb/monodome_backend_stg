@@ -267,4 +267,25 @@ class SettingController extends Controller
         ], 201); // 201 Created status code
     }
 
+
+    public function getDistancePricesByLoadType($loadTypeId)
+    {
+        $loadType = LoadType::findOrFail($loadTypeId);
+
+        $distancePrices = $loadType->distancePrices;
+
+        return response()->json(['distance_prices' => $distancePrices]);
+    }
+
+
+
+    public function getWeightPricesByLoadType($loadTypeId)
+    {
+        $loadType = LoadType::findOrFail($loadTypeId);
+
+        $distancePrices = $loadType->weightPrices;
+
+        return response()->json(['distance_prices' => $distancePrices]);
+    }
+
 }
