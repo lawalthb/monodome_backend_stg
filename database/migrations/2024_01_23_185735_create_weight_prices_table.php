@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->decimal('min_weight', 5, 2);
             $table->decimal('max_weight', 5, 2);
-            $table->unsignedBigInteger('load_type_id');
+            $table->integer('load_type_id');
             $table->integer('price');
             $table->timestamps();
 

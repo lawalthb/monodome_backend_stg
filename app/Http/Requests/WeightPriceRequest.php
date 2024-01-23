@@ -11,7 +11,7 @@ class WeightPriceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class WeightPriceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'min_weight' => 'required|numeric|min:0',
+            'max_weight' => 'required|numeric|min:' . $this->input('min_weight'),
+            'load_type_id' => 'required|exists:load_types,id',
+            'price' => 'required|integer|min:0',
         ];
     }
 }

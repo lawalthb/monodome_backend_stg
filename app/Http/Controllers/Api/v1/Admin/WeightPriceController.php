@@ -24,6 +24,7 @@ class WeightPriceController extends Controller
 
     public function store(WeightPriceRequest $request)
     {
+
         $weightPrice = WeightPrice::create($request->validated());
         return new WeightPriceResource($weightPrice);
     }
