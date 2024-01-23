@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DistancePriceController;
 use App\Http\Controllers\Api\v1\Admin\BlogController;
 use App\Http\Controllers\Api\v1\Admin\RoleController;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
@@ -141,6 +142,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
             Route::put('/{id}', [WeightPriceController::class, 'update']);
             Route::delete('/{id}', [WeightPriceController::class, 'destroy']);
         });
+
+
+        Route::group(['prefix' => 'distance-prices', 'middleware' => 'auth:api'], function () {
+            Route::get('/', [DistancePriceController::class, 'index']);
+            Route::get('/{id}', [DistancePriceController::class, 'show']);
+            Route::post('/', [DistancePriceController::class, 'store']);
+            Route::put('/{id}', [DistancePriceController::class, 'update']);
+            Route::delete('/{id}', [DistancePriceController::class, 'destroy']);
+        });
+
 
 
         Route::group(['prefix' => 'support', 'middleware' => 'auth:api'], function () {

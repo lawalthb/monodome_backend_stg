@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DistancePrice;
 use Illuminate\Http\Request;
+use App\Models\DistancePrice;
+use App\Http\Requests\DistancePriceRequest;
+use App\Http\Resources\DistancePriceResource;
 
 class DistancePriceController extends Controller
 {
