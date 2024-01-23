@@ -49,8 +49,8 @@ jobs:
           git pull
           #pwd
           #ls -la
-          php artisan migrate:fresh --seed --force
-          chmod +x deploy.sh
-          sh deploy.sh
+          #php artisan migrate:fresh --seed --force
+          #chmod +x deploy.sh
+          #sh deploy.sh
 
 
