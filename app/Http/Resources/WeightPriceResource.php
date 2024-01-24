@@ -16,6 +16,7 @@ class WeightPriceResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'range' => $this->min_weight."kg to ".$this->max_weight."kg",
             'min_weight' => $this->min_weight,
             'max_weight' => $this->max_weight,
             'load_type_id' => $this->load_type_id,
