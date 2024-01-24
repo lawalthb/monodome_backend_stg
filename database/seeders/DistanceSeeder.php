@@ -116,7 +116,7 @@ public function run()
 
             // Update values for the next record
             $fromDistance = $toDistance + 1;
-            $toDistance += 50;
+            $toDistance += 200;
             $price += $toDistance; // Adjust the price increment as needed
         }
     }

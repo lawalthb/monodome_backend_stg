@@ -195,17 +195,21 @@ class UsersTableSeeder extends Seeder
         User::find(5)->assignRole('Driver Manager');
 
 
-        $statuses = ['Pending', 'Confirmed', 'Rejected', 'Banned'];
+        $statuses = ['Pending', 'Confirmed'];
 
 
         //customer
         $customerRole = Role::find(3);
         for ($i = 1; $i <= 50; $i++) {
+
+        $randomStatus = $statuses[array_rand($statuses)];
+
         // Create a user
         $user = \App\Models\User::factory()->create([
             'user_type' => "Customer",
             'role_id' => 3,
             'ref_by' => rand(1,4),
+            'status' => $randomStatus,
             'referral_code' => generateReferralCode(),
         ]);
 
