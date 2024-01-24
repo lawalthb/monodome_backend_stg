@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api\v1\Order;
 use App\Models\Order;
 use App\Models\Setting;
 use App\Models\LoadType;
+use App\Models\WeightPrice;
 use App\Models\PriceSetting;
 use Illuminate\Http\Request;
+use App\Models\DistancePrice;
 use App\Models\WalletHistory;
 use App\Traits\ApiStatusTrait;
 use App\Events\LoadTypeCreated;
@@ -311,37 +313,43 @@ class OrderController extends Controller
         //
     }
 
+
+
     public function calculatePrice(Request $request)
     {
         $request->validate([
+            'is_document' => 'required|string|in:Yes,No',
             'distance' => 'required|string',
-            'type' => 'required|string|in:Packages,Documents,Bulk Delivery,Car Clearing,Car Delivery,Container Delivery',
+            'weight_id' => 'required_if:is_document,Yes|integer|exists:distance_prices,id',
+            'load_type_id' => 'required|integer|exists:load_types,id',
         ]);
 
         $payload = $request->all();
-        $type = $request->type;
+        $load_type_id = $request->load_type_id;
+        $weight_id = $request->weight_id;
 
+        // getting number inside any string
         $distance = (int)filter_var($payload['distance'], FILTER_SANITIZE_NUMBER_INT);
 
-        // Find the related PriceSetting by name
-        $priceSetting = PriceSetting::where('name', $type)->first();
+        // Find the related WeightPrice by name
+        $WeightPrice = WeightPrice::where('id', $weight_id)->first();
 
-        if (!$priceSetting) {
+        if (!$WeightPrice) {
             return response()->json(['message' => 'No matching price settings found.'], 404);
         }
 
         // Now you can find the matching distance setting
-        $distanceSetting = DistanceSetting::where('loadable_id', $priceSetting->id)
-            ->where('from', '<=', $distance)
-            ->where('to', '>=', $distance)
+        $distanceSetting = DistancePrice::where('load_type_id', $load_type_id )
+            ->where('min_km', '<=', $distance)
+            ->where('max_km', '>=', $distance)
             ->first();
 
         if (!$distanceSetting) {
-            return response()->json(['message' => 'No matching distance settings found.'], 404);
+            return response()->json(['message' => 'No matching distance settings or load found.'], 404);
         }
 
         // Calculate the final price
-        $finalPrice = $distanceSetting->price;
+        $finalPrice = $distanceSetting->price + $WeightPrice->price;
 
         return response()->json([
             'success' => true,
@@ -349,6 +357,47 @@ class OrderController extends Controller
             'data' => ['final_price' => $finalPrice],
         ]);
     }
+
+
+
+    // public function calculatePrice(Request $request)
+    // {
+    //     $request->validate([
+    //         'distance' => 'required|string',
+    //         'type' => 'required|string|in:Packages,Documents,Bulk Delivery,Car Clearing,Car Delivery,Container Delivery',
+    //     ]);
+
+    //     $payload = $request->all();
+    //     $type = $request->type;
+
+    //     $distance = (int)filter_var($payload['distance'], FILTER_SANITIZE_NUMBER_INT);
+
+    //     // Find the related PriceSetting by name
+    //     $priceSetting = PriceSetting::where('name', $type)->first();
+
+    //     if (!$priceSetting) {
+    //         return response()->json(['message' => 'No matching price settings found.'], 404);
+    //     }
+
+    //     // Now you can find the matching distance setting
+    //     $distanceSetting = DistanceSetting::where('loadable_id', $priceSetting->id)
+    //         ->where('from', '<=', $distance)
+    //         ->where('to', '>=', $distance)
+    //         ->first();
+
+    //     if (!$distanceSetting) {
+    //         return response()->json(['message' => 'No matching distance settings found.'], 404);
+    //     }
+
+    //     // Calculate the final price
+    //     $finalPrice = $distanceSetting->price;
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'Price calculation successful',
+    //         'data' => ['final_price' => $finalPrice],
+    //     ]);
+    // }
 
     // check the distance prices
     public function distancePrice()
