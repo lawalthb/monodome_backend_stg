@@ -169,6 +169,36 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => '2023-10-30 13:22:23',
             ),
 
+
+
+            5 =>
+            array (
+                'id' => 6,
+                'full_name' => 'company transporter',
+                'email' => 'companytransporter@gmail.com',
+                'phone_number' => "+234708474427",
+                'email_verified_at' => now(),
+                'password' => '$2y$10$ls19QB7MfG39OL0BmrkLVuzgN1VbAyQ/UlkzIfGbWBCyu/5cFIfTG',
+                'provider_id' => NULL,
+                'provider' => NULL,
+                'address' => NULL,
+                'user_created_by' => NULL,
+                'ref_by' => 1,
+                'referral_code' => generateReferralCode(),
+                'role_id' => NULL,
+                'imageUrl' => NULL,
+                'user_type' => 'company_transport',
+                'role' => 'super_admin',
+                'location' => NULL,
+                'user_agent' => NULL,
+                'isPremium' => 1,
+                'status' => 'Confirmed',
+                'remember_token' => NULL,
+                'deleted_at' => NULL,
+                'created_at' => '2023-10-30 13:22:23',
+                'updated_at' => '2023-10-30 13:22:23',
+            ),
+
         ));
 
         // adding money to customer
