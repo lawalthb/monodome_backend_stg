@@ -159,12 +159,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         //load type route
         Route::get('/', [OrderController::class, 'index']);
         Route::post('/', [OrderController::class, 'store']);
-        Route::get('/price', [OrderController::class, 'distancePrice']);
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::post('/{id}', [OrderController::class, 'update']);
         Route::delete('/{id}', [OrderController::class, 'destroy']);
-        Route::post('/price/calculate', [OrderController::class, 'calculatePrice']);
         Route::get('/price/get-weight', [OrderController::class, 'weight']);
+        Route::get('/price/get-distance', [OrderController::class, 'distancePrice']);
+        Route::post('/price/calculate', [OrderController::class, 'calculatePrice']);
 
 
     });
