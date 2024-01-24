@@ -20,6 +20,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\OrderResource;
 use App\Notifications\SendNotification;
+use App\Http\Resources\WeightPriceResource;
 use App\Http\Resources\DistanceSettingResource;
 
 class OrderController extends Controller
@@ -421,5 +422,12 @@ class OrderController extends Controller
         'message' => 'Distance settings grouped by Price Setting',
         'data' => $result,
     ]);
+    }
+
+
+    public function weight()
+    {
+        $weightPrices = WeightPrice::all();
+        return WeightPriceResource::collection($weightPrices);
     }
 }

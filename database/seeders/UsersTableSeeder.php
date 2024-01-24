@@ -223,6 +223,7 @@ class UsersTableSeeder extends Seeder
         User::find(3)->assignRole('Customer');
         User::find(4)->assignRole('Driver');
         User::find(5)->assignRole('Driver Manager');
+        User::find(6)->assignRole('Company Transport');
 
 
         $statuses = ['Pending', 'Confirmed'];
