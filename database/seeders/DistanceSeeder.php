@@ -121,7 +121,7 @@ public function run()
 
 
 
-    $loadTypeIds = [1, 6];
+    $loadTypeIds = [1, 6,2];
     $loadableType = 'App\Models\PriceSetting';
 
     foreach ($loadTypeIds as $loadTypeId) {
