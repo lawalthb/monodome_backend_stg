@@ -21,6 +21,8 @@ class WeightPriceResource extends JsonResource
             'max_weight' => $this->max_weight,
             'load_type_id' => $this->load_type_id,
             'price' => $this->price,
+            'vehicle_description' => $this->vehicle_description,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

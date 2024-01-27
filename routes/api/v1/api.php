@@ -163,6 +163,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::post('/{id}', [OrderController::class, 'update']);
         Route::delete('/{id}', [OrderController::class, 'destroy']);
         Route::get('/price/get-weight', [OrderController::class, 'weight']);
+        Route::get('/price/get-weight-bulk', [OrderController::class, 'weightBulk']);
         Route::get('/price/get-distance', [OrderController::class, 'distancePrice']);
         Route::post('/price/calculate', [OrderController::class, 'calculatePrice']);
 

@@ -427,7 +427,13 @@ class OrderController extends Controller
 
     public function weight()
     {
-        $weightPrices = WeightPrice::all();
+        $weightPrices = WeightPrice::whereIn("load_type_id",[1,6])->get();
+        return WeightPriceResource::collection($weightPrices);
+    }
+
+    public function weightBulk()
+    {
+        $weightPrices = WeightPrice::where("load_type_id",2)->get();
         return WeightPriceResource::collection($weightPrices);
     }
 }
