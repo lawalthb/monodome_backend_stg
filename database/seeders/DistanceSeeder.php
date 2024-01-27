@@ -80,6 +80,47 @@ class DistanceSeeder extends Seeder
 
 public function run()
 {
+
+
+    $ranges = [
+        ['min' => 100, 'max' => 300, 'price' => 2000, 'vehicle' => 'Car'],
+        ['min' => 301, 'max' => 500, 'price' => 2000, 'vehicle' => 'Pick up'],
+        ['min' => 501, 'max' => 1000, 'price' => 2000, 'vehicle' => 'Bus'],
+        ['min' => 1001, 'max' => 2000, 'price' => 2000, 'vehicle' => '2 tons Bus'],
+        ['min' => 2001, 'max' => 3000, 'price' => 2000, 'vehicle' => 'Canter'],
+        ['min' => 25001, 'max' => 30000, 'price' => 2000, 'vehicle' => 'Trailer'],
+    ];
+
+    foreach ($ranges as $range) {
+        $minWeight = $range['min'];
+        $maxWeight = $range['max'];
+        $vehicleDescription = $range['vehicle'];
+
+        DB::table('weight_prices')->insert([
+            'min_weight' => $minWeight,
+            'max_weight' => $maxWeight,
+            'price' => $range['price'],
+            'vehicle_description' => $vehicleDescription,
+            'load_type_id' => 2,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+
+    DB::table('weight_prices')->insert([
+        [
+            'min_weight' => 100,
+            'max_weight' => 300,
+            'price' => 2000,
+            'vehicle_description' => "Car",
+            'load_type_id' => 2,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]
+    ]);
+
+
+
     $loadTypeIds = [1, 6];
     $loadableType = 'App\Models\PriceSetting';
 
@@ -108,7 +149,7 @@ public function run()
                     'min_weight' => $fromDistance,
                     'max_weight' => $toDistance,
                     'price' => $price,
-                    'desc' => fake()->word(),
+                   // 'desc' => fake()->word(),
                     'load_type_id' => $loadTypeId,
                     'created_at' => now(),
                     'updated_at' => now(),

@@ -361,7 +361,4 @@ class DriverController extends Controller
 
     }
 
-    public function  (){
-
-    }
 }
