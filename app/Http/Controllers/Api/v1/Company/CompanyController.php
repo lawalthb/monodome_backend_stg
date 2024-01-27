@@ -246,8 +246,8 @@ class CompanyController extends Controller
         $driver = Driver::where(function ($q) use ($key) {
             // Assuming there's a relationship between Agent and User
             $q->whereHas('user', function ($userQuery) use ($key) {
-                $userQuery->where('full_name', 'like', "%{$key}%");
-                $userQuery->where('address', 'like', "%{$key}%");
+                $userQuery->where('full_name', 'like', "%{$key}%")
+                ->where('user_created_by', auth()->id());
             })->orWhere('license_number', 'like', "%{$key}%");
         })->where("have_motor","No")
             ->latest()

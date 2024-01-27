@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('max_weight');
             $table->integer('load_type_id');
             $table->integer('price');
-            $table->string('desc');
+            $table->string('vehicle_description')->nullable();
             $table->string('status')->default('Active');
             $table->timestamps();
 
