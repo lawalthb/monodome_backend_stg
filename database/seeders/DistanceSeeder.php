@@ -108,6 +108,7 @@ public function run()
                     'min_weight' => $fromDistance,
                     'max_weight' => $toDistance,
                     'price' => $price,
+                    'desc' => fake()->word(),
                     'load_type_id' => $loadTypeId,
                     'created_at' => now(),
                     'updated_at' => now(),
