@@ -386,9 +386,6 @@ class CompanyController extends Controller
         }
     }
 
-
-
-
     public function broadcast(Request $request)
     {
         $query = LoadBoard::whereIn('load_type_id', [1, 2])->orWhere("acceptable_id", auth()->id())->orWhere("acceptable_id", null)->orderBy('created_at', 'desc');
@@ -398,11 +395,8 @@ class CompanyController extends Controller
             $query->where('order_no', $request->input('order_no'));
         }
 
-        // Add more filters as needed
+        $perPage = $request->input('per_page', 10);
 
-        $perPage = $request->input('per_page', 10); // Number of items per page, defaulting to 10.
-
-        // Use the paginate method to paginate the results
         $loadBoards = $query->paginate($perPage);
 
         return LoadBoardResource::collection($loadBoards);
