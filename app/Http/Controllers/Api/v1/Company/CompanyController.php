@@ -353,6 +353,25 @@ class CompanyController extends Controller
         return response()->json(['message' => 'List of users registered under ' . Auth::user()->full_name, 'users' => UserResource::collection($myUsers)], 200);
     }
 
+    public function delete_user()
+    {
+        // Check if the logged-in user has the 'Company Transport' role
+        if (!Auth::user()->hasRole('Company Transport')) {
+            return response()->json(['message' => 'You do not have permission to access this resource'], 403);
+        }
+
+        // Fetch the list of users registered under the logged-in user
+        $myUsers = User::where('user_created_by', Auth::user()->id)->delete();
+
+        if($myUsers){
+
+            return response()->json(['message' => 'User deleted'], 200);
+        }else{
+
+            return response()->json(['message' => 'Unable to delete user'], 400);
+        }
+
+    }
 
     public function changeRole(Request $request)
     {
