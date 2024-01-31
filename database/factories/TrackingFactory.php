@@ -23,7 +23,7 @@ class TrackingFactory extends Factory
     {
         return [
             'tracking_id' => $this->faker->unique()->uuid,
-            'order_no' => "MO-"$this->faker->unique()->randomNumber(5),
+            'order_no' => "MO-".$this->faker->unique()->randomNumber(5),
             'comment' => $this->faker->text,
             'time' => $this->faker->dateTime(),
             'longitude' => $this->faker->longitude,
