@@ -6,6 +6,7 @@ use App\Http\Controllers\RoleController;
 // use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
 use App\Http\Controllers\MapApiController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Api\v1\CountryController;
@@ -153,6 +154,17 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/download/{ticket}', [SupportController::class, 'ticketDownload']);
 
     });
+
+    Route::group(['prefix' => 'order/tracking'], function () {
+
+        Route::get('/', [TrackingController::class, 'index']);
+        Route::post('/', [TrackingController::class, 'store']);
+        Route::get('/{id}', [TrackingController::class, 'show']);
+        Route::post('/{id}', [TrackingController::class, 'update']);
+        Route::delete('/{id}', [TrackingController::class, 'destroy']);
+
+    });
+
 
     Route::group(['prefix' => 'order', 'middleware' => 'auth:api'], function () {
 

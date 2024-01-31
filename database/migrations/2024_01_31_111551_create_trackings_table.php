@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('trackings', function (Blueprint $table) {
             $table->id();
             $table->string('tracking_id');
+            $table->string('driver_id');
             $table->string('order_no');
             $table->text('comment')->nullable();
             $table->dateTime('time')->nullable();
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable();
             $table->string('location')->nullable();
-            $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
+            // $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
             $table->string('status');
             $table->timestamps();
         });
