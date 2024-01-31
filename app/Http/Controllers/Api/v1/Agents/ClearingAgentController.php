@@ -257,9 +257,15 @@ class ClearingAgentController extends Controller
         if($loadBoards){
 
             $driverManger = Agent::where("user_id",auth()->id())->first();
+            $order = Order::where("order_no", $loadBoards->order_no)->first();
+
 
             $loadBoards->acceptable_id = $driverManger->id;
             $loadBoards->acceptable_type = get_class($driverManger) ;
+
+            $order->acceptable_id = $driverManger->id;
+            $order->acceptable_type = get_class($driverManger) ;
+            $order->save();
 
             $loadBoards->loadable->status = "Processing";
             $loadBoards->save();
