@@ -40,7 +40,7 @@ class AdminAuthController extends Controller
         if ($request->otp !== "000000" && !$this->verifyOTPCode($request->email, $request->otp)) {
             return $this->error('', 'Invalid OTP', 422);
         }
-
+        
         $credentials = $request->only(['email', 'password']);
 
         try {

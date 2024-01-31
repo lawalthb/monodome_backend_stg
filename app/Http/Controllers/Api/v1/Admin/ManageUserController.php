@@ -48,8 +48,8 @@ class ManageUserController extends Controller
             'full_name' => 'required|string',
             'email' => 'required|email|unique:users,email,', // Ignore the current user's email
             'address' => 'nullable|string',
-            'phone_number' => 'nullable|string|unique:users,phone_number',
-            'password' => 'nullable|string',
+            'phone_number' => 'required|string|unique:users,phone_number',
+            'password' => 'required|string',
             'permission_ids' => 'required|array',
         ]);
 
@@ -57,13 +57,13 @@ class ManageUserController extends Controller
             return $this->error('', $validator->errors()->first(), 422);
         }
 
-        $password = Str::random(10);
+        //$password = Str::random(10);
         $user = new User([
             'full_name' => $request->full_name,
             'email' => $request->email,
             'address' => $request->address,
             'phone_number' => $request->phone_number,
-            'password' => Hash::make($password),
+            'password' => Hash::make($request->password),
             'ref_by' => auth()->user()->id,
             'referral_code' => generateReferralCode(),
             'role_id' => 2,
@@ -94,7 +94,7 @@ class ManageUserController extends Controller
 
         $data = [
             "full_name" => $request->input('full_name'),
-            "password" => $password,
+            "password" => $request->password,
             "message" => "",
         ];
 
