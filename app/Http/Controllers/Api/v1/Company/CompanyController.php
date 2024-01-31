@@ -422,4 +422,108 @@ class CompanyController extends Controller
         return LoadBoardResource::collection($loadBoards);
     }
 
+    /**
+     * sendRequest
+     * this function send request to driver or truck owners
+     * @param  mixed $request
+     *
+     */
+    public function sendRequest(Request $request)
+    {
+        $request->validate([
+            "user_id" => "required|exists:users,id",
+            "role_id" => "required|exists:roles,id"
+        ]);
+
+        $driverOrTruck = User::role('Company Transport')->where('id', auth()->id())->first();
+
+        // Check if the current user is a Company Transport
+        if (!$driverOrTruck) {
+            return response()->json(['message' => 'You are not authorized to send requests.'], 403);
+        }
+
+        // Check if the target user exists and is a driver or truck owner
+        $targetUser = User::where('id', $request->user_id)->whereNull('user_created_by')->first();
+
+        // Ensure $targetUser is not null before accessing its properties
+        if (!$targetUser) {
+            return response()->json(['message' => 'No User is available.'], 400);
+        }
+
+      //  return $targetUser->roles;
+        if (!$targetUser->hasAnyRole(['Driver', 'Truck'])) {
+            return response()->json(['message' => 'This user is not driver or truck role.'], 400);
+        }
+
+        // Send request and set the manager_request flag
+        $targetUser->update(['manager_request' => 1]);
+
+        return response()->json(['message' => 'Request sent successfully.']);
+    }
+
+
+    public function available_truck(Request $request)
+    {
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $truck = Truck::whereHas('user', function ($userQuery) use ($key) {
+            $userQuery->where('full_name', 'like', "%{$key}%")
+            ->whereNull('user_created_by');
+        })
+            ->latest()
+            ->paginate($perPage);
+
+        return TruckResource::collection($truck);
+    }
+
+
+    public function my_truck(Request $request)
+    {
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $truck = Truck::whereHas('user', function ($userQuery) use ($key) {
+            $userQuery->where('full_name', 'like', "%{$key}%")
+            ->where('user_created_by', auth()->id());
+            })
+            ->latest()
+            ->paginate($perPage);
+
+        return TruckResource::collection($truck);
+    }
+
+    public function available_drivers(Request $request)
+    {
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $drivers = Driver::whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('full_name', 'like', "%{$key}%")
+                           ->whereNull('user_created_by');
+            })
+            ->where("have_motor", "No")
+            ->latest()
+            ->paginate($perPage);
+
+        return DriverResource::collection($drivers);
+    }
+
+    public function my_drivers(Request $request)
+    {
+
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $drivers = Driver::whereHas('user', function ($userQuery) use ($key) {
+                $userQuery->where('full_name', 'like', "%{$key}%")
+                           ->where('user_created_by', auth()->id());
+            })
+            ->where("have_motor", "No")
+            ->latest()
+            ->paginate($perPage);
+
+        return DriverResource::collection($drivers);
+    }
+
 }
