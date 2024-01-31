@@ -313,9 +313,6 @@ class OrderController extends Controller
     {
         //
     }
-
-
-
     public function calculatePrice(Request $request)
     {
         $request->validate([
