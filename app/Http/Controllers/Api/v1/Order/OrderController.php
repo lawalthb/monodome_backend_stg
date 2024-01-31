@@ -301,9 +301,9 @@ class OrderController extends Controller
     public function calculatePrice(Request $request)
     {
         $request->validate([
-            'is_document' => 'required|string|in:Yes,No',
+            'is_document' => 'nullable|string|in:Yes,No',
             'distance' => 'required|string',
-            'weight_id' => 'required_if:is_document,No|integer|exists:distance_prices,id',
+            'weight_id' => 'integer|exists:distance_prices,id',
             'load_type_id' => 'required|integer|exists:load_types,id',
         ]);
 
