@@ -194,11 +194,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
             Route::get('/drivers', [CompanyController::class, 'driver']);
             Route::get('/truck', [TruckController::class, 'truck']);
 
-            Route::get('/my-drivers', [DriverMangerController::class, 'my_drivers']);
-            Route::get('/available-drivers', [DriverMangerController::class, 'available_drivers']);
-            Route::get('/my-truck', [DriverMangerController::class, 'my_truck']);
-            Route::get('/available-truck', [DriverMangerController::class, 'available_truck']);
-            Route::post('/send-request', [DriverMangerController::class, 'sendRequest']);
+            Route::get('/my-drivers', [CompanyController::class, 'my_drivers']);
+            Route::get('/remove-driver', [CompanyController::class, 'remove_driver']);
+            Route::get('/available-drivers', [CompanyController::class, 'available_drivers']);
+            Route::get('/my-truck', [CompanyController::class, 'my_truck']);
+            Route::get('/available-truck', [CompanyController::class, 'available_truck']);
+            Route::post('/send-request', [CompanyController::class, 'sendRequest']);
 
 
 
