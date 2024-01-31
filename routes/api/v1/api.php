@@ -166,9 +166,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/price/get-weight-bulk', [OrderController::class, 'weightBulk']);
         Route::get('/price/get-distance', [OrderController::class, 'distancePrice']);
         Route::post('/price/calculate', [OrderController::class, 'calculatePrice']);
-
-
     });
+
+
      // broker route group
     Route::group(['prefix' => 'broker'], function () {
 
@@ -295,7 +295,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     });
 
 
-Route::group(['prefix' => 'driver-manager'], function () {
+    Route::group(['prefix' => 'driver-manager'], function () {
     Route::post('/store', [DriverMangerController::class, 'store']);
 
         Route::middleware(['auth:api'])->group(function () {
