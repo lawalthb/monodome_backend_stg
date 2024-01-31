@@ -37,7 +37,7 @@ class ClearingAgentController extends Controller
     public function my_order()
     {
 
-        $order = Order::where("user_id",auth()->user()->id)->get();
+        $order = Order::where("acceptable_id",auth()->user()->id)->get();
 
         if (!$order) {
 
