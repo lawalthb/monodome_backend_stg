@@ -3,10 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use DistanceSettingSeeder;
 use Illuminate\Database\Seeder;
 use Database\Seeders\AdminSeeder;
+use Database\Seeders\CityOneSeeder;
 use Database\Seeders\SettingsSeeder;
-use DistanceSettingSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -57,6 +58,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(BlogsTableSeeder::class);
+        $this->call(TrackingsTableSeeder::class);
 
 
 
