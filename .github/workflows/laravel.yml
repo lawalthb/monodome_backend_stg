@@ -50,7 +50,7 @@ jobs:
           php artisan optimize:clear
           #pwd
           #ls -la
-          #php artisan migrate:fresh --seed --force
+          php artisan migrate:fresh --seed --force
           #chmod +x deploy.sh
           #sh deploy.sh
 

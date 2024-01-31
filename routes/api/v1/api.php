@@ -158,10 +158,10 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     Route::group(['prefix' => 'order/tracking'], function () {
 
         Route::get('/', [TrackingController::class, 'index']);
-        Route::post('/', [TrackingController::class, 'store']);
+        Route::post('/', [TrackingController::class, 'store'])->middleware('auth:api');
         Route::get('/{id}', [TrackingController::class, 'show']);
-        Route::post('/{id}', [TrackingController::class, 'update']);
-        Route::delete('/{id}', [TrackingController::class, 'destroy']);
+        Route::post('/{id}', [TrackingController::class, 'update'])->middleware('auth:api');
+        Route::delete('/{id}', [TrackingController::class, 'destroy'])->middleware('auth:api');
 
     });
 
