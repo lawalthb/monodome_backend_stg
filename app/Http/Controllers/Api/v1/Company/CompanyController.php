@@ -462,6 +462,40 @@ class CompanyController extends Controller
     }
 
 
+    public function remove_driver(Request $request)
+    {
+        $request->validate([
+            "user_id" => "required|exists:users,id",
+            "role_id" => "required|exists:roles,id"
+        ]);
+
+        $driverOrTruck = User::role('Company Transport')->where('id', auth()->id())->first();
+
+        // Check if the current user is a Company Transport
+        if (!$driverOrTruck) {
+            return response()->json(['message' => 'You are not authorized to send requests.'], 403);
+        }
+
+        // Check if the target user is yours
+        $targetUser = User::where('id', $request->user_id)->where('user_created_by',auth()->id())->first();
+
+        // Ensure $targetUser is not null before accessing its properties
+        if (!$targetUser) {
+            return response()->json(['message' => 'User is not yours.'], 400);
+        }
+
+      //  return $targetUser->roles;
+        if (!$targetUser->hasAnyRole(['Driver', 'Truck'])) {
+            return response()->json(['message' => 'This user is not driver or truck role.'], 400);
+        }
+
+        // Send request and set the manager_request flag
+        $targetUser->update(['user_created_by' => null]);
+
+        return response()->json(['message' => 'User remove successfully.']);
+    }
+
+
     public function available_truck(Request $request)
     {
         $key = $request->input('search');
