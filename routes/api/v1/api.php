@@ -205,6 +205,21 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
             Route::get('/myUsers', [CompanyController::class, 'myUsers']);
             Route::post('/changeRole', [CompanyController::class, 'changeRole']);
 
+
+               // load package route
+            Route::get('/load-package', [LoadPackageController::class, 'index']);
+            Route::post('/load-package', [LoadPackageController::class, 'store']);
+            Route::get('/load-package/{id}', [LoadPackageController::class, 'show']);
+            Route::post('/load-package/{id}', [LoadPackageController::class, 'update']);
+            Route::delete('/load-package/{id}', [LoadPackageController::class, 'destroy']);
+
+            // load Bulk route
+            Route::get('/load-bulk', [LoadBulkController::class, 'index']);
+            Route::post('/load-bulk', [LoadBulkController::class, 'store']);
+            Route::get('/load-bulk/{id}', [LoadBulkController::class, 'show']);
+            Route::post('/load-bulk/{loadBulk}', [LoadBulkController::class, 'update']);
+            Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
+
         });
     });
 
