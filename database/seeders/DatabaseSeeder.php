@@ -59,6 +59,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(BlogsTableSeeder::class);
         $this->call(TrackingsTableSeeder::class);
+        $this->call(ChatSeeder::class);
 
 
 
