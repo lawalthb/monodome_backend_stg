@@ -9,7 +9,8 @@ class WeightPrice extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['min_weight', 'max_weight', 'load_type_id', 'price'];
+    // protected $fillable = ['min_weight', 'max_weight', 'load_type_id', 'price','vehicle_description'];
+    public $guarded = [];
 
     public function loadType()
     {

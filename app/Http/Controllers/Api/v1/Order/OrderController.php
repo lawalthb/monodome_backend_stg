@@ -303,7 +303,7 @@ class OrderController extends Controller
         $request->validate([
             'is_document' => 'nullable|string|in:Yes,No',
             'distance' => 'required|string',
-            'weight_id' => 'integer|exists:distance_prices,id',
+            'weight_id' => 'nullable',
             'load_type_id' => 'required|integer|exists:load_types,id',
         ]);
 
