@@ -14,7 +14,7 @@ class TrackingController extends Controller
 
     public function show($id)
     {
-        return Tracking::findOrFail($id);
+        return Tracking::where("order_no",$id)->first();
     }
     public function store(Request $request)
     {
