@@ -315,6 +315,25 @@ class OrderController extends Controller
         $distance = (int)filter_var($payload['distance'], FILTER_SANITIZE_NUMBER_INT);
 
         // Find the related WeightPrice by name
+
+        if($request->is_document == "Yes"){
+
+            $distanceSetting = DistancePrice::where('load_type_id', $load_type_id )
+            ->where('min_km', '<=', $distance)
+            ->where('max_km', '>=', $distance)
+            ->first();
+
+
+            $finalPrice = $distanceSetting->price;
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Price calculation successful',
+                'data' => ['final_price' => $finalPrice],
+            ]);
+        }
+
+
         $WeightPrice = WeightPrice::where('id', $weight_id)->first();
 
         if (!$WeightPrice) {
