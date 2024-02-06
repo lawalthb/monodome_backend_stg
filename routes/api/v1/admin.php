@@ -146,6 +146,10 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
             Route::post('/', [WeightPriceController::class, 'store']);
             Route::put('/{id}', [WeightPriceController::class, 'update']);
             Route::delete('/{id}', [WeightPriceController::class, 'destroy']);
+
+            Route::get('/load-prices/{id}', [WeightPriceController::class, 'getWeightPricesByLoadType']);
+            Route::get('/get-weight-prices/{weight_id}/{load_type_id}', [WeightPriceController::class, 'getWeightPriceIDByLoadType']);
+
         });
 
 

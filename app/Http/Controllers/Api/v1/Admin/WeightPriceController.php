@@ -24,7 +24,6 @@ class WeightPriceController extends Controller
 
     public function store(WeightPriceRequest $request)
     {
-
         $weightPrice = WeightPrice::create($request->validated());
         return new WeightPriceResource($weightPrice);
     }
@@ -43,4 +42,22 @@ class WeightPriceController extends Controller
 
         return response()->json(['message' => 'Weight price deleted successfully']);
     }
+
+    public function getWeightPricesByLoadType(int $id){
+
+        $weightPrice = WeightPrice::where("load_type_id",$id)->get();
+
+        return WeightPriceResource::collection($weightPrice);
+    }
+
+
+    public function getWeightPriceIDByLoadType(int $id, int $load_type_id){
+
+        $weightPrice = WeightPrice::where("load_type_id",$load_type_id)->where("id",$id)->first();
+
+        return new WeightPriceResource($weightPrice);
+
+    }
+
+
 }

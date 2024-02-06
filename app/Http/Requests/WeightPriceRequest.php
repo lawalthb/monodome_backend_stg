@@ -24,8 +24,10 @@ class WeightPriceRequest extends FormRequest
         return [
             'min_weight' => 'required|numeric|min:0',
             'max_weight' => 'required|numeric|min:' . $this->input('min_weight'),
-            'load_type_id' => 'required|exists:load_types,id',
+            'load_type_id' => 'required|exists:load_types,id|in:1,2,6',
             'price' => 'required|integer|min:0',
+            'vehicle_description' => 'nullable',
+            'status' => 'nullable|in:Active,inActive'
         ];
     }
 }
