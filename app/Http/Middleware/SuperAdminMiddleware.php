@@ -15,13 +15,11 @@ class SuperAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-
-        // && auth()->user()->hasRole('Super Admin')
-        if (auth()->check() ) {
+        if (auth()->check() && (auth()->user()->hasRole('Super Admin') || auth()->user()->getAllPermissions()->isNotEmpty())) {
             return $next($request);
         }
 
-        return response()->json(['error' => 'Unauthorized, only super admin allow'], 403);
+        return response()->json(['error' => 'Unauthorized, only Super Admins with permissions are allowed'], 403);
     }
+
 }
