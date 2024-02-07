@@ -30,7 +30,7 @@ class CompanyFactory extends Factory
             'truck_type' =>rand(1, 3),
             'phone_number' => NULL,
             'company_logo' => 'uploads/company/company_images/1698672864XN29Pev1B0.png',
-            'company_name' => NULL,
+            'company_name' => fake()->streetAddress(),
             'cac_documents' => 'uploads/company/company_documents/1698672864oY8xxvqKC5.pdf',
         //    'status' => 'Pending',
             'created_at' => '2023-10-30 13:34:24',

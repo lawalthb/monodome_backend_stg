@@ -14,6 +14,8 @@ class CompanyResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+        $user = auth()->user()->user_created_by == null ? new UserResource($this->user) : null;
         return [
             'id' => $this->id,
            'name' => $this->user->full_name,
@@ -29,7 +31,7 @@ class CompanyResource extends JsonResource
           'status' => $this->status,
           'created_at' => $this->created_at,
           'updated_at' => $this->updated_at,
-          'user' => new UserResource($this->user),
+          'user' => $user,
           'state' => new StateResource($this->state),
         ];
     }

@@ -54,6 +54,12 @@ class DriverMangerController extends Controller
         return DriverResource::collection($driver);
     }
 
+
+    public function my_info(){
+
+        return new DriverResource(DriverManger::find(auth()->id()));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
