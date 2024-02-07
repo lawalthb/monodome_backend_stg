@@ -318,6 +318,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
     Route::get('/{id}', [LoadBoardController::class, 'show']);
     Route::post('/{loadBulk}', [LoadBoardController::class, 'update']);
     Route::delete('/{id}', [LoadBoardController::class, 'destroy']);
+    Route::delete('/status/{id}', [LoadBoardController::class, 'status']);
 
 });
 
