@@ -201,7 +201,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::group(['middleware' => 'auth:api' ,'role:Company Transport'], function(){
             Route::get('/', [CompanyController::class, 'index']);
 
-            Route::get('/info', [CompanyController::class, 'show']);
+            Route::get('/my-info', [CompanyController::class, 'my_info']);
 
             Route::get('/drivers', [CompanyController::class, 'driver']);
             Route::get('/truck', [TruckController::class, 'truck']);

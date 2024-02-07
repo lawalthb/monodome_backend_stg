@@ -55,6 +55,18 @@ class CompanyController extends Controller
         return CompanyResource::collection($company);
     }
 
+
+    public function my_info(){
+
+        if(auth()->user()->user_created_by != null ){
+           // dd(auth()->user()->user_created_by,"you are under a company");
+         //  return Company::where("user_id",auth()->user()->user_created_by)->first();
+            return new CompanyResource(Company::where("user_id",auth()->user()->user_created_by)->first());
+        }
+        // dd(auth()->user()->user_created_by,"you are a admin");
+        return new CompanyResource(Company::where("user_id",auth()->user()->id)->first());
+
+    }
     /**
      * Store a newly created resource in storage.
      */
