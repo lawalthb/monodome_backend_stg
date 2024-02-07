@@ -179,21 +179,23 @@ class DriverMangerController extends Controller
     }
 
 
-    public function available_drivers(Request $request)
-    {
-        $key = $request->input('search');
-        $perPage = $request->input('per_page', 10);
+public function available_drivers(Request $request)
+{
+    $key = $request->input('search');
+    $perPage = $request->input('per_page', 10);
 
-        $drivers = Driver::whereHas('user', function ($userQuery) use ($key) {
-                $userQuery->where('full_name', 'like', "%{$key}%")
-                           ->whereNull('user_created_by');
-            })
-            ->where("have_motor", "No")
-            ->latest()
-            ->paginate($perPage);
+     $drivers = Driver::with('user')->get();
+        // ->whereHas('user', function ($userQuery) use ($key) {
+        //     $userQuery->where('full_name', 'like', "%{$key}%")
+        //               ->whereNull('user_created_by');
+        // })
+        // ->where("have_motor", "No")
+        // ->latest()
+        // ->paginate($perPage);
 
-        return DriverResource::collection($drivers);
-    }
+    return DriverResource::collection($drivers);
+}
+
 
 
     public function available_truck(Request $request)

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('uuid');
-            $table->bigInteger('user_id')->index('user_id');
+            $table->unsignedBigInteger('user_id')->index('user_id');
             $table->unsignedBigInteger('state_id');
             $table->enum('type', ['driver', 'drives'])->default('driver');
             $table->enum('have_motor', ['Yes', 'No'])->default('Yes');
@@ -30,6 +30,8 @@ return new class extends Migration
             $table->enum('status', ['Pending', 'Confirmed', 'Approved', 'Rejected','Failed'])->default('Pending');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
