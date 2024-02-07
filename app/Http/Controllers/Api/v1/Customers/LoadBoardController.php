@@ -131,7 +131,7 @@ class LoadBoardController extends Controller
         } else {
             // Order with the specified order number not found in load boards
 
-            return $this->success(null, 'rder with the specified order number not found in load boards');
+            return $this->success(null, 'order with the specified order number not found in load boards');
 
         }
     }
