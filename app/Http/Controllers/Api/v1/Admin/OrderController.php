@@ -186,4 +186,25 @@ class OrderController extends Controller
     ]);
 }
 
+
+
+public function status(string $status)
+{
+    $order = Order::where("order_no",$status)->first();
+
+    $order->status = $status;
+
+    if($order->save()){
+        return response()->json([
+            'data' => new OrderResource($order),
+        ],200);
+    }else{
+        return response()->json([
+            'error' => "unable to update the status.",
+        ],400);
+    }
+
+
+}
+
 }
