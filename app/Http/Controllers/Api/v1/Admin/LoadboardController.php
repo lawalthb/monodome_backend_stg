@@ -86,4 +86,24 @@ class LoadboardController extends Controller
 
         return $this->success(null, 'Load board deleted successfully');
     }
+
+
+    public function status(string $status)
+{
+    $loadBoard = LoadBoard::where("order_no",$status)->first();
+
+    $loadBoard->status = $status;
+
+    if($loadBoard->save()){
+        return response()->json([
+            'data' => $loadBoard,
+        ],200);
+    }else{
+        return response()->json([
+            'error' => "unable to update the status.",
+        ],400);
+    }
+
+
+}
 }
