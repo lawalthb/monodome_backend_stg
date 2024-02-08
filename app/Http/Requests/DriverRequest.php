@@ -34,7 +34,7 @@ class DriverRequest extends FormRequest
               'license_number' => 'required|string',
               'proof_of_license' => 'required|image|mimes:jpeg,png,jpg|max:2048',
               'profile_picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-              'vehicle_image' => 'required|array',
+              'vehicle_image' => 'required_if:have_motor,Yes|array',
               'guarantors' => 'required|array',
               'guarantors.*.full_name' => 'required|string',
               'guarantors.*.phone_number' => 'required|string',
