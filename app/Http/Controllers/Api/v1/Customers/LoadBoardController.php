@@ -104,24 +104,20 @@ class LoadBoardController extends Controller
         if ($loadBoard) {
           $order = $loadBoard->order;
 
-            // Get the user who accepts the order (in this case, assuming it's a user with an ID of 1)
-            $acceptedUser = User::find(Auth::user()->id); // Replace 1 with the ID of the accepting user
+            $acceptedUser = User::find(Auth::user()->id);
 
             if ($acceptedUser) {
-                // Update the order and associate it with the accepting user
                 $order->accepted ="Yes";
                 $order->acceptable_id = $acceptedUser->id;
-                $order->acceptable_type = get_class($acceptedUser); // Assuming it's User model
+                $order->acceptable_type = get_class($acceptedUser);
 
                 $order->save();
 
-                // Optionally, you can update the LoadBoard status or perform other actions if needed
                 $loadBoard->status = 'out_for_delivery';
                 $order->acceptable_id = $acceptedUser->id;
-                $order->acceptable_type = get_class($acceptedUser); // Assuming it's User model
+                $order->acceptable_type = get_class($acceptedUser);
                 $loadBoard->save();
 
-                // Order updated and associated with the accepting user
                 return $this->success(['loadBoard' => new LoadBoardResource($loadBoard)], 'Load accepted successfully');
             } else {
                 // User who accepts the order not found
