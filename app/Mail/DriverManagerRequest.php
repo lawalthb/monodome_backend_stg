@@ -37,7 +37,7 @@ class DriverManagerRequest extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.send_notification',
+            markdown: 'mail.manage_request',
         );
     }
 
