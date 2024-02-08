@@ -55,7 +55,7 @@ class DriverController extends Controller
 
     public function broadcast(Request $request)
     {
-        $query = LoadBoard::whereIn('load_type_id', [1, 2])->orWhere("acceptable_id", auth()->id())->orWhere("acceptable_id", null)->orderBy('created_at', 'desc');
+        $query = LoadBoard::whereIn('load_type_id', [1, 2])->where("acceptable_id", null)->orderBy('created_at', 'desc');
 
         // Filter by Order Number
         if ($request->has('order_no')) {
