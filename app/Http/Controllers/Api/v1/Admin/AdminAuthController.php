@@ -40,7 +40,7 @@ class AdminAuthController extends Controller
         if ($request->otp !== "000000" && !$this->verifyOTPCode($request->email, $request->otp)) {
             return $this->error('', 'Invalid OTP', 422);
         }
-        
+
         $credentials = $request->only(['email', 'password']);
 
         try {
@@ -62,7 +62,7 @@ class AdminAuthController extends Controller
 
                 $message = "There was a successful login to your " . config('app.name') . " account. Please see below login details: ";
                  // $user->notify(new SendNotification($user, $message));
-        dispatch(new SendLoginNotificationJob($user, $message));
+                dispatch(new SendLoginNotificationJob($user, $message));
 
                 return $this->success(
                     [

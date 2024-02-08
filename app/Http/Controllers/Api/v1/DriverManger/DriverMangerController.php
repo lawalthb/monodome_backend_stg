@@ -15,6 +15,7 @@ use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Doctrine\DBAL\DriverManager;
+use App\Mail\DriverManagerRequest;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\TruckResource;
 use App\Http\Resources\DriverResource;
+use App\Jobs\SendLoginNotificationJob;
 use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;
 use App\Http\Requests\DriverMangerRequest;
@@ -401,6 +403,13 @@ public function available_drivers(Request $request)
         }
 
         // Send request and set the manager_request flag
+
+        $message = "Hello ".auth()->user()->full_name." want to manage you! <a href='/api/driver-manager/request'  class='btn btn-primary'>  click here to accept  </a>";
+        // $user->notify(new SendNotification($user, $message));
+    //    dispatch(new SendLoginNotificationJob($targetUser, $message));
+
+         Mail::to($targetUser)->send(new DriverManagerRequest($targetUser, $message));
+
         $targetUser->update(['manager_request' => 1]);
 
         return response()->json(['message' => 'Request sent successfully.']);
