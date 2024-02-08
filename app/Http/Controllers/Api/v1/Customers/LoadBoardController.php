@@ -194,9 +194,9 @@ class LoadBoardController extends Controller
     }
 
 
-    public function getAllBidsByOrder(Order $order)
+    public function getAllBidsByOrder(int $id)
     {
-        $bids = Bid::where('order_id',$order->id)->get();
+        $bids = Bid::where('order_id',$id)->get();
 
         return BidResource::collection($bids);
     }
