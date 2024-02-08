@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('bids', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('order_id')->nullable();
             $table->string('order_no')->nullable();
-            $table->unsignedBigInteger('driver_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('driver_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->decimal('amount', 10, 2); // The bid amount
             $table->decimal('old_amount', 10, 2); //
             $table->timestamps();
