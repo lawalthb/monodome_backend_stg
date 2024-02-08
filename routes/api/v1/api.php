@@ -131,6 +131,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     Route::group(['prefix' => 'bid', 'middleware' => 'auth:api'], function () {
         Route::post('/load-board/accept-bid', [LoadBoardController::class, 'acceptBidByCustomer']);
         Route::post('/load-board/accept-order', [LoadBoardController::class, 'accept']);
+        Route::post('/load-board/{order}', [LoadBoardController::class, 'bidStore']);
         Route::post('/load-board/{loadBoard}', [LoadBoardController::class, 'bidStore']);
         Route::get('/load-board/{loadBoard}', [LoadBoardController::class, 'getAllBidsByLoadBoard']);
     });

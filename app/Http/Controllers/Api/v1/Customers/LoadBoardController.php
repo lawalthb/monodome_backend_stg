@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Customers;
 
 use App\Models\Bid;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Driver;
 use App\Models\LoadBoard;
 use Illuminate\Support\Str;
@@ -188,6 +189,14 @@ class LoadBoardController extends Controller
     public function getAllBidsByLoadBoard(LoadBoard $loadBoard)
     {
         $bids = Bid::where('order_id', $loadBoard->order->id)->get();
+
+        return BidResource::collection($bids);
+    }
+
+
+    public function getAllBidsByOrder(Order $order)
+    {
+        $bids = Bid::where('order_id',$order->id)->get();
 
         return BidResource::collection($bids);
     }
