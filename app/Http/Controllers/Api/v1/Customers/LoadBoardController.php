@@ -166,18 +166,40 @@ class LoadBoardController extends Controller
         //     'amount' => $request->amount,
         // ]);
          //   return $loadBoard->order->amount;
-        $bid = Bid::updateOrCreate(
-            [
-                'order_id' => $loadBoard->order->id,
-                'order_no' => $loadBoard->order_no,
-                'driver_id' => auth()->id(),
-                'user_id' => $loadBoard->user_id,
-            ],
-            [
-                'amount' => $request->amount,
-                'old_amount' => $loadBoard->order->amount,
-            ]
-        );
+
+         $bid = Bid::where("order_no",$loadBoard->order_no)->where("driver_id",auth()->id())->first();
+
+         if ($bid) {
+            return $this->error(null, 'You have already bid for this and is not yet to be confirmed');
+        }
+
+        $bid = new Bid();
+
+        $bid->order_no =  $loadBoard->order_no;
+        $bid->order_id =  $loadBoard->order->id;
+        $bid->user_id =  $loadBoard->user_id;
+        $bid->driver_id = auth()->user()->driver->id;
+        $bid->amount =   $request->amount;
+        $bid->old_amount =   $loadBoard->order->amount;
+
+        $bid->save();
+
+        // $bid = Bid::updateOrCreate(
+        //     [
+        //         'order_id' => $loadBoard->order->id,
+        //         'order_no' => $loadBoard->order_no,
+        //         'driver_id' => auth()->id(),
+        //         'user_id' => $loadBoard->user_id,
+        //     ],
+        //     [
+        //         'order_no' => $loadBoard->order_no,
+        //         'order_id' => $loadBoard->order->id,
+        //         'user_id' => $loadBoard->user_id,
+        //         'driver_id' => auth()->id(),
+        //         'amount' => $request->amount,
+        //         'old_amount' => $loadBoard->order->amount,
+        //     ]
+        // );
 
         $message ="You have a new bid ". $acceptedLoad->order_no. " to delivery from: ".$acceptedLoad->loadable->sender_location." To: ".$acceptedLoad->loadable->receiver_location;
         $acceptedLoad->user->notify(new SendNotification($acceptedLoad->user, $message));
