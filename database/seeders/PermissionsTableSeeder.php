@@ -278,7 +278,7 @@ class PermissionsTableSeeder extends Seeder
             32 =>
             array (
                 'id' => 33,
-                'name' => 'payment_option',
+                'name' => 'manage_price_setting',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -286,7 +286,7 @@ class PermissionsTableSeeder extends Seeder
             33 =>
             array (
                 'id' => 34,
-                'name' => 'content_setting',
+                'name' => 'manage_statistic',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -302,7 +302,7 @@ class PermissionsTableSeeder extends Seeder
             35 =>
             array (
                 'id' => 36,
-                'name' => 'manage_affiliate',
+                'name' => 'manage_driver_manage',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
@@ -318,7 +318,7 @@ class PermissionsTableSeeder extends Seeder
             47 =>
             array (
                 'id' => 48,
-                'name' => 'create_blog',
+                'name' => 'manage_specialized_shipment',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-01 02:48:19',
                 'updated_at' => '2022-12-01 02:48:19',
@@ -326,7 +326,7 @@ class PermissionsTableSeeder extends Seeder
             48 =>
             array (
                 'id' => 49,
-                'name' => 'menu_management',
+                'name' => 'manage_website',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-01 02:48:19',
                 'updated_at' => '2022-12-01 02:48:19',
@@ -342,7 +342,7 @@ class PermissionsTableSeeder extends Seeder
             50 =>
             array (
                 'id' => 51,
-                'name' => 'blog_management',
+                'name' => 'manage_private_load',
                 'guard_name' => 'api',
                 'created_at' => '2022-12-01 02:48:19',
                 'updated_at' => '2022-12-01 02:48:19',
