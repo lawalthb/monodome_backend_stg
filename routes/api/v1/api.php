@@ -314,6 +314,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
             Route::post('/profile/update-details', [DriverController::class, 'updateProfile']);
             Route::get('/order', [DriverController::class, 'order']);
             Route::post('/accept-order', [DriverController::class, 'acceptOrder']);
+            Route::post('/reject-order', [DriverController::class, 'rejectOrder']);
 
         });
     });
