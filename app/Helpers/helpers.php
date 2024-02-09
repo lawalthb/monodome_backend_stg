@@ -28,6 +28,11 @@ function unique_code($length = 13)
     return strtoupper(substr(bin2hex($bytes), 0, $length));
 }
 
+function generateQr($val)
+{
+
+    return "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=$val&choe=UTF-8&chf=bg,s,FFFFFF00";
+}
 
 function generate()
 {

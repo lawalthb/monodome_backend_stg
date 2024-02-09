@@ -62,7 +62,16 @@ class LoadBoardController extends Controller
         return $this->success(['loadBoard' => new LoadBoardResource($loadBoard)], 'Load board retrieved successfully');
     }
 
+    public function barCode(Request $request){
 
+        $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        return $this->success(['QrCode' => generateQr($request->content)], 'Qr Code generated updated successfully');
+
+
+    }
     public function store(LoadBoardRequest $request)
     {
         $data = $request->validated();
