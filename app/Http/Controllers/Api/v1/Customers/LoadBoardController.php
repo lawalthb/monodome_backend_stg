@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Customers;
 
 use App\Models\Bid;
+use App\Models\QrCode;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Driver;
@@ -66,9 +67,16 @@ class LoadBoardController extends Controller
 
         $request->validate([
             'content' => 'required|string',
+            'order_id' => 'nullable|string',
         ]);
 
-        return $this->success(['QrCode' => generateQr($request->content)], 'Qr Code generated updated successfully');
+        $qrCode = new QrCode();
+        $qrCode->user_id = auth()->id();
+        $qrCode->order_id = $request->order_id;
+        $qrCode->qr_link = generateQr($request->content);
+        $qrCode->save();
+
+        return $this->success(['data' => $qrCode], 'Qr Code generated updated successfully');
 
 
     }
