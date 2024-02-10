@@ -47,6 +47,7 @@ jobs:
         script: |
           cd /home/kaysolak/www/monolog.kaysolaknigventures.com/
           git pull
+          composer update
           php artisan optimize:clear
           #pwd
           #ls -la
