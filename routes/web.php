@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return ['Laravel' => app()->version()];
-});
+// Route::get('/', function () {
+    //     return ['Laravel' => app()->version()];
+    // });
 
-
+    Route::get('/', function () {
+        return view('testchat');
+        });
 
 
 Route::prefix('adminpanel')->name('adminpanel.')->group(function () {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Chat;
 
+use App\Events\ChatEvent;
 use App\Models\Chat;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
@@ -61,6 +62,8 @@ class ChatController extends Controller
         );
 
         if ($chat) {
+            event(new ChatEvent($request->user() ,$chat));
+
             return $this->success(new ChatResource($chat), 'Created successfully');
         } else {
             return $this->error('An error occurred while registering the Company.');
@@ -134,5 +137,11 @@ class ChatController extends Controller
        }
 
 
+    }
+
+
+    public function test(Request $request){
+
+        
     }
 }
