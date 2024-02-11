@@ -165,11 +165,11 @@ class LoadBoardController extends Controller
         ]);
 
      //   return $loadBoard;
-        $acceptedLoad = $loadBoard->where('acceptable_id',"=", null)->where("acceptable_type","=",null)->first();
+        // $acceptedLoad = $loadBoard->where('acceptable_id',"=", null)->where("acceptable_type","=",null)->first();
 
-        if (!$acceptedLoad) {
-            return $this->error(null, 'This load has already been accepted by another driver.');
-        }
+        // if (!$acceptedLoad) {
+        //     return $this->error(null, 'This load has already been accepted by another driver.');
+        // }
 
 
         if($request->amount <= $loadBoard->order->amount){
