@@ -87,6 +87,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::post('/load-package', [LoadPackageController::class, 'store']);
         Route::get('/load-package/{id}', [LoadPackageController::class, 'show']);
         Route::post('/load-package/{id}', [LoadPackageController::class, 'update']);
+        Route::post('/load-package/fee/{loadPackage}', [LoadPackageController::class, 'delivery_fee']);
         Route::delete('/load-package/{id}', [LoadPackageController::class, 'destroy']);
 
         // load Bulk route
@@ -94,6 +95,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::post('/load-bulk', [LoadBulkController::class, 'store']);
         Route::get('/load-bulk/{id}', [LoadBulkController::class, 'show']);
         Route::post('/load-bulk/{loadBulk}', [LoadBulkController::class, 'update']);
+        Route::post('/load-bulk/fee/{loadBulk}', [LoadBulkController::class, 'delivery_fee']);
         Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
 
         // load Load Car Clearing  route
