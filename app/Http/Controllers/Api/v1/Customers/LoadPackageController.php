@@ -92,7 +92,7 @@ use App\Http\Resources\LoadPackageResource;
             // Create a new LoadPackage instance
             // $loadPackage = $loadType->loadPackages()->create($request->validated());
 
-            $totalAmount = $validatedData['amount'] + $validatedData['delivery_fee'] + $validatedData['insure_amount'];
+            $totalAmount = $validatedData['delivery_fee'] + $validatedData['insure_amount'];
 
 
             $loadPackage = LoadPackage::firstOrCreate(
