@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Api\v1\Customers;
 
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Setting;
 use App\Models\LoadType;
 use App\Models\LoadPackage;
 use App\Models\LoadDocument;
@@ -42,9 +43,47 @@ use App\Http\Resources\LoadPackageResource;
             return $this->error(null, "Load Package not found", 404);
         }
 
-        return $this->success([
-            "loadPackage" => new LoadPackageResource($loadPackage),
-        ], "Successfully");
+        $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
+
+                $url = "https://api.paystack.co/transaction/initialize";
+
+                $fields = [
+                    'email' => $loadPackage->user->email,
+                    'amount' => $loadPackage->total_amount,
+                ];
+
+                $fields_string = http_build_query($fields);
+
+                //open connection
+                $ch = curl_init();
+
+                //set the url, number of POST vars, POST data
+                curl_setopt($ch,CURLOPT_URL, $url);
+                curl_setopt($ch,CURLOPT_POST, true);
+                curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    "Authorization: Bearer $secretkey",
+                    "Cache-Control: no-cache",
+                ));
+
+                //So that curl_exec returns the contents of the cURL; rather than echoing it
+                curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+
+                //execute post
+                $result = curl_exec($ch);
+                $result  = json_decode($result);
+
+                if ($result->status == true) {
+                    return $this->success([
+                        "paystack" => $result->data,
+                        "loadPackage" => new LoadPackageResource($loadPackage),
+                    ], "Successfully");
+                } else {
+                    return $this->error(null, "Paystack key not found", 404);
+                }
+
+
+
     }
 
     public function store(LoadPackageRequest $request)
