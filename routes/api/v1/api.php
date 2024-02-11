@@ -85,7 +85,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         // load package route
         Route::get('/load-package', [LoadPackageController::class, 'index']);
         Route::post('/load-package', [LoadPackageController::class, 'store']);
-        Route::post('/load-package/delivery-fee', [LoadPackageController::class, 'delivery_fee']);
+       // Route::post('/load-package/fee-fee', [LoadPackageController::class, 'delivery_fee']);
         Route::get('/load-package/{id}', [LoadPackageController::class, 'show']);
         Route::post('/load-package/{id}', [LoadPackageController::class, 'update']);
         Route::delete('/load-package/{id}', [LoadPackageController::class, 'destroy']);
