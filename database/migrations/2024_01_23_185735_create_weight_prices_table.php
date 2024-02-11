@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('load_type_id');
             $table->integer('price');
             $table->string('vehicle_description')->nullable();
-            $table->string('status')->default('Active');
+            // $table->string('status')->default('Active');
+            $table->enum('status', ['Active', 'inActive'])->default('Active');
             $table->timestamps();
 
             // Foreign key constraint

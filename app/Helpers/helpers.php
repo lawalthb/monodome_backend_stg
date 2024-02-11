@@ -480,6 +480,42 @@ function generateReferralCode($length = 8)
 }
 
 
+/**
+ * Initiates a transaction with Paystack API.
+ *
+ * @param mixed $fields The fields required for the transaction.
+ * @return mixed The result of the API call.
+ */
+function payStack_checkout($fields) {
+
+    $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
+
+    $url = "https://api.paystack.co/transaction/initialize";
+
+
+    $fields_string = http_build_query($fields);
+
+    //open connection
+    $ch = curl_init();
+
+    //set the url, number of POST vars, POST data
+    curl_setopt($ch,CURLOPT_URL, $url);
+    curl_setopt($ch,CURLOPT_POST, true);
+    curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        "Authorization: Bearer $secretkey",
+        "Cache-Control: no-cache",
+    ));
+
+    //So that curl_exec returns the contents of the cURL; rather than echoing it
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+
+    //execute post
+    $result = curl_exec($ch);
+   return $result  = json_decode($result);
+
+}
+
 ?>
 
 

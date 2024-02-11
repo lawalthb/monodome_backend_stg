@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadPackageRequest;
 use App\Http\Resources\LoadPackageResource;
+use App\Models\LoadBoard;
 
     class LoadPackageController extends Controller
 {
@@ -43,35 +44,11 @@ use App\Http\Resources\LoadPackageResource;
             return $this->error(null, "Load Package not found", 404);
         }
 
-        $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
-
-                $url = "https://api.paystack.co/transaction/initialize";
-
-                $fields = [
-                    'email' => $loadPackage->user->email,
-                    'amount' => str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT),
-                ];
-
-                $fields_string = http_build_query($fields);
-
-                //open connection
-                $ch = curl_init();
-
-                //set the url, number of POST vars, POST data
-                curl_setopt($ch,CURLOPT_URL, $url);
-                curl_setopt($ch,CURLOPT_POST, true);
-                curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    "Authorization: Bearer $secretkey",
-                    "Cache-Control: no-cache",
-                ));
-
-                //So that curl_exec returns the contents of the cURL; rather than echoing it
-                curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-
-                //execute post
-                $result = curl_exec($ch);
-                $result  = json_decode($result);
+        $fields = [
+            'email' => $loadPackage->user->email,
+            'amount' => str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT),
+        ];
+        $result = payStack_checkout($fields);
 
                 if ($result->status == true) {
                     return $this->success([
@@ -84,9 +61,32 @@ use App\Http\Resources\LoadPackageResource;
     }
 
 
-    public function delivery_fee(Request $request){
+    public function delivery_fee(Request $request, LoadPackage $loadPackage){
 
+            $loadPackage->delivery_fee += $request->increase_amount;
+            $loadPackage->total_amount += $request->increase_amount;
 
+            if($loadPackage->save()){
+                $loadPackage->order->fee = $loadPackage->delivery_fee;
+                $loadPackage->order->amount = $loadPackage->total_amount;
+                $loadPackage->order->save();
+
+                $fields = [
+                    'email' => $loadPackage->user->email,
+                    'amount' => str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT),
+                ];
+                $result = payStack_checkout($fields);
+
+                return $this->success([
+                    "paystack" => $result->data,
+                    "loadPackage" => new LoadPackageResource($loadPackage),
+                ], "Successfully");
+
+            }else{
+
+                return $this->error(null, "unable to update delivery fee", 404);
+
+            }
     }
 
     public function store(LoadPackageRequest $request)
@@ -115,7 +115,8 @@ use App\Http\Resources\LoadPackageResource;
                 $order = $loadPackage->order()->create([
                     'order_no' => getNumber(),
                   //  'driver_id' => 1, // Change this to the actual driver ID
-                    'amount' =>  $totalAmount, // Set the appropriate amount
+                    'amount' =>  $totalAmount,
+                    'fee' =>  $validatedData['delivery_fee'],
                     'user_id' => $loadPackage->user_id,
                     'status' => "Pending",
                 ]);
