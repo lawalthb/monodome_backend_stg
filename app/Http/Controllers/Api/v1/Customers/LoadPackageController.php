@@ -84,9 +84,9 @@ use App\Http\Resources\LoadPackageResource;
     }
 
 
-    public function delivery_fee(){
+    public function delivery_fee(Request $request){
 
-        dd("okay");
+        
     }
 
     public function store(LoadPackageRequest $request)
