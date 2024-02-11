@@ -86,7 +86,7 @@ use App\Http\Resources\LoadPackageResource;
 
     public function delivery_fee(Request $request){
 
-        
+
     }
 
     public function store(LoadPackageRequest $request)
@@ -115,7 +115,7 @@ use App\Http\Resources\LoadPackageResource;
                 $order = $loadPackage->order()->create([
                     'order_no' => getNumber(),
                   //  'driver_id' => 1, // Change this to the actual driver ID
-                    'amount' => $request->total_amount, // Set the appropriate amount
+                    'amount' =>  $totalAmount, // Set the appropriate amount
                     'user_id' => $loadPackage->user_id,
                     'status' => "Pending",
                 ]);
