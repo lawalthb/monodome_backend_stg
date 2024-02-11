@@ -49,7 +49,7 @@ use App\Http\Resources\LoadPackageResource;
 
                 $fields = [
                     'email' => $loadPackage->user->email,
-                    'amount' => $loadPackage->total_amount,
+                    'amount' => str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT),
                 ];
 
                 $fields_string = http_build_query($fields);
@@ -81,18 +81,19 @@ use App\Http\Resources\LoadPackageResource;
                 } else {
                     return $this->error(null, "Paystack key not found", 404);
                 }
-
-
-
     }
 
     public function store(LoadPackageRequest $request)
     {
         return DB::transaction(function () use ($request) {
             $loadType = LoadType::find($request->load_type_id);
+            $validatedData = $request->validated();
 
             // Create a new LoadPackage instance
             // $loadPackage = $loadType->loadPackages()->create($request->validated());
+
+            $totalAmount = $validatedData['amount'] + $validatedData['delivery_fee'] + $validatedData['insure_amount'];
+
 
             $loadPackage = LoadPackage::firstOrCreate(
                 [
@@ -101,7 +102,7 @@ use App\Http\Resources\LoadPackageResource;
                     'total_amount' => $request->total_amount,
                     'weight' => $request->weight,
                 ],
-                $request->validated()
+                array_merge($validatedData, ['total_amount' => $totalAmount])
             );
 
             if (!$loadPackage->order) {
