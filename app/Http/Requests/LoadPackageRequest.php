@@ -53,9 +53,9 @@ class LoadPackageRequest extends FormRequest
             'width' => 'nullable',
             'length' => 'nullable',
             'height' => 'nullable',
-            'total_amount' => 'required|numeric',
+            'delivery_fee' => 'required|numeric',
             'insure_it' => 'nullable|in:No,Yes',
-            'insure_amount' => 'nullable|numeric|',
+            'insure_amount' => 'nullable|numeric',
             'is_fragile' => 'nullable|in:No,Yes',
           //  'documents.*' => 'required|file|max:2048'
         ];

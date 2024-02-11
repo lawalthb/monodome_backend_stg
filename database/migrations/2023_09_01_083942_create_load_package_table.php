@@ -53,6 +53,7 @@ return new class extends Migration
             $table->enum('status', ['Pending', 'Approved', 'Failed','Processing','waiting'])->default('Pending');
             $table->enum('insure_it', ['Yes', 'No'])->default('No')->nullable();
             $table->decimal('insure_amount', 20)->nullable()->default(0);
+            $table->decimal('delivery_fee', 20)->nullable()->default(0);
             $table->decimal('total_amount', 20)->nullable()->default(0);
             $table->enum('is_fragile', ['Yes', 'No'])->default('No')->nullable();
             $table->timestamps();
