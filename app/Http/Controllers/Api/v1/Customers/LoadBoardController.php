@@ -184,6 +184,10 @@ class LoadBoardController extends Controller
         // ]);
          //   return $loadBoard->order->amount;
 
+         if ($loadBoard->user_id ==auth()->id() ) {
+            return $this->error(null, 'You cant bid on your placed order');
+        }
+
          $bid = Bid::where("order_no",$loadBoard->order_no)->where("driver_id",auth()->id())->first();
 
          if ($bid) {
@@ -195,7 +199,7 @@ class LoadBoardController extends Controller
         $bid->order_no =  $loadBoard->order_no;
         $bid->order_id =  $loadBoard->order->id;
         $bid->user_id =  $loadBoard->user_id;
-        $bid->driver_id = auth()->user()->driver->id;
+        $bid->driver_id = auth()->id();
         $bid->amount =   $request->amount;
         $bid->old_amount =   $loadBoard->order->amount;
 
