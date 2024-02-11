@@ -405,4 +405,11 @@ class DriverController extends Controller
 
     }
 
+    public function upload_photo(Request  $request){
+
+
+    }
+
+
+
 }
