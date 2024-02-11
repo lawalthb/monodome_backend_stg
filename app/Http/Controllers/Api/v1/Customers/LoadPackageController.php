@@ -83,6 +83,12 @@ use App\Http\Resources\LoadPackageResource;
                 }
     }
 
+
+    public function delivery_fee(){
+
+        dd("okay");
+    }
+
     public function store(LoadPackageRequest $request)
     {
         return DB::transaction(function () use ($request) {
