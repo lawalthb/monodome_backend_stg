@@ -51,8 +51,22 @@ class LoadBulkController extends Controller
     if (!$loadType) {
         return response()->json(['message' => 'LoadType not found'], 404);
     }
+    $validatedData = $request->validated();
 
-    $loadBulk = LoadBulk::updateOrCreate($request->validated());
+    $totalAmount = $validatedData['delivery_fee'] + $validatedData['insure_amount'];
+
+
+   // $loadBulk = LoadBulk::updateOrCreate($request->validated());
+
+    $loadBulk = LoadBulk::firstOrCreate(
+        [
+            'load_type_id' => $request->load_type_id,
+            'user_id' => $request->user()->id ,
+            'delivery_fee' => $request->delivery_fee,
+            'weight' => $request->weight,
+        ],
+        array_merge($validatedData, ['total_amount' => $totalAmount])
+    );
 
     $loadBulk->loadType()->associate($loadType);
 
@@ -64,7 +78,8 @@ class LoadBulkController extends Controller
             $order = $loadBulk->order()->create([
                 'order_no' => getNumber(),
                 'driver_id' => 1,
-                'amount' => $request->total_amount,
+                'amount' =>  $totalAmount,
+                'fee' =>  $validatedData['delivery_fee'],
                 'user_id' => $loadBulk->user_id,
                 'status' => "Pending",
             ]);
@@ -182,19 +197,19 @@ class LoadBulkController extends Controller
     return $this->success(null, "LoadBulk and associated LoadDocuments deleted");
     }
 
-    public function delivery_fee(Request $request, LoadBulk $loadPackage){
+    public function delivery_fee(Request $request, LoadBulk $loadBulk){
 
-        $loadPackage->delivery_fee += $request->increase_amount;
-        $loadPackage->total_amount += $request->increase_amount;
+        $loadBulk->delivery_fee += $request->increase_amount;
+        $loadBulk->total_amount += $request->increase_amount;
 
-        if($loadPackage->save()){
-            $loadPackage->order->fee = $loadPackage->delivery_fee;
-            $loadPackage->order->amount = $loadPackage->total_amount;
-            $loadPackage->order->save();
+        if($loadBulk->save()){
+            $loadBulk->order->fee = $loadBulk->delivery_fee;
+            $loadBulk->order->amount = $loadBulk->total_amount;
+            $loadBulk->order->save();
 
             $fields = [
-                'email' => $loadPackage->user->email,
-                'amount' => str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT),
+                'email' => $loadBulk->user->email,
+                'amount' => str_pad($loadBulk->total_amount, 2, '0', STR_PAD_RIGHT),
             ];
 
             // call the paystack api
@@ -202,7 +217,7 @@ class LoadBulkController extends Controller
 
             return $this->success([
                 "paystack" => $result->data,
-                "loadPackage" => new LoadBulkResource($loadPackage),
+                "loadBulk" => new LoadBulkResource($loadBulk),
             ], "Successfully");
 
         }else{

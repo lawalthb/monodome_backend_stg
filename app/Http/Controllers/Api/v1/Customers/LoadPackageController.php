@@ -107,7 +107,7 @@ use App\Models\LoadBoard;
                 [
                     'load_type_id' => $request->load_type_id,
                     'user_id' => $request->user()->id ,
-                    'total_amount' => $request->total_amount,
+                    'delivery_fee' => $request->delivery_fee,
                     'weight' => $request->weight,
                 ],
                 array_merge($validatedData, ['total_amount' => $totalAmount])
