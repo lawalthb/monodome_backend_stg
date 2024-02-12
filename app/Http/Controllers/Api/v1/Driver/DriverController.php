@@ -393,8 +393,8 @@ class DriverController extends Controller
         $perPage = $request->input('per_page', 10);
          $driver = Driver::where("user_id",auth()->id())->first();
 
-         $order =  Order::where('acceptable_id', $driver->id)
-        ->where('acceptable_type', get_class($driver))
+         $order =  Order::where('acceptable_id', $driver->user->id)
+        ->where('acceptable_type', get_class($driver->user->id))
         ->paginate($perPage);
 
         return  OrderResource::collection($order);
