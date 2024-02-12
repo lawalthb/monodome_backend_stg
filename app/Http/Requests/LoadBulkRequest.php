@@ -56,7 +56,7 @@ class LoadBulkRequest extends FormRequest
             'length' => 'nullable|numeric',
             'height' => 'nullable|numeric',
             'insure_it' => 'nullable|in:Yes,No',
-            'total_amount' => 'required|numeric',
+            'delivery_fee' => 'required|numeric',
             'insure_amount' => 'nullable|numeric',
             'is_fragile' => 'nullable|in:Yes,No',
          //   'documents' => 'required|array',
