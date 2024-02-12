@@ -66,9 +66,6 @@ use App\Models\LoadBoard;
             $loadPackage->delivery_fee += $request->increase_amount;
             $loadPackage->total_amount += $request->increase_amount;
 
-            Log::info($loadPackage->delivery_fee );
-            Log::info($loadPackage->total_amount);
-
             if($loadPackage->save()){
                 $loadPackage->order->fee = $loadPackage->delivery_fee;
                 $loadPackage->order->amount = $loadPackage->total_amount;

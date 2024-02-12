@@ -181,4 +181,35 @@ class LoadBulkController extends Controller
 
     return $this->success(null, "LoadBulk and associated LoadDocuments deleted");
     }
+
+    public function delivery_fee(Request $request, LoadBulk $loadPackage){
+
+        $loadPackage->delivery_fee += $request->increase_amount;
+        $loadPackage->total_amount += $request->increase_amount;
+
+        if($loadPackage->save()){
+            $loadPackage->order->fee = $loadPackage->delivery_fee;
+            $loadPackage->order->amount = $loadPackage->total_amount;
+            $loadPackage->order->save();
+
+            $fields = [
+                'email' => $loadPackage->user->email,
+                'amount' => str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT),
+            ];
+
+            // call the paystack api
+            $result = payStack_checkout($fields);
+
+            return $this->success([
+                "paystack" => $result->data,
+                "loadPackage" => new LoadBulkResource($loadPackage),
+            ], "Successfully");
+
+        }else{
+
+            return $this->error(null, "unable to update delivery fee", 404);
+
+        }
+}
+
 }
