@@ -349,11 +349,11 @@ class DriverController extends Controller
         return DB::transaction(function () use ($request) {
 
         $request->validate([
-            'load_board_id' => 'required',
+            'order_no' => 'required|string',
             //'driver_id' => 'required',
         ]);
 
-        $loadBoards = LoadBoard::where("id",$request->load_board_id)->where('acceptable_id',auth()->id())->first();
+        $loadBoards = LoadBoard::where("order_no",$request->order_no)->where('acceptable_id',auth()->id())->first();
 
         if($loadBoards){
 
