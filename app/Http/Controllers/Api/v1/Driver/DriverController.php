@@ -394,7 +394,7 @@ class DriverController extends Controller
          $driver = Driver::where("user_id",auth()->id())->first();
 
          $order =  Order::where('acceptable_id', $driver->user->id)
-        ->where('acceptable_type', get_class($driver->user->id))
+        ->where('acceptable_type', get_class($driver->user))
         ->paginate($perPage);
 
         return  OrderResource::collection($order);
