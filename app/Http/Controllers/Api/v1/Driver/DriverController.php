@@ -315,8 +315,8 @@ class DriverController extends Controller
 
             $driver = Driver::where("user_id",auth()->id())->first();
 
-            $loadBoards->acceptable_id = $driver->id;
-            $loadBoards->acceptable_type = get_class($driver) ;
+            $loadBoards->acceptable_id = $driver->user->id;
+            $loadBoards->acceptable_type = get_class($driver->user);
 
             if($loadBoards->save()){
                 $loadBoards->order->driver_id = $driver->id;
