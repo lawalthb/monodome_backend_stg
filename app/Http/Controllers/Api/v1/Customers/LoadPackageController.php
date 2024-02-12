@@ -66,6 +66,9 @@ use App\Models\LoadBoard;
             $loadPackage->delivery_fee += $request->increase_amount;
             $loadPackage->total_amount += $request->increase_amount;
 
+            Log::info($loadPackage->delivery_fee );
+            Log::info($loadPackage->total_amount);
+
             if($loadPackage->save()){
                 $loadPackage->order->fee = $loadPackage->delivery_fee;
                 $loadPackage->order->amount = $loadPackage->total_amount;
@@ -75,6 +78,8 @@ use App\Models\LoadBoard;
                     'email' => $loadPackage->user->email,
                     'amount' => str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT),
                 ];
+
+                // call the paystack api
                 $result = payStack_checkout($fields);
 
                 return $this->success([
