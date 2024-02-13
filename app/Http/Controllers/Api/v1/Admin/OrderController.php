@@ -56,7 +56,7 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $order_no)
     {
         $validator = Validator::make($request->all(), [
             'status' => 'required|in:Pending,Approved,Confirmed,Failed,Paid',
@@ -66,7 +66,7 @@ class OrderController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $order = Order::find($id);
+        $order = Order::where("order_no",$order_no)->first();
 
         if (!$order) {
             return $this->error('', 'Order not found', 404);
