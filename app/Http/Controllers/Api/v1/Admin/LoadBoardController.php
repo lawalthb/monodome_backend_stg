@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadBoardRequest;
 use App\Http\Resources\LoadBoardResource;
 
-class LoadboardController extends Controller
+class LoadBoardController extends Controller
 {
     use FileUploadTrait, ApiStatusTrait;
 
