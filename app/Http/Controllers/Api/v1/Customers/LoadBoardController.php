@@ -277,8 +277,8 @@ class LoadBoardController extends Controller
         if($bid->order->save()){
             $driver = Driver::find($bid->driver_id);
             $bid->order->driver_id = $bid->driver_id;
-            $bid->order->acceptable_id = $bid->driver_id;
-            $bid->order->acceptable_type =get_class($driver);
+            $bid->order->acceptable_id = $bid->user->driver_id;
+            $bid->order->acceptable_type =get_class($driver->user);
             $bid->order->save();
 
             $message ="Your bid has been accepted ". $bid->order->order_no. " to delivery from: ".$bid->order->loadable->sender_location." To: ".$bid->order->loadable->receiver_location;
