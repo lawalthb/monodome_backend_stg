@@ -19,7 +19,8 @@ class Bid extends Model
 
     public function driver()
     {
-        return $this->belongsTo(Driver::class);
+        return $this->belongsTo(User::class,'driver_id');
+        // return $this->belongsTo(Driver::class,'user_id');
     }
 
     public function user()
