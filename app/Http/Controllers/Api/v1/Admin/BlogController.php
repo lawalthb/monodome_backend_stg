@@ -156,8 +156,11 @@ class BlogController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $comments = Comment::where('blog_id', $blogId)->latest()->paginate($perPage);
-        return CommentResource::collection($comments);
+        $comments = Comment::where('blog_id', $blogId)
+        ->orderByRaw("FIELD(status, 'draft') DESC")
+        ->latest()
+        ->paginate($perPage);
+            return CommentResource::collection($comments);
     }
 
     // Store a new comment
