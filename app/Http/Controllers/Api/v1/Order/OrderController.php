@@ -152,7 +152,7 @@ class OrderController extends Controller
                 }
 
                 // this for payment gateway
-                if($request->payment_type == "gateway"){
+                if($request->payment_type == "online"){
                     $publickey = Setting::where(['slug' => 'publickey'])->first()->value;
                   //  event(new LoadTypeCreated($load));
 
