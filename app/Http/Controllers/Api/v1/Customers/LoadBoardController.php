@@ -275,6 +275,7 @@ class LoadBoardController extends Controller
         $bid->order->amount = $bid->amount;
 
         if($bid->order->save()){
+            
             $driver = Driver::find($bid->driver_id);
             $bid->order->driver_id = $bid->driver_id;
             $bid->order->acceptable_id = $bid->user->driver_id;

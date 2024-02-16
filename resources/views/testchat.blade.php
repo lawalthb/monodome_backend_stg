@@ -4,6 +4,7 @@
   <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
+
   <script>
 
     // Enable pusher logging - don't include this in production
@@ -16,7 +17,7 @@
 
     });
 
-    var channel = pusher.subscribe('private-chat');
+    var channel = pusher.subscribe('chat');
     channel.bind('user-chat', function(data) {
 
         console.log(data)
