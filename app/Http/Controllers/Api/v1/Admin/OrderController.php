@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\User;
 use App\Models\Order;
+use App\Models\LoadBoard;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use App\Notifications\SendNotification;
+use App\Http\Resources\LoadBoardResource;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\TransactionsResource;
 
@@ -188,7 +191,7 @@ class OrderController extends Controller
 
 
 
-public function paymentStatus(Request $request)
+public function paymentOrderStatus(Request $request)
 {   
 
     $validator = Validator::make($request->all(), [
@@ -205,6 +208,10 @@ public function paymentStatus(Request $request)
     $order->admin_approve = $request->admin_approve;
 
     if($order->save()){
+
+    $order->user->notify(new SendNotification($order->user, 'Your order status has approved by admin '.$request->payment_status.' '));
+
+
         return response()->json([
             'data' => new OrderResource($order),
         ],200);
@@ -217,8 +224,7 @@ public function paymentStatus(Request $request)
 
 }
 
-
-public function status(Request $request)
+public function approveOrderStatus(Request $request)
 {   
 
     $validator = Validator::make($request->all(), [
@@ -235,6 +241,9 @@ public function status(Request $request)
     $order->payment_status = $request->payment_status;
 
     if($order->save()){
+
+            $order->user->notify(new SendNotification($order->user, 'Your order status has been changed to!'.$request->payment_status.' '));
+
         return response()->json([
             'data' => new OrderResource($order),
         ],200);
@@ -244,6 +253,40 @@ public function status(Request $request)
         ],400);
     }
 
+}
+
+
+
+public function loadBoardOrderStatus(Request $request)
+{   
+
+    $validator = Validator::make($request->all(), [
+        'status' => 'required|in:pending,on_transit,delivered,rejected,complicated',
+        'order_no' => 'required|string|exists:load_boards,order_no',
+        'status_comment' => 'nullable|string'
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    $loadBoard = LoadBoard::where("order_no",$request->order_no)->first();
+
+    $loadBoard->status = $request->status;
+    $loadBoard->status_comment = $request->status_comment;
+
+    if($loadBoard->save()){
+
+        $loadBoard->user->notify(new SendNotification($loadBoard->user, 'Your order status has been changed to!'.$request->status.' '));
+
+        return response()->json([
+            'data' => new LoadBoardResource($loadBoard),
+        ],200);
+    }else{
+        return response()->json([
+            'error' => "unable to update the status on loadBoard.",
+        ],400);
+    }
 
 }
 
