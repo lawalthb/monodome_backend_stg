@@ -47,6 +47,11 @@ class CategoryController extends Controller
         return response()->json("Deleted", 204);
     }
 
+    public function setStatus(Request $request, Category $category){
+
+        
+    }
+
 }
 
 
