@@ -90,6 +90,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/user/{id}', [OrderController::class, 'all_user_orders']);
         Route::post('/payment-status/status', [OrderController::class, 'paymentOrderStatus']);
         Route::post('/approve-order/status', [OrderController::class, 'approveOrderStatus']);
+        Route::post('/loadBoard-order/status', [OrderController::class, 'loadBoardOrderStatus']);
 
     });
         Route::group(['prefix' => 'transactions'], function () {
