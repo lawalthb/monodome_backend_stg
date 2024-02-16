@@ -129,8 +129,8 @@ class OrderController extends Controller
                  $walletHistory->user_id = $load->user->id;
                  $walletHistory->type = "debit";
                  $walletHistory->payment_type = "wallet";
-                 $walletHistory->payment_status = "Paid";
-                 $walletHistory->amount = $load->total_amount;∏
+               //  $walletHistory->payment_status = "Paid";
+                 $walletHistory->amount = $load->total_amount;
                  $walletHistory->closing_balance = $load->user->wallet->amount;
                  $walletHistory->fee = 0;
                  $walletHistory->description = "Payment for Order with the follow ID: " . $order->order_no . " !";

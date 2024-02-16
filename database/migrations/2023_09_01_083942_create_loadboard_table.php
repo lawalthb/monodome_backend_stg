@@ -22,8 +22,9 @@ return new class extends Migration
             $table->string('acceptable_type')->nullable();
             $table->integer('load_type_id')->index('load_type_name');
             $table->string('load_type_name', 30)->nullable()->comment('package, bulk, car clearing, container shipment, specialize shipment');
-            $table->enum('admin_approve', ['Yes', 'No'])->default('No');
+            // $table->enum('admin_approve', ['Yes', 'No'])->default('No');
             $table->enum('status', ['pending', 'on_transit', 'delivered', 'rejected',"complicated"])->default('pending');
+            $table->string('status_comment')->nullable();
             $table->string('order_no');
             $table->timestamp('load_date')->useCurrent();
             $table->unsignedBigInteger('loadable_id');
