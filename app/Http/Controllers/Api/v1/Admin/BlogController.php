@@ -138,9 +138,19 @@ class BlogController extends Controller
         return BlogResource::collection($blogs);
     }
 
+    public function setStatus(Request $request, $id){
+        
+        $blog =  Blog::find($id);
+        $blog->status = "confirmed";
+        if($blog->save()){
 
-    public function setStatus(){
+            return new BlogResource($blog);
+        }else{
+            return response()->json(['message' => 'Unable to change Blog status'],404);
 
+        }
+        
+        
     }
 
     public function getComments(Request $request,$blogId)
