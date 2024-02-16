@@ -324,7 +324,7 @@ class DriverController extends Controller
                // $loadBoards->order->acceptable_id = $driver->user->id;
               //  $loadBoards->order->acceptable_type = get_class($driver->user) ;
               //  $loadBoards->order->placed_by_id = auth()->user()->id;
-              $loadBoards->loadable->status = "Processing";
+              $loadBoards->loadable->status = "processing";
                 $loadBoards->order->save();
 
                 $message ="You have been accept order with number ". $loadBoards->order->order_no.
