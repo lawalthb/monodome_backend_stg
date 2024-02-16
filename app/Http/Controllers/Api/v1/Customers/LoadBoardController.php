@@ -27,7 +27,7 @@ class LoadBoardController extends Controller
     public function index(Request $request)
     {
 
-        $query = LoadBoard::where("acceptable_id",null);
+        $query = LoadBoard::where("acceptable_id",null)->where("status",'!=','pending');
 
        // Filter by Cargo Type
         if ($request->has('order_no')) {
