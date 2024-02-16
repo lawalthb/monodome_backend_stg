@@ -120,7 +120,7 @@ use App\Models\LoadBoard;
                     'amount' =>  $totalAmount,
                     'fee' =>  $validatedData['delivery_fee'],
                     'user_id' => $loadPackage->user_id,
-                    'status' => "Pending",
+                    'payment_status' => "Pending",
                 ]);
             } else {
                 $order = $loadPackage->order; // If an order already exists, use the existing one
