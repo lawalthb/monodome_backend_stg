@@ -320,6 +320,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
             Route::post('/reject-order', [DriverController::class, 'rejectOrder']);
             Route::post('/upload-photo', [DriverController::class, 'upload_photo']);
 
+            Route::post('/payment-status/status', [DriverController::class, 'paymentOrderStatus']);
+            //Route::post('/approve-order/status', [DriverController::class, 'approveOrderStatus']);
+            Route::post('/loadBoard-order/status', [DriverController::class, 'loadBoardOrderStatus']);
+    
+
         });
     });
 

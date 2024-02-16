@@ -191,7 +191,7 @@ class OrderController extends Controller
 
 
 
-public function paymentOrderStatus(Request $request)
+public function paymentOrderStatus(Request $request, String $o)
 {   
 
     $validator = Validator::make($request->all(), [
