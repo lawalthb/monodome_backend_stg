@@ -277,6 +277,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/{id}', [BlogController::class, 'show']);
         Route::put('/{id}', [BlogController::class, 'update']);
         Route::delete('/{id}', [BlogController::class, 'destroy']);
+        Route::post('status/{id}', [BlogController::class, 'setStatus']);
 
         Route::get('/comment', [BlogController::class, 'getComments']);
         Route::get('/comment/{id}', [BlogController::class, 'getComments']);
