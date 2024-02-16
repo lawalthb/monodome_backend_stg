@@ -499,7 +499,7 @@ public function loadBoardOrderStatus(Request $request)
     }
     
     $loadBoard = LoadBoard::where("order_no",$request->order_no)->where('acceptable_id', auth()->id())->first();
-    if($loadBoard){
+    if(!$loadBoard){
         return response()->json([
             'error' => "Order your found or order is not yours",
         ],400);
