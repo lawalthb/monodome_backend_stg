@@ -88,7 +88,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::post('/status/{id}', [OrderController::class, 'update']);
         Route::get('/user/{id}', [OrderController::class, 'all_user_orders']);
-        //Route::post('/status/{id}', [OrderController::class, 'status']);
+        Route::post('/payment-status/status/{id}', [OrderController::class, 'paymentStatus']);
+        Route::post('/approve-order/status/{id}', [OrderController::class, 'approveOrder']);
 
     });
         Route::group(['prefix' => 'transactions'], function () {
