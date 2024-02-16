@@ -11,13 +11,20 @@ use App\Http\Resources\CategoryResource;
 class CategoryController extends Controller
 {
     public function index()
-    {
+    {   
         $categories = Category::all();
-        return CategoryResource::collection($categories);
+
+        if($categories){
+
+            return CategoryResource::collection($categories);
+        }else{
+            return response()->json("No categories", 404);
+        }
     }
 
     public function store(CategoryRequest $request)
     {
+
         $category = Category::create($request->validated());
         return new CategoryResource($category);
     }
