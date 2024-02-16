@@ -47,11 +47,18 @@ class CategoryController extends Controller
         return response()->json("Deleted", 204);
     }
 
-    public function setStatus(Request $request, Category $category){
-
+    public function setStatus(Request $request, $id){
         
-    }
+        $blog =  Category::find($id);
+        $blog->status = $request->status;
+        if($blog->save()){
 
+            return new CategoryResource($blog);
+        }else{
+            return response()->json(['message' => 'Unable to change Blog status'],404);
+
+        }
+    }
 }
 
 

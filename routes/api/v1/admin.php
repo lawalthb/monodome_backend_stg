@@ -277,7 +277,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::put('/{category}', [CategoryController::class, 'update']);
         Route::delete('/{category}', [CategoryController::class, 'destroy']);
     });
-    
+
 
     Route::group(['prefix' => 'blog', 'middleware' => 'auth:api'], function () {
 
@@ -293,9 +293,10 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::post('/comment', [BlogController::class, 'storeComment']);
         Route::put('/comment/{id}', [BlogController::class, 'updateComment']);
         Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);
-
+        
         Route::get('/pending', [BlogController::class, 'pendingBlog']);
         Route::get('/{category}/related', [BlogController::class, 'getRelatedBlogs']);
+        Route::post('/comment/status/{id}', [BlogController::class, 'setStatus']);
 
     });
 

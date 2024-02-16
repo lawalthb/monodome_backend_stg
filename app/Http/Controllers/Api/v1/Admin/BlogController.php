@@ -149,8 +149,6 @@ class BlogController extends Controller
             return response()->json(['message' => 'Unable to change Blog status'],404);
 
         }
-        
-        
     }
 
     public function getComments(Request $request,$blogId)
