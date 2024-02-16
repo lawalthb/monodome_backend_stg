@@ -103,7 +103,7 @@ class OrderController extends Controller
                  $load->user->wallet->save();
             }
 
-             $load->status = 'Waiting';
+             //$load->status = 'Waiting';
              $load->save();
 
              $order = Order::updateOrCreate(
@@ -137,7 +137,7 @@ class OrderController extends Controller
                  $walletHistory->save();
 
                  $order->user->notify(new SendNotification($order->user, 'Your wallet payment order was successful!'));
-               //  event(new LoadTypeCreated($load));
+                     event(new LoadTypeCreated($load));
 
                  return $this->success(new OrderResource($order), 'Wallet Order payment was successful');
                 }

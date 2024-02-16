@@ -188,11 +188,51 @@ class OrderController extends Controller
 
 
 
-public function status(string $status)
-{
-    $order = Order::where("order_no",$status)->first();
+public function paymentStatus(Request $request)
+{   
 
-    $order->status = $status;
+    $validator = Validator::make($request->all(), [
+        'admin_approve' => 'required|in:Yes,No',
+        'order_no' => 'required|string|exists:orders,order_no',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    $order = Order::where("order_no",$request->order_no)->first();
+    
+    $order->admin_approve = $request->admin_approve;
+
+    if($order->save()){
+        return response()->json([
+            'data' => new OrderResource($order),
+        ],200);
+    }else{
+        return response()->json([
+            'error' => "unable to update the status.",
+        ],400);
+    }
+
+
+}
+
+
+public function status(Request $request)
+{   
+
+    $validator = Validator::make($request->all(), [
+        'payment_status' => 'required|in:Failed,Paid,Pending',
+        'order_no' => 'required|string|exists:orders,order_no',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    $order = Order::where("order_no",$request->order_no)->first();
+
+    $order->payment_status = $request->payment_status;
 
     if($order->save()){
         return response()->json([
