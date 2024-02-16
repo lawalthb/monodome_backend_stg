@@ -89,7 +89,7 @@ class OrderController extends Controller
                  'user_id' => Auth::id(),
                  'loadable_id' => $load->id,
                  'loadable_type' => get_class($load),
-                 'status' => 'Paid',
+                 'payment_status' => 'Paid',
              ])->first();
 
              if ($existingOrder) {
@@ -116,14 +116,21 @@ class OrderController extends Controller
                   //   'driver_id' => 1,
                      'amount' => $loadTotalAmount,
                      'payment_type' => $request->payment_type,
-                     'status' => $request->payment_type =="wallet" ? 'Paid' : 'Pending',
+                     //'payment_status' => $request->payment_status =="wallet" ? 'Paid' : 'Pending',
                  ]
              );
 
              $order->loadable()->associate($load);
              event(new LoadTypeCreated($load));
-           //     return;
-             if ($request->payment_type == "wallet" && $order->save()) {
+
+             // payment for wallet goes here
+          if ($request->payment_type == "wallet" && $order->save()) {
+
+                 $order->payment_type = 'wallet';
+                 $order->payment_status = 'Paid';
+                 $order->save();
+
+
                  $walletHistory = new WalletHistory;
                  $walletHistory->wallet_id = $load->user->wallet->id;
                  $walletHistory->user_id = $load->user->id;
@@ -144,7 +151,10 @@ class OrderController extends Controller
 
                 //this for offline payment
                 if($request->payment_type == "offline"){
-
+                    $order->payment_type = 'offline';
+                    $order->payment_status = 'Pending';
+                    $order->save();
+   
                     $order->user->notify(new SendNotification($order->user, 'Your offline order order was successful!'));
                   //  event(new LoadTypeCreated($load));
 
@@ -153,6 +163,11 @@ class OrderController extends Controller
 
                 // this for payment gateway
                 if($request->payment_type == "online"){
+
+                    $order->payment_type = 'online';
+                    $order->payment_status = 'Pending';
+                    $order->save();
+
                     $publickey = Setting::where(['slug' => 'publickey'])->first()->value;
                   //  event(new LoadTypeCreated($load));
 
