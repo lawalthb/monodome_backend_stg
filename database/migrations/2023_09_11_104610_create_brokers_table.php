@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('brokers', function (Blueprint $table) {
             $table->id();
             $table->string('uuid');
-            $table->unsignedBigInteger('user_id'); // Foreign key to link the guarantor with an agent
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('state_id')->nullable();
             $table->string('street')->nullable();
             $table->string('lga')->nullable();

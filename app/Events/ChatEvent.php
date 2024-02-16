@@ -26,6 +26,7 @@ class ChatEvent  implements ShouldBroadcast
      */
     public function __construct(User $user, Chat $message)
     {
+        //Log::info($message);
         $this->user = $user;
         $this->message = $message;
     }
@@ -38,7 +39,7 @@ class ChatEvent  implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('private.chat.1'),
+            new Channel('chat'),
         ];
     }
 
