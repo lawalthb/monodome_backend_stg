@@ -17,13 +17,13 @@ return new class extends Migration
             $table->string('uuid')->default(Str::uuid()->toString());
             $table->string('order_no');
             $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('driver_id')->unsigned()->nullable();
+           // $table->bigInteger('driver_id')->unsigned()->nullable();
             $table->bigInteger('placed_by_id')->unsigned()->nullable();
           //  $table->enum('accepted', ['Yes', 'No', 'Rejected'])->default('No');
             $table->decimal('amount', 10, 2)->default(0);
             $table->decimal('fee',38, 2)->default(0);
-            $table->unsignedBigInteger('acceptable_id')->nullable();
-            $table->string('acceptable_type')->nullable();
+            // $table->unsignedBigInteger('acceptable_id')->nullable();
+            // $table->string('acceptable_type')->nullable();
             $table->enum('admin_approve', ['Yes', 'No'])->default('No');
             $table->enum('payment_type',['wallet','online','offline'])->nullable();
             // $table->enum('payment_note',['wallet','online','offline'])->nullable();

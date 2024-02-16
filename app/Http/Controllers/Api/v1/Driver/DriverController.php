@@ -319,10 +319,10 @@ class DriverController extends Controller
             $loadBoards->acceptable_type = get_class($driver->user);
 
             if($loadBoards->save()){
-                $loadBoards->order->driver_id = $driver->id;
-                $loadBoards->order->accepted = "Yes";
-                $loadBoards->order->acceptable_id = $driver->user->id;
-                $loadBoards->order->acceptable_type = get_class($driver->user) ;
+                $loadBoards->order->driver_id = $driver->user->id;
+               // $loadBoards->order->accepted = "Yes";
+               // $loadBoards->order->acceptable_id = $driver->user->id;
+              //  $loadBoards->order->acceptable_type = get_class($driver->user) ;
               //  $loadBoards->order->placed_by_id = auth()->user()->id;
               $loadBoards->loadable->status = "Processing";
                 $loadBoards->order->save();
@@ -364,9 +364,9 @@ class DriverController extends Controller
 
             if($loadBoards->save()){
                 $loadBoards->order->driver_id = null;
-                $loadBoards->order->accepted = "No";
-                $loadBoards->order->acceptable_id = null;
-                $loadBoards->order->acceptable_type = null;
+            //    $loadBoards->order->accepted = "No";
+             //   $loadBoards->order->acceptable_id = null;
+              //  $loadBoards->order->acceptable_type = null;
               //  $loadBoards->order->placed_by_id = auth()->user()->id;
               $loadBoards->loadable->status = "Pending";
                 $loadBoards->order->save();
@@ -391,11 +391,13 @@ class DriverController extends Controller
     {
 
         $perPage = $request->input('per_page', 10);
-         $driver = Driver::where("user_id",auth()->id())->first();
+      //   $driver = LoadBoard::where("acceptable_id",auth()->id())->first();
 
-         $order =  Order::where('acceptable_id', $driver->user->id)
-        ->where('acceptable_type', get_class($driver->user))
-        ->paginate($perPage);
+        //  $order =  Order::where('acceptable_id', $driver->user->id)
+        // ->where('acceptable_type', get_class($driver->user))
+        // ->paginate($perPage);
+
+        $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
 
         return  OrderResource::collection($order);
     }
