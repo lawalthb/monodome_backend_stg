@@ -28,6 +28,7 @@ use App\Http\Resources\DriverResource;
 use App\Http\Requests\AgentFormRequest;
 use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;
+use Illuminate\Support\Facades\Validator;
 
 class DriverController extends Controller
 {
@@ -412,6 +413,115 @@ class DriverController extends Controller
 
     }
 
+//     public function approveOrderStatus(Request $request)
+// {   
 
+//     $validator = Validator::make($request->all(), [
+//         'admin_approve' => 'required|in:Yes,No',
+//         'order_no' => 'required|string|exists:orders,order_no',
+//     ]);
+
+//     if ($validator->fails()) {
+//         return response()->json(['errors' => $validator->errors()], 422);
+//     }
+
+//     $order = Order::where("order_no",$request->order_no)->where('driver', auth()->id())->first();
+
+
+//     $order->admin_approve = $request->admin_approve;
+
+//     if($order->save()){
+
+//     $order->user->notify(new SendNotification($order->user, 'Your order status has approved by admin '.$request->payment_status.' '));
+
+
+//         return response()->json([
+//             'data' => new OrderResource($order),
+//         ],200);
+//     }else{
+//         return response()->json([
+//             'error' => "unable to update the status.",
+//         ],400);
+//     }
+
+
+// }
+
+public function paymentOrderStatus(Request $request)
+{   
+
+    $validator = Validator::make($request->all(), [
+        'payment_status' => 'required|in:Failed,Paid,Pending',
+        'order_no' => 'required|string|exists:orders,order_no',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    $order = Order::where("order_no",$request->order_no)->where('driver_id', auth()->id())->first();
+
+    if($order->payment_type != "offline"){
+        return response()->json([
+            'error' => "You can only change offline payment or your order",
+        ],400);
+    }
+    
+
+    $order->payment_status = $request->payment_status;
+
+    if($order->save()){
+
+            $order->user->notify(new SendNotification($order->user, 'Your order status has been changed to!'.$request->payment_status.' '));
+
+        return response()->json([
+            'data' => new OrderResource($order),
+        ],200);
+    }else{
+        return response()->json([
+            'error' => "unable to update the status.",
+        ],400);
+    }
+
+}
+
+public function loadBoardOrderStatus(Request $request)
+{   
+
+    $validator = Validator::make($request->all(), [
+        'status' => 'required|in:pending,on_transit,delivered,rejected,complicated',
+        'order_no' => 'required|string|exists:load_boards,order_no',
+        'status_comment' => 'nullable|string'
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+    
+    $loadBoard = LoadBoard::where("order_no",$request->order_no)->where('acceptable_id', auth()->id())->first();
+    if($loadBoard){
+        return response()->json([
+            'error' => "Order your found or order is not yours",
+        ],400);
+    }
+    
+
+    $loadBoard->status = $request->status;
+    $loadBoard->status_comment = $request->status_comment;
+
+    if($loadBoard->save()){
+
+        $loadBoard->user->notify(new SendNotification($loadBoard->user, 'Your order status has been changed to!'.$request->status.' '));
+
+        return response()->json([
+            'data' => new LoadBoardResource($loadBoard),
+        ],200);
+    }else{
+        return response()->json([
+            'error' => "unable to update the status on loadBoard.",
+        ],400);
+    }
+
+}
 
 }
