@@ -89,7 +89,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::post('/status/{id}', [OrderController::class, 'update']);
         Route::get('/user/{id}', [OrderController::class, 'all_user_orders']);
         Route::post('/payment-status/status', [OrderController::class, 'paymentOrderStatus']);
-        Route::post('/approve-order/status/{id}', [OrderController::class, 'approveOrderStatus']);
+        Route::post('/approve-order/status', [OrderController::class, 'approveOrderStatus']);
 
     });
         Route::group(['prefix' => 'transactions'], function () {
