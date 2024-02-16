@@ -43,8 +43,6 @@ class LoadBoardController extends Controller
     return LoadBoardResource::collection($loadBoards);
 }
 
-
-
      /**
      * Display the specified resource.
      *
