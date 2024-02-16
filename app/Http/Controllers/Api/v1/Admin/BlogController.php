@@ -141,7 +141,7 @@ class BlogController extends Controller
     public function setStatus(Request $request, $id){
         
         $blog =  Blog::find($id);
-        $blog->status = "confirmed";
+        $blog->status = $request->status;
         if($blog->save()){
 
             return new BlogResource($blog);
