@@ -3,3 +3,19 @@
 Stack trace:
 #0 {main}
   thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/public/index.php on line 34
+[10-Feb-2024 10:32:56 UTC] PHP Warning:  require(/home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/composer/../symfony/var-dumper/Resources/functions/dump.php): Failed to open stream: No such file or directory in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/composer/autoload_real.php on line 41
+[10-Feb-2024 10:32:56 UTC] PHP Warning:  require(/home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/composer/../symfony/var-dumper/Resources/functions/dump.php): Failed to open stream: No such file or directory in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/composer/autoload_real.php on line 41
+[10-Feb-2024 10:32:56 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/composer/../symfony/var-dumper/Resources/functions/dump.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/composer/autoload_real.php:41
+Stack trace:
+#0 /home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/composer/autoload_real.php(45): {closure}()
+#1 /home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/autoload.php(25): ComposerAutoloaderInit550f5e436226c4217da5584469fdad30::getLoader()
+#2 /home/kaysolak/public_html/monolog.kaysolaknigventures.com/public/index.php(34): require('/home/kaysolak/...')
+#3 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/composer/autoload_real.php on line 41
+[10-Feb-2024 10:32:56 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/composer/../symfony/var-dumper/Resources/functions/dump.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/composer/autoload_real.php:41
+Stack trace:
+#0 /home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/composer/autoload_real.php(45): {closure}()
+#1 /home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/autoload.php(25): ComposerAutoloaderInit550f5e436226c4217da5584469fdad30::getLoader()
+#2 /home/kaysolak/public_html/monolog.kaysolaknigventures.com/public/index.php(34): require('/home/kaysolak/...')
+#3 {main}
+  thrown in /home/kaysolak/public_html/monolog.kaysolaknigventures.com/vendor/composer/autoload_real.php on line 41
