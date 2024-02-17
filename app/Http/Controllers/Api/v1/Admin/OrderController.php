@@ -191,8 +191,8 @@ class OrderController extends Controller
 
 
 
-public function paymentOrderStatus(Request $request, String $o)
-{   
+public function  approveOrderStatus(Request $request, String $o)
+{
 
     $validator = Validator::make($request->all(), [
         'admin_approve' => 'required|in:Yes,No',
@@ -204,7 +204,7 @@ public function paymentOrderStatus(Request $request, String $o)
     }
 
     $order = Order::where("order_no",$request->order_no)->first();
-    
+
     $order->admin_approve = $request->admin_approve;
 
     if($order->save()){
@@ -224,8 +224,8 @@ public function paymentOrderStatus(Request $request, String $o)
 
 }
 
-public function approveOrderStatus(Request $request)
-{   
+public function paymentOrderStatus(Request $request)
+{
 
     $validator = Validator::make($request->all(), [
         'payment_status' => 'required|in:Failed,Paid,Pending',
@@ -258,7 +258,7 @@ public function approveOrderStatus(Request $request)
 
 
 public function loadBoardOrderStatus(Request $request)
-{   
+{
 
     $validator = Validator::make($request->all(), [
         'status' => 'required|in:pending,on_transit,delivered,rejected,complicated',
