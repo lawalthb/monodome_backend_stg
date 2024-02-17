@@ -56,8 +56,14 @@ class DriverController extends Controller
 
     public function broadcast(Request $request)
     {
-        $query = LoadBoard::whereIn('load_type_id', [1, 2])->where("acceptable_id", null)->orderBy('created_at', 'desc');
-
+        $query = LoadBoard::whereIn('load_type_id', [1, 2])
+        ->where("acceptable_id", null)
+        ->where("acceptable_id", null)
+        ->orderBy('created_at', 'desc');
+        // Check if admin_approve in related order is 'Yes'
+        $query->whereHas('order', function ($q) {
+            $q->where('admin_approve', 'Yes');
+        });
         // Filter by Order Number
         if ($request->has('order_no')) {
             $query->where('order_no', $request->input('order_no'));
@@ -414,7 +420,7 @@ class DriverController extends Controller
     }
 
 //     public function approveOrderStatus(Request $request)
-// {   
+// {
 
 //     $validator = Validator::make($request->all(), [
 //         'admin_approve' => 'required|in:Yes,No',
@@ -448,7 +454,7 @@ class DriverController extends Controller
 // }
 
 public function paymentOrderStatus(Request $request)
-{   
+{
 
     $validator = Validator::make($request->all(), [
         'payment_status' => 'required|in:Failed,Paid,Pending',
@@ -466,7 +472,7 @@ public function paymentOrderStatus(Request $request)
             'error' => "You can only change offline payment or your order",
         ],400);
     }
-    
+
 
     $order->payment_status = $request->payment_status;
 
@@ -486,7 +492,7 @@ public function paymentOrderStatus(Request $request)
 }
 
 public function loadBoardOrderStatus(Request $request)
-{   
+{
 
     $validator = Validator::make($request->all(), [
         'status' => 'required|in:pending,on_transit,delivered,rejected,complicated',
@@ -497,14 +503,14 @@ public function loadBoardOrderStatus(Request $request)
     if ($validator->fails()) {
         return response()->json(['errors' => $validator->errors()], 422);
     }
-    
+
     $loadBoard = LoadBoard::where("order_no",$request->order_no)->where('acceptable_id', auth()->id())->first();
     if(!$loadBoard){
         return response()->json([
             'error' => "Order your found or order is not yours",
         ],400);
     }
-    
+
 
     $loadBoard->status = $request->status;
     $loadBoard->status_comment = $request->status_comment;
