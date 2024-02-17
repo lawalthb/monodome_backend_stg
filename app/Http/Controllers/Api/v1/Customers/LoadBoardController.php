@@ -26,7 +26,7 @@ class LoadBoardController extends Controller
 
     public function index(Request $request)
 {
-    $query = LoadBoard::where("acceptable_id", null)->where("status", '!=', 'pending');
+    $query = LoadBoard::where("acceptable_id", null)->where("status", 'pending');
 
     // Check if admin_approve in related order is 'Yes'
     $query->whereHas('order', function ($q) {
@@ -267,7 +267,7 @@ class LoadBoardController extends Controller
         $bid->order->amount = $bid->amount;
 
         if($bid->order->save()){
-            
+
             $driver = User::find($bid->driver_id);
             $loadBoard = LoadBoard::where('order_no', $bid->order_no)->first();
             $loadBoard->acceptable_id = $driver->id;
