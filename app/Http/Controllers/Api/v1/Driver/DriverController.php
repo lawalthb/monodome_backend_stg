@@ -398,15 +398,15 @@ class DriverController extends Controller
     {
 
         $perPage = $request->input('per_page', 10);
-      //   $driver = LoadBoard::where("acceptable_id",auth()->id())->first();
+        $driver = LoadBoard::with('order')->where("acceptable_id",auth()->id())->paginate($perPage);
 
         //  $order =  Order::where('acceptable_id', $driver->user->id)
         // ->where('acceptable_type', get_class($driver->user))
         // ->paginate($perPage);
 
-        $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
+        // $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
 
-        return  OrderResource::collection($order);
+        return  LoadBoardResource::collection($driver);
     }
 
     public function acceptLoad(Request  $request){
