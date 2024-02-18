@@ -368,6 +368,7 @@ class DriverController extends Controller
 
             $loadBoards->acceptable_id = null;
             $loadBoards->acceptable_type = null;
+            $loadBoards->status = "Pending";
 
             if($loadBoards->save()){
              //   $loadBoards->order->driver_id = null;
