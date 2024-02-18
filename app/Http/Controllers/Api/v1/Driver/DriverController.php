@@ -406,7 +406,9 @@ class DriverController extends Controller
 
         // $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
 
-        return  LoadBoardResource::collection($driver);
+        // return  LoadBoardResource::collection($driver);
+        return  OrderResource::collection($driver->order);
+    // }
     }
 
     public function acceptLoad(Request  $request){
