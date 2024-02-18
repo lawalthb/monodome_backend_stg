@@ -144,7 +144,7 @@ class OrderController extends Controller
                  $walletHistory->save();
 
                  $order->user->notify(new SendNotification($order->user, 'Your wallet payment order was successful!'));
-                     event(new LoadTypeCreated($load));
+                //     event(new LoadTypeCreated($load));
 
                  return $this->success(new OrderResource($order), 'Wallet Order payment was successful');
                 }
@@ -154,7 +154,7 @@ class OrderController extends Controller
                     $order->payment_type = 'offline';
                     $order->payment_status = 'Pending';
                     $order->save();
-   
+
                     $order->user->notify(new SendNotification($order->user, 'Your offline order order was successful!'));
                   //  event(new LoadTypeCreated($load));
 
