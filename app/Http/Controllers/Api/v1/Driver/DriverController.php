@@ -326,7 +326,7 @@ class DriverController extends Controller
             $loadBoards->acceptable_type = get_class($driver->user);
 
             if($loadBoards->save()){
-                $loadBoards->order->driver_id = $driver->user->id;
+              //  $loadBoards->order->driver_id = $driver->user->id;
                // $loadBoards->order->accepted = "Yes";
                // $loadBoards->order->acceptable_id = $driver->user->id;
               //  $loadBoards->order->acceptable_type = get_class($driver->user) ;
