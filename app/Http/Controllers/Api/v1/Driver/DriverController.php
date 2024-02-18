@@ -326,7 +326,7 @@ class DriverController extends Controller
             $loadBoards->acceptable_type = get_class($driver->user);
 
             if($loadBoards->save()){
-              //  $loadBoards->order->driver_id = $driver->user->id;
+                $loadBoards->order->driver_id = $driver->user->id;
                // $loadBoards->order->accepted = "Yes";
                // $loadBoards->order->acceptable_id = $driver->user->id;
               //  $loadBoards->order->acceptable_type = get_class($driver->user) ;
@@ -370,7 +370,7 @@ class DriverController extends Controller
             $loadBoards->acceptable_type = null;
 
             if($loadBoards->save()){
-                $loadBoards->order->driver_id = null;
+             //   $loadBoards->order->driver_id = null;
             //    $loadBoards->order->accepted = "No";
              //   $loadBoards->order->acceptable_id = null;
               //  $loadBoards->order->acceptable_type = null;
@@ -398,17 +398,14 @@ class DriverController extends Controller
     {
 
         $perPage = $request->input('per_page', 10);
-        $driver = LoadBoard::with('order')->where("acceptable_id",auth()->id())->paginate($perPage);
-
+        $driver = LoadBoard::where("acceptable_id",auth()->id())->paginate($perPage);
         //  $order =  Order::where('acceptable_id', $driver->user->id)
         // ->where('acceptable_type', get_class($driver->user))
         // ->paginate($perPage);
 
-        // $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
+      //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
 
-        // return  LoadBoardResource::collection($driver);
-        return  OrderResource::collection($driver->order);
-    // }
+        return  LoadBoardResource::collection($driver);
     }
 
     public function acceptLoad(Request  $request){
