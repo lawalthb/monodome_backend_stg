@@ -90,6 +90,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::get('/{plan}', [PlanController::class, 'show']);
         Route::put('/{plan}', [PlanController::class, 'update']);
         Route::delete('/{plan}', [PlanController::class, 'destroy']);
+        Route::post('/status/{plan}', [PlanController::class, 'status']);
     });
     //for orders
     Route::group(['prefix' => 'orders'], function () {

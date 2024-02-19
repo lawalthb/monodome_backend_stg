@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\v1\CountryController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
 use App\Http\Controllers\Api\v1\Blog\BlogController;
 use App\Http\Controllers\Api\v1\Chat\ChatController;
+use App\Http\Controllers\Api\v1\Admin\PlanController;
 use App\Http\Controllers\Api\v1\Order\OrderController;
 use App\Http\Controllers\Api\v1\Truck\TruckController;
 use App\Http\Controllers\Api\v1\Wallet\CardController;
@@ -72,6 +73,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
     // customer Route
     Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function () {
+
+
+        Route::group(['prefix' => 'plans'], function () {
+            Route::get('/', [PlanController::class, 'index']);
+            Route::get('/{plan}', [PlanController::class, 'show']);
+        });
 
         //load type route
         Route::get('/bePremium', [AuthController::class, 'bePremium']);
@@ -323,7 +330,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
             Route::post('/payment-status/status', [DriverController::class, 'paymentOrderStatus']);
             //Route::post('/approve-order/status', [DriverController::class, 'approveOrderStatus']);
             Route::post('/loadBoard-order/status', [DriverController::class, 'loadBoardOrderStatus']);
-    
+
 
         });
     });

@@ -20,7 +20,7 @@ class PlanController extends Controller
             'name' => 'required|string',
             'price' => 'required|numeric',
             'expired' => 'numeric|required',
-            'status' => 'nullable|string,in:active,inactive',
+            'status' => 'nullable|string|in:active,inactive',
         ]);
 
         if ($validator->fails()) {
@@ -36,13 +36,29 @@ class PlanController extends Controller
         return $plan;
     }
 
+    public function status(Request $request,Plan $plan)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'nullable|string|in:active,inactive',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->all()], 400);
+        }
+
+        $plan->status = $request->status;
+        $plan->save();
+
+        return $plan;
+    }
+
     public function update(Request $request, Plan $plan)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'price' => 'required|numeric',
             'expired' => 'numeric|required',
-            'status' => 'nullable|string,in:active,inactive',
+            'status' => 'nullable|string|in:active,inactive',
         ]);
 
         if ($validator->fails()) {
