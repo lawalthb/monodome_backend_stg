@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\auth;
 
+use App\Models\Plan;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Support\Str;
@@ -331,19 +332,23 @@ class AuthController extends Controller
 
 
     public function bePremium(Request $request){
+
+
         if(Auth::check()){
 
             $user = auth()->user();
 
+            $plan = Plan::find($request->plan_id);
 
             if($user->isPremium) return $this->success([ 'user' => new UserResource($user),],"This user is already a premium Customer!");
 
             $wallet = Wallet::where("user_id", $user->id)->first();
 
-            if($wallet->amount > 500){
-                $wallet->amount -= 500;
+            if($wallet->amount > $plan->price){
+                $wallet->amount -= $plan->price;
 
                 $user->isPremium = true;
+                $user->plan_id = true;
                 $user->save();
                 $wallet->save();
 

@@ -51,6 +51,10 @@ class User extends Authenticatable implements Auditable
         'isPremium' => 'boolean',
     ];
 
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
 
     public function agent()
     {

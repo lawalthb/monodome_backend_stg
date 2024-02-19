@@ -15,4 +15,10 @@ class Plan extends Model
         'expired',
         'status',
     ];
+
+
+    public function users()
+    {
+        return $this->hasOne(User::class);
+    }
 }

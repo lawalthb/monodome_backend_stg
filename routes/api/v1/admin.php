@@ -74,14 +74,22 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
       //for employee
       Route::group(['prefix' => 'employee'], function () {
-        Route::get('/', [EmployeeController::class, 'index']);
-        Route::post('/', [EmployeeController::class, 'store']);
-        Route::get('/{id}', [EmployeeController::class, 'show']);
-        Route::PUT ('/{id}', [EmployeeController::class, 'update']);
-        Route::delete('/{id}', [EmployeeController::class, 'destroy']);
-        Route::post('/status/{id}', [EmployeeController::class, 'status']);
-    });
+          Route::get('/', [EmployeeController::class, 'index']);
+          Route::post('/', [EmployeeController::class, 'store']);
+          Route::get('/{id}', [EmployeeController::class, 'show']);
+          Route::PUT ('/{id}', [EmployeeController::class, 'update']);
+          Route::delete('/{id}', [EmployeeController::class, 'destroy']);
+          Route::post('/status/{id}', [EmployeeController::class, 'status']);
+        });
 
+
+    Route::group(['prefix' => 'plans'], function () {
+        Route::get('/bootstrap', [PlanController::class, 'index']);
+        Route::post('/bootstrap', [PlanController::class, 'store']);
+        Route::get('/{plan}', [PlanController::class, 'show']);
+        Route::put('/{plan}', [PlanController::class, 'update']);
+        Route::delete('/{plan}', [PlanController::class, 'destroy']);
+    });
     //for orders
     Route::group(['prefix' => 'orders'], function () {
         Route::get('/', [OrderController::class, 'index']);
@@ -271,7 +279,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::delete('/destroy/{id}', [ShippingCompanyController::class, 'destroy']);
     });
 
-    
+
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index']);
         Route::post('/', [CategoryController::class, 'store']);
@@ -295,7 +303,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         Route::post('/comment', [BlogController::class, 'storeComment']);
         Route::put('/comment/{id}', [BlogController::class, 'updateComment']);
         Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);
-        
+
         Route::get('/pending', [BlogController::class, 'pendingBlog']);
         Route::get('/{category}/related', [BlogController::class, 'getRelatedBlogs']);
         Route::post('/comment/status/{id}', [BlogController::class, 'setStatus']);
