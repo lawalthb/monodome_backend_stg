@@ -65,6 +65,7 @@ class LoadBoardController extends Controller
         $qrCode = new QrCode();
         $qrCode->user_id = auth()->id();
         $qrCode->order_id = $request->order_id;
+        $qrCode->content = $request->content;
         $qrCode->qr_link = generateQr($request->content);
         $qrCode->save();
 

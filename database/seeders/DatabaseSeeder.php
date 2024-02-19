@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\AdminSeeder;
 use Database\Seeders\CityOneSeeder;
 use Database\Seeders\SettingsSeeder;
+use Database\Seeders\CarValuePriceSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -60,6 +61,11 @@ class DatabaseSeeder extends Seeder
         $this->call(BlogsTableSeeder::class);
         $this->call(TrackingsTableSeeder::class);
         $this->call(ChatSeeder::class);
+
+
+        $this->call(CarValuePriceSeeder::class);
+        $this->call(CarCountryPriceSeeder::class);
+        $this->call(CarYearPriceSeeder::class);
 
 
 
