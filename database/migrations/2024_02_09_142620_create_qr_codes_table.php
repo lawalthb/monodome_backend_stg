@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('order_id')->nullable();
+            $table->unsignedBigInteger('order_no')->nullable();
             $table->string('content')->nullable();
             $table->string('qr_link')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+          //  $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 

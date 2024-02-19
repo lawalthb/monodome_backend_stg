@@ -59,12 +59,12 @@ class LoadBoardController extends Controller
 
         $request->validate([
             'content' => 'required|string',
-            'order_id' => 'nullable|string',
+            'order_no' => 'nullable|string',
         ]);
 
         $qrCode = new QrCode();
         $qrCode->user_id = auth()->id();
-        $qrCode->order_id = $request->order_id;
+        $qrCode->order_no = $request->order_no;
         $qrCode->content = $request->content;
         $qrCode->qr_link = generateQr($request->content);
         $qrCode->save();

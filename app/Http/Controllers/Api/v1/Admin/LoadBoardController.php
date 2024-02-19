@@ -88,20 +88,43 @@ class LoadBoardController extends Controller
     }
 
 
-    public function status(Request $request, LoadBoard $loadBoard)
-{
-   // $loadBoard = LoadBoard::where("order_no",$status)->first();
+    public function loadBoardOrderStatus(Request $request)
+    {
 
-    $loadBoard->status = $request->status;
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|in:pending,on_transit,delivered,rejected,complicated',
+            'order_no' => 'required|string|exists:load_boards,order_no',
+            'status_comment' => 'nullable|string'
+        ]);
 
-    if($loadBoard->save()){
-        return response()->json([
-            'data' => new LoadBoardResource($loadBoard),
-        ],200);
-    }else{
-        return response()->json([
-            'error' => "unable to update the status.",
-        ],400);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $loadBoard = LoadBoard::where("order_no",$request->order_no)->first();
+        if(!$loadBoard){
+            return response()->json([
+                'error' => "Order your found or order is not yours",
+            ],400);
+        }
+
+
+        $loadBoard->status = $request->status;
+        $loadBoard->status_comment = $request->status_comment;
+
+        if($loadBoard->save()){
+
+            $loadBoard->user->notify(new SendNotification($loadBoard->user, 'Your order status has been changed to!'.$request->status.' '));
+
+            return response()->json([
+                'data' => new LoadBoardResource($loadBoard),
+            ],200);
+        }else{
+            return response()->json([
+                'error' => "unable to update the status on loadBoard.",
+            ],400);
+        }
+
     }
 
 

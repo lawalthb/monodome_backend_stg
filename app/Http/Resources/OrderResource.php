@@ -33,6 +33,7 @@ class OrderResource extends JsonResource
             "payment_status" =>  $this->payment_status,
             "updated_at" =>  $this->updated_at,
             "created_at" =>  $this->created_at,
+            "qr_code" =>  $this->qr,
             "user" =>  new UserResource($this->user),
             "package" => $this->loadableResource(),
         ];

@@ -32,6 +32,10 @@ class Order extends Model
 
         return $this->belongsTo(User::class,'driver_id');
     }
+    public function qr(){
+
+        return $this->hasMany(QrCode::class,'order_no');
+    }
 
     protected static function boot()
     {
