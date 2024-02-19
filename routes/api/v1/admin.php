@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\Admin\BlogController;
+use App\Http\Controllers\Api\v1\Admin\PlanController;
 use App\Http\Controllers\Api\v1\Admin\RoleController;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
 use App\Http\Controllers\Api\v1\Admin\OrderController;
@@ -19,9 +20,9 @@ use App\Http\Controllers\Api\v1\Admin\DashboardController;
 use App\Http\Controllers\Api\v1\Admin\LoadBoardController;
 use App\Http\Controllers\Api\v1\Admin\ManageUserController;
 use App\Http\Controllers\Api\v1\Admin\PermissionController;
-use App\Http\Controllers\Api\v1\Admin\DistancePriceController;
 use App\Http\Controllers\Api\v1\Admin\WeightPriceController;
 use App\Http\Controllers\Api\v1\Admin\ClearingAgentController;
+use App\Http\Controllers\Api\v1\Admin\DistancePriceController;
 use App\Http\Controllers\Api\v1\Admin\DriverManagerController;
 use App\Http\Controllers\Api\v1\Admin\ShippingCompanyController;
 use App\Http\Controllers\Api\v1\Admin\Support\SupportController;
@@ -84,8 +85,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
 
 
     Route::group(['prefix' => 'plans'], function () {
-        Route::get('/bootstrap', [PlanController::class, 'index']);
-        Route::post('/bootstrap', [PlanController::class, 'store']);
+        Route::get('/', [PlanController::class, 'index']);
+        Route::post('/', [PlanController::class, 'store']);
         Route::get('/{plan}', [PlanController::class, 'show']);
         Route::put('/{plan}', [PlanController::class, 'update']);
         Route::delete('/{plan}', [PlanController::class, 'destroy']);

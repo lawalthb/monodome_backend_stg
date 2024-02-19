@@ -19,8 +19,8 @@ class PlanController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'price' => 'required|numeric',
-            'expired' => 'boolean',
-            'status' => 'boolean',
+            'expired' => 'numeric|required',
+            'status' => 'nullable|required',
         ]);
 
         if ($validator->fails()) {

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('price');
-            $table->dateTime('expired');
+            $table->integer('expired');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
