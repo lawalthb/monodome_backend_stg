@@ -16,14 +16,14 @@ class PlanSeeder extends Seeder
         Plan::create([
             'name' => 'Premium',
             'price' => 2000,
-            'expired' => now()->addYear(), // Assuming the plan expires in 1 year
+            'expired' => rand(1,12),
             'status' => 'active',
         ]);
 
         Plan::create([
             'name' => 'Prime',
             'price' => 5000,
-            'expired' => now()->addYear(), // Assuming the plan expires in 1 year
+            'expired' => rand(1,12),
             'status' => 'active',
         ]);
     }

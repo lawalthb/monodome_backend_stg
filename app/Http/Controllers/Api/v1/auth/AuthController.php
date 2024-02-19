@@ -331,42 +331,44 @@ class AuthController extends Controller
     }
 
 
-    public function bePremium(Request $request){
-
-
-        if(Auth::check()){
-
+    public function bePremium(Request $request)
+    {
+        if (Auth::check()) {
             $user = auth()->user();
-
             $plan = Plan::find($request->plan_id);
 
-            if($user->isPremium) return $this->success([ 'user' => new UserResource($user),],"This user is already a premium Customer!");
+            if ($user->isPremium && ($user->plan_id == $request->plan_id)) {
+                return $this->success([
+                    'user' => new UserResource($user),
+                ], "This user is already subscribed to this plan!");
+            }
 
             $wallet = Wallet::where("user_id", $user->id)->first();
 
-            if($wallet->amount > $plan->price){
-                $wallet->amount -= $plan->price;
+            if ($wallet->amount >= $plan->price) {
+                if ($user->isPremium) {
+                    // If user is already premium, upgrade to new plan
+                    $wallet->amount -= $plan->price;
+                    $user->plan_id = $request->plan_id;
+                } else {
+                    // If user is not premium, subscribe to new plan
+                    $wallet->amount -= $plan->price;
+                    $user->isPremium = true;
+                    $user->plan_id = $request->plan_id;
+                }
 
-                $user->isPremium = true;
-                $user->plan_id = true;
                 $user->save();
                 $wallet->save();
 
                 return $this->success([
                     'user' => new UserResource($user),
-
-                ],"Subscription is successful");
-
-            }else{
-
+                ], "Subscription/upgradation is successful");
+            } else {
                 return $this->error(false, 'Not enough money in the wallet', 422);
             }
-
-
-        }else{
+        } else {
             return $this->error(false, 'Session expired', 422);
         }
-
     }
 
     //get the person that refer someone
