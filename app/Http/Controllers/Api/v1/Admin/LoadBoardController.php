@@ -88,15 +88,15 @@ class LoadBoardController extends Controller
     }
 
 
-    public function status(string $status)
+    public function status(Request $request, LoadBoard $loadBoard)
 {
-    $loadBoard = LoadBoard::where("order_no",$status)->first();
+   // $loadBoard = LoadBoard::where("order_no",$status)->first();
 
-    $loadBoard->status = $status;
+    $loadBoard->status = $request->status;
 
     if($loadBoard->save()){
         return response()->json([
-            'data' => $loadBoard,
+            'data' => new LoadBoardResource($loadBoard),
         ],200);
     }else{
         return response()->json([
