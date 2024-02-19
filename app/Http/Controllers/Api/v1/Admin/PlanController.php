@@ -20,7 +20,7 @@ class PlanController extends Controller
             'name' => 'required|string',
             'price' => 'required|numeric',
             'expired' => 'numeric|required',
-            'status' => 'nullable|required',
+            'status' => 'nullable|string,in:active,inactive',
         ]);
 
         if ($validator->fails()) {
@@ -39,10 +39,10 @@ class PlanController extends Controller
     public function update(Request $request, Plan $plan)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'string',
-            'price' => 'numeric',
-            'expired' => 'boolean',
-            'status' => 'boolean',
+            'name' => 'required|string',
+            'price' => 'required|numeric',
+            'expired' => 'numeric|required',
+            'status' => 'nullable|string,in:active,inactive',
         ]);
 
         if ($validator->fails()) {
