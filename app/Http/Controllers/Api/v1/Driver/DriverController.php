@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
@@ -415,9 +416,41 @@ class DriverController extends Controller
 
     }
 
-    public function upload_photo(Request  $request){
+    public function upload_photo(Request $request, string $order_no)
+    {
+        $validator = Validator::make(['order_no' => $order_no], [
+            'order_no' => [
+                'required',
+                Rule::exists('loadboards', 'order_no'),
+            ],
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first()], 400);
+        }
 
+        $load = Loadboard::where('order_no', $order_no)->first();
+        $loadable = $load->loadable;
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $fileDetails = $this->uploadFileWithDetails('load_documents', $file);
+                $path = $fileDetails['path'];
+                $name = $fileDetails['file_name'];
+
+                $document = new LoadDocument([
+                    'name' => $name,
+                    'path' => $path,
+                ]);
+
+                // Associate the document with the Loadable
+                $loadable->loadDocuments()->save($document);
+            }
+
+            return response()->json(['message' => 'Images uploaded successfully'], 200);
+        } else {
+            return response()->json(['error' => 'No images found in the request'], 400);
+        }
     }
 
 //     public function approveOrderStatus(Request $request)
