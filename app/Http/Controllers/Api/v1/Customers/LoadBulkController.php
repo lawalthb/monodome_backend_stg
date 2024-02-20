@@ -75,6 +75,7 @@ class LoadBulkController extends Controller
 
 
         if (!$loadBulk->order) {
+
             $order = $loadBulk->order()->create([
                 'order_no' => getNumber(),
                 //'driver_id' => 1,
@@ -83,6 +84,7 @@ class LoadBulkController extends Controller
                 'user_id' => $loadBulk->user_id,
                 'status' => "Pending",
             ]);
+            
         } else {
             $order = $loadBulk->order;
         }

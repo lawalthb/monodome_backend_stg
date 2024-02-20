@@ -81,7 +81,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         });
 
         //load type route
-        Route::get('/bePremium', [AuthController::class, 'bePremium']);
+        Route::post('/bePremium', [AuthController::class, 'bePremium']);
 
         Route::get('/load-types', [LoadTypeController::class, 'index']);
         Route::post('/load-types', [LoadTypeController::class, 'store']);
