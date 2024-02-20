@@ -81,7 +81,7 @@ class LoadBulkController extends Controller
                 'amount' =>  $totalAmount,
                 'fee' =>  $validatedData['delivery_fee'],
                 'user_id' => $loadBulk->user_id,
-                'status' => "Pending",
+               // 'status' => "Pending",
             ]);
         } else {
             $order = $loadBulk->order;
