@@ -9,7 +9,9 @@ use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadBoardRequest;
+use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;
+use Illuminate\Support\Facades\Validator;
 
 class LoadBoardController extends Controller
 {
@@ -129,4 +131,4 @@ class LoadBoardController extends Controller
 
 
 }
-}
+
