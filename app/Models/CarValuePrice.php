@@ -10,8 +10,8 @@ class CarValuePrice extends Model
     use HasFactory;
 
     protected $fillable = [
-        'min_amount',
-        'max_amount',
+        'min',
+        'max',
         'price',
         'status',
     ];

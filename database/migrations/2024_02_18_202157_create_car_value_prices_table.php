@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('car_value_prices', function (Blueprint $table) {
             $table->id();
-            $table->decimal('min_amount', 10, 2);
-            $table->decimal('max_amount', 10, 2);
+            $table->decimal('min', 10, 2);
+            $table->decimal('max', 10, 2);
             $table->decimal('price', 10, 2);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
