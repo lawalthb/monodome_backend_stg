@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api\v1\Customers;
 
 use App\Models\Bid;
-use App\Models\QrCode;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Driver;
+use App\Models\QrCode;
 use App\Models\LoadBoard;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Resources\BidResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\OrderResource;
 use App\Http\Requests\LoadBoardRequest;
 use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;
@@ -275,7 +276,7 @@ class LoadBoardController extends Controller
             $loadBoard->acceptable_type = get_class($driver);
             $loadBoard->save();
 
-            $bid->order->driver_id = $bid->driver_id;
+           // $bid->order->driver_id = $bid->driver_id;
             // $bid->order->acceptable_id = $bid->user->id;
             // $bid->order->acceptable_type =get_class($driver->user);
             $bid->order->save();
@@ -289,6 +290,54 @@ class LoadBoardController extends Controller
     });
 }
 
+
+    /**
+     * orderAssign
+     * this function assign order to driver
+     * @param  mixed $request
+     * @return void
+     */
+    public function orderAssign(Request $request)
+    {
+        return DB::transaction(function () use ($request) {
+    
+            $request->validate([
+                'order_no' => 'required',
+                'driver_id' => 'required',
+            ]);
+    
+            $driver = Driver::find($request->driver_id);
+            $loadBoard = LoadBoard::where("order_no", $request->order_no)
+                ->where("acceptable_id", null)
+              //  ->where("status", 'pending')
+                ->first();
+    
+            $order = Order::where("order_no", $request->order_no)
+                ->where("driver_id", null)
+                ->first();
+    
+            if (!$order) {
+                return $this->error([], "Order already assigned or doesn't exist!");
+            }
+    
+            if (!$driver) {
+                return $this->error([], "Driver not found!");
+            }
+    
+            $loadBoard->acceptable_id = $driver->id;
+            $loadBoard->acceptable_type = get_class($driver);
+            $loadBoard->save();
+    
+            $message = "You have been assigned an order with number " . $order->order_no . " for delivery from: " . $order->loadable->sender_location . " to: " . $order->loadable->receiver_location;
+            $driver->user->notify(new SendNotification($driver->user, $message));
+    
+            return $this->success([
+                new OrderResource($order),
+            ]);
+    
+        });
+    }
+    
 
 
     // public function acceptBidByCustomer(Request $request){

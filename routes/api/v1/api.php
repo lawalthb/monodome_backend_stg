@@ -130,6 +130,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         // load board route
         Route::get('/load-board', [LoadBoardController::class, 'index']);
         Route::post('/load-board', [LoadBoardController::class, 'store']);
+        Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
         Route::post('/load-board/print-barcode', [LoadBoardController::class, 'barCode']);
         Route::get('/load-board/{id}', [LoadBoardController::class, 'show']);
         Route::post('/load-board/{loadBulk}', [LoadBoardController::class, 'update']);
