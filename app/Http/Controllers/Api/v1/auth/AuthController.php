@@ -247,8 +247,6 @@ class AuthController extends Controller
     }
 
 
-
-
     public function updateProfile(Request $request)
     {
         $user = auth()->user(); // Assuming you are using authentication
@@ -336,6 +334,10 @@ class AuthController extends Controller
         if (Auth::check()) {
             $user = auth()->user();
             $plan = Plan::find($request->plan_id);
+
+            if (!$plan) {
+                return $this->error(false, 'Invalid plan selected', 422);
+            }
 
             if ($user->isPremium && ($user->plan_id == $request->plan_id)) {
                 return $this->success([
