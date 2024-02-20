@@ -77,7 +77,7 @@ class LoadBulkController extends Controller
         if (!$loadBulk->order) {
             $order = $loadBulk->order()->create([
                 'order_no' => getNumber(),
-                'driver_id' => 1,
+                //'driver_id' => 1,
                 'amount' =>  $totalAmount,
                 'fee' =>  $validatedData['delivery_fee'],
                 'user_id' => $loadBulk->user_id,
