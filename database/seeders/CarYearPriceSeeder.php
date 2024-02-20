@@ -23,4 +23,3 @@ class CarYearPriceSeeder extends Seeder
 
     }
 }
-}
