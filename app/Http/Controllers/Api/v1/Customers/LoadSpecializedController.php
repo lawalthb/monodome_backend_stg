@@ -59,7 +59,6 @@ class LoadSpecializedController extends Controller
         if (!$loadBulk->order) {
             $order = $loadBulk->order()->create([
                 'order_no' => getNumber(),
-                'driver_id' => 1,
                 'amount' => $request->total_amount,
                 'user_id' => $loadBulk->user_id,
                 'status' => "Pending",
