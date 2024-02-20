@@ -107,10 +107,10 @@ class LoadContainerController extends Controller
                        if (!$carContainer->order) {
                         $order = $carContainer->order()->create([
                             'order_no' => getNumber(),
-                            'driver_id' => 1,
+                          //  'driver_id' => 1,
                             'amount' => $request->total_amount,
                             'user_id' => $carContainer->user_id,
-                            'status' => "Pending",
+                           // 'status' => "Pending",
                         ]);
                     }
 

@@ -66,10 +66,10 @@ class LoadCarClearingController extends Controller
              if (!$carClearing->order) {
                 $order = $carClearing->order()->create([
                     'order_no' => getNumber(),
-                    'driver_id' => 1,
+                   // 'driver_id' => 1,
                     'amount' => $request->total_amount,
                     'user_id' => $carClearing->user_id,
-                    'status' => "Pending",
+                    //'status' => "Pending",
                 ]);
             }
 
