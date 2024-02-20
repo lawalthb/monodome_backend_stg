@@ -61,7 +61,6 @@ class LoadSpecializedController extends Controller
                 'order_no' => getNumber(),
                 'amount' => $request->total_amount,
                 'user_id' => $loadBulk->user_id,
-                'status' => "Pending",
             ]);
         }
 
