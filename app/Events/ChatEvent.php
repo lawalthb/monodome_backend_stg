@@ -4,6 +4,7 @@ namespace App\Events;
 
 use App\Models\Chat;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -11,8 +12,9 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class ChatEvent  implements ShouldBroadcast
+class ChatEvent  implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -39,7 +41,8 @@ class ChatEvent  implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('chat'),
+            // new PrivateChannel('chat.'.$this->message->id),
+            new PrivateChannel('chat'),
         ];
     }
 

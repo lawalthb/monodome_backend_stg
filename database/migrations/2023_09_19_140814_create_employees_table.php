@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('uuid');
+            $table->unsignedBigInteger('user_id')->index('user_id');
             $table->string('full_name');
             $table->string('address');
             $table->string('phone_number');
@@ -22,6 +23,9 @@ return new class extends Migration
             $table->enum('status', ['Pending', 'Confirmed', 'Approved', 'Rejected','Failed'])->default('Pending');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
 
         });
     }

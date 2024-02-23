@@ -1,22 +1,23 @@
-<x-mail::message>
-# Hi {{ $user['full_name'] }}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Template</title>
+</head>
+<body>
+    <h1>Hi {{ $user['full_name'] }}</h1>
 
-{{  $message }}
+    <p>Request from {!! nl2br(e($message)) !!} want to manage you! <a href='{{ url("/api/driver-manager/request") }}/{{ urlencode($user->id) }}'  class='btn btn-primary'>  click here to accept  </a></p>
 
-{{-- <x-mail::button :url="$url">
-You can continue from here
-</x-mail::button> --}}
+    @if(isset($user['location']))
+        <p><em>Location: {{  $user['location']['ip'] }} | {{ $user['location']['countryName'] }} | {{ $user['location']['regionName'] }}</em></p>
+    @endif
 
-@if($user['location'] != null)
-<em>
-Location: {{  $user['location']['ip'] }}  | {{ $user['location']['countryName'] }} | {{ $user['location']['regionName'] }}
-</em>
-@endif
-<br><br>
-<em style="color: red">Remember:</em> <em>Keep your card and Pin information secure.
-Do not respond to emails requesting for your card/PIN details. If you think an email is suspicious, don't click on any links. Instead, forward it to our customer support.
-</em>
-<br>
-Thanks,<br> <br>
-{{ config('app.name') }}
-</x-mail::message>
+    <br><br>
+
+    <p><em style="color: red">Remember:</em> <em>Keep your card and Pin information secure. Do not respond to emails requesting for your card/PIN details. If you think an email is suspicious, don't click on any links. Instead, forward it to our customer support.</em></p>
+
+    <br>
+
+    <p>Thanks,<br><br>{{ config('app.name') }}</p>
+</body>
+</html>

@@ -355,6 +355,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
     Route::group(['prefix' => 'driver-manager'], function () {
     Route::post('/store', [DriverMangerController::class, 'store']);
 
+    Route::get('/request', [DriverMangerController::class, 'accept-request']);
+
+
         Route::middleware(['auth:api'])->group(function () {
           //  Route::get('/your-url', function () {
 

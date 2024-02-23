@@ -404,7 +404,7 @@ public function available_drivers(Request $request)
 
         // Send request and set the manager_request flag
 
-        $message = "Hello ".auth()->user()->full_name." want to manage you! <a href='/api/driver-manager/request'  class='btn btn-primary'>  click here to accept  </a>";
+        $message = "".auth()->user()->full_name." ";
         // $user->notify(new SendNotification($user, $message));
     //    dispatch(new SendLoginNotificationJob($targetUser, $message));
 
