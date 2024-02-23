@@ -6,7 +6,7 @@
 <body>
     <h1>Hi {{ $user['full_name'] }}</h1>
 
-    <p>Request from {!! nl2br(e($message)) !!} want to manage you! <a href='{{ url("/api/driver-manager/request") }}/{{ urlencode($user->id) }}'  class='btn btn-primary'>  click here to accept  </a></p>
+    <p>Request from {!! nl2br(e($message)) !!} want to manage you! <a href='{{ url("/api/v1/driver-manager/request") }}/{{ rawurlencode($user->id) }}/{{ auth()->id() }}'  class='btn btn-primary'>  click here to accept  </a></p>
 
     @if(isset($user['location']))
         <p><em>Location: {{  $user['location']['ip'] }} | {{ $user['location']['countryName'] }} | {{ $user['location']['regionName'] }}</em></p>

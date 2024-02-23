@@ -353,34 +353,35 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
 
 
     Route::group(['prefix' => 'driver-manager'], function () {
-    Route::post('/store', [DriverMangerController::class, 'store']);
+         Route::post('/store', [DriverMangerController::class, 'store']);
 
-    Route::get('/request', [DriverMangerController::class, 'accept-request']);
-
-
-        Route::middleware(['auth:api'])->group(function () {
-          //  Route::get('/your-url', function () {
-
-                Route::get('/', [DriverMangerController::class, 'index']);
-
-                Route::get('/my-drivers', [DriverMangerController::class, 'my_drivers']);
-                Route::get('/available-drivers', [DriverMangerController::class, 'available_drivers']);
-                Route::get('/my-truck', [DriverMangerController::class, 'my_truck']);
-                Route::get('/available-truck', [DriverMangerController::class, 'available_truck']);
-                Route::post('/send-request', [DriverMangerController::class, 'sendRequest']);
-
-                Route::get('/order', [DriverMangerController::class, 'order']);
-                Route::post('/accept-order', [DriverMangerController::class, 'acceptOrder']);
-                Route::post('/order-assign', [DriverMangerController::class, 'orderAssign']);
-                Route::post('/order-reassign', [DriverMangerController::class, 'orderReAssign']);
-                Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
-                Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);
-                // Route::get('/show/{id}', [DriverMangerController::class, 'show']);
-                // Route::post('/update/{id}', [DriverMangerController::class, 'update']);
-                // Route::delete('/destroy/{id}', [DriverMangerController::class, 'destroy']);
+         // Route::get('/request', [DriverMangerController::class, 'updateRequest']);
+    Route::get('/request/{driverID}/{managerID}', [DriverMangerController::class, 'updateRequest']);
 
 
-         //   });
+   Route::middleware(['auth:api'])->group(function () {
+       //  Route::get('/your-url', function () {
+
+           Route::get('/', [DriverMangerController::class, 'index']);
+
+           Route::get('/my-drivers', [DriverMangerController::class, 'my_drivers']);
+           Route::get('/available-drivers', [DriverMangerController::class, 'available_drivers']);
+           Route::get('/my-truck', [DriverMangerController::class, 'my_truck']);
+           Route::get('/available-truck', [DriverMangerController::class, 'available_truck']);
+           Route::post('/send-request', [DriverMangerController::class, 'sendRequest']);
+
+           Route::get('/order', [DriverMangerController::class, 'order']);
+           Route::post('/accept-order', [DriverMangerController::class, 'acceptOrder']);
+           Route::post('/order-assign', [DriverMangerController::class, 'orderAssign']);
+           Route::post('/order-reassign', [DriverMangerController::class, 'orderReAssign']);
+           Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
+           Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);
+           // Route::get('/show/{id}', [DriverMangerController::class, 'show']);
+           // Route::post('/update/{id}', [DriverMangerController::class, 'update']);
+           // Route::delete('/destroy/{id}', [DriverMangerController::class, 'destroy']);
+
+
+           //   });
         });
 
     });

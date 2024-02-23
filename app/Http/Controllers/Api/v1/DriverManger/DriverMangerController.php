@@ -26,7 +26,9 @@ use App\Http\Resources\TruckResource;
 use App\Http\Resources\DriverResource;
 use App\Jobs\SendLoginNotificationJob;
 use App\Notifications\SendNotification;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Resources\LoadBoardResource;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\DriverMangerRequest;
 use App\Http\Resources\DriverMangerResource;
 
@@ -413,6 +415,34 @@ public function available_drivers(Request $request)
         $targetUser->update(['manager_request' => 1]);
 
         return response()->json(['message' => 'Request sent successfully.']);
+    }
+
+    public function updateRequest(Request $request, $driverId, $managerId)
+    {
+        $validator = Validator::make([
+            'driverId' => $driverId,
+            'managerId' => $managerId,
+        ], [
+            'driverId' => 'required|exists:users,id',
+            'managerId' => 'required|exists:users,id',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/login')->withErrors($validator);
+        }
+
+        $driver = User::find($driverId);
+        $manager = User::find($managerId);
+
+        $driver->manager_request = 0;
+        $driver->user_created_by = $manager->id;
+
+        if ($driver->save()) {
+            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/driver-manager');
+        } else {
+            // Handle the case where the save operation fails
+            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/login')->withErrors(['message' => 'Failed to update user']);
+        }
     }
 
 }
