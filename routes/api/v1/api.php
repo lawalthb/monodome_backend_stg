@@ -191,6 +191,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return
         Route::get('/price/get-weight-bulk', [OrderController::class, 'weightBulk']);
         Route::get('/price/get-distance', [OrderController::class, 'distancePrice']);
         Route::post('/price/calculate', [OrderController::class, 'calculatePrice']);
+        Route::post('/price/calculateCarClearing', [OrderController::class, 'calculateCarClearing']);
     });
 
 

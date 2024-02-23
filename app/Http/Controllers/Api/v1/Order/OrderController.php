@@ -22,6 +22,9 @@ use App\Http\Resources\OrderResource;
 use App\Notifications\SendNotification;
 use App\Http\Resources\WeightPriceResource;
 use App\Http\Resources\DistanceSettingResource;
+use App\Models\CarCountryPrice;
+use App\Models\CarValuePrice;
+use App\Models\CarYearPrice;
 
 class OrderController extends Controller
 {
@@ -453,4 +456,43 @@ class OrderController extends Controller
         $weightPrices = WeightPrice::where("load_type_id",2)->get();
         return WeightPriceResource::collection($weightPrices);
     }
+
+    public function calculateCarClearing(Request $request)
+    {
+        $validatedData = $request->validate([
+            'country_id' => 'required|integer|exists:car_country_prices,id',
+            'car_year' => 'required|integer',
+            'car_value' => 'required',
+            'load_type_id' => 'required|integer|exists:load_types,id',
+        ]);
+
+        $carValue = CarValuePrice::where('min', '<=', $validatedData['car_value'])
+            ->where('max', '>=', $validatedData['car_value'])
+            ->first();
+
+        if (!$carValue) {
+            return response()->json(['message' => 'No car value price found.'], 404);
+        }
+
+        $carValuePrice = $carValue->price;
+
+        $carYear = CarYearPrice::where("year", $validatedData['car_year'])->first();
+
+        if (!$carYear) {
+            return response()->json(['message' => 'No car year price found.'], 404);
+        }
+
+        $carYearPrice = $carYear->price;
+
+        $carCountryPrice = CarCountryPrice::findOrFail($validatedData['country_id'])->price;
+
+        $total = $carValuePrice + $carYearPrice + $carCountryPrice;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Price calculation successful',
+            'data' => ['final_price' => $total],
+        ]);
+    }
+
 }

@@ -428,7 +428,7 @@ public function available_drivers(Request $request)
         ]);
 
         if ($validator->fails()) {
-            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/login')->withErrors($validator);
+            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/monolog/?success=accepted')->withErrors($validator);
         }
 
         $driver = User::find($driverId);
