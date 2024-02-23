@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('uuid');
-            $table->unsignedBigInteger('user_id')->index('user_id');
+            $table->unsignedBigInteger('user_id')->index('user_id')->nullable();
             $table->string('full_name');
             $table->string('address');
             $table->string('phone_number');
