@@ -363,6 +363,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
     Route::get('/', [LoadBoardController::class, 'index']);
     Route::post('/', [LoadBoardController::class, 'store']);
     Route::get('/{id}', [LoadBoardController::class, 'show']);
+    Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
     Route::post('/{load_boards}', [LoadBoardController::class, 'update']);
     Route::delete('/{load_boards}', [LoadBoardController::class, 'destroy']);
     Route::get('/status/{load_boards}', [LoadBoardController::class, 'status']);

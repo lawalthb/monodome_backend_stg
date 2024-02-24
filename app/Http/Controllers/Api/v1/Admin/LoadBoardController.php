@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Api\v1\Admin;
 
+use App\Models\Order;
+use App\Models\Driver;
 use App\Models\LoadBoard;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
 use App\Http\Requests\LoadBoardRequest;
 use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBoardResource;
@@ -127,6 +131,48 @@ class LoadBoardController extends Controller
             ],400);
         }
 
+    }
+
+
+    public function orderAssign(Request $request)
+    {
+        return DB::transaction(function () use ($request) {
+
+            $request->validate([
+                'order_no' => 'required',
+                'driver_id' => 'required',
+            ]);
+
+            $driver = Driver::find($request->driver_id);
+            $loadBoard = LoadBoard::where("order_no", $request->order_no)
+                ->where("acceptable_id", null)
+              //  ->where("status", 'pending')
+                ->first();
+
+            $order = Order::where("order_no", $request->order_no)
+              //  ->where("driver_id", null)
+                ->first();
+
+            if (!$order) {
+                return $this->error([], "Order already assigned or doesn't exist!");
+            }
+
+            if (!$driver) {
+                return $this->error([], "Driver not found!");
+            }
+
+            $loadBoard->acceptable_id = $driver->id;
+            $loadBoard->acceptable_type = get_class($driver);
+            $loadBoard->save();
+
+            $message = "You have been assigned an order with number " . $order->order_no . " for delivery from: " . $order->loadable->sender_location . " to: " . $order->loadable->receiver_location;
+            $driver->user->notify(new SendNotification($driver->user, $message));
+
+            return $this->success([
+                new OrderResource($order),
+            ]);
+
+        });
     }
 
 
