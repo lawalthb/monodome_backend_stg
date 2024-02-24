@@ -19,5 +19,11 @@ use Illuminate\Support\Facades\Broadcast;
 // });
 
 Broadcast::channel('chat', function ($user) {
+
+    return true;
+    // return !is_null($user);
+});
+
+Broadcast::channel('messenger.{sender}.{receiver}', function ($user) {
     return !is_null($user);
 });
