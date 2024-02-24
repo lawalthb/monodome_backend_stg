@@ -133,19 +133,21 @@ class EmployeeController extends Controller
             'email' => $employee->email,
             'address' => $employee->address,
             'phone_number' => $employee->phone_number,
-            'password' => $hashedPassword, // Generate a random password and hash it
+            'password' => $hashedPassword,
             'ref_by' => auth()->user()->id,
             'referral_code' => generateReferralCode(),
             'role_id' => 2,
             'user_agent' => $request->header('User-Agent'),
         ]);
 
-        $employee->user_id =  $user->id;
-        $employee->save();
-        
+
+
         $permissions = Permission::whereIn('id', $request->permission_ids)->get();
         $user->syncPermissions($permissions);
         $user->save();
+
+        $employee->user_id =  $user->id;
+        $employee->save();
 
         $message = "You are now an admin at " . config('app.name') . ". Thank you for registering with " . config('app.name');
         dispatch(new SendLoginNotificationJob($user, $message));
