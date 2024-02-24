@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api\v1\Chat;
 
-use App\Events\ChatEvent;
 use App\Models\Chat;
+use App\Models\User;
+use App\Events\ChatEvent;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ChatResource;
 
@@ -26,9 +29,55 @@ class ChatController extends Controller
             'receiver_id' => 'required|integer',
         ]);
 
-        $chat = Chat::where('sender_id',$request->sender_id)->where('receiver_id', $request->receiver_id)->latest()->get();
+        $senderID= $request->sender_id;
+        $receiverID= $request->receiver_id;
+        // $chat = Chat::where('sender_id',$request->sender_id)->where('receiver_id', $request->receiver_id)->latest()->get();
+        $chat = Chat::whereIn('sender_id',[$senderID,$receiverID])->whereIn('receiver_id',[$senderID,$receiverID])->latest()->get();
 
         return $this->success( ChatResource::collection($chat), 'latest chat');
+    }
+
+    public function getMyChatUser(Request $request){
+
+        $senderId= $request->sender_id;
+        $receiverID= $request->receiver_id;
+
+        DB::statement("SET SESSION sql_mode=''");
+
+        $recentMessages = Chat::where(function ($query) use ($senderId) {
+            $query->where('sender_id', $senderId)
+                ->orWhere('receiver_id', $senderId);
+        })
+            ->groupBy('sender_id', 'receiver_id')
+            ->select('sender_id', 'receiver_id', 'message')
+            ->orderBy('id', 'desc')
+            ->limit(30)
+            ->get();
+
+        return $this->getFilterRecentMessages($recentMessages, $senderId);
+    }
+
+
+    public function getFilterRecentMessages(Collection $recentMessages, int $senderId): array
+    {
+        $recentUsersWithMessage = [];
+        $usedUserIds = [];
+        foreach ($recentMessages as $message) {
+            $userId = $message->sender_id == $senderId ? $message->receiver_id : $message->sender_id;
+            if (!in_array($userId, $usedUserIds)) {
+                $recentUsersWithMessage[] = [
+                    'user_id' => $userId,
+                    'message' => $message->message
+                ];
+                $usedUserIds[] = $userId;
+            }
+        }
+
+        foreach ($recentUsersWithMessage as $key => $userMessage) {
+            $recentUsersWithMessage[$key]['name'] = User::where('id', $userMessage['user_id'])->value('full_name') ?? '';
+        }
+
+        return $recentUsersWithMessage;
     }
 
     /**
@@ -142,6 +191,6 @@ class ChatController extends Controller
 
     public function test(Request $request){
 
-        
+
     }
 }

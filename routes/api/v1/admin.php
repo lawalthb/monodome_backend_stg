@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\v1\Admin\PlanController;
 use App\Http\Controllers\Api\v1\Admin\RoleController;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
 use App\Http\Controllers\Api\v1\Admin\OrderController;
+use App\Http\Controllers\Api\v1\Admin\PriceController;
 use App\Http\Controllers\Api\v1\Wallet\CardController;
 use App\Http\Controllers\Api\v1\Admin\BrokerController;
 use App\Http\Controllers\Api\v1\Admin\DriverController;
@@ -58,6 +59,24 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
             Route::post('/update/{id}', [DashboardController::class, 'update']);
 
         });
+
+
+        Route::prefix('car-country-prices')->group(function () {
+            Route::get('/', [PriceController::class, 'allCarCountryPrice']);
+            Route::post('/', [PriceController::class, 'CarCountryPriceStore']);
+            Route::get('/{id}', [PriceController::class, 'CarCountryPriceShow']);
+            Route::put('/{id}', [PriceController::class, 'CarCountryPriceUpdate']);
+            Route::delete('/{id}', [PriceController::class, 'CarCountryPriceDestroy']);
+        });
+
+        Route::prefix('car-value-prices')->group(function () {
+            Route::get('/', [PriceController::class, 'allCarValuePrice']);
+            Route::post('/', [PriceController::class, 'CarValuePriceStore']);
+            Route::get('/{id}', [PriceController::class, 'CarValuePriceShow']);
+            Route::put('/{id}', [PriceController::class, 'CarValuePriceUpdate']);
+            Route::delete('/{id}', [PriceController::class, 'CarValuePriceDestroy']);
+        });
+
 
         Route::group(['prefix' => 'user'], function () {
 
