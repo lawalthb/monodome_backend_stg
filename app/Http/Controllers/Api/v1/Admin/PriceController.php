@@ -64,6 +64,23 @@ class PriceController extends Controller
         return response()->json(['success' => true, 'data' => $price]);
     }
 
+
+    public function CarCountryPriceStatusUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'in:active,inactive'
+        ]);
+
+        $price = CarCountryPrice::find($id);
+        if (!$price) {
+            return response()->json(['success' => false, 'message' => 'Price not found'], 404);
+        }
+        $price->status = $request->input('status', $price->status);
+        $price->save();
+
+        return response()->json(['success' => true, 'data' => $price]);
+    }
+
     public function CarCountryPriceDestroy($id)
     {
         $price = CarCountryPrice::find($id);
@@ -137,6 +154,23 @@ class PriceController extends Controller
         return response()->json(['success' => true, 'data' => $price]);
     }
 
+
+    public function CarValuePriceStatusUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'in:active,inactive'
+        ]);
+
+        $price = CarValuePrice::find($id);
+        if (!$price) {
+            return response()->json(['success' => false, 'message' => 'Price not found'], 404);
+        }
+
+        $price->status = $request->input('status', $price->status);
+        $price->save();
+
+        return response()->json(['success' => true, 'data' => $price]);
+    }
     public function CarValuePriceDestroy($id)
     {
         $price = CarValuePrice::find($id);
