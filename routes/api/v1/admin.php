@@ -67,7 +67,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
             Route::get('/{id}', [PriceController::class, 'CarCountryPriceShow']);
             Route::put('/{id}', [PriceController::class, 'CarCountryPriceUpdate']);
             Route::delete('/{id}', [PriceController::class, 'CarCountryPriceDestroy']);
-            Route::put('/status/{id}', [PriceController::class, 'CarCountryPriceUpdate']);
+            Route::put('/status/{id}', [PriceController::class, 'CarCountryPriceStatusUpdate']);
         });
 
         Route::prefix('car-value-prices')->group(function () {
