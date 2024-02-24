@@ -17,7 +17,7 @@ use Illuminate\Validation\ValidationException;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Broadcast::routes(['middleware' => ['auth:sanctum']]);
+// Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 // Broadcast::routes(['prefix'=>'api','middleware' => ['auth:api']]);
 
