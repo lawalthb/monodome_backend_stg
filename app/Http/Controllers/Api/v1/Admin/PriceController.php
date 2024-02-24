@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Admin;
 
+use App\Models\CarYearPrice;
 use Illuminate\Http\Request;
 use App\Models\CarValuePrice;
 use App\Models\CarCountryPrice;
@@ -174,6 +175,91 @@ class PriceController extends Controller
     public function CarValuePriceDestroy($id)
     {
         $price = CarValuePrice::find($id);
+        if (!$price) {
+            return response()->json(['success' => false, 'message' => 'Price not found'], 404);
+        }
+
+        $price->delete();
+
+        return response()->json(['success' => true, 'message' => 'Price deleted successfully']);
+    }
+
+
+    // everything about car year.
+    public function allCarYearPrice()
+    {
+        $prices = CarYearPrice::all();
+        return response()->json(['success' => true, 'data' => $prices]);
+    }
+
+    public function CarYearPriceStore(Request $request)
+    {
+        $request->validate([
+            'year' => 'required|integer',
+            'price' => 'required|numeric',
+            'status' => 'required|in:active,inactive'
+        ]);
+
+        $price = CarYearPrice::create([
+            'year' => $request->input('year'),
+            'price' => $request->input('price'),
+            'status' => $request->input('status')
+        ]);
+
+        return response()->json(['success' => true, 'data' => $price]);
+    }
+
+    public function CarYearPriceShow($id)
+    {
+        $price = CarYearPrice::find($id);
+        if (!$price) {
+            return response()->json(['success' => false, 'message' => 'Price not found'], 404);
+        }
+        return response()->json(['success' => true, 'data' => $price]);
+    }
+
+    public function CarYearPriceUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'year' => 'integer',
+            'price' => 'numeric',
+            'status' => 'in:active,inactive'
+        ]);
+
+        $price = CarYearPrice::find($id);
+        if (!$price) {
+            return response()->json(['success' => false, 'message' => 'Price not found'], 404);
+        }
+
+        $price->year = $request->input('year', $price->year);
+        $price->price = $request->input('price', $price->price);
+        $price->status = $request->input('status', $price->status);
+        $price->save();
+
+        return response()->json(['success' => true, 'data' => $price]);
+    }
+
+
+    public function CarYearPriceStatusUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'in:active,inactive'
+        ]);
+
+        $price = CarYearPrice::find($id);
+        if (!$price) {
+            return response()->json(['success' => false, 'message' => 'Price not found'], 404);
+        }
+
+        $price->status = $request->input('status', $price->status);
+        $price->save();
+
+        return response()->json(['success' => true, 'data' => $price]);
+    }
+
+    public function CarYearPriceDestroy($id)
+    {
+        $price = CarYearPrice::find($id);
         if (!$price) {
             return response()->json(['success' => false, 'message' => 'Price not found'], 404);
         }

@@ -80,6 +80,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => '
         });
 
 
+        Route::prefix('car-year-prices')->group(function () {
+            Route::get('/', [PriceController::class, 'allCarYearPrice']);
+            Route::post('/', [PriceController::class, 'CarYearPriceStore']);
+            Route::get('/{id}', [PriceController::class, 'CarYearPriceShow']);
+            Route::put('/{id}', [PriceController::class, 'CarYearPriceUpdate']);
+            Route::delete('/{id}', [PriceController::class, 'CarYearPriceDestroy']);
+            Route::put('/status/{id}', [PriceController::class, 'CarYearPriceStatusUpdate']);
+        });
+
+
         Route::group(['prefix' => 'user'], function () {
 
         Route::get('/', [ManageUserController::class, 'index']);
