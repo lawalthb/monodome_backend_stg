@@ -80,13 +80,13 @@ class PriceController extends Controller
 
     // everything below is for car value
 
-    public function index()
+    public function allCarValuePrice()
     {
         $prices = CarValuePrice::all();
         return response()->json(['success' => true, 'data' => $prices]);
     }
 
-    public function store(Request $request)
+    public function CarValuePriceStore(Request $request)
     {
         $request->validate([
             'min' => 'required|numeric',
@@ -105,7 +105,7 @@ class PriceController extends Controller
         return response()->json(['success' => true, 'data' => $price]);
     }
 
-    public function show($id)
+    public function CarValuePriceShow($id)
     {
         $price = CarValuePrice::find($id);
         if (!$price) {
@@ -114,7 +114,7 @@ class PriceController extends Controller
         return response()->json(['success' => true, 'data' => $price]);
     }
 
-    public function update(Request $request, $id)
+    public function CarValuePriceUpdate(Request $request, $id)
     {
         $request->validate([
             'min' => 'numeric',
@@ -137,7 +137,7 @@ class PriceController extends Controller
         return response()->json(['success' => true, 'data' => $price]);
     }
 
-    public function destroy($id)
+    public function CarValuePriceDestroy($id)
     {
         $price = CarValuePrice::find($id);
         if (!$price) {
