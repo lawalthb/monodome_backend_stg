@@ -417,7 +417,7 @@ public function available_drivers(Request $request)
         return response()->json(['message' => 'Request sent successfully.']);
     }
 
-    public function updateRequest(Request $request, $driverId, $managerId)
+    public function updateRequest(Request $request, $driverId, $managerId, $status)
     {
         $validator = Validator::make([
             'driverId' => $driverId,
@@ -428,7 +428,7 @@ public function available_drivers(Request $request)
         ]);
 
         if ($validator->fails()) {
-            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/monolog/?success=accepted')->withErrors($validator);
+            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/monolog/?feedback=rejected')->withErrors($validator);
         }
 
         $driver = User::find($driverId);
@@ -438,10 +438,10 @@ public function available_drivers(Request $request)
         $driver->user_created_by = $manager->id;
 
         if ($driver->save()) {
-            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/driver-manager');
+            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/monolog/?feedback=accepted');
         } else {
             // Handle the case where the save operation fails
-            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/login')->withErrors(['message' => 'Failed to update user']);
+            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/monolog/?feedback=rejected')->withErrors(['message' => 'Failed to update user']);
         }
     }
 
