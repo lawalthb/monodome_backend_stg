@@ -140,6 +140,9 @@ class EmployeeController extends Controller
             'user_agent' => $request->header('User-Agent'),
         ]);
 
+        $employee->user_id =  $user->id;
+        $employee->save();
+        
         $permissions = Permission::whereIn('id', $request->permission_ids)->get();
         $user->syncPermissions($permissions);
         $user->save();
