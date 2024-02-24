@@ -123,6 +123,12 @@ class EmployeeController extends Controller
 
         $employee = Employee::findOrFail($request->emp_id);
 
+        // Check if the email already exists
+        $existingUser = User::where('email', $employee->email)->first();
+        if ($existingUser) {
+            return $this->error('', 'Email address already exists', 422);
+        }
+
         $password = Str::random(10);
 
         // Hash the password for storage
@@ -139,8 +145,6 @@ class EmployeeController extends Controller
             'role_id' => 2,
             'user_agent' => $request->header('User-Agent'),
         ]);
-
-
 
         $permissions = Permission::whereIn('id', $request->permission_ids)->get();
         $user->syncPermissions($permissions);
@@ -169,5 +173,6 @@ class EmployeeController extends Controller
             "Admin registered successfully"
         );
     }
+
 
 }
