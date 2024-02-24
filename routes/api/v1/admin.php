@@ -29,7 +29,7 @@ use App\Http\Controllers\Api\v1\Admin\ShippingCompanyController;
 use App\Http\Controllers\Api\v1\Admin\Support\SupportController;
 use App\Http\Controllers\Api\v1\Admin\SpecializedShipmentController;
 
-Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin', 'middleware' => 'return-json'], function () {
+Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
 
     Route::get('/', function () {
 

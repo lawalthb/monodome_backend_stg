@@ -40,7 +40,7 @@ use App\Http\Controllers\Api\v1\Customers\LoadSpecializedController;
 use App\Http\Controllers\Api\v1\DriverManger\DriverMangerController;
 use App\Http\Controllers\Api\v1\ShippingCompany\ShippingCompanyController;
 
-Route::group(['namespace' => 'api\v1', 'prefix' => 'v1', 'middleware' => 'return-json'], function () {
+Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
     Route::get('/', function () {
 

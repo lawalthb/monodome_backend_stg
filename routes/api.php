@@ -19,7 +19,7 @@ use Illuminate\Validation\ValidationException;
 */
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
-Broadcast::routes(['prefix'=>'api','middleware' => ['auth:api']]);
+// Broadcast::routes(['prefix'=>'api','middleware' => ['auth:api']]);
 
 
 
