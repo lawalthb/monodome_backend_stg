@@ -13,6 +13,11 @@ class Employee extends Model
     public $guarded = [];
 
 
+    public function user(){
+
+        return $this->belongsTo(User::class);
+    }
+
     protected static function boot()
     {
         parent::boot();
