@@ -29,12 +29,10 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleHasPermissionsTableSeeder::class);
         $this->call(ModelHasRolesTableSeeder::class);
 
-
         $this->call(CountrySeeder::class);
         $this->call(StateSeeder::class);
         $this->call(StatesTableSeeder::class);
         $this->call(LocalGovernmentsTableSeeder::class);
-
 
         $this->call(PriceSettingsSeeder::class);
         $this->call(DistanceSeeder::class);
@@ -62,13 +60,10 @@ class DatabaseSeeder extends Seeder
         $this->call(TrackingsTableSeeder::class);
         $this->call(ChatSeeder::class);
 
-
         $this->call(CarValuePriceSeeder::class);
         $this->call(CarCountryPriceSeeder::class);
         $this->call(CarYearPriceSeeder::class);
         $this->call(PlanSeeder::class);
-
-
 
         $this->call(EmployeesTableSeeder::class);
        $this->call(OrdersTableSeeder::class);

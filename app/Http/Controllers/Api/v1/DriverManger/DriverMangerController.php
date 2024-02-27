@@ -305,12 +305,12 @@ public function available_drivers(Request $request)
         return DB::transaction(function () use ($request) {
 
         $request->validate([
-            'order_id' => 'required',
+            'order_no' => 'required',
             'driver_id' => 'required',
         ]);
 
         $driver = Driver::find($request->driver_id);
-        $order =  Order::where("id",$request->order_id)->where("driver_id",null)->first();
+        $order =  Order::where("order_no",$request->order_no)->where("driver_id",null)->first();
 
         if($order){
          //   return $order->loadable->state;
@@ -343,37 +343,41 @@ public function available_drivers(Request $request)
      * @param  mixed $request
      * @return void
      */
-    public function acceptOrder(Request $request){
-
+    public function acceptOrder(Request $request)
+    {
         return DB::transaction(function () use ($request) {
+            $request->validate([
+                'load_board_id' => 'required|exists:load_boards,id',
+            ]);
 
-        $request->validate([
-            'load_board_id' => 'required',
-            //'driver_id' => 'required',
-        ]);
+            $loadBoard = LoadBoard::find($request->load_board_id);
 
-        $loadBoards = LoadBoard::where("id",$request->load_board_id)->whereNull('acceptable_id')
-        ->whereNull('acceptable_type')->first();
+            if (!$loadBoard) {
+                return response()->json(['message' => 'Order or load not found'], 403);
+            }
 
-        if($loadBoards){
+            if (!$loadBoard->acceptable_id && !$loadBoard->acceptable_type) {
+                $driverManager = DriverManager::where("user_id", auth()->id())->first();
 
-            $driverManger = DriverManger::where("user_id",auth()->id())->first();
+                if ($driverManager) {
+                    $loadBoard->acceptable_id = $driverManager->id;
+                    $loadBoard->acceptable_type = get_class($driverManager);
 
-            $loadBoards->acceptable_id = $driverManger->id;
-            $loadBoards->acceptable_type = get_class($driverManger) ;
+                    if ($loadBoard->loadable && $loadBoard->loadable->status !== "Processing") {
+                        $loadBoard->loadable->status = "Processing";
+                        $loadBoard->loadable->save();
+                    }
 
-            $loadBoards->loadable->status = "Processing";
-            $loadBoards->save();
+                    $loadBoard->save();
 
-            return new LoadBoardResource($loadBoards);
-        }else{
-
-            return $this->error([
-            ], "This load has already been taken!");
-        }
-
-    });
-
+                    return new LoadBoardResource($loadBoard);
+                } else {
+                    return $this->error([], "Driver manager not found!");
+                }
+            } else {
+                return $this->error([], "This load has already been taken!");
+            }
+        });
     }
 
 

@@ -373,7 +373,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
            Route::get('/order', [DriverMangerController::class, 'order']);
            Route::post('/accept-order', [DriverMangerController::class, 'acceptOrder']);
-           Route::post('/order-assign', [DriverMangerController::class, 'orderAssign']);
+           Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
            Route::post('/order-reassign', [DriverMangerController::class, 'orderReAssign']);
            Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
            Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);

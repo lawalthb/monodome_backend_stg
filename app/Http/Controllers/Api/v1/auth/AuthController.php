@@ -173,46 +173,49 @@ class AuthController extends Controller
     {
 
         $validator = Validator::make($request->only('provider', 'access_provider_token'), [
-            'provider' => ['required', 'string'],
+            'provider' => ['required', 'string','in:facebook,google,apple'],
             'access_provider_token' => ['required', 'string']
         ]);
 
         if ($validator->fails())
             return response()->json($validator->errors(), 400);
+
         $provider = $request->provider;
         $validated = $this->validateProvider($provider);
 
-        if (!is_null($validated))
-            return $validated;
+        if (is_null($validated)) return $validated;
 
-        try {
-            $providerUser = Socialite::driver($provider)->userFromToken($request->access_provider_token);
-            dd($providerUser);
-            $user = User::updateOrCreate(
-                [
-                    'email' => $providerUser->getEmail(),
-                    'provider_id' => $providerUser->getId()
-                ],
-                [
-                    'first_name' => $providerUser->user['given_name'],
-                    'provider_id' => $providerUser->getId(),
-                    'password' => Hash::make($providerUser->user['given_name'] . '@' . $providerUser->getId),
-                    'email_verified_at' => now(),
-                ]
-            );
+        $providerUser = Socialite::driver($provider)->userFromToken($request->access_provider_token);
 
-            $user->assignRole('customer'); //register new user default.
-            //$user->load('roles', 'permissions');
-            Auth::login($user);
-            $data =  [
-                'token' => $user->createToken('monodomebackend')->plainTextToken,
-                'user' => new UserResource($user),
-            ];
-            // return response()->json(['data'=>$data], 200);
-            return $this->success($data, "success", 200);
-        } catch (\Exception $e) {
-            return $this->error($e->getMessage(), 'something went wrong', 422);
-        }
+        dd($providerUser);
+
+        // try {
+
+        //     $user = User::updateOrCreate(
+        //         [
+        //             'email' => $providerUser->getEmail(),
+        //             'provider_id' => $providerUser->getId()
+        //         ],
+        //         [
+        //             'first_name' => $providerUser->user['given_name'],
+        //             'provider_id' => $providerUser->getId(),
+        //             'password' => Hash::make($providerUser->user['given_name'] . '@' . $providerUser->getId),
+        //             'email_verified_at' => now(),
+        //         ]
+        //     );
+
+        //     $user->assignRole('customer'); //register new user default.
+        //     //$user->load('roles', 'permissions');
+        //     Auth::login($user);
+        //     $data =  [
+        //         'token' => $user->createToken('monodomebackend')->plainTextToken,
+        //         'user' => new UserResource($user),
+        //     ];
+        //     // return response()->json(['data'=>$data], 200);
+        //     return $this->success($data, "success", 200);
+        // } catch (\Exception $e) {
+        //     return $this->error($e->getMessage(), 'something went wrong', 422);
+        // }
     }
 
 
@@ -288,6 +291,8 @@ class AuthController extends Controller
         if (!in_array($provider, ['google', 'facebook', 'apple'])) {
             return response()->json(["message" => 'You can only login via google,facebook,apple account'], 400);
         }
+
+        return $provider;
     }
 
     public function me(){
