@@ -357,7 +357,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
          Route::post('/store', [DriverMangerController::class, 'store']);
 
          // Route::get('/request', [DriverMangerController::class, 'updateRequest']);
-    Route::get('/request/{driverID}/{managerID}', [DriverMangerController::class, 'updateRequest']);
+    Route::get('/request/{driverID}/{managerID}/{status}', [DriverMangerController::class, 'updateRequest']);
 
 
    Route::middleware(['auth:api'])->group(function () {

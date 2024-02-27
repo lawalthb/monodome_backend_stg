@@ -6,12 +6,16 @@
 </head>
 <body>
     <div class="container">
+        <div class="text-center mt-3 mb-3">
+            <img src="{{ asset('logo.jpeg') }}" class="logo" alt="monodomelogo Logo">
+        </div>
         <h1>Hi {{ $user['full_name'] }}</h1>
 
         <p>Request from {!! nl2br(e($message)) !!} want to manage you! </p>
         <div class="d-grid gap-2">
-            <a href='{{ url("/api/v1/driver-manager/request") }}/{{ rawurlencode($user->id) }}/{{ auth()->id() }}'  class='btn btn-primary'>Click here to accept</a>
-            <a href='{{ url("/api/v1/driver-manager/request") }}/{{ rawurlencode($user->id) }}/{{ auth()->id() }}'  class='btn btn-danger'>Click here to reject</a>
+            <a href='{{ url("/api/v1/driver-manager/request") }}/{{ rawurlencode($user->id) }}/{{ auth()->id() }}/accepted'  class='btn btn-success btn-sm text-white'>Click here to accept</a>
+         <hr>
+            <a href='{{ url("/api/v1/driver-manager/request") }}/{{ rawurlencode($user->id) }}/{{ auth()->id() }}/rejected'  class='btn btn-danger btn-sm text-white'>Click here to reject</a>
         </div>
 
         @if(isset($user['location']))
