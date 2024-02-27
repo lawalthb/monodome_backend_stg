@@ -357,7 +357,7 @@ public function available_drivers(Request $request)
             }
 
             if (!$loadBoard->acceptable_id && !$loadBoard->acceptable_type) {
-                $driverManager = DriverManager::where("user_id", auth()->id())->first();
+                $driverManager = DriverManger::where("user_id", auth()->id())->first();
 
                 if ($driverManager) {
                     $loadBoard->acceptable_id = $driverManager->id;
