@@ -46,7 +46,9 @@ jobs:
         port: ${{ secrets.REMOTE_PORT }}
         script: |
           cd /home/kaysolak/www/monolog.kaysolaknigventures.com/
-          git pull
+          # git pull
+          git fetch origin main
+          git reset --hard origin/main
           composer update
           php artisan optimize:clear
           php artisan config:clear
