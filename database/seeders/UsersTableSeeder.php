@@ -215,9 +215,10 @@ class UsersTableSeeder extends Seeder
         ]);
 
          //driver manager
-         //  DriverManger::factory()->create([
-             // 'user_id' => 5,
-             //  ]);
+         DriverManger::factory()->create([
+          'user_id' => 5,
+         ]);
+
         User::find(1)->assignRole('Super Admin');
         User::find(2)->assignRole('admin');
         User::find(3)->assignRole('Customer');

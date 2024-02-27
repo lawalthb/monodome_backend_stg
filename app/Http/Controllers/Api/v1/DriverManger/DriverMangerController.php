@@ -362,11 +362,12 @@ public function available_drivers(Request $request)
                 if ($driverManager) {
                     $loadBoard->acceptable_id = $driverManager->id;
                     $loadBoard->acceptable_type = get_class($driverManager);
+                    $loadBoard->status = "Processing";
 
-                    if ($loadBoard->loadable && $loadBoard->loadable->status !== "Processing") {
-                        $loadBoard->loadable->status = "Processing";
-                        $loadBoard->loadable->save();
-                    }
+                    // if ($loadBoard->loadable && $loadBoard->loadable->status !== "Processing") {
+                    //     $loadBoard->loadable->save();
+                    //     $loadBoard->loadable->status = "Processing";
+                    // }
 
                     $loadBoard->save();
 
