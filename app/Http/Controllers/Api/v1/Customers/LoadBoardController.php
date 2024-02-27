@@ -300,44 +300,47 @@ class LoadBoardController extends Controller
     public function orderAssign(Request $request)
     {
         return DB::transaction(function () use ($request) {
-    
+
             $request->validate([
                 'order_no' => 'required',
                 'driver_id' => 'required',
             ]);
-    
+
             $driver = Driver::find($request->driver_id);
             $loadBoard = LoadBoard::where("order_no", $request->order_no)
                 ->where("acceptable_id", null)
               //  ->where("status", 'pending')
                 ->first();
-    
-            $order = Order::where("order_no", $request->order_no)
-                ->where("driver_id", null)
-                ->first();
-    
-            if (!$order) {
-                return $this->error([], "Order already assigned or doesn't exist!");
-            }
-    
+
+
+
+            // if (!$order) {
+            //     return $this->error([], "Order already assigned or doesn't exist!");
+            // }
+
             if (!$driver) {
                 return $this->error([], "Driver not found!");
             }
-    
+
             $loadBoard->acceptable_id = $driver->id;
             $loadBoard->acceptable_type = get_class($driver);
             $loadBoard->save();
-    
+
+            $order = Order::where("order_no", $request->order_no)
+            //  ->where("driver_id", null)
+              ->first();
+
             $message = "You have been assigned an order with number " . $order->order_no . " for delivery from: " . $order->loadable->sender_location . " to: " . $order->loadable->receiver_location;
             $driver->user->notify(new SendNotification($driver->user, $message));
-    
+
+
             return $this->success([
                 new OrderResource($order),
             ]);
-    
+
         });
     }
-    
+
 
 
     // public function acceptBidByCustomer(Request $request){
