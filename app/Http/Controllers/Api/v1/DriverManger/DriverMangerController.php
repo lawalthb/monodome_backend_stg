@@ -443,10 +443,10 @@ public function available_drivers(Request $request)
         $driver->user_created_by = $manager->id;
 
         if ($driver->save()) {
-            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/monolog/?feedback=accepted');
+            return redirect()->away("https://talosmart-monodone-frontend.vercel.app/monolog/?feedback=$status");
         } else {
             // Handle the case where the save operation fails
-            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/monolog/?feedback=rejected')->withErrors(['message' => 'Failed to update user']);
+            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/monolog/?feedback=error')->withErrors(['message' => 'Failed to update user']);
         }
     }
 
