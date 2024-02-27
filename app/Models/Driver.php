@@ -65,7 +65,7 @@ class Driver extends Model
 
     public function acceptedOrders()
 {
-    return $this->hasMany(Order::class, 'driver_id')->whereIn('accepted', ['Yes','No']);
+    return $this->hasMany(Order::class, 'order_no');
 }
 
     protected static function boot()
