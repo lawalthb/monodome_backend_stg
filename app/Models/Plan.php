@@ -19,6 +19,6 @@ class Plan extends Model
 
     public function users()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }

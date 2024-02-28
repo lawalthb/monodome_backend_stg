@@ -344,7 +344,7 @@ class AuthController extends Controller
                 return $this->error(false, 'Invalid plan selected', 422);
             }
 
-            if ($user->isPremium && ($user->plan_id == $request->plan_id)) {
+            if ($user->isPremium && ($user->plan->id == $request->plan_id)) {
                 return $this->success([
                     'user' => new UserResource($user),
                 ], "This user is already subscribed to this plan!");
@@ -357,19 +357,22 @@ class AuthController extends Controller
                     // If user is already premium, upgrade to new plan
                     $wallet->amount -= $plan->price;
                     $user->plan_id = $request->plan_id;
+                    $user->save();
+                    $wallet->save();
                 } else {
                     // If user is not premium, subscribe to new plan
                     $wallet->amount -= $plan->price;
                     $user->isPremium = true;
                     $user->plan_id = $request->plan_id;
+                    $user->save();
+                    $wallet->save();
                 }
-
-                $user->save();
-                $wallet->save();
 
                 return $this->success([
                     'user' => new UserResource($user),
                 ], "Subscription/upgradation is successful");
+
+                
             } else {
                 return $this->error(false, 'Not enough money in the wallet', 422);
             }

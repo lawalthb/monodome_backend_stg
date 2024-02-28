@@ -138,6 +138,7 @@ class User extends Authenticatable implements Auditable
         return $this->hasOne(User::class, 'ref_by');
     }
 
+    
 
 
     public function getImagePathAttribute()
