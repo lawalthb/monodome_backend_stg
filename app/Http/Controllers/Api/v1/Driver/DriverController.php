@@ -418,22 +418,31 @@ class DriverController extends Controller
 
     public function upload_photo(Request $request, string $order_no)
     {
-        $validator = Validator::make(['order_no' => $order_no], [
-            'order_no' => [
-                'required',
-                Rule::exists('loadboards', 'order_no'),
-            ],
+        $validator = Validator::make(
+            ['order_no' => $order_no], [
+            'order_no' => ['required'],
         ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->first()], 400);
         }
 
-        $load = Loadboard::where('order_no', $order_no)->first();
+        $load = Loadboard::where('order_no', $order_no)->where("acceptable_id",auth()->id())->first();
+
+        if(!$load){
+            return response()->json([
+                'error' => "Order not exist or you are not the owner!",
+            ],400);
+        }
         $loadable = $load->loadable;
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
+                // Validate file type
+                if (!in_array($file->getClientOriginalExtension(), ['png', 'jpg', 'jpeg'])) {
+                    return response()->json(['error' => 'Invalid file type. Only PNG, JPG, and JPEG files are allowed.'], 400);
+                }
+
                 $fileDetails = $this->uploadFileWithDetails('load_documents', $file);
                 $path = $fileDetails['path'];
                 $name = $fileDetails['file_name'];
@@ -452,6 +461,7 @@ class DriverController extends Controller
             return response()->json(['error' => 'No images found in the request'], 400);
         }
     }
+
 
 //     public function approveOrderStatus(Request $request)
 // {
