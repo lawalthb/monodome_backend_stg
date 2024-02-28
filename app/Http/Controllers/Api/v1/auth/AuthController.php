@@ -187,35 +187,35 @@ class AuthController extends Controller
 
         $providerUser = Socialite::driver($provider)->userFromToken($request->access_provider_token);
 
-        dd($providerUser);
+        try {
 
-        // try {
+            $user = User::updateOrCreate(
+                [
+                    'email' => $providerUser->getEmail(),
+                    'provider_id' => $providerUser->getId()
+                ],
+                [
+                    'full_name' => $providerUser->getName() ?? $providerUser->user['given_name'],
+                    'provider_id' => $providerUser->getId(),
+                    'password' => Hash::make($providerUser->user['given_name'] . '@' . $providerUser->getId),
+                    'email_verified_at' => now(),
+                    'location' => Location::get($request->ip()),
+                    'user_agent' => $request->header('User-Agent'),
+                ]
+            );
 
-        //     $user = User::updateOrCreate(
-        //         [
-        //             'email' => $providerUser->getEmail(),
-        //             'provider_id' => $providerUser->getId()
-        //         ],
-        //         [
-        //             'first_name' => $providerUser->user['given_name'],
-        //             'provider_id' => $providerUser->getId(),
-        //             'password' => Hash::make($providerUser->user['given_name'] . '@' . $providerUser->getId),
-        //             'email_verified_at' => now(),
-        //         ]
-        //     );
-
-        //     $user->assignRole('customer'); //register new user default.
-        //     //$user->load('roles', 'permissions');
-        //     Auth::login($user);
-        //     $data =  [
-        //         'token' => $user->createToken('monodomebackend')->plainTextToken,
-        //         'user' => new UserResource($user),
-        //     ];
-        //     // return response()->json(['data'=>$data], 200);
-        //     return $this->success($data, "success", 200);
-        // } catch (\Exception $e) {
-        //     return $this->error($e->getMessage(), 'something went wrong', 422);
-        // }
+            $user->assignRole('customer'); //register new user default.
+            //$user->load('roles', 'permissions');
+            Auth::login($user);
+            $data =  [
+                'token' => $user->createToken('monodomebackend')->plainTextToken,
+                'user' => new UserResource($user),
+            ];
+            // return response()->json(['data'=>$data], 200);
+            return $this->success($data, "success", 200);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage(), 'something went wrong', 422);
+        }
     }
 
 
