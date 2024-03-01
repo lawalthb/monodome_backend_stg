@@ -306,7 +306,7 @@ class LoadBoardController extends Controller
                 'driver_id' => 'required',
             ]);
 
-            $driver = Driver::find($request->driver_id);
+            $driver = User::find($request->driver_id);
             $loadBoard = LoadBoard::where("order_no", $request->order_no)
                 ->where("acceptable_id", null)
               //  ->where("status", 'pending')
@@ -331,7 +331,7 @@ class LoadBoardController extends Controller
               ->first();
 
             $message = "You have been assigned an order with number " . $order->order_no . " for delivery from: " . $order->loadable->sender_location . " to: " . $order->loadable->receiver_location;
-            $driver->user->notify(new SendNotification($driver->user, $message));
+            $driver->notify(new SendNotification($driver, $message));
 
 
             return $this->success([
