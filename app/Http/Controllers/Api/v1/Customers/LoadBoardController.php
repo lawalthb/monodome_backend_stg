@@ -239,57 +239,56 @@ class LoadBoardController extends Controller
     }
 
     public function acceptBidByCustomer(Request $request)
-{
-    return DB::transaction(function () use ($request) {
+    {
+        return DB::transaction(function () use ($request) {
 
-        $bid = Bid::where('id', $request->bid_id)
-            ->where('user_id', auth()->id())
-            ->first();
+            $bid = Bid::where('id', $request->bid_id)
+                ->where('user_id', auth()->id())
+                ->first();
 
-        if (!$bid) {
-            return $this->error(null, 'No bid or load found.');
-        }
+            if (!$bid) {
+                return $this->error(null, 'No bid or load found.');
+            }
 
-        $totalAmountIncrease = $bid->amount - $bid->order->amount;
+            $totalAmountIncrease = $bid->amount - $bid->order->amount;
 
-        if ($totalAmountIncrease <= 0) {
-            return $this->error(null, 'Bid price should be higher than the total amount.');
-        }
+            if ($totalAmountIncrease <= 0) {
+                return $this->error(null, 'Bid price should be higher than the total amount.');
+            }
 
-        $userWalletAmount = $bid->user->wallet->amount;
+            $userWalletAmount = $bid->user->wallet->amount;
 
-        if ($totalAmountIncrease > $userWalletAmount) {
-            return $this->error('', 'Insufficient funds in wallet!', 404);
-        }
+            if ($totalAmountIncrease > $userWalletAmount) {
+                return $this->error('', 'Insufficient funds in wallet!', 404);
+            }
 
-        // Deduct the difference from the user's wallet
-        $bid->user->wallet->decrement('amount', $totalAmountIncrease);
+            // Deduct the difference from the user's wallet
+            $bid->user->wallet->decrement('amount', $totalAmountIncrease);
 
-        // Update the total amount of the order with the accepted bid price
-        $bid->order->amount = $bid->amount;
+            // Update the total amount of the order with the accepted bid price
+            $bid->order->amount = $bid->amount;
 
-        if($bid->order->save()){
+            if($bid->order->save()){
 
-            $driver = User::find($bid->driver_id);
-            $loadBoard = LoadBoard::where('order_no', $bid->order_no)->first();
-            $loadBoard->acceptable_id = $driver->id;
-            $loadBoard->acceptable_type = get_class($driver);
-            $loadBoard->save();
+                $driver = User::find($bid->driver_id);
+                $loadBoard = LoadBoard::where('order_no', $bid->order_no)->first();
+                $loadBoard->acceptable_id = $driver->id;
+                $loadBoard->acceptable_type = get_class($driver);
+                $loadBoard->save();
 
-           // $bid->order->driver_id = $bid->driver_id;
-            // $bid->order->acceptable_id = $bid->user->id;
-            // $bid->order->acceptable_type =get_class($driver->user);
-            $bid->order->save();
+            // $bid->order->driver_id = $bid->driver_id;
+                // $bid->order->acceptable_id = $bid->user->id;
+                // $bid->order->acceptable_type =get_class($driver->user);
+                $bid->order->save();
 
-            $message ="Your bid has been accepted ". $bid->order->order_no. " to delivery from: ".$bid->order->loadable->sender_location." To: ".$bid->order->loadable->receiver_location;
-            $driver->notify(new SendNotification($driver, $message));
+                $message ="Your bid has been accepted ". $bid->order->order_no. " to delivery from: ".$bid->order->loadable->sender_location." To: ".$bid->order->loadable->receiver_location;
+                $driver->notify(new SendNotification($driver, $message));
 
-        }
+            }
 
-        return $this->success('Bid accepted successfully!');
-    });
-}
-
+            return $this->success('Bid accepted successfully!');
+        });
+    }
 
     /**
      * orderAssign
@@ -314,7 +313,6 @@ class LoadBoardController extends Controller
             if (!$loadBoard) {
                 return $this->error([], "Order not found or has already been taken!");
             }
-
             // Check if driver is already assigned to an order
             if ($loadBoard->acceptable_id == $driver->id) {
                 return $this->error([], "Order has already been assigned to a driver!");
@@ -326,7 +324,6 @@ class LoadBoardController extends Controller
             $order->placed_by_id = auth()->user()->id;
 
             $loadBoard->save();
-
 
             $message = "You have been assigned an order with number " . $loadBoard->order_no . " for delivery from: " . $loadBoard->order->loadable->sender_location . " to: " . $loadBoard->order->loadable->receiver_location;
             $driver->notify(new SendNotification($driver, $message));
