@@ -303,34 +303,33 @@ class LoadBoardController extends Controller
 
             $request->validate([
                 'order_no' => 'required',
-                'driver_id' => 'required:exists:users,id',
+                'driver_id' => 'required|exists:users,id',
             ]);
 
-            $driver = User::find($request->driver_id);
+            $driver = User::findOrFail($request->driver_id);
+
             $loadBoard = LoadBoard::where("order_no", $request->order_no)
                 ->where("acceptable_id", null)
-              //  ->where("status", 'pending')
+                // ->where("status", 'pending')
                 ->first();
 
-                if (!$loadBoard) {
-                return $this->error([], "Order not found! or has already been taking!");
+            if (!$loadBoard) {
+                return $this->error([], "Order not found or has already been taken!");
             }
 
-            if (!$driver) {
-                return $this->error([], "Driver not found!");
+            // Check if driver is already assigned to an order
+            if ($loadBoard->acceptable_id !== null) {
+                return $this->error([], "Order has already been assigned to a driver!");
             }
 
             $loadBoard->acceptable_id = $driver->id;
             $loadBoard->acceptable_type = get_class($driver);
             $loadBoard->save();
 
-            $order = Order::where("order_no", $request->order_no)
-            //  ->where("driver_id", null)
-              ->first();
+            $order = Order::where("order_no", $request->order_no)->first();
 
-            $message = "You have been assigned an order with number " . $loadBoard->order_no . " for delivery from: " . $loadBoard->order->loadable->sender_location. " to: " . $loadBoard->order->loadable->receiver_location;
+            $message = "You have been assigned an order with number " . $loadBoard->order_no . " for delivery from: " . $loadBoard->order->loadable->sender_location . " to: " . $loadBoard->order->loadable->receiver_location;
             $driver->notify(new SendNotification($driver, $message));
-
 
             return $this->success([
                 new OrderResource($order),
