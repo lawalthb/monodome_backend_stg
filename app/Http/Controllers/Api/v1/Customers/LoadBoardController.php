@@ -403,6 +403,27 @@ class LoadBoardController extends Controller
         return  LoadBoardResource::collection($driver);
     }
 
+    public function allUserOrder(Request $request, User $user)
+    {
+
+        $query = LoadBoard::where("acceptable_id",  $user->id);
+
+        // Check if placed_by_id = auth()->user()->id; in related order is 'Yes'
+        $query->whereHas('order', function ($q) {
+            $q->where('placed_by_id', auth()->user()->id);
+        });
+
+        // Filter by Order Number
+        if ($request->has('order_no')) {
+            $query->where('order_no', $request->input('order_no'));
+        }
+
+        $loadBoards = $query->get();
+
+        return LoadBoardResource::collection($loadBoards);
+        // return  LoadBoardResource::collection($driver);
+    }
+
 
     // public function acceptBidByCustomer(Request $request){
 
