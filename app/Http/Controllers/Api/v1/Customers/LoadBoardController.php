@@ -310,7 +310,7 @@ class LoadBoardController extends Controller
             $driver = User::findOrFail($request->driver_id);
 
             $loadBoard = LoadBoard::where("order_no", $request->order_no)
-                ->where("acceptable_id", null)
+                ->where("acceptable_id", auth()->user()->id)
                 // ->where("status", 'pending')
                 ->first();
 
@@ -322,12 +322,14 @@ class LoadBoardController extends Controller
             if ($loadBoard->acceptable_id !== null) {
                 return $this->error([], "Order has already been assigned to a driver!");
             }
+            $order = Order::where("order_no", $request->order_no)->first();
 
             $loadBoard->acceptable_id = $driver->id;
             $loadBoard->acceptable_type = get_class($driver);
+            $order->placed_by_id = auth()->user()->id;
+
             $loadBoard->save();
 
-            $order = Order::where("order_no", $request->order_no)->first();
 
             $message = "You have been assigned an order with number " . $loadBoard->order_no . " for delivery from: " . $loadBoard->order->loadable->sender_location . " to: " . $loadBoard->order->loadable->receiver_location;
             $driver->notify(new SendNotification($driver, $message));
