@@ -302,7 +302,7 @@ class LoadBoardController extends Controller
         return DB::transaction(function () use ($request) {
 
             $request->validate([
-                'order_no' => 'required',
+                'order_no' => 'required|load_boards:users',
                 'driver_id' => 'required|exists:users,id',
             ]);
 
