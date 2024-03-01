@@ -325,7 +325,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
             Route::post('/profile/change-image', [DriverController::class, 'changeImage']);
             Route::post('/profile/update-details', [DriverController::class, 'updateProfile']);
             Route::get('/order', [DriverController::class, 'order']);
-            Route::post('/accept-order', [DriverController::class, 'acceptOrder']);
+            Route::post('/accept-order', [LoadBoardController::class, 'acceptOrder']);
             Route::post('/reject-order', [DriverController::class, 'rejectOrder']);
             Route::post('/upload-photo/{order_no}', [DriverController::class, 'upload_photo']);
 
@@ -372,7 +372,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
            Route::post('/send-request', [DriverMangerController::class, 'sendRequest']);
 
            Route::get('/order', [DriverMangerController::class, 'order']);
-           Route::post('/accept-order', [DriverMangerController::class, 'acceptOrder']);
+           Route::post('/accept-order', [LoadBoardController::class, 'acceptOrder']);
            Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
            Route::post('/order-reassign', [DriverMangerController::class, 'orderReAssign']);
            Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);

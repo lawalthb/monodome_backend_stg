@@ -342,6 +342,56 @@ class LoadBoardController extends Controller
     }
 
 
+        /**
+     * acceptOrder
+     *  this function is for driver manager to accept
+     *  order from loadboard or loadbrocast
+     * @param  mixed $request
+     * @return void
+     */
+    public function acceptOrder(Request $request){
+
+        return DB::transaction(function () use ($request) {
+
+        $request->validate([
+            'order_no' => 'required|string',
+            //'driver_id' => 'required',
+        ]);
+
+        $loadBoards = LoadBoard::where("order_no",$request->order_no)->whereNull('acceptable_id')
+        ->whereNull('acceptable_type')->first();
+
+        if($loadBoards){
+            $user = User::find(auth()->id());
+
+            $loadBoards->acceptable_id = $user->id;
+            $loadBoards->acceptable_type = get_class($user);
+            $loadBoards->status = "processing";
+
+            if($loadBoards->save()){
+              //  $loadBoards->order->driver_id = $driver->user->id;
+               // $loadBoards->order->accepted = "Yes";
+               // $loadBoards->order->acceptable_id = $driver->user->id;
+              //  $loadBoards->order->acceptable_type = get_class($driver->user) ;
+              //  $loadBoards->order->placed_by_id = auth()->user()->id;
+              $loadBoards->loadable->status = "processing";
+                $loadBoards->order->save();
+
+                $message ="You have been accept order with number ". $loadBoards->order->order_no.
+                " to delivery FROM: ".$loadBoards->order->loadable->sender_location.", TO: ".$loadBoards->order->loadable->receiver_location;
+                $user->notify(new SendNotification($user, $message));
+
+            }
+
+            return new OrderResource($loadBoards->order);
+        }else{
+
+            return $this->error([
+            ], "This load has already been taken!");
+        }
+
+    });
+
 
     // public function acceptBidByCustomer(Request $request){
 
