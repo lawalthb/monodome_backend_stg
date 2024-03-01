@@ -392,7 +392,7 @@ class LoadBoardController extends Controller
 
     });
 
-
+    }
     // public function acceptBidByCustomer(Request $request){
 
     //     return DB::transaction(function () use ($request) {
