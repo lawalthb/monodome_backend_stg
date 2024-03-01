@@ -303,7 +303,7 @@ class LoadBoardController extends Controller
 
             $request->validate([
                 'order_no' => 'required',
-                'driver_id' => 'required',
+                'driver_id' => 'required:exists:users,id',
             ]);
 
             $driver = User::find($request->driver_id);
@@ -312,11 +312,9 @@ class LoadBoardController extends Controller
               //  ->where("status", 'pending')
                 ->first();
 
-
-
-            // if (!$order) {
-            //     return $this->error([], "Order already assigned or doesn't exist!");
-            // }
+                if (!$loadBoard) {
+                return $this->error([], "Order not found! or has already been taking!");
+            }
 
             if (!$driver) {
                 return $this->error([], "Driver not found!");
@@ -330,7 +328,7 @@ class LoadBoardController extends Controller
             //  ->where("driver_id", null)
               ->first();
 
-            $message = "You have been assigned an order with number " . $order->order_no . " for delivery from: " . $order->loadable->sender_location . " to: " . $order->loadable->receiver_location;
+            $message = "You have been assigned an order with number " . $loadBoard->order_no . " for delivery from: " . $loadBoard->order->loadable->sender_location. " to: " . $loadBoard->order->loadable->receiver_location;
             $driver->notify(new SendNotification($driver, $message));
 
 
