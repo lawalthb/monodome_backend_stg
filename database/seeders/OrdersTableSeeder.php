@@ -82,7 +82,7 @@ class OrdersTableSeeder extends Seeder
                 'admin_approve' => 'Yes',
                 'payment_type' => 'wallet',
                 'payment_status' => 'Paid',
-                'loadable_id' => '4',
+                'loadable_id' => '2',
                 'loadable_type' => 'App\\Models\\LoadBulk',
                 'created_at' => '2024-02-17 11:27:46',
                 'updated_at' => '2024-02-17 11:28:05',
