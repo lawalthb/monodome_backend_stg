@@ -33,7 +33,7 @@ class AuthController extends Controller
     {
         $ip = '49.35.41.195';
         //https://beyondco.de/blog/a-guide-to-soft-delete-models-in-laravel
-        try {
+    try {
 
             $ref_by = null;
 
@@ -372,7 +372,7 @@ class AuthController extends Controller
                     'user' => new UserResource($user),
                 ], "Subscription/upgradation is successful");
 
-                
+
             } else {
                 return $this->error(false, 'Not enough money in the wallet', 422);
             }
