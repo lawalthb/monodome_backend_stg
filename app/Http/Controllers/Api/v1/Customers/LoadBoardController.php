@@ -393,6 +393,22 @@ class LoadBoardController extends Controller
     });
 
     }
+
+    public function order(Request $request)
+    {
+
+        $perPage = $request->input('per_page', 10);
+        $driver = LoadBoard::where("acceptable_id",auth()->id())->paginate($perPage);
+        //  $order =  Order::where('acceptable_id', $driver->user->id)
+        // ->where('acceptable_type', get_class($driver->user))
+        // ->paginate($perPage);
+
+      //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
+
+        return  LoadBoardResource::collection($driver);
+    }
+
+
     // public function acceptBidByCustomer(Request $request){
 
     //     return DB::transaction(function () use ($request) {
