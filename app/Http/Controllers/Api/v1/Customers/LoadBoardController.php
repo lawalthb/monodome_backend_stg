@@ -307,6 +307,12 @@ class LoadBoardController extends Controller
             ]);
 
             $driver = User::find($request->driver_id);
+
+            if(!$driver){
+                return response()->json([
+                    'error' => "driver does not exist",
+                ],400);
+            }
             $loadBoard = LoadBoard::where("order_no", $request->order_no)
                 ->where("acceptable_id", null)
               //  ->where("status", 'pending')
