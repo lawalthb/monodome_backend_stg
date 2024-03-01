@@ -305,9 +305,7 @@ class LoadBoardController extends Controller
                 'order_no' => 'required|exists:load_boards,order_no',
                 'driver_id' => 'required|exists:users,id',
             ]);
-
             $driver = User::findOrFail($request->driver_id);
-
             $loadBoard = LoadBoard::where("order_no", $request->order_no)
                 ->where("acceptable_id", auth()->user()->id)
                 // ->where("status", 'pending')
