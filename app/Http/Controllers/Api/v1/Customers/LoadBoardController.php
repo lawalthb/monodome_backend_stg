@@ -308,7 +308,7 @@ class LoadBoardController extends Controller
 
             $driver = User::findOrFail($request->driver_id);
 
-          return  $loadBoard = LoadBoard::where("order_no", $request->order_no)
+            $loadBoard = LoadBoard::where("order_no", $request->order_no)
                 ->where("acceptable_id", null)
                 // ->where("status", 'pending')
                 ->first();
@@ -337,6 +337,7 @@ class LoadBoardController extends Controller
 
         });
     }
+
 
 
         /**
