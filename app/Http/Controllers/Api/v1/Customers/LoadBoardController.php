@@ -324,6 +324,7 @@ class LoadBoardController extends Controller
             $order->placed_by_id = auth()->user()->id;
 
             $loadBoard->save();
+            $order->save();
 
             $message = "You have been assigned an order with number " . $loadBoard->order_no . " for delivery from: " . $loadBoard->order->loadable->sender_location . " to: " . $loadBoard->order->loadable->receiver_location;
             $driver->notify(new SendNotification($driver, $message));
