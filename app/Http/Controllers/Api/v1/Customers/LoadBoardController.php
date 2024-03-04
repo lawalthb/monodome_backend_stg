@@ -376,8 +376,7 @@ class LoadBoardController extends Controller
             $loadBoard->acceptable_id = auth()->user()->id;
             $loadBoard->acceptable_type = get_class($driver);
             $loadBoard->status = "processing";
-
-         //   $order->placed_by_id = auth()->user()->id;
+           $order->placed_by_id = null;
 
             $loadBoard->save();
             $order->save();
