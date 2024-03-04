@@ -353,6 +353,45 @@ class LoadBoardController extends Controller
     }
 
 
+    public function removeOrder(Request $request)
+    {
+        return DB::transaction(function () use ($request) {
+
+            $request->validate([
+                'order_no' => 'required|exists:load_boards,order_no',
+                'driver_id' => 'required|exists:users,id',
+            ]);
+            $driver = User::findOrFail($request->driver_id);
+            $loadBoard = LoadBoard::where("order_no", $request->order_no)
+                ->where("acceptable_id", $driver->id)
+                // ->where("status", 'pending')
+                ->first();
+
+            if (!$loadBoard) {
+                return $this->error([], "Order not found or this order doesn't belong to this driver");
+            }
+
+            $order = Order::where("order_no", $request->order_no)->first();
+
+            $loadBoard->acceptable_id = auth()->user()->id;
+            $loadBoard->acceptable_type = get_class($driver);
+            $loadBoard->status = "processing";
+
+         //   $order->placed_by_id = auth()->user()->id;
+
+            $loadBoard->save();
+            $order->save();
+
+            $message = "order with number " . $loadBoard->order_no . " for delivery from: " . $loadBoard->order->loadable->sender_location . " to: " . $loadBoard->order->loadable->receiver_location." has been removed";
+            $driver->notify(new SendNotification($driver, $message));
+
+            return $this->success([
+                new OrderResource($order),
+            ]);
+
+        });
+    }
+
 
         /**
      * acceptOrder
