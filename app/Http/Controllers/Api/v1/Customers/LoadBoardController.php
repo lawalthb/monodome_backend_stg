@@ -292,7 +292,7 @@ class LoadBoardController extends Controller
 
 
 
-    public function driverAssignOrder(Request $request)
+    public function allDriverAssignOrders(Request $request)
     {
 
         $perPage = $request->input('per_page', 10);
