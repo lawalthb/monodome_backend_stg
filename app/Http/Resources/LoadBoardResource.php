@@ -63,25 +63,43 @@ protected function loadableResource()
 }
 
 
+// protected function acceptableResource()
+// {
+//     if ($this->acceptable instanceof Driver) {
+//         return new DriverResource($this->acceptable);
+
+//     } elseif ($this->acceptable instanceof DriverManger) {
+//         return new DriverMangerResource($this->acceptable);
+
+//     } elseif ($this->acceptable instanceof Company) {
+//         return new CompanyResource($this->acceptable);
+
+//     }elseif ($this->acceptable instanceof Agent) {
+//         return new AgentResource($this->acceptable);
+
+//     } elseif ($this->acceptable instanceof ShippingCompany) {
+//         return new ShippingCompanyResource($this->acceptable);
+//     }
+
+//     return null; // Handle other cases or return null if acceptable is not recognized
+// }
+
 protected function acceptableResource()
 {
-    if ($this->acceptable instanceof Driver) {
-        return new DriverResource($this->acceptable);
-
-    } elseif ($this->acceptable instanceof DriverManger) {
-        return new DriverMangerResource($this->acceptable);
-
-    } elseif ($this->acceptable instanceof Company) {
-        return new CompanyResource($this->acceptable);
-
-    }elseif ($this->acceptable instanceof Agent) {
-        return new AgentResource($this->acceptable);
-
-    } elseif ($this->acceptable instanceof ShippingCompany) {
-        return new ShippingCompanyResource($this->acceptable);
+    switch ($this->acceptable_type) {
+        case 'App\\Driver':
+            return new DriverResource($this->acceptable);
+        case 'App\\DriverManager':
+            return new DriverMangerResource($this->acceptable);
+        case 'App\\Company':
+            return new CompanyResource($this->acceptable);
+        case 'App\\Agent':
+            return new AgentResource($this->acceptable);
+        case 'App\\ShippingCompany':
+            return new ShippingCompanyResource($this->acceptable);
+        default:
+            return null;
     }
-
-    return null; // Handle other cases or return null if acceptable is not recognized
 }
 
 
