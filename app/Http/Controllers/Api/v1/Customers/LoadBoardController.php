@@ -290,6 +290,22 @@ class LoadBoardController extends Controller
         });
     }
 
+
+
+    public function driverAssignOrder(Request $request)
+    {
+
+        $perPage = $request->input('per_page', 10);
+        $driver = LoadBoard::whereHas('order', function ($q) {
+            $q->where('placed_by_id', auth()->user()->id);
+        })
+        ->paginate($perPage);
+
+      //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
+
+        return  LoadBoardResource::collection($driver);
+    }
+
     /**
      * orderAssign
      * this function assign order to driver
@@ -394,14 +410,7 @@ class LoadBoardController extends Controller
     {
 
         $perPage = $request->input('per_page', 10);
-        // $driver = LoadBoard::where("acceptable_id",auth()->id())->paginate($perPage);
-
-        $driver = LoadBoard::where('acceptable_id', auth()->id())
-        ->whereHas('order', function ($q) {
-            $q->orWhere('placed_by_id', auth()->user()->id);
-        })
-        ->paginate($perPage);
-
+        $driver = LoadBoard::where("acceptable_id",auth()->id())->paginate($perPage);
         //  $order =  Order::where('acceptable_id', $driver->user->id)
         // ->where('acceptable_type', get_class($driver->user))
         // ->paginate($perPage);
@@ -410,6 +419,8 @@ class LoadBoardController extends Controller
 
         return  LoadBoardResource::collection($driver);
     }
+
+
 
     public function allUserOrder(Request $request, User $user)
     {
