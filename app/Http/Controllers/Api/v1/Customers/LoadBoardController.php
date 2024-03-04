@@ -391,25 +391,18 @@ class LoadBoardController extends Controller
     }
 
     public function order(Request $request)
-{
-    $perPage = $request->input('per_page', 10);
+    {
 
-    // Check if the authenticated user is a driver or a manager
-    if (auth()->user()->role == 'driver') {
-        // If the user is a driver, fetch orders where the driver is acceptable
-        $loadBoards = LoadBoard::where('acceptable_id', auth()->id())
-            ->paginate($perPage);
-    } else {
-        // If the user is a manager, fetch orders based on the manager's ID
-        $loadBoards = LoadBoard::whereHas('order', function ($q) {
-                $q->where('placed_by_id', auth()->user()->id);
-            })
-            ->paginate($perPage);
+        $perPage = $request->input('per_page', 10);
+        $driver = LoadBoard::where("acceptable_id",auth()->id())->paginate($perPage);
+        //  $order =  Order::where('acceptable_id', $driver->user->id)
+        // ->where('acceptable_type', get_class($driver->user))
+        // ->paginate($perPage);
+
+      //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
+
+        return  LoadBoardResource::collection($driver);
     }
-
-    return  LoadBoardResource::collection($loadBoards);
-}
-
 
     public function allUserOrder(Request $request, User $user)
     {
