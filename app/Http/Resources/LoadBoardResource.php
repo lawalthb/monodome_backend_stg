@@ -15,6 +15,7 @@ use App\Models\Agent;
 use App\Models\Company;
 use App\Models\DriverManger;
 use App\Models\ShippingCompany;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LoadBoardResource extends JsonResource
@@ -63,44 +64,44 @@ protected function loadableResource()
 }
 
 
-// protected function acceptableResource()
-// {
-//     if ($this->acceptable instanceof Driver) {
-//         return new DriverResource($this->acceptable);
-
-//     } elseif ($this->acceptable instanceof DriverManger) {
-//         return new DriverMangerResource($this->acceptable);
-
-//     } elseif ($this->acceptable instanceof Company) {
-//         return new CompanyResource($this->acceptable);
-
-//     }elseif ($this->acceptable instanceof Agent) {
-//         return new AgentResource($this->acceptable);
-
-//     } elseif ($this->acceptable instanceof ShippingCompany) {
-//         return new ShippingCompanyResource($this->acceptable);
-//     }
-
-//     return null; // Handle other cases or return null if acceptable is not recognized
-// }
-
 protected function acceptableResource()
 {
-    switch ($this->acceptable_type) {
-        case 'App\\Models\\Driver':
-            return new DriverResource($this->acceptable);
-        case 'App\\Models\\DriverManager':
-            return new DriverMangerResource($this->acceptable);
-        case 'App\\Models\\Company':
-            return new CompanyResource($this->acceptable);
-        case 'App\\Models\\Agent':
-            return new AgentResource($this->acceptable);
-        case 'App\\Models\\ShippingCompany':
-            return new ShippingCompanyResource($this->acceptable);
-        default:
-            return null;
+    if ($this->acceptable instanceof User) {
+        return new UserRoleResource($this->acceptable);
+
+    } elseif ($this->acceptable instanceof DriverManger) {
+        return new DriverMangerResource($this->acceptable);
+
+    } elseif ($this->acceptable instanceof Company) {
+        return new CompanyResource($this->acceptable);
+
+    }elseif ($this->acceptable instanceof Agent) {
+        return new AgentResource($this->acceptable);
+
+    } elseif ($this->acceptable instanceof ShippingCompany) {
+        return new ShippingCompanyResource($this->acceptable);
     }
+
+    return null; // Handle other cases or return null if acceptable is not recognized
 }
+
+// protected function acceptableResource()
+// {
+//     switch ($this->acceptable_type) {
+//         case 'App\\Models\\Driver':
+//             return new DriverResource($this->acceptable);
+//         case 'App\\Models\\DriverManager':
+//             return new DriverMangerResource($this->acceptable);
+//         case 'App\\Models\\Company':
+//             return new CompanyResource($this->acceptable);
+//         case 'App\\Models\\Agent':
+//             return new AgentResource($this->acceptable);
+//         case 'App\\Models\\ShippingCompany':
+//             return new ShippingCompanyResource($this->acceptable);
+//         default:
+//             return null;
+//     }
+// }
 
 
 
