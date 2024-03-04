@@ -87,15 +87,15 @@ protected function loadableResource()
 protected function acceptableResource()
 {
     switch ($this->acceptable_type) {
-        case 'App\Models\Driver':
+        case 'App\\Models\\Driver':
             return new DriverResource($this->acceptable);
-        case 'App\Models\DriverManager':
+        case 'App\\Models\\DriverManager':
             return new DriverMangerResource($this->acceptable);
-        case 'App\Models\Company':
+        case 'App\\Models\\Company':
             return new CompanyResource($this->acceptable);
-        case 'App\Models\Agent':
+        case 'App\\Models\\Agent':
             return new AgentResource($this->acceptable);
-        case 'App\Models\ShippingCompany':
+        case 'App\\Models\\ShippingCompany':
             return new ShippingCompanyResource($this->acceptable);
         default:
             return null;
