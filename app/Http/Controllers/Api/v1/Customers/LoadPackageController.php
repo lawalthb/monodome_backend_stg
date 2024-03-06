@@ -61,25 +61,32 @@ use App\Models\LoadBoard;
     }
 
 
-    public function delivery_fee(Request $request, LoadPackage $loadPackage){
-
+    public function delivery_fee(Request $request, LoadPackage $loadPackage)
+    {
+        try {
             $loadPackage->delivery_fee += $request->increase_amount;
             $loadPackage->total_amount += $request->increase_amount;
 
-            if($loadPackage->save()){
+            if ($loadPackage->save()) {
                 $loadPackage->order->fee = $loadPackage->delivery_fee;
                 $loadPackage->order->amount = $loadPackage->total_amount;
                 $loadPackage->order->save();
 
                 Log::info(str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT));
 
+                $customFields = [
+                    [
+                        "order_no" => $loadPackage->order_no,
+                        "from" => "order"
+                    ],
+                ];
+
                 $fields = [
                     'email' => $loadPackage->user->email,
                     'amount' => str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT),
-                    "metadata" => "{\"order_no\": $loadPackage->order_no,\"from\":\"order\"}",
+                    "metadata"  => json_encode(['order_no' => $loadPackage->order_no,'custom_fields' => $customFields]),
                     'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
                 ];
-
 
                 // call the paystack api
                 $result = payStack_checkout($fields);
@@ -88,13 +95,15 @@ use App\Models\LoadBoard;
                     "paystack" => $result->data,
                     "loadPackage" => new LoadPackageResource($loadPackage),
                 ], "Successfully");
-
-            }else{
-
+            } else {
                 return $this->error(null, "unable to update delivery fee", 404);
-
             }
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return $this->error(null, "An error occurred while processing the request", 500);
+        }
     }
+
 
     public function store(LoadPackageRequest $request)
     {
