@@ -126,7 +126,7 @@ class PaymentController extends Controller
                     'payment_status' => 'Paid',
                 ]);
 
-                $order->user->notify(new SendNotification($order->user, 'Your wallet payment order was successful!'));
+                $order->user->notify(new SendNotification($order->user, 'Your paystack online payment order was successful!'));
             }
 
         }
