@@ -122,7 +122,7 @@ class PaymentController extends Controller
             // $order->user->notify(new SendNotification($order->user, 'Your wallet payment order was successful!'));
 
             $orderNo = $request['data']['metadata']['order_no'];
-            $order = Order::where('order_no', $orderNo)->first();
+            $order = Order::find($orderNo)->first();
 
             if ($order) {
                 $order->update([
