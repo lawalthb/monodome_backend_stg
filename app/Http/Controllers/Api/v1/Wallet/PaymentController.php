@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Wallet;
 
 use App\Models\Card;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Wallet;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Notifications\SendNotification;
 use Illuminate\Support\Facades\Storage;
 
 class PaymentController extends Controller
@@ -33,8 +35,7 @@ class PaymentController extends Controller
         Log::info($request['data']);
         Log::info($request['event']);
 
-        if ($request['event'] == 'charge.success') {
-
+        if ($request['event'] == 'charge.success' && $request['data']['metadata']['from'] =='wallet') {
 
             try {
             DB::beginTransaction();
@@ -103,6 +104,28 @@ class PaymentController extends Controller
             DB::rollBack();
            Log::info($th->getMessage());
         }
+
+        }elseif($request['event'] == 'charge.success' && $request['data']['metadata']['from'] =='order'){
+            // $data = $request['data'];
+            // $order_no = $request['data']['metadata']['order_no'];
+
+            // $order = Order::where("order_no",$order_no)->first();
+            // $order->payment_type = 'online';
+            // $order->payment_status = 'Paid';
+            // $order->save();
+            // $order->user->notify(new SendNotification($order->user, 'Your wallet payment order was successful!'));
+
+            $orderNo = $request['data']['metadata']['order_no'];
+            $order = Order::where('order_no', $orderNo)->first();
+
+            if ($order) {
+                $order->update([
+                    'payment_type' => 'online',
+                    'payment_status' => 'Paid',
+                ]);
+
+                $order->user->notify(new SendNotification($order->user, 'Your wallet payment order was successful!'));
+            }
 
         }
 

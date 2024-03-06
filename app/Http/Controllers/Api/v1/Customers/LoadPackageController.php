@@ -76,7 +76,7 @@ use App\Models\LoadBoard;
                 $fields = [
                     'email' => $loadPackage->user->email,
                     'amount' => str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT),
-                    "metadata" => "{\"load_id\": $loadPackage->id,\"from\":\"order\"}",
+                    "metadata" => "{\"order_no\": $loadPackage->order_no,\"from\":\"order\"}",
                     'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
                 ];
 
