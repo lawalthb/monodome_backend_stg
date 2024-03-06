@@ -80,6 +80,7 @@ use App\Models\LoadBoard;
                 $loadPackage->order->save();
 
                 Log::info($loadPackage->total_amount*100);
+                Log::info($loadPackage->order_no);
 
 
                 $customFields = [
