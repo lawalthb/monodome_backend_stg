@@ -64,8 +64,8 @@ use App\Models\LoadBoard;
     public function delivery_fee(Request $request, LoadPackage $loadPackage){
 
 
-             Log::info("First delivery_fee",$loadPackage->delivery_fee);
-             Log::info("First total_amount",$loadPackage->total_amount);
+            //  Log::info("First delivery_fee",$loadPackage->delivery_fee);
+            //  Log::info("First total_amount",$loadPackage->total_amount);
 
             $loadPackage->delivery_fee += $request->increase_amount;
             $loadPackage->total_amount += $request->increase_amount;
