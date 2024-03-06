@@ -24,9 +24,12 @@ class PaymentController extends Controller
     public function webhooks(Request $request)
     {
 
+
+
         if ((strtoupper($_SERVER['REQUEST_METHOD']) != 'POST' ) || !array_key_exists('HTTP_X_PAYSTACK_SIGNATURE', $_SERVER) ) exit();
 
         $input = @file_get_contents("php://input");
+        http_response_code(200);
 
         //get the secretkey from database and check if the hash are thesame else exist
         $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
