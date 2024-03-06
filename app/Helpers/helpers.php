@@ -514,7 +514,6 @@ function payStack_checkout($fields) {
     //execute post
     $result = curl_exec($ch);
 
-    Log::info($result);
    return $result  = json_decode($result);
 
 }
