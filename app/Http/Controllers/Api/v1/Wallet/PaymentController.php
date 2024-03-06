@@ -34,8 +34,7 @@ class PaymentController extends Controller
         $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
         if($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, $secretkey)) exit();
 
-        Log::info($request['data']);
-        Log::info($request['event']);
+
 
         if ($request['event'] == 'charge.success' && $request['data']['metadata']['custom_fields'][0]['from'] =='wallet') {
 
@@ -108,6 +107,10 @@ class PaymentController extends Controller
         }
 
         }elseif($request['event'] == 'charge.success' && $request['data']['metadata']['custom_fields'][0]['from'] =='order'){
+
+            Log::info($request['data']);
+            Log::info($request['event']);
+            
             // $data = $request['data'];
             // $order_no = $request['data']['metadata']['order_no'];
 
