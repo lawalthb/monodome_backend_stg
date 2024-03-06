@@ -37,7 +37,7 @@ class PaymentController extends Controller
         Log::info($request['data']);
         Log::info($request['event']);
 
-        if ($request['event'] == 'charge.success' && $request['data']['metadata']['from'] =='wallet') {
+        if ($request['event'] == 'charge.success' && $request['data']['metadata']['custom_fields'][0]['from'] =='wallet') {
 
             try {
             DB::beginTransaction();
@@ -107,7 +107,7 @@ class PaymentController extends Controller
            Log::info($th->getMessage());
         }
 
-        }elseif($request['event'] == 'charge.success' && $request['data']['metadata']['from'] =='order'){
+        }elseif($request['event'] == 'charge.success' && $request['data']['metadata']['custom_fields'][0]['from'] =='order'){
             // $data = $request['data'];
             // $order_no = $request['data']['metadata']['order_no'];
 
