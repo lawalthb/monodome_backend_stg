@@ -3,6 +3,7 @@
 use App\Models\User;
 use App\Models\Setting;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -512,6 +513,8 @@ function payStack_checkout($fields) {
 
     //execute post
     $result = curl_exec($ch);
+
+    Log::info($result);
    return $result  = json_decode($result);
 
 }
