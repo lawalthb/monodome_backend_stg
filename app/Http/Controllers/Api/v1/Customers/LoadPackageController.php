@@ -72,8 +72,8 @@ use App\Models\LoadBoard;
 
             if($loadPackage->save()){
 
-                Log::info("Save delivery_fee",$loadPackage->delivery_fee);
-                Log::info("Save total_amount",$loadPackage->total_amount);
+                // Log::info("Save delivery_fee",$loadPackage->delivery_fee);
+                // Log::info("Save total_amount",$loadPackage->total_amount);
 
                 $loadPackage->order->fee = $loadPackage->delivery_fee;
                 $loadPackage->order->amount = $loadPackage->total_amount;
