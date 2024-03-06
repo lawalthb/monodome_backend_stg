@@ -25,6 +25,7 @@ class PaymentController extends Controller
     {
 
 
+        http_response_code(200);
 
         if ((strtoupper($_SERVER['REQUEST_METHOD']) != 'POST' ) || !array_key_exists('HTTP_X_PAYSTACK_SIGNATURE', $_SERVER) ) exit();
 
