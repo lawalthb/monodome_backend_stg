@@ -71,11 +71,15 @@ use App\Models\LoadBoard;
                 $loadPackage->order->amount = $loadPackage->total_amount;
                 $loadPackage->order->save();
 
+                Log::info(str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT));
+
                 $fields = [
                     'email' => $loadPackage->user->email,
                     'amount' => str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT),
+                    "metadata" => "{\"load_id\": $loadPackage->id}",
                     'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
                 ];
+
 
                 // call the paystack api
                 $result = payStack_checkout($fields);
