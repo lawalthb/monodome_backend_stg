@@ -80,10 +80,19 @@ use App\Models\LoadBoard;
                 $loadPackage->order->save();
 
                 Log::info($loadPackage->total_amount*100);
+
+
+                $customFields = [
+                    [
+                        "order_no" => $loadPackage->order_no,
+                        "from" => "order"
+                    ],
+                ];
+
                 $fields = [
                     'email' => $loadPackage->user->email,
                     'amount' => $loadPackage->total_amount*100,
-                    "metadata" => "{\"order_no\": $loadPackage->order_no,\"from\":\"order\" }",
+                    "metadata"  => json_encode(['order_no' => $loadPackage->order_no,'custom_fields' => $customFields]),
                     'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
                 ];
 
