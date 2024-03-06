@@ -61,30 +61,32 @@ use App\Models\LoadBoard;
     }
 
 
-    public function delivery_fee(Request $request, LoadPackage $loadPackage)
-    {
-        try {
+    public function delivery_fee(Request $request, LoadPackage $loadPackage){
+
+
+             Log::info("First delivery_fee",$loadPackage->delivery_fee);
+             Log::info("First total_amount",$loadPackage->total_amount);
+
             $loadPackage->delivery_fee += $request->increase_amount;
             $loadPackage->total_amount += $request->increase_amount;
 
-            if ($loadPackage->save()) {
+            if($loadPackage->save()){
+
+                Log::info("Save delivery_fee",$loadPackage->delivery_fee);
+                Log::info("Save total_amount",$loadPackage->total_amount);
+
                 $loadPackage->order->fee = $loadPackage->delivery_fee;
                 $loadPackage->order->amount = $loadPackage->total_amount;
                 $loadPackage->order->save();
 
-                $customFields = [
-                    [
-                        "order_no" => $loadPackage->id,
-                        "from" => "order"
-                    ],
-                ];
-
+                Log::info($loadPackage->total_amount*100);
                 $fields = [
                     'email' => $loadPackage->user->email,
                     'amount' => $loadPackage->total_amount*100,
-                    "metadata"  => json_encode(['order_no' => $loadPackage->id,'custom_fields' => $customFields]),
+                    "metadata" => "{\"order_no\": $loadPackage->order_no}",
                     'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
                 ];
+
 
                 // call the paystack api
                 $result = payStack_checkout($fields);
@@ -93,15 +95,13 @@ use App\Models\LoadBoard;
                     "paystack" => $result->data,
                     "loadPackage" => new LoadPackageResource($loadPackage),
                 ], "Successfully");
-            } else {
-                return $this->error(null, "unable to update delivery fee", 404);
-            }
-        } catch (\Throwable $th) {
-            Log::error($th->getMessage());
-            return $this->error(null, "An error occurred while processing the request", 500);
-        }
-    }
 
+            }else{
+
+                return $this->error(null, "unable to update delivery fee", 404);
+
+            }
+    }
 
     public function store(LoadPackageRequest $request)
     {
