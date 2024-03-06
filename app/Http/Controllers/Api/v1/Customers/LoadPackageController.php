@@ -74,6 +74,7 @@ use App\Models\LoadBoard;
                 $fields = [
                     'email' => $loadPackage->user->email,
                     'amount' => str_pad($loadPackage->total_amount, 2, '0', STR_PAD_RIGHT),
+                    'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
                 ];
 
                 // call the paystack api
