@@ -109,7 +109,7 @@ class PaymentController extends Controller
         }elseif($request['event'] == 'charge.success' && $request['data']['metadata']['custom_fields'][0]['from'] =='order'){
 
             Log::info("inside order");
-            // Log::info($request['data']);
+            Log::info($request['data']);
             // Log::info($request['event']);
 
             // $data = $request['data'];
