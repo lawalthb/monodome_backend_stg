@@ -94,7 +94,7 @@ use App\Models\LoadBoard;
                 $fields = [
                     'email' => $order->user->email,
                     'amount' => $order->amount*100,
-                    "metadata"  => json_encode(['order_no' => $order->id,'custom_fields' => $customFields]),
+                    "metadata"  => json_encode(['id' => $order->id,'custom_fields' => $customFields]),
                     'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
                 ];
 
