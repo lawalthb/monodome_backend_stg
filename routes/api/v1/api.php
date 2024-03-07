@@ -95,7 +95,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
         Route::get('/load-package/{id}', [LoadPackageController::class, 'show']);
         Route::post('/load-package/{id}', [LoadPackageController::class, 'update']);
         Route::delete('/load-package/{id}', [LoadPackageController::class, 'destroy']);
-        Route::post('/load-package/fee/{order}', [LoadPackageController::class, 'delivery_fee']);
+        Route::post('/pay-load/fee/{order}', [LoadPackageController::class, 'delivery_fee']);
 
         // load Bulk route
         Route::get('/load-bulk', [LoadBulkController::class, 'index']);
