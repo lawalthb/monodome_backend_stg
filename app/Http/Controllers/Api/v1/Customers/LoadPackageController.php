@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadPackageRequest;
+use App\Http\Resources\LoadBoardResource;
 use App\Http\Resources\LoadPackageResource;
 use App\Models\LoadBoard;
 
@@ -61,39 +62,40 @@ use App\Models\LoadBoard;
     }
 
 
-    public function delivery_fee(Request $request, LoadPackage $loadPackage){
+    public function delivery_fee(Request $request, LoadBoard $LoadBoard){
 
+    //     return  $LoadBoard
+    //   return  $loadable = $LoadBoard->loadable;
 
-            //  Log::info("First delivery_fee",$loadPackage->delivery_fee);
-            //  Log::info("First total_amount",$loadPackage->total_amount);
+    Log::info($LoadBoard);
 
-            $loadPackage->delivery_fee += $request->increase_amount;
-            $loadPackage->total_amount += $request->increase_amount;
+        $loadable->delivery_fee += $request->increase_amount;
+        $loadable->total_amount += $request->increase_amount;
 
-            if($loadPackage->save()){
+        if($LoadBoard->save()){
 
-                // Log::info("Save delivery_fee",$loadPackage->delivery_fee);
-                // Log::info("Save total_amount",$loadPackage->total_amount);
+                // Log::info("Save delivery_fee",$LoadBoard->delivery_fee);
+                // Log::info("Save total_amount",$LoadBoard->total_amount);
 
-                $loadPackage->order->fee = $loadPackage->delivery_fee;
-                $loadPackage->order->amount = $loadPackage->total_amount;
-                $loadPackage->order->save();
+                $LoadBoard->order->fee = $LoadBoard->loadable->delivery_fee;
+                $LoadBoard->order->amount = $LoadBoard->loadable->total_amount;
+                $LoadBoard->order->save();
 
-                Log::info($loadPackage->total_amount*100);
-                Log::info($loadPackage->order->id);
+                Log::info($LoadBoard->total_amount*100);
+                Log::info($LoadBoard->order->id);
 
 
                 $customFields = [
                     [
-                        "order_no" => $loadPackage->order->id,
+                        "order_no" => $LoadBoard->order->id,
                         "from" => "order"
                     ],
                 ];
 
                 $fields = [
-                    'email' => $loadPackage->user->email,
-                    'amount' => $loadPackage->total_amount*100,
-                    "metadata"  => json_encode(['order_no' => $loadPackage->order->id,'custom_fields' => $customFields]),
+                    'email' => $LoadBoard->user->email,
+                    'amount' => $LoadBoard->total_amount*100,
+                    "metadata"  => json_encode(['order_no' => $LoadBoard->order->id,'custom_fields' => $customFields]),
                     'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
                 ];
 
@@ -103,7 +105,7 @@ use App\Models\LoadBoard;
 
                 return $this->success([
                     "paystack" => $result->data,
-                    "loadPackage" => new LoadPackageResource($loadPackage),
+                    "loadPackage" => new LoadBoardResource($LoadBoard),
                 ], "Successfully");
 
             }else{
