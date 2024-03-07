@@ -171,11 +171,28 @@ class OrderController extends Controller
                     $order->payment_status = 'Pending';
                     $order->save();
 
-                    $publickey = Setting::where(['slug' => 'publickey'])->first()->value;
+                    $customFields = [
+                        [
+                            "order_no" => $order->id,
+                            "from" => "order"
+                        ],
+                    ];
+
+                    $fields = [
+                        'email' => $order->user->email,
+                        'amount' => $order->amount*100,
+                        "metadata"  => json_encode(['id' => $order->id,'custom_fields' => $customFields]),
+                        'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
+                    ];
+
+                    // $publickey = Setting::where(['slug' => 'publickey'])->first()->value;
+                      // call the paystack api
+                  $result = payStack_checkout($fields);
+
                   //  event(new LoadTypeCreated($load));
 
                   //  $order->user->notify(new SendNotification($order->user, 'Your offline order order was successful!'));
-                    return $this->success(["public_key"=>$publickey], 'Gateway Order was successful');
+                    return $this->success(["paystack" => $result->data,], 'Gateway Order was successful');
                 }
 
 
