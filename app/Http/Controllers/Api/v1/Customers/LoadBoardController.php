@@ -532,6 +532,50 @@ class LoadBoardController extends Controller
     }
 
 
+    public function rejectOrder(Request $request){
+
+        return DB::transaction(function () use ($request) {
+
+        $request->validate([
+            'order_no' => 'required|string',
+            //'driver_id' => 'required',
+        ]);
+
+        $loadBoards = LoadBoard::where("order_no",$request->order_no)->where('acceptable_id',auth()->id())->first();
+
+        if($loadBoards){
+
+            $loadBoards->acceptable_id = null;
+            $loadBoards->acceptable_type = null;
+            $loadBoards->status = "Pending";
+
+            if($loadBoards->save()){
+             //   $loadBoards->order->driver_id = null;
+            //    $loadBoards->order->accepted = "No";
+             //   $loadBoards->order->acceptable_id = null;
+              //  $loadBoards->order->acceptable_type = null;
+              //  $loadBoards->order->placed_by_id = auth()->user()->id;
+              $loadBoards->loadable->status = "Pending";
+                $loadBoards->order->save();
+
+                // $message ="You have rejected this load with ". $loadBoards->order->order_no.
+                // " to delivery FROM: ".$loadBoards->order->loadable->sender_location.", TO: ".$loadBoards->order->loadable->receiver_location;
+                // $driver->user->notify(new SendNotification($driver->user, $message));
+
+            }
+
+            return new OrderResource($loadBoards->order);
+        }else{
+
+            return $this->error([
+            ], "This load doesn't belong to this driver");
+        }
+
+    });
+
+    }
+
+
     // public function acceptBidByCustomer(Request $request){
 
     //     return DB::transaction(function () use ($request) {
