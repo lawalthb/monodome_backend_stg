@@ -34,7 +34,8 @@ class LoadBoardResource extends JsonResource
             "load_date" => $this->load_date,
             "status" => $this->status,
             "order" => new OrderResource($this->order),
-            "accept_user" => $this->acceptableResource(),
+            "accept_user" => $this->acceptable,
+            // "accept_user" => $this->acceptableResource(),
             "package" => $this->loadableResource(),
             "user" => new UserResource($this->user),
         ];
