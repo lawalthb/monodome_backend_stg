@@ -346,7 +346,12 @@ class LoadBoardController extends Controller
 
       //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
 
-        return  new LoadBoardResource($loadBoard);
+        // return  new LoadBoardResource($loadBoard);
+
+        return $this->success([
+            new LoadBoardResource($loadBoard),
+        ]);
+
     }
 
 
