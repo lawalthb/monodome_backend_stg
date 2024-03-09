@@ -35,7 +35,7 @@ class LoadBoardResource extends JsonResource
             "status" => $this->status,
             "order" => new OrderResource($this->order),
             "accept_user" => $this->acceptable,
-            "tuck_user" => new TruckResource($this->truck),
+            "tuck_user" => new UserResource($this->truck),
             // "accept_user" => $this->acceptableResource(),
             "package" => $this->loadableResource(),
             "user" => new UserResource($this->user),
