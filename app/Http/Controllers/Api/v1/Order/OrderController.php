@@ -63,15 +63,12 @@ class OrderController extends Controller
 
              $specificType = $loadType->specificType;
 
-             Log::info($specificType);
-
              if (!$specificType) {
                  return $this->error('', 'Specific type not found', 404);
                 }
 
                 //  $load = $specificType->where('id', $request->load_id)->first();
                 $load = $specificType->where('id', $request->load_id)->lockForUpdate()->first();
-                Log::info($load);
 
              if (!$load) {
                  return $this->error('', 'Load not found', 404);

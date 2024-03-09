@@ -19,6 +19,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->unsigned();
            // $table->bigInteger('driver_id')->unsigned()->nullable();
             $table->bigInteger('placed_by_id')->unsigned()->nullable();
+            $table->bigInteger('truck_by_id')->unsigned()->nullable();
           //  $table->enum('accepted', ['Yes', 'No', 'Rejected'])->default('No');
             $table->decimal('amount', 10, 2)->default(0);
             $table->decimal('fee',38, 2)->default(0);
