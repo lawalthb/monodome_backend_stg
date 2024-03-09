@@ -306,6 +306,38 @@ class LoadBoardController extends Controller
         return  LoadBoardResource::collection($driver);
     }
 
+
+
+    public function assignDriverToTruck(Request $request)
+    {
+
+        $request->validate([
+            'truck_id' => 'required|exists:users,id',
+            'driver_id' => 'required|exists:users,id',
+        ]);
+
+        $perPage = $request->input('per_page', 10);
+        $loadBoard = LoadBoard::where('status','!=','delivered')->where('acceptable_id',$request->driver_id)->whereHas('order', function ($q) {
+            $q->where('placed_by_id', auth()->user()->id);
+        })
+        ->first();
+
+
+        if (!$loadBoard) {
+            return $this->error([], "Order not found or you don't have pending driver with order to assign to truck!");
+        }
+
+        $loadBoard->order->truck_by_id = $request->truck_id;
+
+        $loadBoard->order->save();
+
+      //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
+
+        return  LoadBoardResource::collection($loadBoard);
+    }
+
+
+
     /**
      * orderAssign
      * this function assign order to driver
