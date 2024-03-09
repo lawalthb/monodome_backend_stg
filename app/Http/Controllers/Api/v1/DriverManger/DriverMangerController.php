@@ -259,7 +259,7 @@ public function available_drivers(Request $request)
 
     public function broadcast(Request $request)
     {
-        $query = LoadBoard::whereIn('load_type_id', [1, 2])->Where("acceptable_id", null)->orderBy('created_at', 'desc');
+        $query = LoadBoard::whereIn('load_type_id', [1, 2])->where("acceptable_id", null)->orderBy('created_at', 'desc');
         // $query = LoadBoard::orWhere("acceptable_id", auth()->id())->whereIn('load_type_id', [1, 2])->orWhere("acceptable_id", null)->orderBy('created_at', 'desc');
 
         // Filter by Order Number
@@ -280,7 +280,7 @@ public function available_drivers(Request $request)
     public function singleBroadcast(Request $request,$id)
     {
 
-        $query = LoadBoard::where("id",$id)->whereIn('load_type_id', [1, 2])->Where("acceptable_id", null)->orderBy('created_at', 'desc');
+        $query = LoadBoard::where("id",$id)->whereIn('load_type_id', [1, 2])->where("acceptable_id", null)->orderBy('created_at', 'desc');
         // $query = LoadBoard::where("id",$id)->orWhere("acceptable_id", auth()->id())->whereIn('load_type_id', [1, 2])->orWhere("acceptable_id", null)->orderBy('created_at', 'desc');
 
         // Filter by Order Number
