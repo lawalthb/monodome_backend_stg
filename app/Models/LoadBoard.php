@@ -21,7 +21,7 @@ class LoadBoard extends Model
 
     public function truck(){
 
-        return $this->belongsTo(Truck::class,'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function agent(){
