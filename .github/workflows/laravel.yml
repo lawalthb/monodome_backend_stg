@@ -50,8 +50,8 @@ jobs:
           git fetch origin main
           git reset --hard origin/main
           # composer update
-          php artisan optimize:clear
-          php artisan config:clear
+          # php artisan optimize:clear
+          # php artisan config:clear
           #pwd
           #ls -la
           # php artisan migrate:fresh --seed --force
