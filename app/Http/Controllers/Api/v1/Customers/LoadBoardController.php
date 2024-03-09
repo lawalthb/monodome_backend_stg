@@ -306,6 +306,19 @@ class LoadBoardController extends Controller
         return  LoadBoardResource::collection($driver);
     }
 
+    public function allassignDriverToTruck(Request $request)
+    {
+
+        $perPage = $request->input('per_page', 10);
+        $driver = LoadBoard::whereHas('order', function ($q) {
+            $q->where('placed_by_id', auth()->user()->id);
+        })
+        ->paginate($perPage);
+
+      //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
+
+        return  LoadBoardResource::collection($driver);
+    }
 
 
     public function assignDriverToTruck(Request $request)
@@ -333,7 +346,7 @@ class LoadBoardController extends Controller
 
       //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
 
-        return  LoadBoardResource::collection($loadBoard);
+        return  new LoadBoardResource($loadBoard);
     }
 
 
