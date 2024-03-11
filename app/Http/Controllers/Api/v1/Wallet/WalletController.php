@@ -10,10 +10,12 @@ use App\Models\WalletHistory;
 use App\Models\RequestPayment;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\BeneficiaryBankDetail;
 use App\Http\Resources\WalletResource;
+use App\Notifications\SendNotification;
 use App\Http\Resources\WalletHistoryResource;
 use App\Http\Resources\RequestPaymentResource;
 
@@ -264,5 +266,88 @@ class WalletController extends Controller
   
       }
 
+
+      public function approveRequest(Request $request, $id)
+      {
+          // Validate the inputs
+          $request->validate([
+              'accept_amount' => 'required|integer',
+              'status' => 'required|string|in:Pending,Success,Refund,Blocked',
+              'comment' => 'nullable|string|max:255',
+          ]);
+      
+          // Find the request payment
+          $requestPayment = RequestPayment::where("receiver_id", auth()->id())->findOrFail($id);
+
+          if(in_array($requestPayment->status, ['Refund', 'Success'])){
+
+            return $this->error('', 'payment request is already Refund or Successfully!', 404);
+
+            // return response()->json(['status' => true, 'data' => new RequestPaymentResource($requestPayment)], 200);
+          }
+      
+        //   if (in_array($requestPayment->status, ['Refund', 'Blocked'])) {
+          if (in_array($requestPayment->status, ['Blocked'])) {
+              // Update status and comment for Refund or Blocked requests
+              $requestPayment->status = $request->status;
+              $requestPayment->comment = $request->comment;
+              $requestPayment->save();
+              return response()->json(['status' => true, 'data' => new RequestPaymentResource($requestPayment)], 200);
+          }
+      
+          if ($request->status === "Success") {
+              // Use a database transaction to ensure atomicity
+              DB::beginTransaction();
+      
+              try {
+                  // Lock the user's wallet row for update
+                  $wallet = Wallet::where('user_id', $requestPayment->receiver_id)->lockForUpdate()->first();
+      
+                  // Check if the user has sufficient funds
+                  if ($requestPayment->accept_amount > $wallet->amount) {
+                      throw new \Exception('Insufficient funds in wallet');
+                  }
+      
+                  // Update the wallet balance
+                  $wallet->amount -= $requestPayment->accept_amount;
+                  $wallet->save();
+      
+                  // Update the request payment status and save
+                  $requestPayment->status = $request->status;
+                  $requestPayment->comment = $request->comment;
+                  $requestPayment->save();
+
+                  // Update wallet history
+                $walletHistory = new WalletHistory;
+                $walletHistory->wallet_id = $requestPayment->receiver->wallet->id;
+                $walletHistory->user_id = $requestPayment->receiver->id;
+                $walletHistory->type = "debit";
+                $walletHistory->payment_type = "wallet";
+                $walletHistory->amount = $requestPayment->accept_amount;
+                $walletHistory->closing_balance = $requestPayment->receiver->wallet->amount - $requestPayment->accept_amount;
+                $walletHistory->fee = 0;
+                $walletHistory->description = "Request Payment with the following ID: " . $requestPayment->uuid . "!";
+                $walletHistory->save();
+
+                // Notify the user
+                $requestPayment->receiver->notify(new SendNotification($requestPayment->receiver, 'Request payment was successful!'));
+               
+                DB::commit();
+
+                  // Return success response
+                  return response()->json(['wallet_amount' => $wallet->amount, 'requestPayment' =>  new RequestPaymentResource($requestPayment)]);
+              } catch (\Exception $e) {
+                  // Roll back the transaction on error
+                  DB::rollBack();
+      
+                  return response()->json(['error' => $e->getMessage()], 500);
+              }
+          }
+      
+          // Return a default response if the request does not fall into any of the above conditions
+          return response()->json(['message' => 'Request not processed'], 400);
+      }
+      
+      
 
 }
