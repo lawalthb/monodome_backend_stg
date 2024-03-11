@@ -371,11 +371,19 @@ class LoadBoardController extends Controller
         $fromLoadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->from_order_no)->first();
         $fromLoadBoard->order->truck_by_id = null;
         
-        $fromLoadBoard->order->save();
+        
         
         $toLoadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->to_order_no)->first();
         
         $toLoadBoard->order->truck_by_id = $request->truck_id;
+        
+        
+        if($fromLoadBoard->acceptable_id == $toLoadBoard->acceptable_id){
+            return $this->error([], "You cannot assign same truck to one driver!");
+        }
+        
+        
+        $fromLoadBoard->order->save();
         $toLoadBoard->order->save();
 
         // Log::info($loadBoard);
