@@ -374,6 +374,7 @@ class LoadBoardController extends Controller
 
         Log::info($loadBoard);
         Log::info($request->truck_id);
+        Log::info($request->order);
         
         // if (!$loadBoard) {
         //     return $this->error([], "Order not found or you don't have pending driver with order to assign to truck!");
