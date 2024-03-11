@@ -14,6 +14,7 @@ use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\BidResource;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\OrderResource;
@@ -371,10 +372,12 @@ class LoadBoardController extends Controller
         })
         ->first();
 
-
-        if (!$loadBoard) {
-            return $this->error([], "Order not found or you don't have pending driver with order to assign to truck!");
-        }
+        Log::info($loadBoard);
+        Log::info($request->truck_id);
+        
+        // if (!$loadBoard) {
+        //     return $this->error([], "Order not found or you don't have pending driver with order to assign to truck!");
+        // }
 
         $loadBoard->order->truck_by_id = $request->truck_id;
 
