@@ -416,9 +416,9 @@ class LoadBoardController extends Controller
                 // ->where("status", 'pending')
                 ->first();
 
-            if (!$loadBoard) {
-                return $this->error([], "Order not found or has already been taken!");
-            }
+            // if (!$loadBoard) {
+            //     return $this->error([], "Order not found or has already been taken!");
+            // }
             // Check if driver is already assigned to an order
             if ($loadBoard->acceptable_id == $driver->id) {
                 return $this->error([], "Order has already been assigned to a driver!");
