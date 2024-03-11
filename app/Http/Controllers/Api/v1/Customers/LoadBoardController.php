@@ -420,9 +420,9 @@ class LoadBoardController extends Controller
             //     return $this->error([], "Order not found or has already been taken!");
             // }
             // Check if driver is already assigned to an order
-            if ($loadBoard->acceptable_id == $driver->id) {
-                return $this->error([], "Order has already been assigned to a driver!");
-            }
+            // if ($loadBoard->acceptable_id == $driver->id) {
+            //     return $this->error([], "Order has already been assigned to a driver!");
+            // }
             $order = Order::where("order_no", $request->order_no)->first();
 
             $loadBoard->acceptable_id = $driver->id;
