@@ -368,18 +368,23 @@ class LoadBoardController extends Controller
 
         $perPage = $request->input('per_page', 10);
         $loadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->order_no)->first();
+        $loadBoard->order->truck_by_id = null;
+        $loadBoard->order->save();
+        
+        $loadBoard = LoadBoard::where('status','!=','delivered')->where('acceptable_id',$request->driver_id)->first();
+        
+        $loadBoard->order->truck_by_id = $request->truck_id;
+        $loadBoard->order->save();
 
-        Log::info($loadBoard);
-        Log::info($request->truck_id);
-        Log::info($request->order);
+        // Log::info($loadBoard);
+        // Log::info($request->truck_id);
+        // Log::info($request->order);
         
         // if (!$loadBoard) {
         //     return $this->error([], "Order not found or you don't have pending driver with order to assign to truck!");
         // }
 
-        $loadBoard->order->truck_by_id = $request->truck_id;
 
-        $loadBoard->order->save();
 
       //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
 
