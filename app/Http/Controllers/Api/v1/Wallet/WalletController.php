@@ -177,7 +177,7 @@ class WalletController extends Controller
     {
         $userId = $request->input('user_id');
         $amount = $request->input('amount');
-        $comment = $request->input('note');
+        $comment = $request->input('comment');
     
         // Validate the inputs
         $request->validate([
@@ -233,10 +233,36 @@ class WalletController extends Controller
     }
     }
 
-    public function sendRequest(){
-
+    public function sendRequest(Request $request){
         
+      $perPage = $request->input('per_page', 10);
+
+      $requestPayment =  RequestPayment::where('user_id',auth()->id())->where('status','Pending')->paginate($perPage);
+
+      if($requestPayment){
+
+          return RequestPaymentResource::collection($requestPayment);
+    //   return response()->json(['status'=>true,'data'=> RequestPaymentResource::collection($requestPayment)],200);
+
+    } else{
+        return response()->json(['status'=>false, 'message' => 'No Data Found.', 'data'=> [] ],200); 
     }
+
+    }
+
+    public function allMoneyRequest(Request $request){
+
+        $perPage = $request->input('per_page', 10);
+        $requestPayment =  RequestPayment::where('user_id',auth()->id())->orWhere('receiver_id',auth()->id())->where('status','Pending')->paginate($perPage);
+  
+        if($requestPayment){
+            return RequestPaymentResource::collection($requestPayment);
+      //   return response()->json(['status'=>true,'data'=> RequestPaymentResource::collection($requestPayment)],200);
+      } else{
+          return response()->json(['status'=>false, 'message' => 'No Data Found.', 'data'=> [] ],200); 
+      }
+  
+      }
 
 
 }

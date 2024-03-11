@@ -424,6 +424,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
         Route::post('/request-money', [WalletController::class, 'requestMoney']);
         Route::get('/request-inbox', [WalletController::class, 'requestInbox']);
         Route::get('/sent-request', [WalletController::class, 'sendRequest']);
+        Route::get('/all-money-request', [WalletController::class, 'allMoneyRequest']);
 
 
         //card endpoint here

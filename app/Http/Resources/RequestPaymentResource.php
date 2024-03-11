@@ -16,11 +16,11 @@ class RequestPaymentResource extends JsonResource
     {
         return [
             "id"=> $this->id,
-            "sender"=> new UserResource($this->user),
-            "receiver_id"=>  new UserResource($this->receiver),
             "amount"=> $this->amount,
             "comment"=> $this->comment,
             "status"=> $this->status,
+            "sender"=> new UserResource($this->user),
+            "receiver"=>  new UserResource($this->receiver),
             "updated_at"=> $this->updated_at,
             "created_at"=> $this->created_at
         ];
