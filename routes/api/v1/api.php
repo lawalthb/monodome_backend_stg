@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\RoleController;
 // use App\Http\Controllers\Api\v1\Customers\LoadTypeController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\MapApiController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TrackingController;
@@ -42,11 +43,17 @@ use App\Http\Controllers\Api\v1\ShippingCompany\ShippingCompanyController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
-    Route::get('/', function () {
-
+    Route::get('/', function (Request $request) {
+        
          return response()->json(['message' =>"v1 Server is up and running"]);
         //return "here is the user";
     });
+
+    Route::get('/auth', function (Request $request) {
+        
+        return response()->json(['message' =>"v1 Server is up and running"]);
+       //return "here is the user";
+   });
 
     // user registration namespace
     Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
@@ -410,9 +417,13 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
         Route::get('/', [WalletController::class, 'index']);
         Route::get('/check-pin', [WalletController::class, 'checkPinExists']);
+        Route::post('/fetch-user', [WalletController::class, 'fetchContact']);
         Route::post('/validate-pin', [WalletController::class, 'validate_pin']);
         Route::post('/update-pin', [WalletController::class, 'update_pin']);
         Route::get('/wallet-history', [WalletController::class, 'wallet_history']);
+        Route::post('/request-money', [WalletController::class, 'requestMoney']);
+        Route::get('/request-inbox', [WalletController::class, 'requestInbox']);
+        Route::get('/sent-request', [WalletController::class, 'sendRequest']);
 
 
         //card endpoint here
