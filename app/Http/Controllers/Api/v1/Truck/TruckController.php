@@ -135,7 +135,7 @@ class TruckController extends Controller
             DB::rollBack();
             Log::error($e->getMessage());
 
-            return $this->error('An error occurred while registering the agent and guarantors.');
+            return $this->error('An error occurred while registering the truck');
         }
     }
 

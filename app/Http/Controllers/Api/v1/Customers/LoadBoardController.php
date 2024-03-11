@@ -355,7 +355,6 @@ class LoadBoardController extends Controller
     }
 
 
-
     /**
      * orderAssign
      * this function assign order to driver
