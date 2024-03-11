@@ -362,16 +362,17 @@ class LoadBoardController extends Controller
 
         $request->validate([
             'truck_id' => 'required|exists:users,id',
-            'driver_id' => 'required|exists:users,id',
-            'order_no' => 'required|exists:load_boards,order_no',
+            // 'driver_id' => 'required|exists:users,id',
+            'from_order_no' => 'required|exists:load_boards,order_no',
+            'to_order_no' => 'required|exists:load_boards,order_no',
         ]);
 
         $perPage = $request->input('per_page', 10);
-        $loadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->order_no)->first();
+        $loadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->from_order_no)->first();
         $loadBoard->order->truck_by_id = null;
         $loadBoard->order->save();
         
-        $loadBoard = LoadBoard::where('status','!=','delivered')->where('acceptable_id',$request->driver_id)->first();
+        $loadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->to_order_no)->first();
         
         $loadBoard->order->truck_by_id = $request->truck_id;
         $loadBoard->order->save();
