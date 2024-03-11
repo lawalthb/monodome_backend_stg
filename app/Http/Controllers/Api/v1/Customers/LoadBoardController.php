@@ -368,14 +368,15 @@ class LoadBoardController extends Controller
         ]);
 
         $perPage = $request->input('per_page', 10);
-        $loadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->from_order_no)->first();
-        $loadBoard->order->truck_by_id = null;
-        $loadBoard->order->save();
+        $fromLoadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->from_order_no)->first();
+        $fromLoadBoard->order->truck_by_id = null;
         
-        $loadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->to_order_no)->first();
+        $fromLoadBoard->order->save();
         
-        $loadBoard->order->truck_by_id = $request->truck_id;
-        $loadBoard->order->save();
+        $toLoadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->to_order_no)->first();
+        
+        $toLoadBoard->order->truck_by_id = $request->truck_id;
+        $toLoadBoard->order->save();
 
         // Log::info($loadBoard);
         // Log::info($request->truck_id);
@@ -392,7 +393,7 @@ class LoadBoardController extends Controller
         // return  new LoadBoardResource($loadBoard);
 
         return $this->success([
-            new LoadBoardResource($loadBoard),
+            new LoadBoardResource($toLoadBoard),
         ]);
 
     }
