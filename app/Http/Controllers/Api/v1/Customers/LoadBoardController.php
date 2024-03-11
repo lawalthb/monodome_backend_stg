@@ -367,10 +367,7 @@ class LoadBoardController extends Controller
         ]);
 
         $perPage = $request->input('per_page', 10);
-        $loadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->order_no)->whereHas('order', function ($q) {
-            $q->where('placed_by_id', auth()->user()->id);
-        })
-        ->first();
+        $loadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->order_no)->first();
 
         Log::info($loadBoard);
         Log::info($request->truck_id);
