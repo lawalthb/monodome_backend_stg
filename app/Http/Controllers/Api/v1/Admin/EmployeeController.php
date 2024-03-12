@@ -175,4 +175,31 @@ class EmployeeController extends Controller
     }
 
 
+    
+    public function removeAdmin(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "emp_id" => 'required|integer|exists:employees,id',
+            'permission_ids' => 'required|array',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error('', $validator->errors()->first(), 422);
+        }
+
+        $employee = Employee::findOrFail($request->emp_id);
+
+        $employee->user->syncPermissions([]);
+        //$user->syncPermissions($permissions);
+        $employee->user->save();
+
+        return $this->success(
+            [
+                "user" => new UserResource($employee->user),
+            ],
+            "Admin registered successfully"
+        );
+
+    }
+
 }

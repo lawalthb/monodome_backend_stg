@@ -37,7 +37,7 @@ class AdminAuthController extends Controller
         ]);
 
         // Check if the OTP is either "000000" or verified by verifyOTPCode
-        if ($request->otp !== "000000" && !$this->verifyOTPCode($request->email, $request->otp)) {
+        if (!$this->verifyOTPCode($request->email, $request->otp)) {
             return $this->error('', 'Invalid OTP', 422);
         }
 
