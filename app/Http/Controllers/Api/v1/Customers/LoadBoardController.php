@@ -322,6 +322,39 @@ class LoadBoardController extends Controller
     }
 
 
+    public function removeTruck(Request $request)
+    {
+
+        $request->validate([
+            'truck_id' => 'required|exists:users,id',
+            'driver_id' => 'required|exists:users,id',
+            'order_no' => 'required|exists:load_boards,order_no',
+        ]);
+
+        $loadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->order_no)->where('acceptable_id',$request->driver_id)->whereHas('order', function ($q) use($request) {
+            $q->where('placed_by_id', auth()->user()->id) ->where('truck_by_id',$request->truck_id);
+        })
+        ->first();
+
+
+        if (!$loadBoard) {
+            return $this->error([], "Order not found or you don't have pending driver with order to assign to truck!");
+        }
+
+        $loadBoard->order->truck_by_id = null;
+
+        $loadBoard->order->save();
+
+      //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
+
+        // return  new LoadBoardResource($loadBoard);
+
+        return $this->success([
+            new LoadBoardResource($loadBoard),
+        ]);
+
+    }
+
     public function assignDriverToTruck(Request $request)
     {
 

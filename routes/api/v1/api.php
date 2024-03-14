@@ -387,6 +387,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
            Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
            Route::post('/order-re-assign', [LoadBoardController::class, 'orderReAssign']);
            Route::post('/remove-order', [LoadBoardController::class, 'removeOrder']);
+           Route::post('/remove-truck', [LoadBoardController::class, 'removeTruck']);
            Route::post('/order-reassign', [DriverMangerController::class, 'orderReAssign']);
            Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
            Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);
