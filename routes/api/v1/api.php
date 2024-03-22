@@ -44,13 +44,13 @@ use App\Http\Controllers\Api\v1\ShippingCompany\ShippingCompanyController;
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
     Route::get('/', function (Request $request) {
-        
+
          return response()->json(['message' =>"v1 Server is up and running"]);
         //return "here is the user";
     });
 
     Route::get('/auth', function (Request $request) {
-        
+
         return response()->json(['message' =>"v1 Server is up and running"]);
        //return "here is the user";
    });
@@ -237,7 +237,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
 
             Route::get('/order', [CompanyController::class, 'order']);
-            Route::post('/accept-order', [CompanyController::class, 'acceptOrder']);
+            Route::post('/accept-order', [LoadBoardController::class, 'acceptOrder']);
             Route::post('/order-assign', [CompanyController::class, 'orderAssign']);
             Route::post('/order-reassign', [CompanyController::class, 'orderReAssign']);
             Route::get('/broadcast', [CompanyController::class, 'broadcast']);
