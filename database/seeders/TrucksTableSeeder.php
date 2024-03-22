@@ -27,6 +27,7 @@ class TrucksTableSeeder extends Seeder
                 'phone_number' => '070779873623',
                 'street' => '980 Kari Stravenue',
                 'user_id' => 22,
+                'driver_user_id' => 4,
                 'country_id' => NULL,
                 'state_id' => 3,
                 'lga' => '3',

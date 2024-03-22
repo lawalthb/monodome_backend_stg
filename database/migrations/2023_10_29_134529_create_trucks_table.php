@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('business_name')->nullable();
             $table->string('phone_number')->unique();
             $table->string('street')->nullable();
-            $table->unsignedBigInteger('user_id'); // Foreign key to link the guarantor with an agent
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('driver_user_id');
             $table->unsignedBigInteger('country_id')->nullable();
             $table->unsignedBigInteger('state_id');
             $table->string('lga')->nullable();
@@ -37,6 +38,7 @@ return new class extends Migration
 
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('driver_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
         });
