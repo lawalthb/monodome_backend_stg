@@ -92,7 +92,6 @@ class TruckController extends Controller
                 'street' => $request->input('street'),
                 'lga' => $request->input('lga'),
                 'status' => 'Pending',
-                'driver_user_id' => 0,
                 'truck_name' => $request->input('truck_name'),
                 'truck_type' => $request->input('truck_type'),
                 'truck_location' => $request->input('truck_location'),
