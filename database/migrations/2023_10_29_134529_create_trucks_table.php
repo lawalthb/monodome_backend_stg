@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone_number')->unique();
             $table->string('street')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('driver_user_id')->nullable();
+            $table->unsignedBigInteger('driver_user_id')->nullable()->default(null);
             $table->unsignedBigInteger('country_id')->nullable();
             $table->unsignedBigInteger('state_id');
             $table->string('lga')->nullable();
