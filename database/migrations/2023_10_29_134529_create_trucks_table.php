@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone_number')->unique();
             $table->string('street')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('driver_user_id')->nullable()->default(null);
+            $table->unsignedBigInteger('driver_user_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
             $table->unsignedBigInteger('state_id');
             $table->string('lga')->nullable();
@@ -38,7 +38,7 @@ return new class extends Migration
 
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('driver_user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('driver_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
         });
