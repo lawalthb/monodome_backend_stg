@@ -218,6 +218,38 @@ public function available_drivers(Request $request)
     }
 
 
+    public function assignDriverToTruck(Request $request)
+    {
+
+        $request->validate([
+            'truck_id' => 'required|exists:users,id',
+            'driver_id' => 'required|exists:users,id',
+        ]);
+
+
+        $driver = User::where("id",$request->driver_id)->where('user_created_by', auth()->id())->first();
+        $truck = User::where("id",$request->driver_id)->where('user_created_by', auth()->id())->first();
+
+        if (!$driver) {
+            return $this->error([], "driver not found or is not under you!");
+        }
+
+        if (!$truck) {
+            return $this->error([], "truck not found or is not under you!");
+        }
+
+        $truck->truck->driver_user_id = $driver->id;
+
+        $truck->user->save();
+
+
+        return $this->success([
+            new TruckResource($truck->truck),
+        ]);
+
+    }
+
+
     public function my_truck(Request $request)
     {
         $key = $request->input('search');
@@ -453,6 +485,6 @@ public function available_drivers(Request $request)
     }
 
 
-    
+
 
 }

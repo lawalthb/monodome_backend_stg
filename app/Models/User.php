@@ -67,6 +67,11 @@ class User extends Authenticatable implements Auditable
         return $this->hasOne(Driver::class);
     }
 
+    public function truck()
+    {
+        return $this->hasOne(Truck::class);
+    }
+
     public function company()
     {
         return $this->hasOne(Company::class);
@@ -138,7 +143,7 @@ class User extends Authenticatable implements Auditable
         return $this->hasOne(User::class, 'ref_by');
     }
 
-    
+
 
 
     public function getImagePathAttribute()
