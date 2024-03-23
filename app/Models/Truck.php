@@ -21,6 +21,12 @@ class Truck extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function driver()
+    {
+        return $this->hasOne(Driver::class, 'user_id', 'driver_user_id');
+    }
+
+
     public function loadDocuments()
     {
         return $this->morphMany(LoadDocument::class, 'loadable');
