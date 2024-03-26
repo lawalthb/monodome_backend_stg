@@ -381,6 +381,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
            Route::get('/order', [LoadBoardController::class, 'order']);
            Route::post('/reject-order', [LoadBoardController::class, 'rejectOrder']);
            Route::get('/all-driver-assign-orders', [LoadBoardController::class, 'allDriverAssignOrders']);
+           Route::get('/all-driver-truck', [DriverMangerController::class, 'driverWithTruck']);
            Route::post('/assign-driver-truck', [DriverMangerController::class, 'assignDriverToTruck']);
         //    Route::post('/assign-driver-truck', [LoadBoardController::class, 'assignDriverToTruck']);
            Route::post('/re-assign-driver-truck', [LoadBoardController::class, 'reAssignDriverToTruck']);

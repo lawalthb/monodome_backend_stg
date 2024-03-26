@@ -23,7 +23,7 @@ class Truck extends Model
 
     public function driver()
     {
-        return $this->hasOne(Driver::class, 'user_id', 'driver_user_id');
+        return $this->belongsTo(Driver::class, 'driver_user_id', 'user_id');
     }
 
 

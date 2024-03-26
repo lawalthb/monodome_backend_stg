@@ -38,6 +38,11 @@ class Driver extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function driver()
+    {
+        return $this->hasOne(Truck::class, 'user_id', 'driver_user_id');
+    }
+
     public function RLga()
     {
         return $this->belongsTo(LocalGovernment::class,'lga');

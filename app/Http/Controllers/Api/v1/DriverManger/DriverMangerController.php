@@ -262,6 +262,56 @@ public function available_drivers(Request $request)
     }
 
 
+    public function driverWithTruck(Request $request)
+    {
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $truck = Truck::whereHas('driver')
+            ->latest()
+            ->paginate($perPage);
+
+        return TruckResource::collection($truck);
+    }
+
+
+    public function reAssignDriverToTruck(Request $request)
+    {
+
+        $request->validate([
+            'truck_id' => 'required|exists:users,id',
+            // 'driver_id' => 'required|exists:users,id',
+            'from_order_no' => 'required|exists:load_boards,order_no',
+            'to_order_no' => 'required|exists:load_boards,order_no',
+        ]);
+
+        $perPage = $request->input('per_page', 10);
+        $fromLoadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->from_order_no)->first();
+        $fromLoadBoard->order->truck_by_id = null;
+
+        $toLoadBoard = LoadBoard::where('status','!=','delivered')->where('order_no',$request->to_order_no)->first();
+
+        $toLoadBoard->order->truck_by_id = $request->truck_id;
+
+
+        if($fromLoadBoard->acceptable_id == $toLoadBoard->acceptable_id){
+            return $this->error([], "You cannot assign same truck to one driver!");
+        }
+
+
+        $fromLoadBoard->order->save();
+        $toLoadBoard->order->save();
+
+      //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
+
+        // return  new LoadBoardResource($loadBoard);
+
+        return $this->success([
+            new LoadBoardResource($toLoadBoard),
+        ]);
+
+    }
+
     public function order(Request $request)
     {
         $key = $request->input('search');
