@@ -15,6 +15,7 @@ use App\Models\Agent;
 use App\Models\Company;
 use App\Models\DriverManger;
 use App\Models\ShippingCompany;
+use App\Models\Truck;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -35,7 +36,7 @@ class LoadBoardResource extends JsonResource
             "status" => $this->status,
             "order" => new OrderResource($this->order),
             "accept_driver" => $this->acceptable,
-            "accept_truck" => new UserResource(User::find($this->order->truck_by_id)) ?? null,
+            "accept_truck" => new TruckResource(Truck::where("driver_user_id",$this->loadable_id)) ?? null,
             // "accept_user" => $this->acceptableResource(),
             "package" => $this->loadableResource(),
             "user" => new UserResource($this->user),
