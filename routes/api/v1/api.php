@@ -383,6 +383,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
            Route::get('/all-driver-assign-orders', [LoadBoardController::class, 'allDriverAssignOrders']);
            Route::get('/all-driver-truck', [DriverMangerController::class, 'driverWithTruck']);
            Route::post('/assign-driver-truck', [DriverMangerController::class, 'assignDriverToTruck']);
+           Route::post('/driver-truck', [DriverMangerController::class, 'singleDriverTrucks']);
         //    Route::post('/assign-driver-truck', [LoadBoardController::class, 'assignDriverToTruck']);
            Route::post('/re-assign-driver-truck', [LoadBoardController::class, 'reAssignDriverToTruck']);
            Route::post('/accept-order', [LoadBoardController::class, 'acceptOrder']);
@@ -393,7 +394,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
            Route::post('/order-reassign', [DriverMangerController::class, 'orderReAssign']);
            Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
            Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);
-           Route::get('/driver-truck/{id}', [DriverMangerController::class, 'singleDriverTrucks']);
            Route::get('/driver-orders/{user}', [LoadBoardController::class, 'allUserOrder']);
            // Route::get('/show/{id}', [DriverMangerController::class, 'show']);
            // Route::post('/update/{id}', [DriverMangerController::class, 'update']);
