@@ -223,10 +223,7 @@ public function available_drivers(Request $request)
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $truck = Truck::where("driver_user_id", $request->id)->whereHas('user', function ($userQuery) use ($key) {
-            $userQuery->where('full_name', 'like', "%{$key}%")
-            ->whereNull('user_created_by');
-        })
+        $truck = Truck::where("driver_user_id", $request->id)
             ->latest()
             ->paginate($perPage);
 
