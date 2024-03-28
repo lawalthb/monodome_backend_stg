@@ -40,8 +40,9 @@ class Driver extends Model
 
     public function truck()
     {
-        return $this->hasOne(Truck::class, 'user_id', 'driver_user_id');
+        return Truck::where('driver_user_id', $this->user_id)->first();
     }
+
 
     public function RLga()
     {
