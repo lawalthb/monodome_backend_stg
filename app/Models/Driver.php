@@ -38,11 +38,10 @@ class Driver extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function truck()
+    public function trucks()
     {
-        return $this->hasOne(Truck::class, 'driver_user_id', 'user_id');
+        return $this->hasMany(Truck::class, 'user_id', 'driver_user_id');
     }
-
 
     public function RLga()
     {

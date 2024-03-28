@@ -35,7 +35,7 @@ class DriverResource extends JsonResource
           "lga" => new LocalGovernmentResource($this->RLga),
           'guarantors' => GuarantorResource::collection($this->guarantors),
           'state' => new StateResource($this->state),
-          'truck' => new TruckResource($this->truck),
+          'truck' => TruckResource::collection($this->truck),
         ];
     }
 }
