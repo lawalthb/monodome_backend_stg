@@ -218,6 +218,25 @@ public function available_drivers(Request $request)
     }
 
 
+
+
+    public function singleDriverTrucks(Request $request, $id)
+    {
+
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $truck = Truck::where("driver_user_id", $id)->whereHas('user', function ($userQuery) use ($key) {
+            $userQuery->where('full_name', 'like', "%{$key}%")
+            ->whereNull('user_created_by');
+        })
+            ->latest()
+            ->paginate($perPage);
+
+        return TruckResource::collection($truck);
+    }
+
+
     public function assignDriverToTruck(Request $request)
     {
         $request->validate([

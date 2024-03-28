@@ -393,6 +393,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
            Route::post('/order-reassign', [DriverMangerController::class, 'orderReAssign']);
            Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
            Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);
+           Route::get('/driver-truck/{id}', [DriverMangerController::class, 'singleDriverTrucks']);
            Route::get('/driver-orders/{user}', [LoadBoardController::class, 'allUserOrder']);
            // Route::get('/show/{id}', [DriverMangerController::class, 'show']);
            // Route::post('/update/{id}', [DriverMangerController::class, 'update']);
