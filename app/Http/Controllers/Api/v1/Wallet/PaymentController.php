@@ -21,7 +21,7 @@ class PaymentController extends Controller
 {
     use ApiStatusTrait, FileUploadTrait;
 
-    public function webhooks(Request $request)
+    public function paystackWebhooks(Request $request)
     {
         http_response_code(200);
 
@@ -140,6 +140,71 @@ class PaymentController extends Controller
         http_response_code(200);
 
         return response()->json(['message' => 'Webhook received successfully'], 200);
+    }
+
+
+    public function nombaWebhooks(Request $request) {
+        http_response_code(200);
+
+        if ($request->has('payload') && $request->has('event_type') && $request->has('data')) {
+            $payload = $request->input('payload');
+            $eventType = $payload['event_type'];
+            $data = $payload['data'];
+
+            if ($eventType == 'payment_success') {
+                try {
+                    DB::beginTransaction();
+
+                    $user = User::where('email', $data['order']['customerEmail'])->first();
+
+                    if ($user) {
+                        // Update user's wallet if exists
+                        if ($user->wallet) {
+                            $user->wallet->update([
+                                "amount" => $user->wallet->amount + ($data['order']['amount']),
+                                "status" => "active",
+                            ]);
+                        } else {
+                            // Create a new wallet if user doesn't have one
+                            $wallet = new Wallet;
+                            $wallet->amount = $data['order']['amount'];
+                            $wallet->status = 'active';
+                            $wallet->user_id = $user->id;
+                            $wallet->save();
+                        }
+
+                        // Create wallet history entry
+                        $walletHistory = new WalletHistory;
+                        $walletHistory->wallet_id = $user->wallet->id;
+                        $walletHistory->user_id = $user->id;
+                        $walletHistory->type = "deposit";
+                        $walletHistory->paystack_reference = $data["order"]["orderId"];
+                        $walletHistory->payment_type = "nomba";
+                        $walletHistory->amount = $data['order']['amount'];
+                        $walletHistory->closing_balance = $user->wallet->amount;
+                        $walletHistory->fee = 0;
+                        $walletHistory->description = "Nomba deposit via wallet orderId".$data["order"]["orderId"]." orderReference ".$data["order"]["orderReference"];
+                        $walletHistory->save();
+
+                        // Update user's card details if necessary
+                        // $card = Card::where('user_id', $user->id)->first();
+                        // if ($card) {
+                        //     $card->auth_token = $data['authorization']['authorization_code'];
+                        //     $card->customer_code = $data['customer']['customer_code'];
+                        //     $card->save();
+                        // }
+
+                        DB::commit();
+                    }
+
+                } catch (\Throwable $th) {
+                    DB::rollBack();
+                    Log::info($th->getMessage());
+                }
+            }
+        }
+
+        return response()->json(['message' => 'Webhook received'], 200);
     }
 
 }

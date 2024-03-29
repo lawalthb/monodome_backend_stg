@@ -416,8 +416,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
     });
 
 
-    Route::get('paystack/webhooks', [PaymentController::class, 'webhooks']);
+    Route::get('paystack/webhooks', [PaymentController::class, 'paystackWebhooks']);
     Route::post('paystack/webhooks', [PaymentController::class, 'webhooks']);
+    Route::post('nomba/webhooks', [PaymentController::class, 'nombaWebhooks']);
     // wallet route group
     Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {
 

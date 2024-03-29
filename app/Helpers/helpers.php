@@ -5,6 +5,7 @@ use App\Models\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -518,6 +519,31 @@ function payStack_checkout($fields) {
 
 }
 
-?>
+function nombaAccessToken(){
+
+    $AccountId = Setting::where(['slug' => 'nombaAccountID'])->first()->value;
+    $client_id = Setting::where(['slug' => 'nombaClientID'])->first()->value;
+    $client_secret = Setting::where(['slug' => 'nombaPrivatekey'])->first()->value;
 
 
+    $response = Http::withHeaders([
+        'AccountId' => $AccountId,
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+    ])->post('https://api.nomba.com/v1/auth/token/issue', [
+        'grant_type' => 'client_credentials',
+        'client_id' => $client_id,
+        'client_secret' => $client_secret,
+    ]);
+
+    $result = $response->json();
+
+    if(isset($result['data']['access_token'])) {
+        $accessToken = $result['data']['access_token'];
+        return $accessToken;
+    }
+
+    return null;
+
+
+}

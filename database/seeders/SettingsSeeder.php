@@ -137,6 +137,35 @@ class SettingsSeeder extends Seeder
                 'updated_at' => null,
             ],
 
+
+
+            [
+                'name' => 'Nomba Client ID',
+                'value' => 'ef933dff-d45a-4669-baca-ee9115241ad8',
+                'slug' => 'nombaClientID',
+                'created_at' => '2020-01-07 18:30:00',
+                'updated_at' => null,
+            ],
+
+            [
+                'name' => 'Nomba Private key',
+                'value' => 'wJSQVoqx8LEAjps7zF3CJwS/mxxdnQFKzXSjryCllekhvzFQEpgv/9AJEx9D955m7bUR8EivIPr9g9AkU+gDxQ==',
+                'slug' => 'nombaPrivatekey',
+                'created_at' => '2020-01-07 18:30:00',
+                'updated_at' => null,
+            ],
+
+
+            [
+                'name' => 'Nomba Account ID',
+                'value' => '118f1bfb-c207-4e55-9646-bc54afe3e2e5',
+                'slug' => 'nombaAccountID',
+                'created_at' => '2020-01-07 18:30:00',
+                'updated_at' => null,
+            ],
+
+
+
             [
                 'name' => 'Map Api Server Key',
                 'value' => 'AIzaSyDMl9gMhFdQ8yel_p9EREkl-i9ocbBf178',
