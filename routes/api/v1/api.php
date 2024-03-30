@@ -424,6 +424,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
         Route::get('/', [WalletController::class, 'index']);
         Route::get('/check-pin', [WalletController::class, 'checkPinExists']);
+        Route::post('/topup', [WalletController::class, 'topUpWallet']);
         Route::post('/fetch-user', [WalletController::class, 'fetchContact']);
         Route::post('/validate-pin', [WalletController::class, 'validate_pin']);
         Route::post('/update-pin', [WalletController::class, 'update_pin']);

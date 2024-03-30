@@ -146,6 +146,8 @@ class PaymentController extends Controller
     public function nombaWebhooks(Request $request) {
         http_response_code(200);
 
+        Log::info($request);
+
         if ($request->has('payload') && $request->has('event_type') && $request->has('data')) {
             $payload = $request->input('payload');
             $eventType = $payload['event_type'];

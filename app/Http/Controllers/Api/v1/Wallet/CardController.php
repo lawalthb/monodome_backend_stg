@@ -112,7 +112,7 @@ class CardController extends Controller
 
                 $publickey = Setting::where(['slug' => 'publickey'])->first()->value;
 
-                return $this->success(['card' => $encryptedCard, "public_key" => $publickey], "Card details Save successfully");
+                return $this->success(['card' => $encryptedCard, "payment" => topUpWallet($request->amount) ], "Card details Save successfully");
             } else {
                 return $this->error(null, 'Error saving card details', 422);
             }

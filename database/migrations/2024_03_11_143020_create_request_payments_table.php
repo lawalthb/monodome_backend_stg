@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('receiver_id')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
-            $table->string('uuid', 13)->nullable()->comment('Unique ID (For Each Payment Request)');
+            $table->string('uuid')->nullable()->comment('Unique ID (For Each Payment Request)');
             $table->decimal('amount', 20, 8)->default(0.00000000);
             $table->decimal('accept_amount', 20, 8)->default(0.00000000);
             $table->string('email')->nullable();

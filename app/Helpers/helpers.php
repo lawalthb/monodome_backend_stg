@@ -3,6 +3,7 @@
 use App\Models\User;
 use App\Models\Setting;
 use Illuminate\Support\Str;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -547,3 +548,45 @@ function nombaAccessToken(){
 
 
 }
+
+
+function topUpWallet($amount){
+
+    $AccountId = Setting::where(['slug' => 'nombaAccountID'])->first()->value;
+    $client_id = Setting::where(['slug' => 'nombaClientID'])->first()->value;
+    $client_secret = Setting::where(['slug' => 'nombaPrivatekey'])->first()->value;
+
+    $response = Http::withHeaders([
+        'accountId' => $AccountId,
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'Authorization' => 'Bearer '.nombaAccessToken(),
+    ])->post('https://api.nomba.com/v1/checkout/order', [
+        'order' => [
+            'orderReference' => Str::uuid(),
+          //  'customerId' => '762878332454',
+            'callbackUrl' => 'https://talosmart-monodone-frontend.vercel.app/customer',
+            'customerEmail' => Auth::user()->email,
+            'amount' => $amount,
+            'currency' => 'NGN',
+        ],
+        'tokenizeCard' => 'true',
+    ]);
+
+    // Assuming you want to retrieve the response as an array
+
+    $result = $response->json();
+
+    if(isset($result['data']['checkoutLink']) && isset($result['data']['orderReference'])) {
+        $checkoutLink = $result['data']['checkoutLink'];
+        $orderReference = $result['data']['orderReference'];
+
+        return [
+            'status' => true,
+            'checkoutLink' =>  $checkoutLink,
+            'orderReference' => $orderReference
+        ];
+    }
+    return null;
+
+  }
