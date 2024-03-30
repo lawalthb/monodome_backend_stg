@@ -437,7 +437,8 @@ class CompanyController extends Controller
     public function singleBroadcast(Request $request,$id)
     {
 
-        $query = LoadBoard::where("id",$id)->whereIn('load_type_id', [1, 2])->orWhere("acceptable_id", auth()->id())->orWhere("acceptable_id", null)->orderBy('created_at', 'desc');
+        // $query = LoadBoard::where("id",$id)->whereIn('load_type_id', [1, 2])->orWhere("acceptable_id", auth()->id())->orWhere("acceptable_id", null)->orderBy('created_at', 'desc');
+        $query = LoadBoard::where("id",$id)->whereIn('load_type_id', [1, 2])->where("acceptable_id", null)->orderBy('created_at', 'desc');
 
         // Filter by Order Number
         if ($request->has('order_no')) {
