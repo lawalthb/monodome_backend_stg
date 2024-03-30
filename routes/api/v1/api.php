@@ -236,7 +236,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
 
 
-            Route::get('/order', [CompanyController::class, 'order']);
+            // Route::get('/order', [CompanyController::class, 'order']);
+            Route::get('/order', [LoadBoardController::class, 'order']);
             Route::post('/accept-order', [LoadBoardController::class, 'acceptOrder']);
             Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
             Route::post('/order-reassign', [CompanyController::class, 'orderReAssign']);
