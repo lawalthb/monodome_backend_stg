@@ -10,6 +10,7 @@ use App\Models\WalletHistory;
 use App\Models\RequestPayment;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -145,23 +146,19 @@ class WalletController extends Controller
 
     public function requestMoney(Request $request)
     {
-        $userId = $request->input('user_id');
-        $amount = $request->input('amount');
-        $comment = $request->input('comment');
-
         // Validate the inputs
         $request->validate([
-            'user_id' => 'required|integer',
+            'request_receiver' => ['required', 'integer', Rule::notIn([auth()->id()])],
             'amount' => 'required|numeric|min:0',
             'comment' => 'nullable|string|max:255',
         ]);
 
         // Create a new request payment
         $requestPayment = RequestPayment::create([
-            'user_id' => $userId,
-            'receiver_id' =>auth()->id(),
-            'amount' => $amount,
-            'comment' => $comment,
+            'request_sender' => auth()->id(),
+            'request_receiver' => $request->input('request_receiver'),
+            'amount' => $request->input('amount'),
+            'comment' => $request->input('comment'),
             'status' => 'Pending', // Set the default status
         ]);
 
@@ -236,85 +233,188 @@ class WalletController extends Controller
 
 
       public function approveRequest(Request $request, $id)
-      {
-          // Validate the inputs
-          $request->validate([
-              'accept_amount' => 'required|integer',
-              'status' => 'required|string|in:Pending,Success,Refund,Blocked',
-              'comment' => 'nullable|string|max:255',
-          ]);
+{
+    // Validate the inputs
+    $request->validate([
+        'accept_amount' => 'required|numeric|min:0',
+        'status' => 'required|string|in:Pending,Success,Refund,Blocked',
+        'comment' => 'nullable|string|max:255',
+    ]);
 
-          // Find the request payment
-          $requestPayment = RequestPayment::where("receiver_id", auth()->id())->findOrFail($id);
+    // Find the request payment by ID and ensure it belongs to the authenticated user
+    $requestPayment = RequestPayment::where('id', $id)
+        ->where('request_receiver', auth()->id())
+        ->firstOrFail();
 
-          if(in_array($requestPayment->status, ['Refund', 'Success'])){
+    // Check if the request status is already Refund or Success
+    if (in_array($requestPayment->status, ['Refund', 'Success'])) {
+        return response()->json(['message' => 'Payment request is already Refund or Successfully!'], 404);
+    }
 
-            return $this->error('', 'payment request is already Refund or Successfully!', 404);
+    // Update the request payment status and comment for Refund or Blocked requests
+    if (in_array($requestPayment->status, ['Blocked'])) {
+        $requestPayment->status = $request->input('status');
+        $requestPayment->comment = $request->input('comment');
+        $requestPayment->save();
+        return response()->json(['status' => true, 'data' => new RequestPaymentResource($requestPayment)], 200);
+    }
 
-            // return response()->json(['status' => true, 'data' => new RequestPaymentResource($requestPayment)], 200);
-          }
+    // Process the request if the status is Success
+    if ($request->input('status') === 'Success') {
+        // Use a database transaction to ensure atomicity
+        DB::beginTransaction();
 
-        //   if (in_array($requestPayment->status, ['Refund', 'Blocked'])) {
-          if (in_array($requestPayment->status, ['Blocked'])) {
-              // Update status and comment for Refund or Blocked requests
-              $requestPayment->status = $request->status;
-              $requestPayment->comment = $request->comment;
-              $requestPayment->save();
-              return response()->json(['status' => true, 'data' => new RequestPaymentResource($requestPayment)], 200);
-          }
+        try {
+            // Lock the receiver's and requester's wallets for update
+            $receiverWallet = Wallet::where('user_id', $requestPayment->request_sender)->lockForUpdate()->first();
+            $SenderWallet = Wallet::where('user_id', $requestPayment->request_receiver)->lockForUpdate()->first();
 
-          if ($request->status === "Success") {
-              // Use a database transaction to ensure atomicity
-              DB::beginTransaction();
+            // Check if the requester has sufficient funds
+            if ($request->accept_amount > $SenderWallet->amount) {
+                throw new \Exception('Insufficient funds in wallet');
+            }
 
-              try {
-                  // Lock the user's wallet row for update
-                  $wallet = Wallet::where('user_id', $requestPayment->receiver_id)->lockForUpdate()->first();
+            // Update the wallets
+            $receiverWallet->amount += $request->accept_amount;
+            $SenderWallet->amount -= $request->accept_amount;
 
-                  // Check if the user has sufficient funds
-                  if ($requestPayment->accept_amount > $wallet->amount) {
-                      throw new \Exception('Insufficient funds in wallet');
-                  }
+            $receiverWallet->save();
+            $SenderWallet->save();
 
-                  // Update the wallet balance
-                  $wallet->amount -= $requestPayment->accept_amount;
-                  $wallet->save();
+            // the ammount the user later accept
+            $requestPayment->accept_amount = $request->accept_amount;
+            $requestPayment->save();
 
-                  // Update the request payment status and save
-                  $requestPayment->status = $request->status;
-                  $requestPayment->comment = $request->comment;
-                  $requestPayment->save();
+            // Update the request payment status and comment
+            $requestPayment->status = 'Success';
+            $requestPayment->comment = $request->input('comment');
+            $requestPayment->save();
 
-                  // Update wallet history
-                $walletHistory = new WalletHistory;
-                $walletHistory->wallet_id = $requestPayment->receiver->wallet->id;
-                $walletHistory->user_id = $requestPayment->receiver->id;
-                $walletHistory->type = "debit";
-                $walletHistory->payment_type = "wallet";
-                $walletHistory->amount = $requestPayment->accept_amount;
-                $walletHistory->closing_balance = $requestPayment->receiver->wallet->amount - $requestPayment->accept_amount;
-                $walletHistory->fee = 0;
-                $walletHistory->description = "Request Payment with the following ID: " . $requestPayment->uuid . "!";
-                $walletHistory->save();
+            // Update wallet history for the receiver
+            $receiverWalletHistory = new WalletHistory;
+            $receiverWalletHistory->wallet_id = $receiverWallet->id;
+            $receiverWalletHistory->user_id = $receiverWallet->user_id;
+            $receiverWalletHistory->type = 'credit';
+            $receiverWalletHistory->payment_type = 'wallet';
+            $receiverWalletHistory->amount = $request->accept_amount;
+            $receiverWalletHistory->closing_balance = $receiverWallet->amount;
+            $receiverWalletHistory->fee = 0;
+            $receiverWalletHistory->description = 'Received payment with the following ID: ' . $requestPayment->uuid;
+            $receiverWalletHistory->save();
 
-                // Notify the user
-                $requestPayment->receiver->notify(new SendNotification($requestPayment->receiver, 'Request payment was successful!'));
+            // Update wallet history for the requester
+            $SenderWalletHistory = new WalletHistory;
+            $SenderWalletHistory->wallet_id = $SenderWallet->id;
+            $SenderWalletHistory->user_id = $SenderWallet->user_id;
+            $SenderWalletHistory->type = 'debit';
+            $SenderWalletHistory->payment_type = 'wallet';
+            $SenderWalletHistory->amount = $request->accept_amount;
+            $SenderWalletHistory->closing_balance = $SenderWallet->amount;
+            $SenderWalletHistory->fee = 0;
+            $SenderWalletHistory->description = 'Sent payment with the following ID: ' . $requestPayment->uuid;
+            $SenderWalletHistory->save();
 
-                DB::commit();
+            // Notify the requester and receiver
+            $requestPayment->user->notify(new SendNotification($requestPayment->user, 'Request payment was successful!'));
+            $requestPayment->receiver->notify(new SendNotification($requestPayment->receiver, 'Received payment was successful!'));
 
-                  // Return success response
-                  return response()->json(['wallet_amount' => $wallet->amount, 'requestPayment' =>  new RequestPaymentResource($requestPayment)]);
-              } catch (\Exception $e) {
-                  // Roll back the transaction on error
-                  DB::rollBack();
+            DB::commit();
 
-                  return response()->json(['error' => $e->getMessage()], 500);
-              }
-          }
+            // Return success response
+            return response()->json(['wallet_amount' => $SenderWallet->amount, 'requestPayment' => new RequestPaymentResource($requestPayment)]);
+        } catch (\Exception $e) {
+            // Roll back the transaction on error
+            DB::rollBack();
 
-          // Return a default response if the request does not fall into any of the above conditions
-          return response()->json(['message' => 'Request not processed'], 400);
-      }
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    // Return a default response if the request does not fall into any of the above conditions
+    return response()->json(['message' => 'Request not processed'], 400);
+}
+
+
+    //   public function approveRequest(Request $request, $id)
+    //   {
+    //       // Validate the inputs
+    //       $request->validate([
+    //           'accept_amount' => 'required|integer',
+    //           'status' => 'required|string|in:Pending,Success,Refund,Blocked',
+    //           'comment' => 'nullable|string|max:255',
+    //       ]);
+
+    //       // Find the request payment
+    //       $requestPayment = RequestPayment::where("receiver_id", auth()->id())->findOrFail($id);
+
+    //       if(in_array($requestPayment->status, ['Refund', 'Success'])){
+
+    //         return $this->error('', 'payment request is already Refund or Successfully!', 404);
+
+    //         // return response()->json(['status' => true, 'data' => new RequestPaymentResource($requestPayment)], 200);
+    //       }
+
+    //     //   if (in_array($requestPayment->status, ['Refund', 'Blocked'])) {
+    //       if (in_array($requestPayment->status, ['Blocked'])) {
+    //           // Update status and comment for Refund or Blocked requests
+    //           $requestPayment->status = $request->status;
+    //           $requestPayment->comment = $request->comment;
+    //           $requestPayment->save();
+    //           return response()->json(['status' => true, 'data' => new RequestPaymentResource($requestPayment)], 200);
+    //       }
+
+    //       if ($request->status === "Success") {
+    //           // Use a database transaction to ensure atomicity
+    //           DB::beginTransaction();
+
+    //           try {
+    //               // Lock the user's wallet row for update
+    //               $wallet = Wallet::where('user_id', $requestPayment->receiver_id)->lockForUpdate()->first();
+
+    //               // Check if the user has sufficient funds
+    //               if ($requestPayment->accept_amount > $wallet->amount) {
+    //                   throw new \Exception('Insufficient funds in wallet');
+    //               }
+
+    //               // Update the wallet balance
+    //               $wallet->amount -= $requestPayment->accept_amount;
+    //               $wallet->save();
+
+    //               // Update the request payment status and save
+    //               $requestPayment->status = $request->status;
+    //               $requestPayment->comment = $request->comment;
+    //               $requestPayment->save();
+
+    //               // Update wallet history
+    //             $walletHistory = new WalletHistory;
+    //             $walletHistory->wallet_id = $requestPayment->receiver->wallet->id;
+    //             $walletHistory->user_id = $requestPayment->receiver->id;
+    //             $walletHistory->type = "debit";
+    //             $walletHistory->payment_type = "wallet";
+    //             $walletHistory->amount = $requestPayment->accept_amount;
+    //             $walletHistory->closing_balance = $requestPayment->receiver->wallet->amount - $requestPayment->accept_amount;
+    //             $walletHistory->fee = 0;
+    //             $walletHistory->description = "Request Payment with the following ID: " . $requestPayment->uuid . "!";
+    //             $walletHistory->save();
+
+    //             // Notify the user
+    //             $requestPayment->receiver->notify(new SendNotification($requestPayment->receiver, 'Request payment was successful!'));
+
+    //             DB::commit();
+
+    //               // Return success response
+    //               return response()->json(['wallet_amount' => $wallet->amount, 'requestPayment' =>  new RequestPaymentResource($requestPayment)]);
+    //           } catch (\Exception $e) {
+    //               // Roll back the transaction on error
+    //               DB::rollBack();
+
+    //               return response()->json(['error' => $e->getMessage()], 500);
+    //           }
+    //       }
+
+    //       // Return a default response if the request does not fall into any of the above conditions
+    //       return response()->json(['message' => 'Request not processed'], 400);
+    //   }
 
 
       public function topUpWallet(Request $request){

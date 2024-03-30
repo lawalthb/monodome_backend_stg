@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('request_payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('receiver_id')->nullable();
+            $table->unsignedBigInteger('request_sender')->nullable();
+            $table->unsignedBigInteger('request_receiver')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
             $table->string('uuid')->nullable()->comment('Unique ID (For Each Payment Request)');
             $table->decimal('amount', 20, 8)->default(0.00000000);
@@ -25,6 +25,10 @@ return new class extends Migration
             $table->text('comment')->nullable();
             $table->enum('status', ['Pending','Success','Refund','Blocked'])->default('Pending')->comment('Pending, Success, Refund, Blocked');
             $table->timestamps();
+
+            $table->foreign('request_sender')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('request_receiver')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 
