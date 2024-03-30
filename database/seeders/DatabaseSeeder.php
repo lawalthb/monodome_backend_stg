@@ -69,5 +69,8 @@ class DatabaseSeeder extends Seeder
        //$this->call(OrdersTableSeeder::class);
        //$this->call(LoadBoardsTableSeeder::class);
        //$this->call(LoadPackagesTableSeeder::class);
+        $this->call(WalletsTableSeeder::class);
+        $this->call(WalletHistoriesTableSeeder::class);
+        $this->call(RequestPaymentsTableSeeder::class);
     }
 }

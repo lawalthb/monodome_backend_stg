@@ -315,8 +315,8 @@ class WalletController extends Controller
             $SenderWalletHistory->save();
 
             // Notify the requester and receiver
-            $requestPayment->user->notify(new SendNotification($requestPayment->user, 'Request payment was successful!'));
-            $requestPayment->receiver->notify(new SendNotification($requestPayment->receiver, 'Received payment was successful!'));
+            $SenderWalletHistory->user->notify(new SendNotification($SenderWalletHistory->user, 'Request payment was successful!'));
+            $receiverWalletHistory->user->notify(new SendNotification($receiverWalletHistory->user, 'Received payment was successful!'));
 
             DB::commit();
 
