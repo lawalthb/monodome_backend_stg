@@ -36,38 +36,6 @@ class WalletController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //api
-    }
-
     public function wallet_history(Request $request){
         $perPage = $request->input('per_page', 10);
         $walletHistory = WalletHistory::where('user_id', auth()->user()->id)->paginate($perPage);
@@ -90,7 +58,7 @@ class WalletController extends Controller
         if($walletHistory)
             return response()->json(['status'=>true,'data'=> $walletHistory],200);
         else
-            return response()->json(['status'=>false, 'message' => 'No Data Found.', 'data'=> [] ],200); 
+            return response()->json(['status'=>false, 'message' => 'No Data Found.', 'data'=> [] ],200);
     }
 
     public function update_pin(Request $request){
@@ -180,14 +148,14 @@ class WalletController extends Controller
         $userId = $request->input('user_id');
         $amount = $request->input('amount');
         $comment = $request->input('comment');
-    
+
         // Validate the inputs
         $request->validate([
             'user_id' => 'required|integer',
             'amount' => 'required|numeric|min:0',
             'comment' => 'nullable|string|max:255',
         ]);
-    
+
         // Create a new request payment
         $requestPayment = RequestPayment::create([
             'user_id' => $userId,
@@ -196,20 +164,20 @@ class WalletController extends Controller
             'comment' => $comment,
             'status' => 'Pending', // Set the default status
         ]);
-    
+
         // Return a success response
         return response()->json([
             'message' => 'Request payment created successfully',
             'request_payment' => $requestPayment,
         ]);
     }
-    
+
 
     public function listBeneficiaryBankDetails() {
         $banks = BeneficiaryBankDetail::where('user_id', Auth::user()->id)->get();
         return response()->json(['status' => 1, 'data' => $banks], 200);
     }
-    
+
     public function removeBeneficiaryBankDetails(Request $request) {
         $banks = BeneficiaryBankDetail::where(['user_id' => Auth::user()->id, 'id' => $request->id])->first();
         $banks->delete();
@@ -226,17 +194,17 @@ class WalletController extends Controller
       if($requestPayment){
 
           return RequestPaymentResource::collection($requestPayment);
-          
+
     //   return response()->json(['status'=>true,'data'=> RequestPaymentResource::collection($requestPayment)],200);
 
     } else{
-        
-        return response()->json(['status'=>false, 'message' => 'No Data Found.', 'data'=> [] ],200); 
+
+        return response()->json(['status'=>false, 'message' => 'No Data Found.', 'data'=> [] ],200);
     }
     }
 
     public function sendRequest(Request $request){
-        
+
       $perPage = $request->input('per_page', 10);
 
       $requestPayment =  RequestPayment::where('user_id',auth()->id())->where('status','Pending')->paginate($perPage);
@@ -247,7 +215,7 @@ class WalletController extends Controller
     //   return response()->json(['status'=>true,'data'=> RequestPaymentResource::collection($requestPayment)],200);
 
     } else{
-        return response()->json(['status'=>false, 'message' => 'No Data Found.', 'data'=> [] ],200); 
+        return response()->json(['status'=>false, 'message' => 'No Data Found.', 'data'=> [] ],200);
     }
 
     }
@@ -256,14 +224,14 @@ class WalletController extends Controller
 
         $perPage = $request->input('per_page', 10);
         $requestPayment =  RequestPayment::where('user_id',auth()->id())->orWhere('receiver_id',auth()->id())->where('status','Pending')->paginate($perPage);
-  
+
         if($requestPayment){
             return RequestPaymentResource::collection($requestPayment);
       //   return response()->json(['status'=>true,'data'=> RequestPaymentResource::collection($requestPayment)],200);
       } else{
-          return response()->json(['status'=>false, 'message' => 'No Data Found.', 'data'=> [] ],200); 
+          return response()->json(['status'=>false, 'message' => 'No Data Found.', 'data'=> [] ],200);
       }
-  
+
       }
 
 
@@ -275,7 +243,7 @@ class WalletController extends Controller
               'status' => 'required|string|in:Pending,Success,Refund,Blocked',
               'comment' => 'nullable|string|max:255',
           ]);
-      
+
           // Find the request payment
           $requestPayment = RequestPayment::where("receiver_id", auth()->id())->findOrFail($id);
 
@@ -285,7 +253,7 @@ class WalletController extends Controller
 
             // return response()->json(['status' => true, 'data' => new RequestPaymentResource($requestPayment)], 200);
           }
-      
+
         //   if (in_array($requestPayment->status, ['Refund', 'Blocked'])) {
           if (in_array($requestPayment->status, ['Blocked'])) {
               // Update status and comment for Refund or Blocked requests
@@ -294,24 +262,24 @@ class WalletController extends Controller
               $requestPayment->save();
               return response()->json(['status' => true, 'data' => new RequestPaymentResource($requestPayment)], 200);
           }
-      
+
           if ($request->status === "Success") {
               // Use a database transaction to ensure atomicity
               DB::beginTransaction();
-      
+
               try {
                   // Lock the user's wallet row for update
                   $wallet = Wallet::where('user_id', $requestPayment->receiver_id)->lockForUpdate()->first();
-      
+
                   // Check if the user has sufficient funds
                   if ($requestPayment->accept_amount > $wallet->amount) {
                       throw new \Exception('Insufficient funds in wallet');
                   }
-      
+
                   // Update the wallet balance
                   $wallet->amount -= $requestPayment->accept_amount;
                   $wallet->save();
-      
+
                   // Update the request payment status and save
                   $requestPayment->status = $request->status;
                   $requestPayment->comment = $request->comment;
@@ -331,7 +299,7 @@ class WalletController extends Controller
 
                 // Notify the user
                 $requestPayment->receiver->notify(new SendNotification($requestPayment->receiver, 'Request payment was successful!'));
-               
+
                 DB::commit();
 
                   // Return success response
@@ -339,15 +307,21 @@ class WalletController extends Controller
               } catch (\Exception $e) {
                   // Roll back the transaction on error
                   DB::rollBack();
-      
+
                   return response()->json(['error' => $e->getMessage()], 500);
               }
           }
-      
+
           // Return a default response if the request does not fall into any of the above conditions
           return response()->json(['message' => 'Request not processed'], 400);
       }
-      
-      
+
+
+      public function topUpWallet(Request $request){
+
+
+      }
+
+
 
 }

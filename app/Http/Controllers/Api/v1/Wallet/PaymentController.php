@@ -34,7 +34,7 @@ class PaymentController extends Controller
         $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
         if($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, $secretkey)) exit();
 
-
+        Log::info($request);
 
         if ($request['event'] == 'charge.success' && $request['data']['metadata']['custom_fields'][0]['from'] =='wallet') {
 
