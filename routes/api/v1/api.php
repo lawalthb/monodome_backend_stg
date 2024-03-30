@@ -245,6 +245,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
             Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
             Route::post('/order-re-assign', [LoadBoardController::class, 'orderReAssign']);
 
+            Route::get('/all-driver-assign-orders', [LoadBoardController::class, 'allDriverAssignOrders']);
+
             Route::get('/broadcast', [CompanyController::class, 'broadcast']);
             Route::get('/broadcast/{id}', [CompanyController::class, 'singleBroadcast']);
 
