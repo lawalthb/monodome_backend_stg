@@ -187,6 +187,32 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2022-12-04 22:35:33',
                 'updated_at' => '2022-12-04 22:35:33',
             ),
+            21 =>
+            array (
+                'id' => 22,
+                'name' => 'manage_plan',
+                'guard_name' => 'api',
+                'created_at' => '2022-12-04 22:35:33',
+                'updated_at' => '2022-12-04 22:35:33',
+            ),
+
+            22 =>
+            array (
+                'id' => 23,
+                'name' => 'manage_referral',
+                'guard_name' => 'api',
+                'created_at' => '2022-12-04 22:35:33',
+                'updated_at' => '2022-12-04 22:35:33',
+            ),
+
+            23 =>
+            array (
+                'id' => 24,
+                'name' => 'manage_wallet_management',
+                'guard_name' => 'api',
+                'created_at' => '2022-12-04 22:35:33',
+                'updated_at' => '2022-12-04 22:35:33',
+            ),
         ));
 
 
