@@ -277,14 +277,24 @@ public function available_drivers(Request $request)
 
     public function driverWithTruck(Request $request)
     {
+
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $truck = Truck::whereHas('driver')
-            ->latest()
-            ->paginate($perPage);
+        $drivers = Driver::whereHas('trucks')
+        ->latest()
+        ->paginate($perPage);
 
-        return TruckResource::collection($truck);
+       return DriverResource::collection($drivers);
+
+        // $key = $request->input('search');
+        // $perPage = $request->input('per_page', 10);
+
+        // $truck = Truck::whereHas('driver')
+        //     ->latest()
+        //     ->paginate($perPage);
+
+        // return TruckResource::collection($truck);
     }
 
 
