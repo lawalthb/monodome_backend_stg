@@ -29,7 +29,7 @@ class TruckResource extends JsonResource
             'profile_picture' =>  getImageFile($this->profile_picture),
             "document" => LoadDocumentResource::collection($this->loadDocuments),
             'user' => new UserResource($this->user),
-            'driver' => new DriverResource($this->whenLoaded('driver')),
+            'driver' => new DriverResource($this->driver),
             // ($this->whenLoaded('trucks')
             'lga' => new LocalGovernmentResource($this->local),
             'state' => new StateResource($this->state),
