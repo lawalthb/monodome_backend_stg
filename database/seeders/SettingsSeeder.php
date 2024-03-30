@@ -141,7 +141,8 @@ class SettingsSeeder extends Seeder
 
             [
                 'name' => 'Nomba Client ID',
-                'value' => 'ef933dff-d45a-4669-baca-ee9115241ad8',
+                // 'value' => 'ef933dff-d45a-4669-baca-ee9115241ad8',
+                'value' => '3b30d208-6196-4b4b-83f2-f52f658896ac',
                 'slug' => 'nombaClientID',
                 'created_at' => '2020-01-07 18:30:00',
                 'updated_at' => null,
@@ -149,7 +150,8 @@ class SettingsSeeder extends Seeder
 
             [
                 'name' => 'Nomba Private key',
-                'value' => 'wJSQVoqx8LEAjps7zF3CJwS/mxxdnQFKzXSjryCllekhvzFQEpgv/9AJEx9D955m7bUR8EivIPr9g9AkU+gDxQ==',
+                'value' => '/gJLjd8Rg8QoCc31m5U/qODjIRwbjAK4p0t54tOJR6ZCc4eZI3c77UU8LlRi5ghUP+SFhYEz8FLZaqdhDDDx0w==',
+                // 'value' => 'wJSQVoqx8LEAjps7zF3CJwS/mxxdnQFKzXSjryCllekhvzFQEpgv/9AJEx9D955m7bUR8EivIPr9g9AkU+gDxQ==',
                 'slug' => 'nombaPrivatekey',
                 'created_at' => '2020-01-07 18:30:00',
                 'updated_at' => null,
@@ -159,6 +161,7 @@ class SettingsSeeder extends Seeder
             [
                 'name' => 'Nomba Account ID',
                 'value' => '118f1bfb-c207-4e55-9646-bc54afe3e2e5',
+                // 'value' => '118f1bfb-c207-4e55-9646-bc54afe3e2e5',
                 'slug' => 'nombaAccountID',
                 'created_at' => '2020-01-07 18:30:00',
                 'updated_at' => null,
