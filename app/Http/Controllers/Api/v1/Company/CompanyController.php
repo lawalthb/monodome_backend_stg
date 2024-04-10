@@ -776,6 +776,7 @@ class CompanyController extends Controller
         $validatedData = $request->validate([
             'user_id' => 'required|integer',
             'moveIt' => 'required|in:Yes,No',
+            'workshop_mode_reason' => 'required_if:moveIt,Yes|in:Yes,No',
         ]);
 
         $key = $validatedData['user_id'];
@@ -793,6 +794,22 @@ class CompanyController extends Controller
         $truck->save();
 
         return new TruckResource($truck);
+    }
+
+
+    public function truckInWorkshop(Request $request)
+    {
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $truck = Truck::where('workshop_mode','Yes')->whereHas('user', function ($userQuery) use ($key) {
+            $userQuery->where('full_name', 'like', "%{$key}%")
+            ->where('user_created_by', auth()->id());
+            })
+            ->latest()
+            ->paginate($perPage);
+
+        return TruckResource::collection($truck);
     }
 
 }

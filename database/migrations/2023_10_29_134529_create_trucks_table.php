@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('outside_truck_picture')->nullable();
             $table->string('truck_document')->nullable();
             $table->enum('workshop_mode',['Yes','No'])->default('No');
+            $table->string('workshop_mode_reason')->nullable();
             $table->enum('status', ['Pending', 'Confirmed', 'Approved', 'Rejected','Failed'])->default('Pending');
 
             $table->timestamps();

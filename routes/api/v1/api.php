@@ -258,6 +258,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
             Route::post('/create-truck', [CompanyController::class, 'createTruck']);
             Route::post('/create-driver', [CompanyController::class, 'createDriver']);
             Route::post('/move-truck-workshop', [CompanyController::class, 'moveTruckToWorkshop']);
+            Route::get('/move-truck-workshop', [CompanyController::class, 'truckInWorkshop']);
 
 
 
