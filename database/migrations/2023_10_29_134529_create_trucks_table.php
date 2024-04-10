@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('truck_type')->nullable();
             $table->string('truck_location')->nullable();
             $table->string('truck_make')->nullable();
-            $table->string('plate_number')->nullable();
+            $table->string('cac_number')->nullable();
             $table->string('plate_number')->nullable();
             $table->text('truck_description')->nullable();
             $table->string('profile_picture')->nullable();
