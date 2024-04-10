@@ -26,6 +26,7 @@ class TruckResource extends JsonResource
             'plate_number' => $this->plate_number,
             'cac_number' => $this->cac_number,
             'truck_description' => $this->truck_description,
+            'workshop_mode' => $this->workshop_mode,
             'profile_picture' =>  getImageFile($this->profile_picture),
             "document" => LoadDocumentResource::collection($this->loadDocuments),
             'user' => new UserResource($this->user),
