@@ -791,6 +791,7 @@ class CompanyController extends Controller
         }
 
         $truck->workshop_mode = $validatedData['moveIt'];
+        $truck->workshop_mode_reason = $validatedData['workshop_mode_reason'];
         $truck->save();
 
         return new TruckResource($truck);
