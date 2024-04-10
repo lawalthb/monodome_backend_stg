@@ -819,11 +819,15 @@ class CompanyController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $drivers = Driver::whereHas('trucks')
+        $drivers = Driver::whereHas('user',function ($userQuery) use ($key) {
+            $userQuery->where('full_name', 'like', "%{$key}%")
+            ->where('user_created_by', auth()->id());
+            })->whereHas('trucks')
         ->latest()
         ->paginate($perPage);
 
        return DriverResource::collection($drivers);
     }
+
 
 }
