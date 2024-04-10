@@ -703,11 +703,21 @@ class CompanyController extends Controller
                     $user->user_type = 'driver';
                     $user->save();
 
+
+                    $role = Role::where('name', 'Driver')->first();
+
+                    if ($role) {
+                        $user->assignRole($role);
+                    }
+
                     $data = [
                         "full_name" => $request->input('full_name'),
                         "password" => $password,
-                        "message" => "",
+                        "message" => "Your account as a/an ".$role->name." has been created",
                     ];
+                    Mail::to($user->email)->send(
+                        new SendPasswordMail($data)
+                    );
 
                     //only send password to drivers that doesnt have motor
                 //    if($request->input('have_motor') =="Yes"){
@@ -717,11 +727,7 @@ class CompanyController extends Controller
 
                // }
 
-                    $role = Role::where('name', 'Driver')->first();
 
-                    if ($role) {
-                        $user->assignRole($role);
-                    }
                 }
 
 
