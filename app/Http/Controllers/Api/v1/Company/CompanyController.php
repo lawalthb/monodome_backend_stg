@@ -684,7 +684,6 @@ class CompanyController extends Controller
 
                 $user = User::firstOrNew(['email' => $request->input('email')]);
 
-                $ref_by = null;
 
                 if ($request->has('ref_by')) {
                     $ref_by = User::where("referral_code", $request->ref_by)->first();
