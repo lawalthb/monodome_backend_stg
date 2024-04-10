@@ -591,4 +591,179 @@ class CompanyController extends Controller
         return DriverResource::collection($drivers);
     }
 
+
+    public function createTruck(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Check if the email or phone number already exists
+            $existingUser = User::where('email', $request->input('email'))
+                                ->orWhere('phone_number', $request->input('phone_number'))
+                                ->first();
+
+            if ($existingUser) {
+                return $this->error('User with the provided email or phone number already exists');
+            }
+
+            // Create or update the user
+            $user = User::firstOrNew(['email' => $request->input('email')]);
+
+            if (!$user->exists) {
+                // User doesn't exist, so create a new user
+                $user->full_name = $request->input('business_name');
+                $user->email = $request->input('email');
+                $user->phone_number = $request->input('phone_number');
+                $password = Str::random(16);
+                $user->password = $password;
+                $user->user_created_by = Auth::user()->id;
+                $user->ref_by =  Auth::user()->id;
+                $user->user_type = 'truck';
+                $user->save();
+
+                $role = Role::where('name', 'Truck')->first();
+                $data = [
+                    "full_name" => $request->input('full_name'),
+                    "password" => $password,
+                    "message" => "Your account as a/an ".$role->name." has been created",
+                ];
+                Mail::to($user->email)->send(
+                    new SendPasswordMail($data)
+                );
+
+                if ($role) {
+                    $user->assignRole($role);
+                }
+            }
+
+            // Create or update the truck
+            $truck = Truck::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'phone_number' => $request->input('phone_number'),
+                    'state_id' => $request->input('state_id'),
+                    'street' => $request->input('street'),
+                    'lga' => $request->input('lga'),
+                    'status' => 'Pending',
+                    'truck_name' => $request->input('truck_name'),
+                    'truck_type' => $request->input('truck_type'),
+                    'truck_location' => $request->input('truck_location'),
+                    'truck_make' => $request->input('truck_make'),
+                    'plate_number' => $request->input('plate_number'),
+                    'cac_number' => $request->input('cac_number'),
+                    'truck_description' => $request->input('truck_description'),
+                    'business_name' => $request->input('business_name'),
+                ]
+            );
+
+
+            // Handle document uploads
+            if ($request->input('profile_picture')) {
+                // Save the profile picture
+                $truck->profile_picture = $this->uploadFile('truck/truck_images', $request->file('profile_picture'));
+                $truck->save();
+
+            }
+
+            DB::commit();
+
+            return $this->success(new TruckResource($truck), 'Truck registered successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+
+            return $this->error('An error occurred while registering the truck');
+        }
+    }
+
+
+    public function createDriver(Request $request){
+
+            try {
+                DB::beginTransaction();
+
+                $user = User::firstOrNew(['email' => $request->input('email')]);
+
+                $ref_by = null;
+
+                if ($request->has('ref_by')) {
+                    $ref_by = User::where("referral_code", $request->ref_by)->first();
+                }
+
+                if (!$user->exists) {
+                    // User doesn't exist, so create a new user
+                    $user->full_name = $request->input('full_name');
+                    $user->email = $request->input('email');
+                    $user->address = $request->input('address');
+                    $user->ref_by =  Auth::user()->id;
+                    $user->user_created_by = Auth::user()->id;
+                    $user->referral_code = $request->referral_code ?? generateReferralCode();
+                    $password  = Str::random(16);
+                    $user->phone_number = $request->input('phone_number');
+                    $user->password = Hash::make($password);
+                    $user->user_type = 'driver';
+                    $user->save();
+
+                    $data = [
+                        "full_name" => $request->input('full_name'),
+                        "password" => $password,
+                        "message" => "",
+                    ];
+
+                    //only send password to drivers that doesnt have motor
+                //    if($request->input('have_motor') =="Yes"){
+                    Mail::to($user->email)->send(
+                        new SendPasswordMail($data)
+                    );
+
+               // }
+
+                    $role = Role::where('name', 'Driver')->first();
+
+                    if ($role) {
+                        $user->assignRole($role);
+                    }
+                }
+
+
+               // $data = $request->validated();
+            //   $driver = Driver::create($data);
+
+
+                $driver = new Driver([
+                    'user_id' => $user->id,
+                    'state_id' => $request->input('state_id'),
+                    'street' => $request->input('street'),
+                    'status' => 'Pending',
+                    'lga' => $request->input('lga'),
+                    'nin_number' => $request->input('nin_number'),
+                    'license_number' => $request->input('license_number'),
+                    'have_motor' => $request->input('have_motor'),
+                    'vehicle_type_id' => $request->input('vehicle_type_id'),
+                    // Add other agent fields here
+                ]);
+
+               // $driver->registration_documents = $this->uploadFile('agent/agent_documents', $request->file('registration_documents'));
+
+                $driver->save();
+
+                if ($request->hasFile('proof_of_license')) {
+
+                    $driver->proof_of_license = $this->uploadFile('driver/driver_images', $request->file('proof_of_license'));
+                    $driver->profile_picture = $this->uploadFile('driver/driver_images', $request->file('profile_picture'));
+
+                }
+
+                DB::commit();
+
+                return $this->success( new DriverResource($driver), 'Driver and guarantors registered successfully');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                Log::error($e->getMessage());
+
+                return $this->error('An error occurred while registering the driver and guarantors.');
+            }
+
+    }
+
 }

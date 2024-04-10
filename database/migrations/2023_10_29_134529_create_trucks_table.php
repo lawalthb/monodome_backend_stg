@@ -27,11 +27,12 @@ return new class extends Migration
             $table->string('truck_location')->nullable();
             $table->string('truck_make')->nullable();
             $table->string('plate_number')->nullable();
-            $table->string('cac_number')->nullable();
+            $table->string('plate_number')->nullable();
             $table->text('truck_description')->nullable();
             $table->string('profile_picture')->nullable();
             $table->string('outside_truck_picture')->nullable();
             $table->string('truck_document')->nullable();
+            $table->enum('workshop_mode',['Yes','No'])->default('No');
             $table->enum('status', ['Pending', 'Confirmed', 'Approved', 'Rejected','Failed'])->default('Pending');
 
             $table->timestamps();

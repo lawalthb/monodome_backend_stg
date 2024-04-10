@@ -255,6 +255,11 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
             Route::get('/myUsers', [CompanyController::class, 'myUsers']);
             Route::post('/changeRole', [CompanyController::class, 'changeRole']);
 
+            Route::post('/create-truck', [CompanyController::class, 'createTruck']);
+            Route::post('/create-driver', [CompanyController::class, 'createDriver']);
+
+
+
 
                // load package route
             Route::get('/load-package', [LoadPackageController::class, 'index']);
