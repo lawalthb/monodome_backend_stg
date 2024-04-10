@@ -676,7 +676,6 @@ class CompanyController extends Controller
         }
     }
 
-
     public function createDriver(Request $request){
 
             try {
