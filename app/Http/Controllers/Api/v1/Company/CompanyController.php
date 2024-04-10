@@ -770,4 +770,29 @@ class CompanyController extends Controller
 
     }
 
+
+    public function moveTruckToWorkshop(Request $request)
+    {
+        $validatedData = $request->validate([
+            'user_id' => 'required|integer',
+            'moveIt' => 'required|in:Yes,No',
+        ]);
+
+        $key = $validatedData['user_id'];
+
+        $truck = Truck::whereHas('user', function ($userQuery) use ($key) {
+            $userQuery->where('id', $key)
+                      ->where('user_created_by', auth()->id());
+        })->first();
+
+        if (!$truck) {
+            return response()->json(['error' => 'Truck not found for the specified user id.'], 404);
+        }
+
+        $truck->workshop_mode = $validatedData['moveIt'];
+        $truck->save();
+
+        return new TruckResource($truck);
+    }
+
 }
