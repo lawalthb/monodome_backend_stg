@@ -813,4 +813,17 @@ class CompanyController extends Controller
         return TruckResource::collection($truck);
     }
 
+    public function driverWithTruck(Request $request)
+    {
+
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+
+        $drivers = Driver::whereHas('trucks')
+        ->latest()
+        ->paginate($perPage);
+
+       return DriverResource::collection($drivers);
+    }
+
 }
