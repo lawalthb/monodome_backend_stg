@@ -22,11 +22,11 @@ return new class extends Migration
             $table->enum('have_motor', ['Yes', 'No'])->default('Yes');
             $table->string('street');
             $table->string('lga');
-            $table->string('nin_number');
-            $table->string('license_number');
-            $table->string('proof_of_license');
+            $table->string('nin_number')->nullable();
+            $table->string('license_number')->nullable();
+            $table->string('proof_of_license')->nullable();
             $table->unsignedBigInteger('vehicle_type_id')->nullable();
-            $table->string('profile_picture');
+            $table->string('profile_picture')->nullable();
             $table->enum('status', ['Pending', 'Confirmed', 'Approved', 'Rejected','Failed'])->default('Pending');
             $table->timestamps();
             $table->softDeletes();
