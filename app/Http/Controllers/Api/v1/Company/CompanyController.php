@@ -830,4 +830,29 @@ class CompanyController extends Controller
     }
 
 
+    public function assignDriverToTruck(Request $request)
+    {
+        $request->validate([
+            'truck_id' => 'required|exists:trucks,user_id',
+            'driver_id' => 'required|exists:users,id',
+        ]);
+
+        $driver = User::where("id", $request->driver_id)->where('user_created_by', auth()->id())->first();
+        $truck = Truck::where("user_id", $request->truck_id)->first();
+
+        if (!$driver) {
+            return $this->error([], "Driver not found or is not under you!");
+        }
+
+        if (!$truck) {
+            return $this->error([], "Truck not found or is not under you!");
+        }
+
+        $truck->driver_user_id = $driver->id;
+        $truck->save();
+
+        return $this->success([
+            new TruckResource($truck),
+        ]);
+    }
 }

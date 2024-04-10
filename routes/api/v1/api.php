@@ -235,6 +235,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
             Route::post('/send-request', [CompanyController::class, 'sendRequest']);
 
 
+            Route::post('/assign-driver-truck', [CompanyController::class, 'assignDriverToTruck']);
 
             // Route::get('/order', [CompanyController::class, 'order']);
             Route::get('/order', [LoadBoardController::class, 'order']);
