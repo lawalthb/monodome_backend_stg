@@ -776,7 +776,7 @@ class CompanyController extends Controller
         $validatedData = $request->validate([
             'user_id' => 'required|integer',
             'moveIt' => 'required|in:Yes,No',
-            'workshop_mode_reason' => 'required_if:moveIt,Yes|in:Yes,No',
+            'workshop_mode_reason' => 'required_if:moveIt,Yes',
         ]);
 
         $key = $validatedData['user_id'];
