@@ -44,6 +44,7 @@ return new class extends Migration
             $table->string('receiver_apartment', 100)->nullable();
             $table->string('receiver_apartment_no', 100)->nullable();
             $table->enum('is_document', ['No', 'Yes'])->default('Yes');
+            $table->enum('is_private', ['No', 'Yes'])->default('No');
             $table->string('document')->nullable();
             $table->text('description')->nullable();
             $table->decimal('weight', 20)->nullable();

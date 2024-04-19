@@ -263,18 +263,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
             Route::get('/move-truck-workshop', [CompanyController::class, 'truckInWorkshop']);
 
 
-
-
                // load package route
             Route::get('/load-package', [LoadPackageController::class, 'index']);
-            Route::post('/load-package', [LoadPackageController::class, 'store']);
+            Route::post('/load-package', [CompanyController::class, 'privateLoadPackageStore']);
             Route::get('/load-package/{id}', [LoadPackageController::class, 'show']);
             Route::post('/load-package/{id}', [LoadPackageController::class, 'update']);
             Route::delete('/load-package/{id}', [LoadPackageController::class, 'destroy']);
 
             // load Bulk route
             Route::get('/load-bulk', [LoadBulkController::class, 'index']);
-            Route::post('/load-bulk', [LoadBulkController::class, 'store']);
+            Route::post('/load-bulk', [LoadBulkController::class, 'privateLoadBulkStore']);
             Route::get('/load-bulk/{id}', [LoadBulkController::class, 'show']);
             Route::post('/load-bulk/{loadBulk}', [LoadBulkController::class, 'update']);
             Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
@@ -433,7 +431,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
 
     Route::get('paystack/webhooks', [PaymentController::class, 'paystackWebhooks']);
-    Route::post('paystack/webhooks', [PaymentController::class, 'webhooks']);
+    Route::post('paystack/webhooks', [PaymentController::class, 'paystackWebhooks']);
     Route::post('nomba/webhooks', [PaymentController::class, 'nombaWebhooks']);
     // wallet route group
     Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {

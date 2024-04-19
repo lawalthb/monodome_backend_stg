@@ -539,7 +539,7 @@ public function loadBoardOrderStatus(Request $request)
 {
 
     $validator = Validator::make($request->all(), [
-        'status' => 'required|in:pending,on_transit,delivered,rejected,complicated',
+        'status' => 'required|in:pending,on_transit,delivered,rejected,delayed',
         'order_no' => 'required|string|exists:load_boards,order_no',
         'status_comment' => 'nullable|string'
     ]);

@@ -84,7 +84,7 @@ class LoadBulkController extends Controller
                 'user_id' => $loadBulk->user_id,
                // 'status' => "Pending",
             ]);
-            
+
         } else {
             $order = $loadBulk->order;
         }
