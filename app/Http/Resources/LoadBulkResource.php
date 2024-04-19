@@ -54,6 +54,7 @@ class LoadBulkResource extends JsonResource
             'description'=>$this->description,
             'vehicle_no'=>$this->vehicle_no,
             'weight'=>$this->weight,
+            'is_private'=>$this->is_private,
             'schedule_date'=>$this->schedule_date,
             "status" => $this->status,
             "loadType" => new LoadTypeResource($this->loadType),
