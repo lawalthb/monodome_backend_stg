@@ -64,6 +64,7 @@ class LoadBulkController extends Controller
             'user_id' => $request->user()->id ,
             'delivery_fee' => $request->delivery_fee,
             'weight' => $request->weight,
+            'is_private' =>"Yes",
         ],
         array_merge($validatedData, ['total_amount' => $totalAmount])
     );
@@ -84,7 +85,7 @@ class LoadBulkController extends Controller
                 'user_id' => $loadBulk->user_id,
                // 'status' => "Pending",
             ]);
-            
+
         } else {
             $order = $loadBulk->order;
         }
