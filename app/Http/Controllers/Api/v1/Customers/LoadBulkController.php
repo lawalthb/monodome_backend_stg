@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Events\LoadTypeCreated;
 use App\Traits\FileUploadTrait;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoadBulkRequest;
@@ -58,13 +59,15 @@ class LoadBulkController extends Controller
 
    // $loadBulk = LoadBulk::updateOrCreate($request->validated());
 
+   $role = Role::where('name', 'Company Transport')->first();
+
     $loadBulk = LoadBulk::firstOrCreate(
         [
             'load_type_id' => $request->load_type_id,
             'user_id' => $request->user()->id ,
             'delivery_fee' => $request->delivery_fee,
             'weight' => $request->weight,
-            'is_private' =>"Yes",
+            'is_private' => $request->user()->hasRole($role) ? "Yes" : "No",
         ],
         array_merge($validatedData, ['total_amount' => $totalAmount])
     );
