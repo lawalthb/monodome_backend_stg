@@ -132,7 +132,6 @@ use App\Models\LoadBoard;
                     'user_id' => $request->user()->id ,
                     'delivery_fee' => $request->delivery_fee,
                     'weight' => $request->weight,
-                    'is_private' =>"Yes",
                 ],
                 array_merge($validatedData, ['total_amount' => $totalAmount])
             );

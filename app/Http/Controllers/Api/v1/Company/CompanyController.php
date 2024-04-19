@@ -7,7 +7,10 @@ use App\Models\Order;
 use App\Models\Truck;
 use App\Models\Driver;
 use App\Models\Company;
+use App\Models\LoadBulk;
+use App\Models\LoadType;
 use App\Models\LoadBoard;
+use App\Models\LoadPackage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
@@ -24,10 +27,12 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CompanyRequest;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\TruckResource;
+use App\Http\Requests\LoadBulkRequest;
 use App\Http\Resources\DriverResource;
 use App\Jobs\SendLoginNotificationJob;
 use App\Http\Resources\CompanyResource;
 use App\Notifications\SendNotification;
+use App\Http\Requests\LoadPackageRequest;
 use App\Http\Resources\LoadBoardResource;
 
 
@@ -854,5 +859,154 @@ class CompanyController extends Controller
         return $this->success([
             new TruckResource($truck),
         ]);
+    }
+
+
+    public function privateLoadPackageStore(LoadPackageRequest $request)
+    {
+        return DB::transaction(function () use ($request) {
+            $loadType = LoadType::find($request->load_type_id);
+            $validatedData = $request->validated();
+
+            // Create a new LoadPackage instance
+            // $loadPackage = $loadType->loadPackages()->create($request->validated());
+
+            $totalAmount = $validatedData['delivery_fee'] + $validatedData['insure_amount'];
+
+            $role = Role::where('name', 'Company Transport')->first();
+
+            $loadPackage = LoadPackage::firstOrCreate(
+                [
+                    'load_type_id' => $request->load_type_id,
+                    'user_id' => $request->user()->id ,
+                    'delivery_fee' => $request->delivery_fee,
+                    'weight' => $request->weight,
+                    'is_private' =>"Yes",
+                ],
+                array_merge($validatedData, ['total_amount' => $totalAmount])
+            );
+
+            if (!$loadPackage->order) {
+                $order = $loadPackage->order()->create([
+                    'order_no' => getNumber(),
+                  //  'driver_id' => 1, // Change this to the actual driver ID
+                    'amount' =>  $totalAmount,
+                    'fee' =>  $validatedData['delivery_fee'],
+                    'user_id' => $loadPackage->user_id,
+                    'payment_status' => "Pending",
+                ]);
+            } else {
+                $order = $loadPackage->order; // If an order already exists, use the existing one
+            }
+
+        // Handle document uploads (if any)
+        if ($request->hasFile('documents')) {
+            $documents = [];
+
+            foreach ($request->file('documents') as $file) {
+
+                $file = $this->uploadFileWithDetails('load_documents', $file);
+                $path = $file['path'];
+                $name = $file['file_name'];
+
+                // Create a record in the load_documents table
+                $document = new LoadDocument([
+                    'name' => $name,
+                    'path' => $path,
+                ]);
+
+                // Associate the document with the LoadBulk
+                $loadPackage->loadDocuments()->save($document);
+            }
+        }
+
+            return $this->success([
+                "loadPackage" => new LoadPackageResource($loadPackage),
+                // "order" => $order, // Include the order in the response
+            ], "Created Successfully");
+        });
+    }
+
+    public function privateLoadBulkStore(LoadBulkRequest $request)
+    {
+
+    $loadType = LoadType::find($request->load_type_id);
+
+    if (!$loadType) {
+        return response()->json(['message' => 'LoadType not found'], 404);
+    }
+    $validatedData = $request->validated();
+
+    $totalAmount = $validatedData['delivery_fee'] + $validatedData['insure_amount'];
+
+
+   // $loadBulk = LoadBulk::updateOrCreate($request->validated());
+
+    $loadBulk = LoadBulk::firstOrCreate(
+        [
+            'load_type_id' => $request->load_type_id,
+            'user_id' => $request->user()->id ,
+            'delivery_fee' => $request->delivery_fee,
+            'weight' => $request->weight,
+            'is_private' =>"Yes",
+        ],
+        array_merge($validatedData, ['total_amount' => $totalAmount])
+    );
+
+    $loadBulk->loadType()->associate($loadType);
+
+    try {
+        $loadBulk->save();
+
+
+        if (!$loadBulk->order) {
+
+            $order = $loadBulk->order()->create([
+                'order_no' => getNumber(),
+                //'driver_id' => 1,
+                'amount' =>  $totalAmount,
+                'fee' =>  $validatedData['delivery_fee'],
+                'user_id' => $loadBulk->user_id,
+               // 'status' => "Pending",
+            ]);
+
+        } else {
+            $order = $loadBulk->order;
+        }
+
+
+    } catch (\Exception $e) {
+        // Handle the error here
+        return response()->json(['message' => 'Error creating LoadBulk', 'error' => $e->getMessage()], 500);
+    }
+
+        // Handle document uploads (if any)
+        if ($request->hasFile('documents')) {
+            $documents = [];
+
+            foreach ($request->file('documents') as $file) {
+
+                $file = $this->uploadFileWithDetails('load_documents', $file);
+                $path = $file['path'];
+                $name = $file['file_name'];
+
+                // Create a record in the load_documents table
+                $document = new LoadDocument([
+                    'name' => $name,
+                    'path' => $path,
+                ]);
+
+                // Associate the document with the LoadBulk
+                $loadBulk->loadDocuments()->save($document);
+            }
+        }
+        //event(new LoadTypeCreated($loadBulk));
+
+        return $this->success(
+            [
+                "loadBulk" => new LoadBulkResource($loadBulk),
+            ],
+            "Created Successfully"
+        );
     }
 }
