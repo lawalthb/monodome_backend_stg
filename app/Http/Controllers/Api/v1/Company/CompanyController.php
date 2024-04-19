@@ -12,6 +12,7 @@ use App\Models\LoadType;
 use App\Models\LoadBoard;
 use App\Models\LoadPackage;
 use Illuminate\Support\Str;
+use App\Models\LoadDocument;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
@@ -34,6 +35,7 @@ use App\Http\Resources\CompanyResource;
 use App\Notifications\SendNotification;
 use App\Http\Requests\LoadPackageRequest;
 use App\Http\Resources\LoadBoardResource;
+use App\Http\Resources\LoadPackageResource;
 
 
 class CompanyController extends Controller
@@ -871,7 +873,8 @@ class CompanyController extends Controller
             // Create a new LoadPackage instance
             // $loadPackage = $loadType->loadPackages()->create($request->validated());
 
-            $totalAmount = $validatedData['delivery_fee'] + $validatedData['insure_amount'];
+            // $totalAmount = $validatedData['delivery_fee'] + $validatedData['insure_amount'];
+            $totalAmount = $validatedData['insure_amount'];
 
             $role = Role::where('name', 'Company Transport')->first();
 
@@ -879,7 +882,7 @@ class CompanyController extends Controller
                 [
                     'load_type_id' => $request->load_type_id,
                     'user_id' => $request->user()->id ,
-                    'delivery_fee' => $request->delivery_fee,
+                    // 'delivery_fee' => $request->delivery_fee,
                     'weight' => $request->weight,
                     'is_private' =>"Yes",
                 ],
@@ -891,7 +894,7 @@ class CompanyController extends Controller
                     'order_no' => getNumber(),
                   //  'driver_id' => 1, // Change this to the actual driver ID
                     'amount' =>  $totalAmount,
-                    'fee' =>  $validatedData['delivery_fee'],
+                    // 'fee' =>  $validatedData['delivery_fee'],
                     'user_id' => $loadPackage->user_id,
                     'payment_status' => "Pending",
                 ]);
@@ -937,7 +940,9 @@ class CompanyController extends Controller
     }
     $validatedData = $request->validated();
 
-    $totalAmount = $validatedData['delivery_fee'] + $validatedData['insure_amount'];
+    $totalAmount =  $validatedData['insure_amount'];
+    // $totalAmount = $validatedData['delivery_fee'] + $validatedData['insure_amount'];
+
 
 
    // $loadBulk = LoadBulk::updateOrCreate($request->validated());
@@ -946,7 +951,7 @@ class CompanyController extends Controller
         [
             'load_type_id' => $request->load_type_id,
             'user_id' => $request->user()->id ,
-            'delivery_fee' => $request->delivery_fee,
+           // 'delivery_fee' => $request->delivery_fee,
             'weight' => $request->weight,
             'is_private' =>"Yes",
         ],
@@ -965,7 +970,7 @@ class CompanyController extends Controller
                 'order_no' => getNumber(),
                 //'driver_id' => 1,
                 'amount' =>  $totalAmount,
-                'fee' =>  $validatedData['delivery_fee'],
+              //  'fee' =>  $validatedData['delivery_fee'],
                 'user_id' => $loadBulk->user_id,
                // 'status' => "Pending",
             ]);

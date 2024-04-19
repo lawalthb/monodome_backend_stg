@@ -53,7 +53,7 @@ class LoadPackageRequest extends FormRequest
             'width' => 'nullable',
             'length' => 'nullable',
             'height' => 'nullable',
-            'delivery_fee' => 'required|numeric',
+            'delivery_fee' => 'nullable|numeric',
             'insure_it' => 'nullable|in:No,Yes',
             'insure_amount' => 'nullable|numeric',
             'is_fragile' => 'nullable|in:No,Yes',
