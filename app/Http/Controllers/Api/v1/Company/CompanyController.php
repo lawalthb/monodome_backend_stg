@@ -1014,4 +1014,46 @@ class CompanyController extends Controller
             "Created Successfully"
         );
     }
+
+
+    public function assignOrderToDriver(Request $request)
+    {
+
+        $request->validate([
+            // 'truck_id' => 'required|exists:users,id',
+            'driver_id' => 'required|exists:users,id',
+            'order_no' => 'required|exists:load_boards,order_no',
+        ]);
+
+        $perPage = $request->input('per_page', 10);
+        $order = Order::where("order_no",$request->order_no)->where("payment_status","Pending")->first();
+
+        if (!$order) {
+            return $this->error([], "Order not found");
+        }
+
+        $driver = User::where("id",$request->driver_id)->where("user_created_by", Auth::user()->id)->first();
+
+        if (!$driver) {
+            return $this->error([], "driver not found!");
+        }
+        $truck = Truck::where("driver_user_id",$driver->id)->first();
+
+        if (!$truck) {
+            return $this->error([], "driver to truck not found!");
+        }
+
+        $order->truck_by_id = $request->truck_id;
+
+        $order->save();
+
+      //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
+
+        // return  new LoadBoardResource($loadBoard);
+
+        return $this->success([
+            new OrderResource($order),
+        ]);
+
+    }
 }

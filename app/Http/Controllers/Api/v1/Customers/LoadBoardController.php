@@ -291,8 +291,6 @@ class LoadBoardController extends Controller
         });
     }
 
-
-
     public function allDriverAssignOrders(Request $request)
     {
 
@@ -306,7 +304,6 @@ class LoadBoardController extends Controller
 
         return  LoadBoardResource::collection($driver);
     }
-
     public function allassignDriverToTruck(Request $request)
     {
 
@@ -320,7 +317,6 @@ class LoadBoardController extends Controller
 
         return  LoadBoardResource::collection($driver);
     }
-
 
     public function removeTruck(Request $request)
     {
