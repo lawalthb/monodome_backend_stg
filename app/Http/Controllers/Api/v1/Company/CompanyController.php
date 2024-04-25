@@ -591,7 +591,7 @@ class CompanyController extends Controller
                 $userQuery->where('full_name', 'like', "%{$key}%")
                            ->where('user_created_by', auth()->id());
             })
-            ->where("have_motor", "No")
+         //   ->where("have_motor", "No")
             ->latest()
             ->paginate($perPage);
 
