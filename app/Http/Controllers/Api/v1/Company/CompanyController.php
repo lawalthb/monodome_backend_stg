@@ -33,6 +33,7 @@ use App\Http\Resources\DriverResource;
 use App\Jobs\SendLoginNotificationJob;
 use App\Http\Resources\CompanyResource;
 use App\Notifications\SendNotification;
+use App\Http\Resources\LoadBulkResource;
 use App\Http\Requests\LoadPackageRequest;
 use App\Http\Resources\LoadBoardResource;
 use App\Http\Resources\LoadPackageResource;
