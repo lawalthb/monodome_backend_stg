@@ -264,12 +264,6 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
             Route::post('/move-truck-workshop', [CompanyController::class, 'moveTruckToWorkshop']);
             Route::get('/move-truck-workshop', [CompanyController::class, 'truckInWorkshop']);
 
-               // load Bulk route
-               Route::get('/load-bulk', [LoadBulkController::class, 'index']);
-               Route::post('/load-bulk', [LoadBulkController::class, 'privateLoadBulkStore']);
-               Route::get('/load-bulk/{id}', [LoadBulkController::class, 'show']);
-               Route::post('/load-bulk/{loadBulk}', [LoadBulkController::class, 'update']);
-               Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
 
                // load package route
             Route::get('/load-package', [LoadPackageController::class, 'index']);
@@ -278,7 +272,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
             Route::post('/load-package/{id}', [LoadPackageController::class, 'update']);
             Route::delete('/load-package/{id}', [LoadPackageController::class, 'destroy']);
 
-
+            // load Bulk route
+            Route::get('/load-bulk', [LoadBulkController::class, 'index']);
+            Route::post('/load-bulk', [CompanyController::class, 'privateLoadBulkStore']);
+            Route::get('/load-bulk/{id}', [LoadBulkController::class, 'show']);
+            Route::post('/load-bulk/{loadBulk}', [LoadBulkController::class, 'update']);
+            Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
 
         });
     });
