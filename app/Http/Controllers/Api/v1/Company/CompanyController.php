@@ -1018,9 +1018,10 @@ class CompanyController extends Controller
 
     public function assignOrderToDriver(Request $request)
     {
+
         $request->validate([
             'driver_id' => 'required|exists:users,id',
-            'order_no' => 'required|exists:load_boards,order_no',
+            'order_no' => 'required',
         ]);
 
         $perPage = $request->input('per_page', 10);
