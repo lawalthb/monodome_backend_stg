@@ -688,6 +688,16 @@ class CompanyController extends Controller
             try {
                 DB::beginTransaction();
 
+                       // Check if the email or phone number already exists
+            $existingUser = User::where('email', $request->input('email'))
+            ->orWhere('phone_number', $request->input('phone_number'))
+            ->first();
+
+            if ($existingUser) {
+            return $this->error('User with the provided email or phone number already exists');
+            }
+
+
                 $user = User::firstOrNew(['email' => $request->input('email')]);
 
 
