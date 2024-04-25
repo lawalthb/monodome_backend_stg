@@ -1065,4 +1065,34 @@ class CompanyController extends Controller
         ]);
 
     }
+
+
+    public function deleteAccount(Request $request) {
+        try {
+            DB::beginTransaction();
+
+            // Find the user
+            $user = User::findOrFail(auth()->id());
+
+            $company = Company::where('user_id',auth()->id())->first();
+
+                if ($company) {
+                    // Delete the company
+                    $company->delete();
+                }
+
+            // Delete the user
+            $user->delete();
+
+            DB::commit();
+
+            return $this->success(null, 'User and associated company deleted successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+
+            return $this->error('An error occurred while deleting the user and associated company.');
+        }
+    }
+
 }

@@ -554,6 +554,34 @@ public function available_drivers(Request $request)
     }
 
 
+    public function deleteUserAndDriver(Request $request) {
+        try {
+            DB::beginTransaction();
+
+            // Find the user
+            $user = User::findOrFail(auth()->id());
+
+            $driver = DriverManger::where('user_id',auth()->id())->first();
+
+                if ($driver) {
+                    // Delete the driver
+                    $driver->delete();
+                }
+
+            // Delete the user
+            $user->delete();
+
+            DB::commit();
+
+            return $this->success(null, 'User and associated driver deleted successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+
+            return $this->error('An error occurred while deleting the user and associated driver.');
+        }
+    }
+
 
 
 }

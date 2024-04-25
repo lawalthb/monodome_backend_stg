@@ -223,6 +223,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
             Route::get('/', [CompanyController::class, 'index']);
 
             Route::get('/my-info', [CompanyController::class, 'my_info']);
+            Route::get('/delete-account', [CompanyController::class, 'deleteAccount']);
 
             Route::get('/drivers', [CompanyController::class, 'driver']);
             Route::get('/truck', [TruckController::class, 'truck']);

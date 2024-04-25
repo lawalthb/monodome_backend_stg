@@ -26,6 +26,7 @@ class LoadPackageResource extends JsonResource
             "insure_amount" => $this->insure_amount,
             "delivery_fee" => $this->delivery_fee,
             "order" => $this->order,
+            "driver" => $this->order->truck,
             'sender_location'=>$this->sender_location,
             'receiver_location'=>$this->receiver_location,
             'distance'=>$this->distance,
