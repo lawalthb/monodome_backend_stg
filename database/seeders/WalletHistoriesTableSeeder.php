@@ -14,16 +14,16 @@ class WalletHistoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('wallet_histories')->delete();
-        
+
         \DB::table('wallet_histories')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 5,
-                'user_id' => 4,
-                'wallet_id' => 2,
+                'user_id' => 3,
+                'wallet_id' => 1,
                 'type' => 'credit',
                 'payment_type' => 'wallet',
                 'paystack_reference' => NULL,
@@ -34,7 +34,7 @@ class WalletHistoriesTableSeeder extends Seeder
                 'created_at' => '2024-03-30 10:36:47',
                 'updated_at' => '2024-03-30 10:36:47',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 6,
                 'user_id' => 3,
@@ -50,7 +50,7 @@ class WalletHistoriesTableSeeder extends Seeder
                 'updated_at' => '2024-03-30 10:36:47',
             ),
         ));
-        
-        
+
+
     }
 }

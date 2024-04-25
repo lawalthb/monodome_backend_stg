@@ -126,7 +126,7 @@ class WalletController extends Controller
           ]);
 
              // Here Find the wallet by its ID
-        $user = User::where('email', $request->email_or_phone)->orWhere('phone', $request->email_or_phone)->first();
+        $user = User::where('email', $request->email_or_phone)->orWhere('phone_number', $request->email_or_phone)->first();
 
 
         if(in_array($user, [ $user->email,  $user->phone])){
@@ -186,7 +186,7 @@ class WalletController extends Controller
 
       $perPage = $request->input('per_page', 10);
 
-      $requestPayment =  RequestPayment::where('receiver_id',auth()->id())->where('status','Pending')->paginate($perPage);
+      $requestPayment =  RequestPayment::where('request_receiver',auth()->id())->where('status','Pending')->paginate($perPage);
 
       if($requestPayment){
 
@@ -204,7 +204,7 @@ class WalletController extends Controller
 
       $perPage = $request->input('per_page', 10);
 
-      $requestPayment =  RequestPayment::where('user_id',auth()->id())->where('status','Pending')->paginate($perPage);
+      $requestPayment =  RequestPayment::where('request_sender',auth()->id())->where('status','Pending')->paginate($perPage);
 
       if($requestPayment){
 
@@ -220,7 +220,7 @@ class WalletController extends Controller
     public function allMoneyRequest(Request $request){
 
         $perPage = $request->input('per_page', 10);
-        $requestPayment =  RequestPayment::where('user_id',auth()->id())->orWhere('receiver_id',auth()->id())->where('status','Pending')->paginate($perPage);
+        $requestPayment =  RequestPayment::where('request_sender',auth()->id())->orWhere('request_receiver',auth()->id())->where('status','Pending')->paginate($perPage);
 
         if($requestPayment){
             return RequestPaymentResource::collection($requestPayment);
