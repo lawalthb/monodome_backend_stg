@@ -1053,6 +1053,7 @@ class CompanyController extends Controller
         }
 
         $order->truck_by_id = $request->truck_id;
+        $order->driver_id = $request->driver_id;
 
         $order->save();
 
