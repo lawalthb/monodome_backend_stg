@@ -1018,9 +1018,7 @@ class CompanyController extends Controller
 
     public function assignOrderToDriver(Request $request)
     {
-
         $request->validate([
-            // 'truck_id' => 'required|exists:users,id',
             'driver_id' => 'required|exists:users,id',
             'order_no' => 'required|exists:load_boards,order_no',
         ]);
