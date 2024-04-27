@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\User;
+use App\Models\Driver;
 use Illuminate\Support\Str;
 use App\Services\WalletService;
 use Illuminate\Validation\Rule;
@@ -52,6 +53,12 @@ class UsersImport implements ToModel,WithHeadingRow ,WithValidation
 
         $user->save();
 
+        //if is driver
+        if ($role->id == 8) {
+           $this->driverData($user, $row);
+        }
+
+
         if ($ref_by !== null) {
             $data = [
                 "amount" => 5,
@@ -65,7 +72,7 @@ class UsersImport implements ToModel,WithHeadingRow ,WithValidation
         }
 
         $message = "Thank you for Registering with " . config('app.name');
-     //   dispatch(new SendLoginNotificationJob($user, $message));
+        dispatch(new SendLoginNotificationJob($user, $message));
 
         // $token = $user->createToken("monodomebackend" . $user->email)->plainTextToken;
 
@@ -79,6 +86,22 @@ class UsersImport implements ToModel,WithHeadingRow ,WithValidation
     }
 
 
+    public function driverData($user, $row){
+
+        $driver = new Driver([
+            'user_id' => $user->id,
+            'state_id' =>$row['state_id'],
+            'street' =>$row['street'],
+            'status' => 'Pending',
+            'lga' =>$row['lga'],
+            'nin_number' =>$row['nin_number'],
+            'license_number' =>$row['license_number'],
+            'have_motor' =>$row['have_motor'],
+            'vehicle_type_id' =>$row['vehicle_type_id'],
+            // Add other agent fields here
+        ]);
+    }
+
      /**
      * Write code on Method
      *
@@ -89,13 +112,21 @@ class UsersImport implements ToModel,WithHeadingRow ,WithValidation
         return [
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string',
             'ref_by' => 'nullable|string|max:10',
             'role_id' => [
                 'required',
                 'numeric',
                 Rule::in([8, 3]),
             ],
+            'state_id' => 'required_if:role_id,8|numeric|max:255',
+            'street' => 'required_if:role_id,8|string|max:255',
+            'lga' => 'required_if:role_id,8|string|max:255',
+            'nin_number' => 'required_if:role_id,8|numeric',
+            'license_number' => 'required_if:role_id,8|numeric',
+            'have_motor' => 'required_if:role_id,8|string|max:255',
+            'vehicle_type_id' => 'required_if:role_id,8|numeric',
         ];
     }
+
 }

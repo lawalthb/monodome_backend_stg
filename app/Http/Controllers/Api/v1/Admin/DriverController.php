@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\User;
+use App\Models\Broker;
 use App\Models\Driver;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Resources\DriverResource;
-use App\Models\Broker;
 use Illuminate\Support\Facades\Validator;
 
 class DriverController extends Controller
@@ -49,6 +51,20 @@ class DriverController extends Controller
         return DriverResource::collection($driver);
     }
 
+
+    public function bulkUpload(Request $request){
+
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,csv,txt'
+        ]);
+
+        try {
+            Excel::import(new UsersImport, $request->file('file'));
+            return $this->success([], "Drivers imported successfully");
+        } catch (\Throwable $th) {
+            return $this->error(['error' => $th->getMessage()]);
+        }
+    }
 
 
     public function pending(Request $request){

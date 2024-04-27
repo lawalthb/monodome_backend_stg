@@ -283,6 +283,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
       Route::group(['prefix' => 'driver'], function () {
         Route::get('/', [DriverController::class, 'index']);
         Route::post('/store', [DriverController::class, 'store']);
+        Route::post('/bulk-upload', [DriverController::class, 'bulkUpload']);
         Route::get('/search', [DriverController::class, 'search']);
         Route::get('/pending', [DriverController::class, 'pending']);
         Route::post('/status/{id}', [DriverController::class, 'setStatus']);
