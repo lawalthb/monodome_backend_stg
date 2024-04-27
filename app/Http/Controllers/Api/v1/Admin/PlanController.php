@@ -54,6 +54,7 @@ class PlanController extends Controller
 
     public function update(Request $request, Plan $plan)
     {
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'price' => 'required|numeric',

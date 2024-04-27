@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\User;
 use Illuminate\Support\Str;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
@@ -14,6 +15,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Jobs\SendLoginNotificationJob;
 use App\Notifications\SendNotification;
 use App\Http\Resources\UserRoleResource;
@@ -183,6 +185,7 @@ class ManageUserController extends Controller
             "Admin profile updated successfully"
         );
     }
+
 
 
     public function pending(Request $request){

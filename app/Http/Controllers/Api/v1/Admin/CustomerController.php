@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\User;
 use App\Models\Order;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderResource;
 use App\Http\Resources\UserResource;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Resources\OrderResource;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
@@ -142,6 +144,21 @@ class CustomerController extends Controller
         return new UserResource($customer);
     }
 
+
+
+    public function bulkUpload(Request $request){
+
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,csv,txt'
+        ]);
+
+        try {
+            Excel::import(new UsersImport, $request->file('file'));
+            return $this->success([], "Users imported successfully");
+        } catch (\Throwable $th) {
+            return $this->error(['error' => $th->getMessage()]);
+        }
+    }
 
     public function update(Request $request, $id)
     {

@@ -16,6 +16,7 @@ use App\Models\LoadDocument;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
+use App\Events\LoadTypeCreated;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;

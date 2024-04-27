@@ -94,6 +94,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
 
         Route::get('/', [ManageUserController::class, 'index']);
         Route::post('/', [ManageUserController::class, 'store']);
+        Route::get('/bulk-upload', [ManageUserController::class, 'pending']);
         Route::get('/pending', [ManageUserController::class, 'pending']);
         Route::get('/{id}', [ManageUserController::class, 'show']);
         Route::delete('/{id}', [ManageUserController::class, 'delete']);
@@ -389,6 +390,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
      Route::group(['prefix' => 'customer'], function () {
         Route::get('/', [CustomerController::class, 'index']);
         Route::post('/store', [CustomerController::class, 'store']);
+        Route::post('/bulk-upload', [CustomerController::class, 'bulkUpload']);
         Route::get('/search', [CustomerController::class, 'search']);
         Route::get('/pending', [CustomerController::class, 'pending']);
         Route::get('/confirmed', [CustomerController::class, 'confirmed']);
