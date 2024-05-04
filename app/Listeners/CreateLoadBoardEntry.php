@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Models\LoadBoard;
+use App\Models\OrderRoutePlan;
 use App\Events\LoadTypeCreated;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -24,10 +25,8 @@ class CreateLoadBoardEntry
      */
     public function handle(LoadTypeCreated $event)
     {
-        // /Log::info($event->loadType);
-
          $loadTypeId = $event->loadType->load_type_id;
-         $userId = Auth::user()->id; // Adjust this according to your LoadType model
+         $userId = Auth::user()->id;
 
          $load_board = new LoadBoard();
          $load_board->user_id = $userId;
@@ -37,5 +36,6 @@ class CreateLoadBoardEntry
          $load_board->order_no = $event->loadType->order->order_no; //getNumber();
          $load_board->status = 'pending'; // Set the initial status
          $load_board->save();
+
     }
 }

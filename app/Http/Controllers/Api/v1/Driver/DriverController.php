@@ -411,6 +411,21 @@ class DriverController extends Controller
         return  LoadBoardResource::collection($driver);
     }
 
+
+    public function routeBuild(Request $request)
+    {
+
+        $perPage = $request->input('per_page', 10);
+        $driver = LoadBoard::where("acceptable_id",auth()->id())->paginate($perPage);
+        //  $order =  Order::where('acceptable_id', $driver->user->id)
+        // ->where('acceptable_type', get_class($driver->user))
+        // ->paginate($perPage);
+
+      //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
+
+        return  LoadBoardResource::collection($driver);
+    }
+
     public function acceptLoad(Request  $request){
 
 
@@ -601,5 +616,7 @@ public function deleteAccount(Request $request) {
         return $this->error('An error occurred while deleting the user and associated driver.');
     }
 }
+
+
 
 }

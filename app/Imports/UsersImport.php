@@ -30,6 +30,7 @@ class UsersImport implements ToModel,WithHeadingRow ,WithValidation
         $user = new User([
             'full_name' => $row['full_name'],
             'email' => $row['email'],
+            'phone_number' => $row['phone_number'],
             'address' => $row['address'] ?? null,
             'password' => Hash::make($row['password']),
             'role_id' => $row['role_id'],

@@ -10,6 +10,7 @@ use App\Models\QrCode;
 use App\Models\LoadBoard;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\OrderRoutePlan;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
@@ -510,7 +511,6 @@ class LoadBoardController extends Controller
         });
     }
 
-
     public function removeOrder(Request $request)
     {
         return DB::transaction(function () use ($request) {
@@ -582,10 +582,21 @@ class LoadBoardController extends Controller
                // $loadBoards->order->acceptable_id = $driver->user->id;
               //  $loadBoards->order->acceptable_type = get_class($driver->user) ;
               //  $loadBoards->order->placed_by_id = auth()->user()->id;
-              $loadBoards->loadable->status = "processing";
+               $loadBoards->loadable->status = "processing";
                 $loadBoards->order->save();
 
-                $message ="You have been accept order with number ". $loadBoards->order->order_no.
+
+                  // Build route for this order and driver with address
+                $orderRoutePlan = new OrderRoutePlan();
+                $orderRoutePlan->acceptable_id = $loadBoards->acceptable_id;
+                $orderRoutePlan->order_no = $loadBoards->order_no;
+                $addresses = $loadBoards->loadable->computeAddress();
+                $orderRoutePlan->data = json_encode($addresses);
+                $orderRoutePlan->name = $loadBoards->load_type_name;
+                $orderRoutePlan->status = 'Pending'; // Set the initial status
+                $orderRoutePlan->save();
+
+                $message ="You have accept order with number ". $loadBoards->order->order_no.
                 " to delivery FROM: ".$loadBoards->order->loadable->sender_location.", TO: ".$loadBoards->order->loadable->receiver_location;
                 $user->notify(new SendNotification($user, $message));
 

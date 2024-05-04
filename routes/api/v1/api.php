@@ -348,6 +348,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
             Route::post('/profile/change-image', [DriverController::class, 'changeImage']);
             Route::post('/profile/update-details', [DriverController::class, 'updateProfile']);
             Route::get('/order', [DriverController::class, 'order']);
+            Route::get('/order/build-route', [DriverController::class, 'routeBuild']);
             Route::post('/accept-order', [LoadBoardController::class, 'acceptOrder']);
             Route::post('/reject-order', [DriverController::class, 'rejectOrder']);
             Route::post('/upload-photo/{order_no}', [DriverController::class, 'upload_photo']);
