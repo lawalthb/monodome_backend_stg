@@ -427,7 +427,7 @@ class DriverController extends Controller
         $request->validate([
             'id' => 'required|exists:order_route_plans,id',
             'position' => 'required|integer',
-            'status' => 'required|in:Pending,Confirmed,Processing,Waiting,out_for_delivery,canceled,returned,Delivered,awaiting_confirmation'
+          //  'status' => 'required|in:Pending,Confirmed,Processing,Waiting,out_for_delivery,canceled,returned,Delivered,awaiting_confirmation'
         ]);
 
         $route = OrderRoutePlan::where("acceptable_id",auth()->id())->where("id",$request->id)->first();
@@ -437,7 +437,7 @@ class DriverController extends Controller
         }
 
         $route->position = $request->position;
-        $route->status = $request->status;
+     //   $route->status = $request->status;
         $route->save();
 
         return response()->json(['message' => 'Route updated successfully', 'route' => $route], 200);
