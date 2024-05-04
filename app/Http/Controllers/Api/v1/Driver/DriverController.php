@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use App\Models\LoadDocument;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
+use App\Models\OrderRoutePlan;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Illuminate\Validation\Rule;
@@ -415,15 +416,18 @@ class DriverController extends Controller
     public function routeBuild(Request $request)
     {
 
-        $perPage = $request->input('per_page', 10);
-        $driver = LoadBoard::where("acceptable_id",auth()->id())->paginate($perPage);
-        //  $order =  Order::where('acceptable_id', $driver->user->id)
-        // ->where('acceptable_type', get_class($driver->user))
-        // ->paginate($perPage);
+        $route = OrderRoutePlan::where("acceptable_id",auth()->id())->orderby('position')->get();
 
-      //  $order =  Order::where('driver_id', auth()->id())->paginate($perPage);
+        return  $route;
+    }
 
-        return  LoadBoardResource::collection($driver);
+
+    public function storeRouteBuild(Request $request)
+    {
+
+        $route = OrderRoutePlan::where("acceptable_id",auth()->id())->orderby('position')->get();
+
+        return  $route;
     }
 
     public function acceptLoad(Request  $request){

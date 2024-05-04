@@ -11,4 +11,8 @@ class OrderRoutePlan extends Model
 
     public $guarded = [];
 
+    protected $casts = [
+        'data' => 'array',
+    ];
+
 }
