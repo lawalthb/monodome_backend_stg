@@ -424,10 +424,23 @@ class DriverController extends Controller
 
     public function storeRouteBuild(Request $request)
     {
+        $request->validate([
+            'id' => 'required|exists:order_route_plans,id',
+            'position' => 'required|integer',
+            'status' => 'required|in:Pending,Confirmed,Processing,Waiting,out_for_delivery,canceled,returned,Delivered,awaiting_confirmation'
+        ]);
 
-        $route = OrderRoutePlan::where("acceptable_id",auth()->id())->orderby('position')->get();
+        $route = OrderRoutePlan::where("acceptable_id",auth()->id())->where("id",$request->id)->first();
 
-        return  $route;
+        if (!$route) {
+            return response()->json(['error' => 'Route not found'], 404);
+        }
+
+        $route->position = $request->position;
+        $route->status = $request->status;
+        $route->save();
+
+        return response()->json(['message' => 'Route updated successfully', 'route' => $route], 200);
     }
 
     public function acceptLoad(Request  $request){
