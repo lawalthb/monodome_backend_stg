@@ -18,6 +18,11 @@ class Tracking extends Model
         return $this->belongsTo(Order::class,'order_no','order_no');
     }
 
+    public function driver(){
+
+        return $this->belongsTo(Driver::class,'driver_id','user_id');
+    }
+
 
     protected static function boot()
     {

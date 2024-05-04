@@ -9,7 +9,7 @@ class TrackingController extends Controller
 {
     public function index()
     {
-        return Tracking::with('order')->latest()->get();
+        return Tracking::with(['order','driver'])->latest()->get();
     }
 
     public function show($id)
