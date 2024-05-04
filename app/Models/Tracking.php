@@ -13,6 +13,11 @@ class Tracking extends Model
     public $guarded = [];
 
 
+    public function order(){
+
+        return $this->belongsTo(Order::class,'order_no','order_no');
+    }
+
 
     protected static function boot()
     {
