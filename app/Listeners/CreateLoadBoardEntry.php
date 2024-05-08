@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Models\Tracking;
 use App\Models\LoadBoard;
 use App\Models\OrderRoutePlan;
 use App\Events\LoadTypeCreated;
@@ -36,6 +37,20 @@ class CreateLoadBoardEntry
          $load_board->order_no = $event->loadType->order->order_no; //getNumber();
          $load_board->status = 'pending'; // Set the initial status
          $load_board->save();
+
+
+         $data = [
+            'order_no' => $event->loadType->order->order_no,
+            'comment' => "Payment success and Packaging load",
+            'time' => now(),
+            'longitude' => null,
+            'latitude' => null,
+            'location' => null,
+            'driver_id' => null,
+            'status' => 'pending',
+        ];
+
+        $tracking = Tracking::create($data);
 
     }
 }

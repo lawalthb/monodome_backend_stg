@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('trackings', function (Blueprint $table) {
             $table->id();
             $table->string('tracking_id');
-            $table->string('driver_id');
+            $table->string('driver_id')->nullable();
             $table->string('order_no');
             $table->text('comment')->nullable();
             $table->dateTime('time')->nullable();

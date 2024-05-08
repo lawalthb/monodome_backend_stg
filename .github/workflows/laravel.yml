@@ -50,10 +50,10 @@ jobs:
           git fetch origin main
           git reset --hard origin/main
           # composer update
-          # php artisan migrate:fresh --seed --force
-          # php artisan optimize:clear
-          # php artisan route:clear
-          # php artisan config:clear
+          php artisan migrate:fresh --seed --force
+          php artisan optimize:clear
+          php artisan route:clear
+          php artisan config:clear
           #pwd
           #ls -la
           #chmod +x deploy.sh
