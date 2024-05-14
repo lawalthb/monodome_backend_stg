@@ -44,6 +44,8 @@ class AuthController extends Controller
                 'full_name' => $request->full_name,
                 'email' => $request->email,
                 'address' => $request->address,
+                'gender' => $request->gender,
+                'date_of_birth' => $request->date_of_birth,
                 'password' => Hash::make($request->password),
                 'role_id' => $request->role_id,
                 'ref_by' => $ref_by ? $ref_by->id : null,
