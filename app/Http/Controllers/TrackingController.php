@@ -12,7 +12,7 @@ class TrackingController extends Controller
         return Tracking::with(['order','driver'])->latest()->get();
     }
 
-    public function show($id)
+    public function show(string $id)
     {
         return Tracking::with('order')->where("order_no",$id)->orWhere("tracking_id",$id)->first();
     }
