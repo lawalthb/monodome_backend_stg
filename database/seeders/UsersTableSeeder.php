@@ -210,14 +210,14 @@ class UsersTableSeeder extends Seeder
 
 
         //driver
-       Driver::factory()->create([
-            'user_id' => 4,
-        ]);
+    //    Driver::factory()->create([
+    //         'user_id' => 4,
+    //     ]);
 
-         //driver manager
-         DriverManger::factory()->create([
-          'user_id' => 5,
-         ]);
+    //      //driver manager
+    //      DriverManger::factory()->create([
+    //       'user_id' => 5,
+    //      ]);
 
         User::find(1)->assignRole('Super Admin');
         User::find(2)->assignRole('admin');
@@ -365,9 +365,10 @@ class UsersTableSeeder extends Seeder
                 'referral_code' => generateReferralCode(),
             ]);
 
+            $user->save();
 
             // Create an agent and associate it with the user
-            $agent = Driver::factory()->create([
+             Driver::factory()->create([
                 'user_id' => $user->id,
             ]);
 
@@ -403,9 +404,10 @@ class UsersTableSeeder extends Seeder
                 'referral_code' => generateReferralCode(),
             ]);
 
+            $user->save();
 
             // Create an shipping company and associate it with the user
-            $agent = ShippingCompany::factory()->create([
+            ShippingCompany::factory()->create([
                 'user_id' => $user->id,
             ]);
 
@@ -415,6 +417,9 @@ class UsersTableSeeder extends Seeder
                'loadable_id' => $agent->id,
                'loadable_type' => 'App\\Models\\ShippingCompany',
            ]);
+
+           $user->save();
+
         }
 
        // driver manager
@@ -435,6 +440,7 @@ class UsersTableSeeder extends Seeder
                'referral_code' => generateReferralCode(),
            ]);
 
+           $user->save();
 
            // Create an driver manager and associate it with the user
            $agent = DriverManger::factory()->create([
@@ -448,6 +454,9 @@ class UsersTableSeeder extends Seeder
               'loadable_id' => $agent->id,
               'loadable_type' => 'App\\Models\\DriverManger',
           ]);
+
+          $user->save();
+
        }
 
          // Company Transport

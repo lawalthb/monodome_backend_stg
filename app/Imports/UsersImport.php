@@ -101,6 +101,9 @@ class UsersImport implements ToModel,WithHeadingRow ,WithValidation
             'vehicle_type_id' =>$row['vehicle_type_id'],
             // Add other agent fields here
         ]);
+
+        $driver->save();
+
     }
 
      /**

@@ -46,7 +46,7 @@ class DriverController extends Controller
             });
         }
 
-        $driver = $driver->where('status','Confirmed')->latest()->paginate($perPage);
+        $driver = $driver->where('status','Confirmed')->orWhere('status','Pending')->latest()->paginate($perPage);
 
         return DriverResource::collection($driver);
     }
