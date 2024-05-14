@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('user_created_by')->nullable();
             $table->string('ref_by')->nullable();
-            $table->string('gender')->nullable();
+            $table->string('date_of_birth')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->string('referral_code')->nullable();
             $table->string('role_id')->nullable();
