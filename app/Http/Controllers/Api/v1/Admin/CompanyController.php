@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\Company;
+use App\Models\LoadBulk;
+use App\Models\LoadPackage;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
@@ -10,7 +12,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CompanyResource;
+use App\Http\Resources\LoadBulkResource;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\LoadPackageResource;
 
 class CompanyController extends Controller
 {
@@ -200,10 +204,6 @@ class CompanyController extends Controller
        return CompanyResource::collection($shippingCompany);
    }
 
-
-
-
-
     public function destroy($companyId)
     {
         try {
@@ -252,5 +252,34 @@ class CompanyController extends Controller
         $company->save();
 
         return $this->success(['company'=> new CompanyResource($company)], 'Company status updated successfully');
+    }
+
+    public function privateLoadBulkGet()
+    {
+        $key = request()->input('search');
+        $size = request()->input('size') ?? 20;
+
+        $loadBulk = LoadBulk::where('user_id', auth()->id())->where("is_private", "Yes")->where(function ($q) use ($key) {
+            $q->where('sender_name', 'like', "%{$key}%")
+                ->orWhere('sender_email', 'like', "%{$key}%");
+        })->latest()->paginate($size);
+
+
+        return LoadBulkResource::collection($loadBulk);
+        // return response()->json($loadBulk);
+    }
+
+    public function privateLoadPackageGet()
+    {
+        $key = request()->input('search');
+
+        $loadPackages = LoadPackage::where('user_id', auth()->id())->where("is_private", "Yes")->where(function ($q) use ($key) {
+            $q->where('sender_name', 'like', "%{$key}%")
+            ->orWhere('sender_email', 'like', "%{$key}%");
+        })->latest()->paginate();
+
+
+       return LoadPackageResource::collection($loadPackages);
+       // return response()->json($loadPackages);
     }
 }

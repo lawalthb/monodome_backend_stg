@@ -95,8 +95,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
             Route::get('/top-referrer', [ManageUserController::class, 'getTopReferrer']);
             Route::get('/users-with-referrers', [ManageUserController::class, 'getUsersWithReferrers']);
            Route::get('/user/{userId}', [ManageUserController::class, 'getTotalUsersByReferrer']);
-           Route::get('/getUplineByUserId/{userId}', [ManageUserController::class, 'getUplineByUserId']);  // New route for fetching upline
-
+           Route::get('/getUplineByUserId/{userId}', [ManageUserController::class, 'getUplineByUserId']);
 
         });
         Route::group(['prefix' => 'user'], function () {
@@ -362,6 +361,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
     // company-transporter route group
     Route::group(['prefix' => 'company-transporter'], function () {
     Route::get('/', [CompanyController::class, 'index']);
+    Route::get('/private-load-bulk', [CompanyController::class, 'privateLoadBulkGet']);
+    Route::get('/private-load-package', [CompanyController::class, 'privateLoadPackageGet']);
     Route::post('/store', [CompanyController::class, 'store']);
     Route::get('/search', [CompanyController::class, 'search']);
     Route::get('/pending', [CompanyController::class, 'pending']);
