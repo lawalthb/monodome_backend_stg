@@ -591,7 +591,7 @@ class LoadBoardController extends Controller
                 $orderRoutePlan->acceptable_id = $loadBoards->acceptable_id;
                 $orderRoutePlan->order_no = $loadBoards->order_no;
                 $addresses = $loadBoards->loadable->computeAddress();
-                $orderRoutePlan->data = json_encode($addresses);
+                $orderRoutePlan->data = $addresses;
                 $orderRoutePlan->name = $loadBoards->load_type_name;
                 $orderRoutePlan->status = 'Pending'; // Set the initial status
                 $orderRoutePlan->save();
