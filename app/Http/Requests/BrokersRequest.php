@@ -27,6 +27,8 @@ class BrokersRequest extends FormRequest
           //  'isNew' => 'required|in:Yes,No',
             'phone_number' => 'required|numeric|min:10|unique:users,phone_number',
             'street' => 'required|string',
+            'date_of_birth' => 'required|string',
+            'gender' => 'required|string|in:male,female',
             'state_id' => 'required|exists:states,id',
             'lga' => 'required|string',
             'nin_number' => 'required|string',

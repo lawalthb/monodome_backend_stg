@@ -26,6 +26,8 @@ class TruckFormRequest extends FormRequest
         'phone_number' => 'required|string|unique:truck_owners,phone_number',
         'email' => 'required|email|unique:users,email',
         'street' => 'required|string',
+        'date_of_birth' => 'required|string',
+        'gender' => 'required|string|in:male,female',
         'state_id' => 'required|exists:states,id',
         'lga' => 'required|numeric',
         'truck_name' => 'required|string',
