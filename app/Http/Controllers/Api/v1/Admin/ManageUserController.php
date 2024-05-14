@@ -303,12 +303,21 @@ class ManageUserController extends Controller
      * @param  int  $userId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getTotalUsersByReferrer($userId)
+    public function getTotalUsersByReferrer($userId, Request $request)
     {
-        $totalUsers = User::where('ref_by', $userId)->count();
+        // Fetch users referred by the given user
+        $users = User::where('ref_by', $userId)->paginate(10);
+
+        // Optionally, you can customize the pagination size via the query string
+        // $perPage = $request->query('per_page', 10);
+        // $users = User::where('ref_by', $userId)->paginate($perPage);
 
         return response()->json([
-            'total_users' => $totalUsers,
+            'total_user' => $users->total(),
+            'current_page' => $users->currentPage(),
+            'last_page' => $users->lastPage(),
+            'per_page' => $users->perPage(),
+            'users' => $users->items(),
         ]);
     }
 
@@ -331,8 +340,32 @@ class ManageUserController extends Controller
         }
 
         return response()->json([
-            'top_referrer' => $topReferrerUser,
+            'top_referrer' => new UserResource($topReferrerUser),
             'total_referrals' => $topReferrer ? $topReferrer->total : 0,
         ]);
+    }
+
+    public function getUplineByUserId($userId)
+    {
+        // Fetch the user by ID
+        $user = User::find($userId);
+
+        // Check if the user exists
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found.'
+            ], 404);
+        }
+
+        // Fetch the upline (referrer) based on the ref_by field
+        $upline = User::find($user->ref_by);
+
+        if (!$upline) {
+            return response()->json([
+                'message' => 'Upline not found.'
+            ], 404);
+        }
+
+        return response()->json($upline);
     }
 }

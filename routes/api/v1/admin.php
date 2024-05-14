@@ -92,8 +92,10 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
 
         Route::group(['prefix' => 'referrer'], function () {
 
-           // Route::get('/user/{userId}', [ManageUserController::class, 'getTotalUsersByReferrer']);
-            Route::get('/user/top-referrer', [ManageUserController::class, 'getTopReferrer']);
+            Route::get('/top-referrer', [ManageUserController::class, 'getTopReferrer']);
+           Route::get('/user/{userId}', [ManageUserController::class, 'getTotalUsersByReferrer']);
+           Route::get('/getUplineByUserId/{userId}', [ManageUserController::class, 'getUplineByUserId']);  // New route for fetching upline
+
 
         });
         Route::group(['prefix' => 'user'], function () {
