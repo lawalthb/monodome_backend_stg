@@ -18,6 +18,7 @@ class DriverFactory extends Factory
     {
         return [
             'uuid' => fake()->uuid(),
+            'user_id' => 4,
             'state_id' => rand(1, 30),
             'type' => fake()->randomElement(['driver', 'drives']),
             'have_motor' => fake()->randomElement(['Yes', 'No']),
