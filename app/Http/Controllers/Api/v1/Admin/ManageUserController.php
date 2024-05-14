@@ -297,6 +297,17 @@ class ManageUserController extends Controller
     }
 
 
+    public function getUsersWithReferrers()
+    {
+        // Retrieve users with their number of referrers
+        $users = User::whereNotNull('ref_by')
+            ->withCount('referrers')
+            ->get();
+
+        return response()->json($users);
+    }
+
+
     /**
      * Get the total number of users referred by a specific user.
      *

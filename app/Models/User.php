@@ -67,6 +67,11 @@ class User extends Authenticatable implements Auditable
         return $this->hasOne(Driver::class);
     }
 
+    public function referrers()
+    {
+        return $this->hasMany(User::class, 'ref_by', 'id');
+    }
+
     public function driverManager()
     {
         return $this->belongsTo(DriverManger::class);
