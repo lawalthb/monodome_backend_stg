@@ -415,7 +415,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
            Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);
            Route::get('/driver-orders/{user}', [LoadBoardController::class, 'allUserOrder']);
            // Route::get('/show/{id}', [DriverMangerController::class, 'show']);
-           // Route::post('/update/{id}', [DriverMangerController::class, 'update']);
+           Route::post('/update/{id}', [DriverMangerController::class, 'update']);
            // Route::delete('/destroy/{id}', [DriverMangerController::class, 'destroy']);
 
 

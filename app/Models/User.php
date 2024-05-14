@@ -67,6 +67,11 @@ class User extends Authenticatable implements Auditable
         return $this->hasOne(Driver::class);
     }
 
+    public function driverManager()
+    {
+        return $this->belongsTo(DriverManger::class);
+    }
+
     public function truck()
     {
         return $this->hasOne(Truck::class);

@@ -156,4 +156,30 @@ class SpecializedShipmentController extends Controller
         return $this->success(['specialized'=> new LoadSpecializedResource($specialized)], 'specialized status updated successfully');
     }
 
+
+    public function price(Request $request, $specializedId) {
+
+        $validator = Validator::make($request->all(), [
+            'total_amount' => ['required', 'numeric'],
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error('', $validator->errors()->first(), 422);
+        }
+
+        $specialized = LoadSpecialized::find($specializedId);
+
+        if (!$specialized) {
+
+            return $this->error('', 'specialized not found', 422);
+
+        }
+
+        // Update the status
+        $specialized->total_amount = $request->total_amount;
+        $specialized->save();
+
+        return $this->success(['specialized'=> new LoadSpecializedResource($specialized)], 'specialized Total Amount updated successfully');
+    }
+
 }

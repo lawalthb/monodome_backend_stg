@@ -29,7 +29,7 @@ class DriverManagerController extends Controller
             })->orWhere('status', 'like', "%{$key}%")->orWhere('business_name', 'like', "%{$key}%");
         })
         ->withCount('user_created_by')
-        ->where('status','Confirmed') // Eager load the user_created_by relationship and count
+      //  ->where('status','Confirmed') // Eager load the user_created_by relationship and count
         ->latest()
         ->paginate($perPage);
 
@@ -87,7 +87,7 @@ class DriverManagerController extends Controller
 
         if (!$Driver) {
 
-            return $this->error('', 'Driver not found', 422);
+            return $this->error('', 'Driver manager not found', 422);
 
         }
 
@@ -97,38 +97,47 @@ class DriverManagerController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Validate the incoming request
+        $validatedData = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id . ',id',
+            'phone_number' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+        ]);
+
         try {
             DB::beginTransaction();
 
-            $Driver = DriverManger::findOrFail($id);
+            // Find the DriverManager by ID
+            $driverManager = DriverManger::findOrFail($id);
 
-            // Update Driver information
-          //  $Driver->phone_number = $request->input('phone_number');
-            $Driver->street = $request->input('address');
-            $Driver->save();
+            // Update DriverManager information
+            $driverManager->street = $validatedData['address'];
+            $driverManager->save();
 
-            // Update Driver information
-            if ($Driver->user) {
-                // If the user has an associated Driver, update its information
-            $user = $Driver->user;
-            $user->full_name = $request->input('full_name');
-            $user->email = $request->input('email');
-            $user->address = $request->input('address');
-            $user->phone_number = $request->input('phone_number');
-            $user->save();
-
+            // Check if the driver manager has an associated user and update the user details
+            if ($driverManager->user) {
+                $user = $driverManager->user;
+                $user->full_name = $validatedData['full_name'];
+                $user->email = $validatedData['email'];
+                $user->address = $validatedData['address'];
+                $user->phone_number = $validatedData['phone_number'];
+                $user->save();
+            } else {
+                throw new \Exception("Associated user not found for the Driver Manager with ID {$id}");
             }
 
-            DB::commit();
+           DB::commit();
 
-            return $this->success(new DriverMangerResource($user->Driver), 'Driver updated successfully');
+            return $this->success(new DriverMangerResource($driverManager), 'Driver Manager and user updated successfully');
         } catch (\Exception $e) {
-            DB::rollBack();
+           DB::rollBack();
             Log::error($e->getMessage());
 
-            return $this->error('An error occurred while updating the Driver and user.');
+            return $this->error('An error occurred while updating the Driver Manager and user.');
         }
     }
+
 
 
     public function destroy($driverID)
