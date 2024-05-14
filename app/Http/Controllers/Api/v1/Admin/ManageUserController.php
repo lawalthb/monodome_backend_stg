@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
@@ -293,5 +294,45 @@ class ManageUserController extends Controller
 
             return response()->json(['message' => 'User not found!'], 404);
         }
+    }
+
+
+    /**
+     * Get the total number of users referred by a specific user.
+     *
+     * @param  int  $userId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTotalUsersByReferrer($userId)
+    {
+        $totalUsers = User::where('ref_by', $userId)->count();
+
+        return response()->json([
+            'total_users' => $totalUsers,
+        ]);
+    }
+
+    /**
+     * Get the top referrer based on the number of users referred.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTopReferrer()
+    {
+        $topReferrer = User::select('ref_by', DB::raw('count(*) as total'))
+            ->groupBy('ref_by')
+            ->orderByDesc('total')
+            ->first();
+
+        if ($topReferrer && $topReferrer->ref_by) {
+            $topReferrerUser = User::find($topReferrer->ref_by);
+        } else {
+            $topReferrerUser = null;
+        }
+
+        return response()->json([
+            'top_referrer' => $topReferrerUser,
+            'total_referrals' => $topReferrer ? $topReferrer->total : 0,
+        ]);
     }
 }

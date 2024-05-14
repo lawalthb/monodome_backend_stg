@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\Plan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -34,6 +35,15 @@ class PlanController extends Controller
     public function show(Plan $plan)
     {
         return $plan;
+    }
+
+    public function getTotal(Plan $plan)
+    {
+        // Count the users that have the given plan_id
+        $totalUsers = User::where('plan_id', $plan->id)->count();
+
+        return response()->json(['message' => 'Total User on this plan', 'amount' => $totalUsers], 200);
+
     }
 
     public function status(Request $request,Plan $plan)

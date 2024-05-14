@@ -90,20 +90,26 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
         });
 
 
-        Route::group(['prefix' => 'user'], function () {
+        Route::group(['prefix' => 'referrer'], function () {
 
-        Route::get('/', [ManageUserController::class, 'index']);
-        Route::post('/', [ManageUserController::class, 'store']);
-        Route::get('/bulk-upload', [ManageUserController::class, 'pending']);
-        Route::get('/pending', [ManageUserController::class, 'pending']);
-        Route::get('/{id}', [ManageUserController::class, 'show']);
-        Route::delete('/{id}', [ManageUserController::class, 'delete']);
-        Route::post('/update/{id}', [ManageUserController::class, 'update']);
-        Route::get('/user-with-role', [ManageUserController::class, 'user_role_auth']);
-        Route::get('/user-with-role/{user}', [ManageUserController::class, 'user_role']);
-        Route::post('/change-password/{user}', [ManageUserController::class, 'change_password']);
-        Route::post('/status/{user}', [ManageUserController::class, 'status']);
-    });
+           // Route::get('/user/{userId}', [ManageUserController::class, 'getTotalUsersByReferrer']);
+            Route::get('/user/top-referrer', [ManageUserController::class, 'getTopReferrer']);
+
+        });
+        Route::group(['prefix' => 'user'], function () {
+            Route::get('/', [ManageUserController::class, 'index']);
+            Route::post('/', [ManageUserController::class, 'store']);
+            Route::get('/bulk-upload', [ManageUserController::class, 'pending']);
+            Route::get('/pending', [ManageUserController::class, 'pending']);
+            Route::get('/{id}', [ManageUserController::class, 'show']);
+            Route::delete('/{id}', [ManageUserController::class, 'delete']);
+            Route::post('/update/{id}', [ManageUserController::class, 'update']);
+            Route::get('/user-with-role', [ManageUserController::class, 'user_role_auth']);
+            Route::get('/user-with-role/{user}', [ManageUserController::class, 'user_role']);
+            Route::post('/change-password/{user}', [ManageUserController::class, 'change_password']);
+            Route::post('/status/{user}', [ManageUserController::class, 'status']);
+        });
+
 
       //for employee
       Route::group(['prefix' => 'employee'], function () {
@@ -118,14 +124,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
         });
 
 
-    Route::group(['prefix' => 'plans'], function () {
-        Route::get('/', [PlanController::class, 'index']);
-        Route::post('/', [PlanController::class, 'store']);
-        Route::get('/{plan}', [PlanController::class, 'show']);
-        Route::put('/{plan}', [PlanController::class, 'update']);
-        Route::delete('/{plan}', [PlanController::class, 'destroy']);
-        Route::post('/status/{plan}', [PlanController::class, 'status']);
-    });
+        Route::group(['prefix' => 'plans'], function () {
+            Route::get('/', [PlanController::class, 'index']);
+            Route::post('/', [PlanController::class, 'store']);
+            Route::get('/{plan}', [PlanController::class, 'show']);
+            Route::put('/{plan}', [PlanController::class, 'update']);
+            Route::delete('/{plan}', [PlanController::class, 'destroy']);
+            Route::get('/{plan}/getTotal', [PlanController::class, 'getTotal']); // Corrected route
+            Route::post('/status/{plan}', [PlanController::class, 'status']);
+        });
+
     //for orders
     Route::group(['prefix' => 'orders'], function () {
         Route::get('/', [OrderController::class, 'index']);
