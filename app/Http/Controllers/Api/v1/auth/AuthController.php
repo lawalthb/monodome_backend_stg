@@ -107,7 +107,6 @@ class AuthController extends Controller
         $credentials = $request->only(['email', 'password']);
 
         $user = User::where("email",$request->email)->first();
-
         if(!$user){
 
             return $this->error(['error' => "Email address not found!"],'Not found');
