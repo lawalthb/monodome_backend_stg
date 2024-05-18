@@ -113,7 +113,6 @@ class AuthController extends Controller
         }
 
         if($user->status == "Banned"){
-
             $message ="Your ".config('app.name'). " account has been Banned!. please contact ".config('app.name'). " admin for clarification ";
           //   // $user->notify(new SendNotification($user, $message));
               dispatch(new SendLoginNotificationJob($user, $message));
