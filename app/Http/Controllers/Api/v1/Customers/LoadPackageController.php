@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api\v1\Customers;
 
 use App\Models\User;
@@ -20,7 +21,7 @@ use App\Http\Resources\LoadPackageResource;
 use App\Http\Resources\OrderResource;
 use App\Models\LoadBoard;
 
-    class LoadPackageController extends Controller
+class LoadPackageController extends Controller
 {
     use FileUploadTrait, ApiStatusTrait;
     public function index()
@@ -30,12 +31,12 @@ use App\Models\LoadBoard;
 
         $loadPackages = LoadPackage::where('user_id', auth()->id())->where(function ($q) use ($key) {
             $q->where('sender_name', 'like', "%{$key}%")
-            ->orWhere('sender_email', 'like', "%{$key}%");
+                ->orWhere('sender_email', 'like', "%{$key}%");
         })->latest()->paginate();
 
 
-       return LoadPackageResource::collection($loadPackages);
-       // return response()->json($loadPackages);
+        //eturn LoadPackageResource::collection($loadPackages);
+        return response()->json($loadPackages);
     }
 
     public function show($id)
@@ -52,66 +53,65 @@ use App\Models\LoadBoard;
         ];
         $result = payStack_checkout($fields);
 
-                if ($result->status == true) {
-                    return $this->success([
-                        "paystack" => $result->data,
-                        "loadPackage" => new LoadPackageResource($loadPackage),
-                    ], "Successfully");
-                } else {
-                    return $this->error(null, "Paystack key not found", 404);
-                }
+        if ($result->status == true) {
+            return $this->success([
+                "paystack" => $result->data,
+                "loadPackage" => new LoadPackageResource($loadPackage),
+            ], "Successfully");
+        } else {
+            return $this->error(null, "Paystack key not found", 404);
+        }
     }
 
 
-    public function delivery_fee(Request $request, Order $order){
+    public function delivery_fee(Request $request, Order $order)
+    {
 
-    //     return  $LoadBoard
-    //   return  $loadable = $LoadBoard->loadable;
+        //     return  $LoadBoard
+        //   return  $loadable = $LoadBoard->loadable;
 
         $order->fee += $request->increase_amount;
         $order->amount += $request->increase_amount;
 
-        if($order->save()){
+        if ($order->save()) {
 
-                // Log::info("Save delivery_fee",$LoadBoard->delivery_fee);
-                // Log::info("Save total_amount",$LoadBoard->total_amount);
+            // Log::info("Save delivery_fee",$LoadBoard->delivery_fee);
+            // Log::info("Save total_amount",$LoadBoard->total_amount);
 
-                $order->loadable->delivery_fee = $order->fee;
-                $order->loadable->total_amount = $order->amount;
-                $order->loadable->save();
+            $order->loadable->delivery_fee = $order->fee;
+            $order->loadable->total_amount = $order->amount;
+            $order->loadable->save();
 
-                Log::info($order->amount*100);
-                Log::info($order->id);
-
-
-                $customFields = [
-                    [
-                        "order_no" => $order->id,
-                        "from" => "order"
-                    ],
-                ];
-
-                $fields = [
-                    'email' => $order->user->email,
-                    'amount' => $order->amount*100,
-                    "metadata"  => json_encode(['id' => $order->id,'custom_fields' => $customFields]),
-                    'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
-                ];
+            Log::info($order->amount * 100);
+            Log::info($order->id);
 
 
-                // call the paystack api
-                $result = payStack_checkout($fields);
+            $customFields = [
+                [
+                    "order_no" => $order->id,
+                    "from" => "order"
+                ],
+            ];
 
-                return $this->success([
-                    "paystack" => $result->data,
-                    "loadPackage" => new OrderResource($order),
-                ], "Successfully");
+            $fields = [
+                'email' => $order->user->email,
+                'amount' => $order->amount * 100,
+                "metadata"  => json_encode(['id' => $order->id, 'custom_fields' => $customFields]),
+                'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
+            ];
 
-            }else{
 
-                return $this->error(null, "unable to update delivery fee", 404);
+            // call the paystack api
+            $result = payStack_checkout($fields);
 
-            }
+            return $this->success([
+                "paystack" => $result->data,
+                "loadPackage" => new OrderResource($order),
+            ], "Successfully");
+        } else {
+
+            return $this->error(null, "unable to update delivery fee", 404);
+        }
     }
 
     public function store(LoadPackageRequest $request)
@@ -129,7 +129,7 @@ use App\Models\LoadBoard;
             $loadPackage = LoadPackage::firstOrCreate(
                 [
                     'load_type_id' => $request->load_type_id,
-                    'user_id' => $request->user()->id ,
+                    'user_id' => $request->user()->id,
                     'delivery_fee' => $request->delivery_fee,
                     'weight' => $request->weight,
                 ],
@@ -139,7 +139,7 @@ use App\Models\LoadBoard;
             if (!$loadPackage->order) {
                 $order = $loadPackage->order()->create([
                     'order_no' => getNumber(),
-                  //  'driver_id' => 1, // Change this to the actual driver ID
+                    //  'driver_id' => 1, // Change this to the actual driver ID
                     'amount' =>  $totalAmount,
                     'fee' =>  $validatedData['delivery_fee'],
                     'user_id' => $loadPackage->user_id,
@@ -149,26 +149,26 @@ use App\Models\LoadBoard;
                 $order = $loadPackage->order; // If an order already exists, use the existing one
             }
 
-        // Handle document uploads (if any)
-        if ($request->hasFile('documents')) {
-            $documents = [];
+            // Handle document uploads (if any)
+            if ($request->hasFile('documents')) {
+                $documents = [];
 
-            foreach ($request->file('documents') as $file) {
+                foreach ($request->file('documents') as $file) {
 
-                $file = $this->uploadFileWithDetails('load_documents', $file);
-                $path = $file['path'];
-                $name = $file['file_name'];
+                    $file = $this->uploadFileWithDetails('load_documents', $file);
+                    $path = $file['path'];
+                    $name = $file['file_name'];
 
-                // Create a record in the load_documents table
-                $document = new LoadDocument([
-                    'name' => $name,
-                    'path' => $path,
-                ]);
+                    // Create a record in the load_documents table
+                    $document = new LoadDocument([
+                        'name' => $name,
+                        'path' => $path,
+                    ]);
 
-                // Associate the document with the LoadBulk
-                $loadPackage->loadDocuments()->save($document);
+                    // Associate the document with the LoadBulk
+                    $loadPackage->loadDocuments()->save($document);
+                }
             }
-        }
 
             return $this->success([
                 "loadPackage" => new LoadPackageResource($loadPackage),
@@ -195,7 +195,7 @@ use App\Models\LoadBoard;
         $loadPackage = LoadPackage::where('user_id', auth()->id())->find($id);
 
         if (!$loadPackage) {
-            return $this->error(null, "Load Package not found'",404 );
+            return $this->error(null, "Load Package not found'", 404);
         }
         $loadPackage->delete();
         return $this->success(["loadType" => new LoadPackageResource($loadPackage),], "Package Type deleted");
