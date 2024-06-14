@@ -29,14 +29,14 @@ class LoadPackageController extends Controller
 
         $key = request()->input('search');
 
-        $loadPackages = LoadPackage::where('user_id', auth()->id())->where(function ($q) use ($key) {
+        $loadPackages = LoadPackage::with('loadBoard')->where('user_id', auth()->id())->where(function ($q) use ($key) {
             $q->where('sender_name', 'like', "%{$key}%")
                 ->orWhere('sender_email', 'like', "%{$key}%");
         })->latest()->paginate();
 
 
-        //eturn LoadPackageResource::collection($loadPackages);
-        return response()->json($loadPackages);
+        return LoadPackageResource::collection($loadPackages);
+        // return response()->json($loadPackages);
     }
 
     public function show($id)

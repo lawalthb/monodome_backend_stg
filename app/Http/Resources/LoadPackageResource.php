@@ -27,9 +27,9 @@ class LoadPackageResource extends JsonResource
             "delivery_fee" => $this->delivery_fee,
             "order" => $this->order,
             "driver" => $this->order->driver ?? null,
-            'sender_location'=>$this->sender_location,
-            'receiver_location'=>$this->receiver_location,
-            'distance'=>$this->distance,
+            'sender_location' => $this->sender_location,
+            'receiver_location' => $this->receiver_location,
+            'distance' => $this->distance,
             "sender_name" => $this->sender_name,
             "sender_phone" => $this->sender_phone,
             "sender_apartment" => $this->sender_apartment,
@@ -38,8 +38,8 @@ class LoadPackageResource extends JsonResource
             "sender_lga" => new LocalGovernmentResource($this->SLga),
             "sender_state" => new LocalStateResource($this->SState),
             "sender_email" => $this->sender_email,
-            'deliver_to' =>   ($this->deliver_to == "office") ? new AgentResource($this->officeTo) :  null,            // "from_office_id" => $this->from_office_id,load
-            'deliver_from' =>($this->deliver_from == "office") ? new AgentResource($this->officeFrom) :  null,            // "from_office_id" => $this->from_office_id,load
+            'deliver_to' => ($this->deliver_to == "office") ? new AgentResource($this->officeTo) :  null,            // "from_office_id" => $this->from_office_id,load
+            'deliver_from' => ($this->deliver_from == "office") ? new AgentResource($this->officeFrom) :  null,            // "from_office_id" => $this->from_office_id,load
             "receiver_name" => $this->receiver_name,
             "receiver_email" => $this->receiver_email,
             "receiver_phone" => $this->receiver_phone,
@@ -56,9 +56,11 @@ class LoadPackageResource extends JsonResource
             "is_fragile" => $this->is_fragile,
             "is_private" => $this->is_private,
             "loadType" => new LoadTypeResource($this->loadType),
+            "acceptable" => $this->loadBoard,
             "document" => LoadDocumentResource::collection($this->loadDocuments),
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
+            'score' => 2,
         ];
     }
 }
