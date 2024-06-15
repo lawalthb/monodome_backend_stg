@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use App\Jobs\SendLoginNotificationJob;
+use App\Models\Referral;
 use App\Notifications\SendNotification;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Validator;
@@ -33,13 +34,14 @@ class AuthController extends Controller
     {
         $ip = '49.35.41.195';
         //https://beyondco.de/blog/a-guide-to-soft-delete-models-in-laravel
-    try {
+        try {
 
             $ref_by = null;
 
             if ($request->has('ref_by')) {
                 $ref_by = User::where("referral_code", $request->ref_by)->first();
             }
+
             $user = new User([
                 'full_name' => $request->full_name,
                 'email' => $request->email,
@@ -56,15 +58,15 @@ class AuthController extends Controller
 
             $role = Role::find($request->role_id);
             if ($role) {
-                $user->user_type = Str::slug($role->name, "_");// str_replace(' ', '_', $role->name);;
+                $user->user_type = Str::slug($role->name, "_"); // str_replace(' ', '_', $role->name);;
                 $user->role_id = $role->id;
                 $user->role = $role->name;
                 $user->assignRole($role);
             }
 
-           if($role->id==3){
-               $user->status = "Confirmed";
-           }
+            if ($role->id == 3) {
+                $user->status = "Confirmed";
+            }
 
             $user->save();
 
@@ -74,21 +76,34 @@ class AuthController extends Controller
                 "payment_type" => 'wallet',
                 "type" => 'credit',
                 "fee" => 0,
-                "description" => 'Bonus point for referring'. $user->full_name
+                "fees" => 50,
+                "reference" => 56225454656,
+                "description" => 'Bonus point for referring' . $user->full_name
             ];
 
             // check if ref_by exist and add the money to Bonus
-            if($ref_by !== null){
+            if ($ref_by !== null) {
+                Referral::insert([
+                    'user_id' => $user->id,
+                    'referral_code' => $request->ref_by,
+                    'referred_user_id' => $ref_by->id,
+                    'bonus' => 500,
 
+                ]);
+                $ref_by->update([
+                    "total_bonus" => $ref_by->total_bonus +  500,
+                    "ref_count" => $ref_by->ref_count +  1,
+
+                ]);
                 WalletService::createWalletAndHistory($ref_by, $data);
             }
 
-            $message ="Thank you for Registering with ".config('app.name');
-              // $user->notify(new SendNotification($user, $message));
-        dispatch(new SendLoginNotificationJob($user, $message));
-             //Mail::to($event->user->email)->send(new NewUserMail($user));
+            $message = "Thank you for Registering with " . config('app.name');
+            // $user->notify(new SendNotification($user, $message));
+            dispatch(new SendLoginNotificationJob($user, $message));
+            //Mail::to($event->user->email)->send(new NewUserMail($user));
 
-            $token = $user->createToken("monodomebackend". $request->email)->plainTextToken;
+            $token = $user->createToken("monodomebackend" . $request->email)->plainTextToken;
 
             return $this->success(
                 [
@@ -106,20 +121,20 @@ class AuthController extends Controller
     {
         $credentials = $request->only(['email', 'password']);
 
-        $user = User::where("email",$request->email)->first();
-        if(!$user){
+        $user = User::where("email", $request->email)->first();
+        if (!$user) {
 
-            return $this->error(['error' => "Email address not found!"],'Not found');
+            return $this->error(['error' => "Email address not found!"], 'Not found');
         }
 
-        if($user->status == "Banned"){
-            $message ="Your ".config('app.name'). " account has been Banned!. please contact ".config('app.name'). " admin for clarification ";
-          //   // $user->notify(new SendNotification($user, $message));
-              dispatch(new SendLoginNotificationJob($user, $message));
-              //dispatch(new SendLoginNotificationJob($user, $message));
+        if ($user->status == "Banned") {
+            $message = "Your " . config('app.name') . " account has been Banned!. please contact " . config('app.name') . " admin for clarification ";
+            //   // $user->notify(new SendNotification($user, $message));
+            dispatch(new SendLoginNotificationJob($user, $message));
+            //dispatch(new SendLoginNotificationJob($user, $message));
 
 
-            return $this->error(['error' => "Your account has been Banned, and please contact admin for clarification"],'Account Banned');
+            return $this->error(['error' => "Your account has been Banned, and please contact admin for clarification"], 'Account Banned');
         }
 
         // if($user->status != "Confirmed"){
@@ -138,7 +153,7 @@ class AuthController extends Controller
                 $user->user_agent = $request->header('User-Agent');
                 $user->save();
 
-                if(!$user->wallet){
+                if (!$user->wallet) {
                     $wallet = new Wallet;
                     $wallet->amount = 0;
                     $wallet->status = 'active';
@@ -149,9 +164,9 @@ class AuthController extends Controller
                 $token = $user->createToken('monodomebackend' . $request->email)->plainTextToken;
 
 
-             $message ="There was a successful login to your ".config('app.name'). " account. Please see below login details: ";
-              // $user->notify(new SendNotification($user, $message));
-             dispatch(new SendLoginNotificationJob($user, $message));
+                $message = "There was a successful login to your " . config('app.name') . " account. Please see below login details: ";
+                // $user->notify(new SendNotification($user, $message));
+                dispatch(new SendLoginNotificationJob($user, $message));
 
                 return $this->success(
                     [
@@ -173,7 +188,7 @@ class AuthController extends Controller
     {
 
         $validator = Validator::make($request->only('provider', 'access_provider_token'), [
-            'provider' => ['required', 'string','in:facebook,google,apple'],
+            'provider' => ['required', 'string', 'in:facebook,google,apple'],
             'access_provider_token' => ['required', 'string']
         ]);
 
@@ -271,15 +286,15 @@ class AuthController extends Controller
 
         // Handle image upload if provided
         if ($request->hasFile('image')) {
-           // $imagePath = $request->file('image')->store('profile_images', 'public');
-           $imagePath =  $request->image ? $this->saveImage('profile', $request->image, 500, 500) : null;
+            // $imagePath = $request->file('image')->store('profile_images', 'public');
+            $imagePath =  $request->image ? $this->saveImage('profile', $request->image, 500, 500) : null;
             $user->update(['imageUrl' => $imagePath]);
         }
 
-        $message ="Your Profile details was updated successfully";
+        $message = "Your Profile details was updated successfully";
         //  // $user->notify(new SendNotification($user, $message));
         dispatch(new SendLoginNotificationJob($user, $message));
-     //   dispatch(new SendLoginNotificationJob($user, $message));
+        //   dispatch(new SendLoginNotificationJob($user, $message));
 
 
         return $this->success(['user' => new UserResource($user)], "Profile updated successfully");
@@ -295,13 +310,14 @@ class AuthController extends Controller
         return $provider;
     }
 
-    public function me(){
+    public function me()
+    {
 
         $user = User::find(auth()->id());
         return $this->success(['user' => new UserResource($user)], "Successfully");
     }
 
-        /**
+    /**
      * logout
      *
      * @param  mixed $request
@@ -316,19 +332,19 @@ class AuthController extends Controller
     }
 
 
-       /**
+    /**
      * isLogin
      * check if users is login
      * @param  mixed $request
      * @return
      */
-    public function isLogin(Request $request) : JsonResponse  {
+    public function isLogin(Request $request): JsonResponse
+    {
 
-        if(Auth::check()){
+        if (Auth::check()) {
 
-            return $this->success(true,true);
-
-        }else{
+            return $this->success(true, true);
+        } else {
             return $this->error(false, 'Session expired', 422);
         }
     }
@@ -371,8 +387,6 @@ class AuthController extends Controller
                 return $this->success([
                     'user' => new UserResource($user),
                 ], "Subscription/upgradation is successful");
-
-
             } else {
                 return $this->error(false, 'Not enough money in the wallet', 422);
             }
@@ -400,27 +414,23 @@ class AuthController extends Controller
     }
 
 
-    public function delete_user(){
+    public function delete_user()
+    {
 
 
-        if(Auth::check()){
+        if (Auth::check()) {
             $user = auth()->user(); // Assuming you are using authentication
 
             $user->update([
-                'status' =>"Banned"
+                'status' => "Banned"
             ]);
 
             return $this->success([
                 'user' => new UserResource($user),
 
-            ],"deleted successful");
-
-
-
-        }else{
+            ], "deleted successful");
+        } else {
             return $this->error(false, 'Session expired', 422);
         }
-
     }
-
 }

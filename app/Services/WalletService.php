@@ -12,6 +12,7 @@ class WalletService
 {
     public static function createWalletAndHistory(User $user, $data)
     {
+         $wallet = null;
         if ($user) {
             if ($user->wallet) {
                 // Update the existing wallet
