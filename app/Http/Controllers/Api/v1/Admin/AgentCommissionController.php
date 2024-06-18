@@ -6,14 +6,15 @@ namespace App\Http\Controllers\Api\v1\Admin;
 use Illuminate\Http\Request;
 use App\Models\AgentCommission;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\AgentCommissionResource;
 
 class AgentCommissionController extends Controller  {
 
 
     public function index()
     {
-        $commissions = AgentCommission::with('state')::all();
-        return response()->json($commissions);
+        $commissions = AgentCommission::with('state')->paginate();
+        return AgentCommissionResource::collection($commissions);
     }
 
     public function store(Request $request)
@@ -24,14 +25,14 @@ class AgentCommissionController extends Controller  {
         ]);
 
         $commission = AgentCommission::create($request->all());
-        return response()->json($commission, 201);
+        return new AgentCommissionResource($commission);
     }
 
 
     public function show($id)
     {
-        $commission = AgentCommission::findOrFail($id);
-        return response()->json($commission);
+        $commission = AgentCommission::with('state')->findOrFail($id);
+        return new AgentCommissionResource($commission);
     }
 
     public function update(Request $request, $id)
@@ -43,7 +44,7 @@ class AgentCommissionController extends Controller  {
 
         $commission = AgentCommission::findOrFail($id);
         $commission->update($request->all());
-        return response()->json($commission);
+        return new AgentCommissionResource($commission);
     }
 
     public function destroy($id)
