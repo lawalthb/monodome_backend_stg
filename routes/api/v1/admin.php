@@ -95,7 +95,13 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
         });
 
         Route::prefix('commissions')->group(function () {
-            Route::resource('agent-commissions', AgentCommissionController::class);
+            // Route::resource('agent-commissions', AgentCommissionController::class);
+            Route::get('/agent-commissions', [AgentCommissionController::class, 'allCarYearPrice']);
+            Route::post('/agent-commissions', [AgentCommissionController::class, 'CarYearPriceStore']);
+            Route::get('/agent-commissions/{id}', [AgentCommissionController::class, 'CarYearPriceShow']);
+            Route::put('/agent-commissions/{id}', [AgentCommissionController::class, 'CarYearPriceUpdate']);
+            Route::delete('/agent-commissions/{id}', [AgentCommissionController::class, 'CarYearPriceDestroy']);
+
         });
 
         Route::group(['prefix' => 'referrer'], function () {

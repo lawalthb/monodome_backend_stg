@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('agent_commissions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('state_id')->constrained()->onDelete('cascade');
+            $table->decimal('percentage', 5, 2);
             $table->timestamps();
         });
     }
