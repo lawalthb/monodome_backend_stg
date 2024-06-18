@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\v1\Admin\BlogController;
 use App\Http\Controllers\Api\v1\Admin\PlanController;
 use App\Http\Controllers\Api\v1\Admin\RoleController;
 use App\Http\Controllers\Api\v1\Admin\AgentController;
+use App\Http\Controllers\Api\v1\Admin\LoadsController;
 use App\Http\Controllers\Api\v1\Admin\OrderController;
 use App\Http\Controllers\Api\v1\Admin\PriceController;
 use App\Http\Controllers\Api\v1\Wallet\CardController;
@@ -16,20 +17,22 @@ use App\Http\Controllers\Api\v1\Admin\SettingController;
 use App\Http\Controllers\Api\v1\Admin\CategoryController;
 use App\Http\Controllers\Api\v1\Admin\CustomerController;
 use App\Http\Controllers\Api\v1\Admin\EmployeeController;
+use App\Http\Controllers\Api\v1\Referral\BonusController;
 use App\Http\Controllers\Api\v1\Admin\AdminAuthController;
 use App\Http\Controllers\Api\v1\Admin\DashboardController;
 use App\Http\Controllers\Api\v1\Admin\LoadBoardController;
 use App\Http\Controllers\Api\v1\Admin\ManageUserController;
 use App\Http\Controllers\Api\v1\Admin\PermissionController;
 use App\Http\Controllers\Api\v1\Admin\WeightPriceController;
+use App\Http\Controllers\Api\v1\Referral\ReferralController;
+use App\Http\Controllers\Api\v1\Customers\LoadBulkController;
 use App\Http\Controllers\Api\v1\Admin\ClearingAgentController;
 use App\Http\Controllers\Api\v1\Admin\DistancePriceController;
 use App\Http\Controllers\Api\v1\Admin\DriverManagerController;
 use App\Http\Controllers\Api\v1\Admin\ShippingCompanyController;
 use App\Http\Controllers\Api\v1\Admin\Support\SupportController;
+use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
 use App\Http\Controllers\Api\v1\Admin\SpecializedShipmentController;
-use App\Http\Controllers\Api\v1\Referral\ReferralController;
-use App\Http\Controllers\Api\v1\Referral\BonusController;
 
 Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
 
@@ -177,6 +180,28 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
             Route::post('/update/{id}', [SettingController::class, 'update']);
         });
 
+        Route::group(['prefix' => 'private-load'], function () {
+
+        Route::post('/order-to-driver', [LoadsController::class, 'assignOrderToDriver']);
+
+        });
+        // for private-load
+        Route::group(['prefix' => 'private-load'], function () {
+            Route::get('/load-package', [LoadPackageController::class, 'index']);
+            Route::post('/load-package', [LoadsController::class, 'privateLoadPackageStore']);
+            Route::get('/load-package/{id}', [LoadPackageController::class, 'show']);
+            Route::post('/load-package/{id}', [LoadPackageController::class, 'update']);
+            Route::delete('/load-package/{id}', [LoadPackageController::class, 'destroy']);
+        });
+
+
+        Route::group(['prefix' => 'private-load'], function () {
+            Route::get('/load-bulk', [LoadBulkController::class, 'index']);
+            Route::post('/load-bulk', [LoadsController::class, 'privateLoadBulkStore']);
+            Route::get('/load-bulk/{id}', [LoadBulkController::class, 'show']);
+            Route::post('/load-bulk/{loadBulk}', [LoadBulkController::class, 'update']);
+            Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
+        });
 
         Route::group(['prefix' => 'price'], function () {
             Route::get('/', [SettingController::class, 'price']);
