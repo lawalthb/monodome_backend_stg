@@ -14,6 +14,6 @@ class AgentCommission extends Model
 
     public function state()
     {
-        return $this->belongsTo(State::class);
+        return $this->belongsTo(LocalState::class);
     }
 }

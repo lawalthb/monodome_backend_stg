@@ -4,6 +4,7 @@ namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\StateResource;
+use App\Http\Resources\LocalStateResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AgentCommissionResource extends JsonResource
@@ -17,7 +18,7 @@ class AgentCommissionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'state' => new StateResource($this->whenLoaded('state')),
+            'state' => new LocalStateResource($this->whenLoaded('state')),
             'percentage' => $this->percentage,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

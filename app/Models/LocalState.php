@@ -18,4 +18,9 @@ class LocalState extends Model
     {
         return $this->hasMany(LocalGovernment::class, 'state_id');
     }
+
+    public function commissions()
+    {
+        return $this->hasMany(AgentCommission::class, 'state_id');
+    }
 }

@@ -19,8 +19,5 @@ class State extends Model
         return $this->belongsTo(Country::class, 'country_id');
     }
 
-    public function commissions()
-    {
-        return $this->hasMany(AgentCommission::class);
-    }
+  
 }

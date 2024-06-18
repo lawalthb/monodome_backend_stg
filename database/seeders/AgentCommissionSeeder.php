@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\State;
+use App\Models\LocalState;
 use App\Models\AgentCommission;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,7 +16,7 @@ class AgentCommissionSeeder extends Seeder
     public function run(): void
     {
         for ($i = 0; $i < 10; $i++) {
-            $state = State::inRandomOrder()->first();
+            $state = LocalState::inRandomOrder()->first();
 
             if ($state) {
                 AgentCommission::create([
