@@ -16,12 +16,6 @@ class AgentCommissionController extends Controller  {
         return response()->json($commissions);
     }
 
-    public function create()
-    {
-        // Not needed for API-based application
-    }
-
-
     public function store(Request $request)
     {
         $request->validate([
@@ -38,11 +32,6 @@ class AgentCommissionController extends Controller  {
     {
         $commission = AgentCommission::findOrFail($id);
         return response()->json($commission);
-    }
-
-    public function edit($id)
-    {
-        // Not needed for API-based application
     }
 
     public function update(Request $request, $id)
