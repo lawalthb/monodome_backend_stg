@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('referral_code');
             $table->integer('bonus')->default(0);
-            $table->timestamps();
             $table->foreignId('referred_user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
