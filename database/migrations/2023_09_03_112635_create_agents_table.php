@@ -32,6 +32,7 @@ return new class extends Migration
         $table->string('other_documents')->nullable();
         $table->string('custom_license_number')->nullable();
         $table->string('cac_certificate')->nullable();
+        $table->unsignedBigInteger('percentage')->default(0);
         $table->enum('type', ['agent', 'clearing'])->default('agent');
         $table->enum('status', ['Pending', 'Confirmed', 'Rejected','Banned'])->default('Pending');
         $table->timestamps();

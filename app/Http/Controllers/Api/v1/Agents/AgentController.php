@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
+use App\Models\AgentCommission;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -110,6 +111,8 @@ class AgentController extends Controller
                 }
             }
 
+            $commission = AgentCommission::where("state_id",$request->input('state_id'))->first();
+
             $agent = Agent::updateOrCreate(
                 [
                     'user_id' => $user->id
@@ -120,6 +123,7 @@ class AgentController extends Controller
                     'street' => $request->input('street'),
                     'status' => 'Pending',
                     'type' => 'agent',
+                    'percentage' => $commission ? $commission->percentage : 0,
                     'nin_number' => $request->input('nin_number'),
                     'business_name' => $request->input('business_name'),
                     'lga' => $request->input('lga'),

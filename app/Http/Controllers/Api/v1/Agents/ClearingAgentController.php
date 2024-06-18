@@ -14,6 +14,7 @@ use App\Models\LoadDocument;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Traits\ApiStatusTrait;
+use App\Models\AgentCommission;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -118,6 +119,7 @@ class ClearingAgentController extends Controller
                 }
             }
 
+            $commission = AgentCommission::where("state_id",$request->input('state_id'))->first();
             $agent = Agent::updateOrCreate(
                 [
                     'user_id' => $user->id
@@ -129,6 +131,7 @@ class ClearingAgentController extends Controller
                     'custom_license_number' => $request->input('custom_license_number'),
                     'status' => 'Pending',
                     'type' => 'clearing',
+                    'percentage' => $commission ? $commission->percentage : 0,
                     'nin_number' => $request->input('nin_number'),
                     'business_name' => $request->input('business_name'),
                     'lga' => $request->input('lga'),
