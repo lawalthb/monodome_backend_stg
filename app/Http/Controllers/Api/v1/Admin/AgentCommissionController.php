@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\AgentCommission;
+use App\Http\Controllers\Controller;
 
-class AgentCommissionController {
+class AgentCommissionController extends Controller  {
 
 
     public function index()
     {
-        $commissions = AgentCommission::all();
+        $commissions = AgentCommission::with('state')::all();
         return response()->json($commissions);
     }
 
