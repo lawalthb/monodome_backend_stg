@@ -18,7 +18,7 @@ class AgentCommissionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'state' => new LocalStateResource($this->whenLoaded('state')),
+            'state' => new LocalStateResource($this->state),
             'percentage' => $this->percentage,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
