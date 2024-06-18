@@ -14,13 +14,15 @@ class AgentCommissionSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i=0; $i < 11; $i++) {
+        for ($i = 0; $i < 10; $i++) {
+            $state = State::inRandomOrder()->first();
 
-            AgentCommission::create([
-                'state_id' => State::inRandomOrder()->id,
-                'percentage' => rand(1, 100) / 100,
-            ]);
-
+            if ($state) {
+                AgentCommission::create([
+                    'state_id' => $state->id,
+                    'percentage' => rand(1, 100) / 100,
+                ]);
+            }
         }
     }
 }
