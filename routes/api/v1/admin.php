@@ -29,6 +29,7 @@ use App\Http\Controllers\Api\v1\Customers\LoadBulkController;
 use App\Http\Controllers\Api\v1\Admin\ClearingAgentController;
 use App\Http\Controllers\Api\v1\Admin\DistancePriceController;
 use App\Http\Controllers\Api\v1\Admin\DriverManagerController;
+use App\Http\Controllers\Api\v1\Admin\AgentCommissionController;
 use App\Http\Controllers\Api\v1\Admin\ShippingCompanyController;
 use App\Http\Controllers\Api\v1\Admin\Support\SupportController;
 use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
@@ -93,6 +94,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
             Route::put('/status/{id}', [PriceController::class, 'CarYearPriceStatusUpdate']);
         });
 
+        Route::prefix('commissions')->group(function () {
+            Route::resource('agent-commissions', AgentCommissionController::class);
+        });
 
         Route::group(['prefix' => 'referrer'], function () {
 
