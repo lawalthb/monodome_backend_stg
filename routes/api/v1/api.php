@@ -159,6 +159,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
         Route::post('/store', [ChatController::class, 'store']);
         Route::delete('/delete/{id}', [ChatController::class, 'destroy']);
         Route::get('/show/{id}', [ChatController::class, 'show']);
+        Route::get('/update/{id}', [ChatController::class, 'update']);
 
     });
 
