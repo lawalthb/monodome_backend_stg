@@ -298,6 +298,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
             Route::post('/update/{id}', [AgentController::class, 'update']);
             Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
             Route::get('/status/type', [AgentController::class, 'statusType']);
+            Route::post('/percentage/update/{id}', [AgentController::class, 'percentage']);
         });
 
         // agent route group

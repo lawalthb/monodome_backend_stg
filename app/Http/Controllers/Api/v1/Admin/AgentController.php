@@ -307,4 +307,29 @@ class AgentController extends Controller
     }
 
 
+
+    public function percentage(Request $request, $agentId) {
+
+
+        $validator = Validator::make($request->all(), [
+            'percentage' => ['required', 'numeric'],
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error('', $validator->errors()->first(), 422);
+        }
+
+        $agent = Agent::find($agentId);
+
+        if (!$agent) {
+
+            return $this->error('', 'Agent not found', 422);
+
+        }
+
+        $agent->percentage = $request->percentage;
+        $agent->save();
+
+        return $this->success(['agent'=> new AgentResource($agent)], 'Agent percentage updated successfully');
+    }
 }
