@@ -16,6 +16,7 @@ return new class extends Migration
                 $table->unsignedBigInteger('sender_id');
                 $table->unsignedBigInteger('receiver_id')->nullable();
                 $table->text('message');
+                $table->string('send_by')->nullable();
                 $table->text('file_path')->nullable();
                 $table->unsignedBigInteger('loadable_id')->nullable();
                 $table->string('loadable_type')->nullable();

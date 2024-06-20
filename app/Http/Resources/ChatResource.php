@@ -19,6 +19,7 @@ class ChatResource extends JsonResource
             "sender" => new UserResource($this->sender),
             "receiver" =>  new UserResource($this->receiver),
             "message" => $this->message,
+            "send_by" => $this->send_by,
             "file_path" => getImageFile($this->file_path),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

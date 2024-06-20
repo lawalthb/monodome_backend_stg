@@ -106,6 +106,7 @@ class ChatController extends Controller
                 'sender_id' => $validatedData['sender_id'],
                 'receiver_id' => $validatedData['receiver_id'],
                 'message' => $validatedData['message'],
+                'send_by' => auth()->id(),
             ],
             $validatedData
         );
