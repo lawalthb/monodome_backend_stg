@@ -201,7 +201,7 @@ class UsersTableSeeder extends Seeder
 
         ));
 
-        // adding money to customer
+        //adding money to customer
         $wallet = new Wallet;
         $wallet->amount = 100000;
         $wallet->status = 'active';
@@ -232,7 +232,7 @@ class UsersTableSeeder extends Seeder
 
         //customer
         $customerRole = Role::find(3);
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
 
         $randomStatus = $statuses[array_rand($statuses)];
 
@@ -253,7 +253,7 @@ class UsersTableSeeder extends Seeder
 
         //broker
         $brokerRole = Role::find(4);
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
 
             $randomStatus = $statuses[array_rand($statuses)];
 
@@ -278,7 +278,7 @@ class UsersTableSeeder extends Seeder
 
         $agentRole = Role::find(6);
 
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
             // Create a user
             $randomStatus = $statuses[array_rand($statuses)];
 
@@ -315,7 +315,7 @@ class UsersTableSeeder extends Seeder
         //Clearing and Forwarding Agent
         $clearingRole = Role::find(7);
 
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
             $randomStatus = $statuses[array_rand($statuses)];
 
             // Create a user
@@ -354,7 +354,7 @@ class UsersTableSeeder extends Seeder
          //driver
          $driverRole = Role::find(8);
 
-         for ($i = 1; $i <= 50; $i++) {
+         for ($i = 1; $i <= 20; $i++) {
             // Create a user
             $user = \App\Models\User::factory()->create([
 
@@ -389,7 +389,7 @@ class UsersTableSeeder extends Seeder
         // for Shipping Company
         $ShippingCompanyRole = Role::find(5);
 
-         for ($i = 1; $i <= 50; $i++) {
+         for ($i = 1; $i <= 20; $i++) {
 
             $randomStatus = $statuses[array_rand($statuses)];
 
@@ -425,7 +425,7 @@ class UsersTableSeeder extends Seeder
        // driver manager
         $driverManager = Role::find(9);
 
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
 
             $randomStatus = $statuses[array_rand($statuses)];
 
@@ -462,7 +462,7 @@ class UsersTableSeeder extends Seeder
          // Company Transport
          $company = Role::find(10);
 
-         for ($i = 1; $i <= 50; $i++) {
+         for ($i = 1; $i <= 20; $i++) {
 
              $randomStatus = $statuses[array_rand($statuses)];
 
@@ -499,7 +499,7 @@ class UsersTableSeeder extends Seeder
 
         $role = Role::find(11);
 
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
 
             $randomStatus = $statuses[array_rand($statuses)];
 
@@ -533,7 +533,7 @@ class UsersTableSeeder extends Seeder
 
         \DB::table('employees')->delete();
 
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
 
             $randomStatus = $statuses[array_rand($statuses)];
 

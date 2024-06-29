@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('image')->nullable();
             $table->integer('price');
             $table->integer('expired');
             $table->enum('status', ['active', 'inactive'])->default('active');

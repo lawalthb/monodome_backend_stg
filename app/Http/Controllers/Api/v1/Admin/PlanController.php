@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Api\v1\Admin;
 use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class PlanController extends Controller
 {
+    use FileUploadTrait, ApiStatusTrait;
+
     public function index()
     {
         return Plan::all();
@@ -19,8 +23,9 @@ class PlanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required|numeric',
-            'expired' => 'numeric|required',
+            'expired' => 'required|numeric',
             'status' => 'nullable|string|in:active,inactive',
         ]);
 
@@ -28,13 +33,21 @@ class PlanController extends Controller
             return response()->json(['error' => $validator->errors()->all()], 400);
         }
 
-        $plan = Plan::create($request->all());
+        // Create the plan with validated data
+        $plan = Plan::create($validator->validated());
+
+        // Handle image upload if provided
+        if ($request->hasFile('image')) {
+            $imagePath = $this->saveImage('plan', $request->file('image'), 500, 500);
+            $plan->update(['imageUrl' => $imagePath]);
+        }
+
         return response()->json(['message' => 'Plan created successfully', 'data' => $plan], 201);
     }
 
     public function show(Plan $plan)
     {
-        return $plan;
+        return response()->json($plan);
     }
 
     public function getTotal(Plan $plan)
@@ -42,14 +55,13 @@ class PlanController extends Controller
         // Count the users that have the given plan_id
         $totalUsers = User::where('plan_id', $plan->id)->count();
 
-        return response()->json(['message' => 'Total User on this plan', 'amount' => $totalUsers], 200);
-
+        return response()->json(['message' => 'Total users on this plan', 'amount' => $totalUsers], 200);
     }
 
-    public function status(Request $request,Plan $plan)
+    public function status(Request $request, Plan $plan)
     {
         $validator = Validator::make($request->all(), [
-            'status' => 'nullable|string|in:active,inactive',
+            'status' => 'required|string|in:active,inactive',
         ]);
 
         if ($validator->fails()) {
@@ -59,16 +71,15 @@ class PlanController extends Controller
         $plan->status = $request->status;
         $plan->save();
 
-        return $plan;
+        return response()->json(['message' => 'Status updated successfully', 'data' => $plan], 200);
     }
 
     public function update(Request $request, Plan $plan)
     {
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'price' => 'required|numeric',
-            'expired' => 'numeric|required',
+            'expired' => 'required|numeric',
             'status' => 'nullable|string|in:active,inactive',
         ]);
 
@@ -76,7 +87,14 @@ class PlanController extends Controller
             return response()->json(['error' => $validator->errors()->all()], 400);
         }
 
-        $plan->update($request->all());
+        $plan->update($validator->validated());
+
+        // Handle image upload if provided
+        if ($request->hasFile('image')) {
+            $imagePath = $this->saveImage('plan', $request->file('image'), 500, 500);
+            $plan->update(['imageUrl' => $imagePath]);
+        }
+
         return response()->json(['message' => 'Plan updated successfully', 'data' => $plan], 200);
     }
 
