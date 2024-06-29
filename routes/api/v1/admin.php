@@ -193,6 +193,10 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
         Route::group(['prefix' => 'private-load'], function () {
 
         Route::post('/order-to-driver', [LoadsController::class, 'assignOrderToDriver']);
+        Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
+           Route::post('/order-re-assign', [LoadBoardController::class, 'orderReAssign']);
+           Route::post('/remove-order', [LoadBoardController::class, 'removeOrder']);
+
 
         });
         // for private-load

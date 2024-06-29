@@ -7,8 +7,10 @@ use App\Models\Order;
 use App\Models\Truck;
 use App\Models\LoadBulk;
 use App\Models\LoadType;
+use App\Models\LoadBoard;
 use App\Models\LoadPackage;
 use App\Models\LoadDocument;
+use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Events\LoadTypeCreated;
 use App\Traits\FileUploadTrait;
@@ -18,7 +20,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\OrderResource;
 use App\Http\Requests\LoadBulkRequest;
-use Illuminate\Http\Request;
+use App\Notifications\SendNotification;
 use App\Http\Resources\LoadBulkResource;
 use App\Http\Requests\LoadPackageRequest;
 use App\Http\Resources\LoadBoardResource;
@@ -228,6 +230,86 @@ class LoadsController extends Controller
             new OrderResource($order),
         ]);
 
+    }
+
+
+
+    public function orderReAssign(Request $request)
+    {
+        return DB::transaction(function () use ($request) {
+
+            $request->validate([
+                'order_no' => 'required|exists:load_boards,order_no',
+                'driver_id' => 'required|exists:users,id',
+            ]);
+            $driver = User::findOrFail($request->driver_id);
+            $loadBoard = LoadBoard::where("order_no", $request->order_no)
+                //->where("acceptable_id", auth()->user()->id)
+                // ->where("status", 'pending')
+                ->first();
+
+            if (!$loadBoard) {
+                return $this->error([], "Order not found or has already been taken!");
+            }
+            // Check if driver is already assigned to an order
+            if ($loadBoard->acceptable_id == $driver->id) {
+                return $this->error([], "Order has already been assigned to a driver!");
+            }
+            $order = Order::where("order_no", $request->order_no)->first();
+
+            $loadBoard->acceptable_id = $driver->id;
+            $loadBoard->acceptable_type = get_class($driver);
+            $order->placed_by_id = auth()->user()->id;
+
+            $loadBoard->save();
+            $order->save();
+
+            $message = "You have been Re assigned an order with number " . $loadBoard->order_no . " for delivery from: " . $loadBoard->order->loadable->sender_location . " to: " . $loadBoard->order->loadable->receiver_location;
+            $driver->notify(new SendNotification($driver, $message));
+
+            return $this->success([
+                new OrderResource($order),
+            ]);
+
+        });
+    }
+
+    public function removeOrder(Request $request)
+    {
+        return DB::transaction(function () use ($request) {
+
+            $request->validate([
+                'order_no' => 'required|exists:load_boards,order_no',
+                'driver_id' => 'required|exists:users,id',
+            ]);
+            $driver = User::findOrFail($request->driver_id);
+            $loadBoard = LoadBoard::where("order_no", $request->order_no)
+                ->where("acceptable_id", $driver->id)
+                // ->where("status", 'pending')
+                ->first();
+
+            if (!$loadBoard) {
+                return $this->error([], "Order not found or this order doesn't belong to this driver");
+            }
+
+            $order = Order::where("order_no", $request->order_no)->first();
+
+            $loadBoard->acceptable_id = auth()->user()->id;
+            $loadBoard->acceptable_type = get_class($driver);
+            $loadBoard->status = "processing";
+           $order->placed_by_id = null;
+
+            $loadBoard->save();
+            $order->save();
+
+            $message = "order with number " . $loadBoard->order_no . " for delivery from: " . $loadBoard->order->loadable->sender_location . " to: " . $loadBoard->order->loadable->receiver_location." has been removed";
+            $driver->notify(new SendNotification($driver, $message));
+
+            return $this->success([
+                new OrderResource($order),
+            ]);
+
+        });
     }
 
 }
