@@ -197,8 +197,15 @@ class LoadsController extends Controller
             return $this->error([], "Order not found");
         }
 
-        $driver = User::where("id",$request->driver_id)->where("user_created_by", Auth::user()->id)->first();
-
+        $user = Auth::user();
+         if ($user->hasRole(['admin', 'Super Admin'])) {
+        $driver = User::find($request->driver_id);
+            $driver = User::find($request->driver_id);
+        } else {
+            $driver = User::where('id', $request->driver_id)
+                          ->where('user_created_by', Auth::user()->id)
+                          ->first();
+        }
         if (!$driver) {
             return $this->error([], "This driver is not under you");
         }
