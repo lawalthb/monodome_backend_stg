@@ -541,7 +541,7 @@ function nombaAccessToken(){
 
     if(isset($result['data']['access_token'])) {
         $accessToken = $result['data']['access_token'];
-        return $accessToken;
+        return ["accessToken"=>$accessToken,"accountId" => $AccountId ]; ;
     }
 
     return null;
@@ -590,3 +590,6 @@ function topUpWallet($amount){
     return null;
 
   }
+
+
+

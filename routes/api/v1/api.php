@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\v1\Chat\ChatController;
 use App\Http\Controllers\Api\v1\Admin\PlanController;
 use App\Http\Controllers\Api\v1\Order\OrderController;
 use App\Http\Controllers\Api\v1\Truck\TruckController;
+use App\Http\Controllers\Api\v1\Wallet\BankController;
 use App\Http\Controllers\Api\v1\Wallet\CardController;
 use App\Http\Controllers\Api\v1\Agents\AgentController;
 use App\Http\Controllers\Api\v1\Blog\CategoryController;
@@ -380,13 +381,12 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
 
     Route::group(['prefix' => 'driver-manager'], function () {
-         Route::post('/store', [DriverMangerController::class, 'store']);
+        Route::post('/store', [DriverMangerController::class, 'store']);
 
          // Route::get('/request', [DriverMangerController::class, 'updateRequest']);
-    Route::get('/request/{driverID}/{managerID}/{status}', [DriverMangerController::class, 'updateRequest']);
+        Route::get('/request/{driverID}/{managerID}/{status}', [DriverMangerController::class, 'updateRequest']);
 
-
-   Route::middleware(['auth:api'])->group(function () {
+        Route::middleware(['auth:api'])->group(function () {
        //  Route::get('/your-url', function () {
 
            Route::get('/', [DriverMangerController::class, 'index']);
@@ -425,6 +425,15 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
     });
 
+
+    Route::group(['prefix' => 'transfer', 'middleware' => 'auth:api'], function () {
+
+        Route::get('/bank/list', [BankController::class, 'list']);
+        Route::post('/bank/lookup', [BankController::class, 'lookup']);
+        Route::post('/bank/submit', [BankController::class, 'submit']);
+
+    });
+
     Route::group(['prefix' => 'notification', 'middleware' => 'auth:api'], function () {
         Route::get('/', [NotificationController::class, 'index']);
         Route::get('/read/{id}', [NotificationController::class, 'readNotification']);
@@ -440,6 +449,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
     Route::post('paystack/webhooks', [PaymentController::class, 'paystackWebhooks']);
     Route::post('nomba/webhooks', [PaymentController::class, 'nombaWebhooks']);
     // wallet route group
+
+
     Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {
 
         Route::get('/', [WalletController::class, 'index']);
@@ -462,6 +473,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
         Route::get('/cards/{id}', [CardController::class, 'show']);
         Route::put('/cards/{id}', [CardController::class, 'update']);
         Route::delete('/cards/{id}', [CardController::class, 'destroy']);
+
 
     });
 

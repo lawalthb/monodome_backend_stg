@@ -200,7 +200,7 @@ class LoadsController extends Controller
         $driver = User::where("id",$request->driver_id)->where("user_created_by", Auth::user()->id)->first();
 
         if (!$driver) {
-            return $this->error([], "driver not found!");
+            return $this->error([], "This driver is not under you");
         }
         $truck = Truck::where("driver_user_id",$driver->id)->first();
 

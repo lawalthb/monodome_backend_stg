@@ -422,6 +422,22 @@ class WalletController extends Controller
 
       }
 
+      public static function getWalletGrossVolume($user_id)
+    {
+        $sql = "SELECT IFNULL(SUM(amount), 0) AS total FROM wallet_transactions WHERE user_id = :ID AND type='credit'";
 
+        $result = DB::select($sql, ['ID' => $user_id]);
+
+        return $result;
+    }
+
+    public static function getWalletTotalTransactions($user_id)
+    {
+        $sql = "SELECT IFNULL(COUNT(*), 0) AS total FROM wallet_transactions WHERE user_id = :ID";
+
+        $result = DB::select($sql, ['ID' => $user_id]);
+
+        return $result;
+    }
 
 }
