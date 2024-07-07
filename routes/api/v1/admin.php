@@ -167,10 +167,10 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
         Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {
 
             Route::get('/', [WalletController::class, 'index']);
-            Route::get('/check-pin', [WalletController::class, 'checkPinExists']);
-            Route::post('/validate-pin', [WalletController::class, 'validate_pin']);
-            Route::post('/update-pin', [WalletController::class, 'update_pin']);
             Route::get('/wallet-history', [WalletController::class, 'wallet_history']);
+            Route::post('/update-pin/{id}', [WalletController::class, 'update_pin']);
+            Route::post('/topup-balance/{id}', [WalletController::class, 'topup_balance']);
+            Route::post('/enable-disable-wallet/{id}', [WalletController::class, 'update_wallet_status']);
 
 
             //card endpoint here
