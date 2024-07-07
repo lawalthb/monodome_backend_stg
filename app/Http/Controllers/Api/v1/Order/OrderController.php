@@ -6,12 +6,16 @@ use App\Models\Order;
 use App\Models\Setting;
 use App\Models\LoadType;
 use App\Models\WeightPrice;
+use App\Models\CarYearPrice;
 use App\Models\PriceSetting;
 use Illuminate\Http\Request;
+use App\Models\CarStatePrice;
+use App\Models\CarValuePrice;
 use App\Models\DistancePrice;
 use App\Models\WalletHistory;
 use App\Traits\ApiStatusTrait;
 use App\Events\LoadTypeCreated;
+use App\Models\CarCountryPrice;
 use App\Models\DistanceSetting;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\OrderRequest;
@@ -22,9 +26,6 @@ use App\Http\Resources\OrderResource;
 use App\Notifications\SendNotification;
 use App\Http\Resources\WeightPriceResource;
 use App\Http\Resources\DistanceSettingResource;
-use App\Models\CarCountryPrice;
-use App\Models\CarValuePrice;
-use App\Models\CarYearPrice;
 
 class OrderController extends Controller
 {
@@ -479,9 +480,11 @@ class OrderController extends Controller
     {
         $validatedData = $request->validate([
             'country_id' => 'required|integer|exists:car_country_prices,id',
-            'car_year' => 'required|integer',
+            'car_year' => 'required|integer|between:1990,2024',
             'car_value' => 'required',
             'load_type_id' => 'required|integer|exists:load_types,id',
+            'final' => 'required|string|in:Yes,No',
+            'state_id' => 'required_if:final,Yes|integer|exists:states,id',
         ]);
 
         $carValue = CarValuePrice::where('min', '<=', $validatedData['car_value'])
@@ -503,8 +506,17 @@ class OrderController extends Controller
         $carYearPrice = $carYear->price;
 
         $carCountryPrice = CarCountryPrice::findOrFail($validatedData['country_id'])->price;
+        
+        $total = 0; 
+        
+        if($request->final === "Yes"){
+            $carStatePrice = CarStatePrice::findOrFail($validatedData['state_id'])->price;
 
-        $total = $carValuePrice + $carYearPrice + $carCountryPrice;
+            $carValuePrice + $carYearPrice + $carCountryPrice + $carStatePrice;
+        }else {
+            $carValuePrice + $carYearPrice + $carCountryPrice;
+
+        }
 
         return response()->json([
             'success' => true,
