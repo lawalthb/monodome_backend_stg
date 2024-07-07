@@ -57,19 +57,14 @@ class PlanController extends Controller
 
     public function getTotal()
     {
-        // Fetch the total number of users for each plan
         $plans = Plan::withCount('users')->get();
-
-        // Calculate the total number of users
         $totalUsers = User::count();
 
-        // Group users by plan and get counts
         $groupedUsers = DB::table('users')
             ->select('plan_id', DB::raw('count(*) as total'))
             ->groupBy('plan_id')
             ->get();
 
-        // Prepare the response data
         $data = [
             'total_users' => $totalUsers,
             'plans' => PlanResource::collection($plans),
@@ -77,6 +72,19 @@ class PlanController extends Controller
         ];
 
         return response()->json(['message' => 'Total users and plans information', 'data' => $data], 200);
+    }
+
+    public function getTotalById($plan_id)
+    {
+        $plan = Plan::withCount('users')->findOrFail($plan_id);
+        $totalUsers = User::where('plan_id', $plan_id)->count();
+
+        $data = [
+            'plan' => new PlanResource($plan),
+            'total_users' => $totalUsers
+        ];
+
+        return response()->json(['message' => 'Total users for the plan', 'data' => $data], 200);
     }
 
     public function status(Request $request, Plan $plan)
