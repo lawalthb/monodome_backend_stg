@@ -331,5 +331,23 @@ class LoadsController extends Controller
         });
     }
 
+    public  function sendOrderToLoadBoard(Request $request){
+
+        $request->validate([
+            'order_no' => 'required',
+        ]);
+
+        $order = Order::where("order_no", $request->order_no)->first();
+        $order->payment_status = "Paid";
+        $order->admin_approve = "Yes";
+        $order->save();
+
+        event(new LoadTypeCreated($order->loadable));
+
+        return $this->success([
+            new OrderResource($order),
+        ]);
+    }
+
 }
 

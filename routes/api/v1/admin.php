@@ -196,6 +196,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
         Route::post('/order-assign', [LoadsController::class, 'orderAssign']);
         Route::post('/order-re-assign', [LoadsController::class, 'orderReAssign']);
         Route::post('/remove-order', [LoadsController::class, 'removeOrder']);
+        Route::post('/privateLoad-to-loadBoard', [LoadsController::class, 'sendOrderToLoadBoard']);
 
 
         });
