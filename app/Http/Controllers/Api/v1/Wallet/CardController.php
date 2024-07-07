@@ -58,11 +58,11 @@ class CardController extends Controller
         if ($request->card_id != null) {
 
 
-           return $card =  Card::where(["id"=>$request->card_id,'user_id'=>auth()->user()->id])->first();
+            $card =  Card::where(["id"=>$request->card_id,'user_id'=>auth()->user()->id])->first();
 
             if(!$card) return $this->error(null, 'Card details not found', 422);
 
-             return $authtoken = $card->auth_token;
+             $authtoken = $card->auth_token;
             $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
 
 
@@ -85,7 +85,7 @@ class CardController extends Controller
             $response = Http::withHeaders($headers)->post($url, $data);
 
             // Get the response content
-          return  $result = $response->json();
+          returnn  $result = $response->json();
 
             if( $result['status'] ==true){
 
