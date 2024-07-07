@@ -53,6 +53,7 @@ class UsersTableSeeder extends Seeder
                 'location' => NULL,
                 'user_agent' => NULL,
                 'isPremium' => 1,
+                'plan_id' => 2,
                 'status' => 'Confirmed',
                 'remember_token' => NULL,
                 'deleted_at' => NULL,
@@ -80,6 +81,7 @@ class UsersTableSeeder extends Seeder
                 'location' => NULL,
                 'user_agent' => NULL,
                 'isPremium' => 1,
+                'plan_id' => 1,
                 'status' => 'Confirmed',
                 'remember_token' => NULL,
                 'deleted_at' => NULL,
@@ -107,6 +109,7 @@ class UsersTableSeeder extends Seeder
                 'location' => NULL,
                 'user_agent' => NULL,
                 'isPremium' => 1,
+                'plan_id' => 2,
                 'status' => 'Confirmed',
                 'remember_token' => NULL,
                 'deleted_at' => NULL,
@@ -134,6 +137,7 @@ class UsersTableSeeder extends Seeder
                 'location' => NULL,
                 'user_agent' => NULL,
                 'isPremium' => 1,
+                'plan_id' => 1,
                 'status' => 'Confirmed',
                 'remember_token' => NULL,
                 'deleted_at' => NULL,
@@ -241,6 +245,7 @@ class UsersTableSeeder extends Seeder
             'user_type' => "Customer",
             'role_id' => 3,
             'ref_by' => rand(1,4),
+            'plan_id' => rand(1,2),
             'status' => $randomStatus,
             'referral_code' => generateReferralCode(),
         ]);
@@ -262,6 +267,7 @@ class UsersTableSeeder extends Seeder
             'user_type' => "broker",
             'role_id' => 4,
             'ref_by' => rand(1,3),
+            'plan_id' => rand(1,2),
             'status' => $randomStatus,
             'referral_code' => generateReferralCode(),
         ]);
@@ -286,6 +292,7 @@ class UsersTableSeeder extends Seeder
                 'user_type' => "agent",
                 'role_id' => 6,
                 'ref_by' => rand(1,4),
+                'plan_id' => rand(1,2),
                 'status' => $randomStatus,
                 'referral_code' => generateReferralCode(),
             ]);
@@ -323,6 +330,7 @@ class UsersTableSeeder extends Seeder
                 'user_type' => "clearing",
                 'role_id' => 7,
                 'ref_by' => rand(1,4),
+                'plan_id' => rand(1,2),
                 'status' => $randomStatus,
                 'referral_code' => generateReferralCode(),
             ]);
@@ -361,6 +369,7 @@ class UsersTableSeeder extends Seeder
                 'user_type' => "driver",
                 'role' => "driver",
                 'role_id' => 8,
+                'plan_id' => rand(1,2),
                 'ref_by' => rand(1,5),
                 'referral_code' => generateReferralCode(),
             ]);
@@ -400,6 +409,7 @@ class UsersTableSeeder extends Seeder
                 'role' => "shipping_company",
                 'role_id' => 5,
                 'ref_by' => rand(1,5),
+                'plan_id' => rand(1,2),
                 'status' => $randomStatus,
                 'referral_code' => generateReferralCode(),
             ]);
