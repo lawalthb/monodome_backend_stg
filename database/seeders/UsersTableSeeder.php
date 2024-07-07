@@ -166,6 +166,7 @@ class UsersTableSeeder extends Seeder
                 'location' => NULL,
                 'user_agent' => NULL,
                 'isPremium' => 1,
+                'plan_id' => 2,
                 'status' => 'Confirmed',
                 'remember_token' => NULL,
                 'deleted_at' => NULL,
@@ -196,6 +197,7 @@ class UsersTableSeeder extends Seeder
                 'location' => NULL,
                 'user_agent' => NULL,
                 'isPremium' => 1,
+                'plan_id' => 1,
                 'status' => 'Confirmed',
                 'remember_token' => NULL,
                 'deleted_at' => NULL,
@@ -446,6 +448,7 @@ class UsersTableSeeder extends Seeder
               // 'role' => "driver_manager",
                'role_id' => 9,
                'ref_by' => rand(1,5),
+               'plan_id' => rand(1,2),
                'status' => $randomStatus,
                'referral_code' => generateReferralCode(),
            ]);
@@ -483,6 +486,7 @@ class UsersTableSeeder extends Seeder
                // 'role' => "driver_manager",
                 'role_id' => 10,
                 'ref_by' => rand(1,5),
+                'plan_id' => rand(1,2),
                 'status' => $randomStatus,
                 'referral_code' => generateReferralCode(),
             ]);
@@ -520,6 +524,7 @@ class UsersTableSeeder extends Seeder
               // 'role' => "driver_manager",
                'role_id' => 11,
                'ref_by' => rand(1,5),
+               'plan_id' => rand(1,2),
                'status' => $randomStatus,
                'referral_code' => generateReferralCode(),
            ]);
