@@ -453,6 +453,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {
 
+        // Wallet endpoints
         Route::get('/', [WalletController::class, 'index']);
         Route::get('/check-pin', [WalletController::class, 'checkPinExists']);
         Route::post('/topup', [WalletController::class, 'topUpWallet']);
@@ -466,14 +467,14 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
         Route::get('/all-money-request', [WalletController::class, 'allMoneyRequest']);
         Route::post('/approve-request-money/{id}', [WalletController::class, 'approveRequest']);
 
-
-        //card endpoint here
-        Route::post('/cards', [CardController::class, 'store']);
-        Route::get('/cards', [CardController::class, 'index']);
-        Route::get('/cards/{id}', [CardController::class, 'show']);
-        Route::put('/cards/{id}', [CardController::class, 'update']);
-        Route::delete('/cards/{id}', [CardController::class, 'destroy']);
-
+        // Card endpoints
+        Route::group(['prefix' => 'cards'], function () {
+            Route::post('/', [CardController::class, 'store']);
+            Route::get('/', [CardController::class, 'index']);
+            Route::get('/{id}', [CardController::class, 'show']);
+            Route::put('/{id}', [CardController::class, 'update']);
+            Route::delete('/{id}', [CardController::class, 'destroy']);
+        });
 
     });
 
