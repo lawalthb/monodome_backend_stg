@@ -278,8 +278,6 @@ class LoadsController extends Controller
 
     }
 
-
-
     public function orderReAssign(Request $request)
     {
         return DB::transaction(function () use ($request) {
@@ -289,28 +287,15 @@ class LoadsController extends Controller
                 'driver_id' => 'required|exists:users,id',
             ]);
             $driver = User::findOrFail($request->driver_id);
-            $loadBoard = LoadBoard::where("order_no", $request->order_no)
-                //->where("acceptable_id", auth()->user()->id)
-                // ->where("status", 'pending')
-                ->first();
 
-            if (!$loadBoard) {
-                return $this->error([], "Order not found or has already been taken!");
-            }
-            // Check if driver is already assigned to an order
-            if ($loadBoard->acceptable_id == $driver->id) {
-                return $this->error([], "Order has already been assigned to a driver!");
-            }
             $order = Order::where("order_no", $request->order_no)->first();
 
-            $loadBoard->acceptable_id = $driver->id;
-            $loadBoard->acceptable_type = get_class($driver);
+            $order->driver_id = $driver->id;
             $order->placed_by_id = auth()->user()->id;
 
-            $loadBoard->save();
             $order->save();
 
-            $message = "You have been Re assigned an order with number " . $loadBoard->order_no . " for delivery from: " . $loadBoard->order->loadable->sender_location . " to: " . $loadBoard->order->loadable->receiver_location;
+            $message = "You have been Re assigned an order with number " . $order->order_no . " for delivery from: " . $order->loadable->sender_location . " to: " . $order->loadable->receiver_location;
             $driver->notify(new SendNotification($driver, $message));
 
             return $this->success([
