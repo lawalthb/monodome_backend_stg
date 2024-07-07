@@ -13,13 +13,21 @@ class CarYearPriceSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 20; $i++) {
+        $startYear = 1990;
+        $endYear = 2024;
+        $initialPrice = 100000;
+        $maxPrice = 2000000;
+        $incrementFactor = ($maxPrice - $initialPrice) / ($endYear - $startYear);
+
+        for ($i = $startYear; $i <= $endYear; $i++) {
+            $price = $initialPrice + ($i - $startYear) * $incrementFactor;
+
             CarYearPrice::create([
-                'year' => rand(2000, date('Y')),
-                'price' => rand(100000, 2000000),
+                'year' => $i,
+                'price' => $price,
                 'status' => 'active',
             ]);
         }
-
     }
+
 }
