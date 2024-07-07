@@ -146,7 +146,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
             Route::put('/{plan}', [PlanController::class, 'update']);
             Route::delete('/{plan}', [PlanController::class, 'destroy']);
             Route::get('/getTotal', [PlanController::class, 'getTotal']); // Corrected route
-            Route::get('/{plan}/getTotal', [PlanController::class, 'getTotal']); // Corrected route
+            Route::get('/{plan}/getTotalById', [PlanController::class, 'getTotalById']); // Corrected route
             Route::post('/status/{plan}', [PlanController::class, 'status']);
         });
 
