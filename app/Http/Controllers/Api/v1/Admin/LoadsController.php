@@ -257,13 +257,13 @@ class LoadsController extends Controller
         if (!$driver) {
             return $this->error([], "This driver is not under you");
         }
-        $truck = Truck::where("driver_user_id",$driver->id)->first();
+        // $truck = Truck::where("driver_user_id",$driver->id)->first();
 
-        if (!$truck) {
-            return $this->error([], "driver to truck not found!");
-        }
+        // if (!$truck) {
+        //     return $this->error([], "driver to truck not found!");
+        // }
 
-        $order->truck_by_id = $request->truck_id;
+        // $order->truck_by_id = $request->truck_id;
         $order->driver_id = $request->driver_id;
 
         $order->save();
