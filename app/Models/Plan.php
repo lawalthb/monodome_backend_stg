@@ -12,8 +12,9 @@ class Plan extends Model
     public $guarded = [];
 
 
-    public function users()
-    {
-        return $this->belongsTo(User::class);
-    }
+   // Define relationship with User model
+   public function users()
+   {
+       return $this->hasMany(User::class);
+   }
 }

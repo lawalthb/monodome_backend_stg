@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PlanResource;
 use Illuminate\Support\Facades\Validator;
@@ -20,8 +21,8 @@ class PlanController extends Controller
         $key = request()->input('search');
         $perPage = request()->input('per_page', 10);
 
-        $plan  = Plan::latest()->paginate($perPage);
-        return  PlanResource::collection($plan);
+        $plans = Plan::latest()->paginate($perPage);
+        return PlanResource::collection($plans);
     }
 
     public function store(Request $request)
@@ -38,29 +39,44 @@ class PlanController extends Controller
             return response()->json(['error' => $validator->errors()->all()], 400);
         }
 
-        // Create the plan with validated data
         $plan = Plan::create($validator->validated());
 
-        // Handle image upload if provided
         if ($request->hasFile('image')) {
             $imagePath = $this->saveImage('plan', $request->file('image'), 500, 500);
             $plan->update(['image' => $imagePath]);
         }
 
-        return response()->json(['message' => 'Plan created successfully', 'data' => $plan], 201);
+        return new PlanResource($plan);
     }
 
     public function show(Plan $plan)
     {
-        return response()->json($plan);
+        return new PlanResource($plan);
     }
 
-    public function getTotal(Plan $plan)
-    {
-        // Count the users that have the given plan_id
-        $totalUsers = User::where('plan_id', $plan->id)->count();
 
-        return response()->json(['message' => 'Total users on this plan', 'amount' => $totalUsers], 200);
+    public function getTotal()
+    {
+        // Fetch the total number of users for each plan
+        $plans = Plan::withCount('users')->get();
+
+        // Calculate the total number of users
+        $totalUsers = User::count();
+
+        // Group users by plan and get counts
+        $groupedUsers = DB::table('users')
+            ->select('plan_id', DB::raw('count(*) as total'))
+            ->groupBy('plan_id')
+            ->get();
+
+        // Prepare the response data
+        $data = [
+            'total_users' => $totalUsers,
+            'plans' => PlanResource::collection($plans),
+            'grouped_users' => $groupedUsers
+        ];
+
+        return response()->json(['message' => 'Total users and plans information', 'data' => $data], 200);
     }
 
     public function status(Request $request, Plan $plan)
@@ -73,10 +89,9 @@ class PlanController extends Controller
             return response()->json(['error' => $validator->errors()->all()], 400);
         }
 
-        $plan->status = $request->status;
-        $plan->save();
+        $plan->update(['status' => $request->status]);
 
-        return response()->json(['message' => 'Status updated successfully', 'data' => $plan], 200);
+        return new PlanResource($plan);
     }
 
     public function update(Request $request, Plan $plan)
@@ -94,13 +109,12 @@ class PlanController extends Controller
 
         $plan->update($validator->validated());
 
-        // Handle image upload if provided
         if ($request->hasFile('image')) {
             $imagePath = $this->saveImage('plan', $request->file('image'), 500, 500);
             $plan->update(['image' => $imagePath]);
         }
 
-        return response()->json(['message' => 'Plan updated successfully', 'data' => $plan], 200);
+        return new PlanResource($plan);
     }
 
     public function destroy(Plan $plan)

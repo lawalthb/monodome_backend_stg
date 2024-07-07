@@ -23,6 +23,7 @@ class PlanResource extends JsonResource
             'status' => $this->status,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
+            'user_count' => $this->users_count,
         ];
     }
 }
