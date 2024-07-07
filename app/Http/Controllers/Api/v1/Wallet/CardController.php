@@ -58,7 +58,7 @@ class CardController extends Controller
         if ($request->card_id != null) {
 
 
-            $card =  Card::where(["id"=>$request->card_id,'user_id'=>auth()->user()->id])->first();
+           return $card =  Card::where(["id"=>$request->card_id,'user_id'=>auth()->user()->id])->first();
 
             if(!$card) return $this->error(null, 'Card details not found', 422);
 
