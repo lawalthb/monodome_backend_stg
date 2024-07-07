@@ -283,7 +283,7 @@ class LoadsController extends Controller
         return DB::transaction(function () use ($request) {
 
             $request->validate([
-                'order_no' => 'required|exists:load_boards,order_no',
+                'order_no' => 'required',
                 'driver_id' => 'required|exists:users,id',
             ]);
             $driver = User::findOrFail($request->driver_id);
@@ -310,7 +310,7 @@ class LoadsController extends Controller
         return DB::transaction(function () use ($request) {
 
             $request->validate([
-                'order_no' => 'required|exists:load_boards,order_no',
+                'order_no' => 'required',
                 'driver_id' => 'required|exists:users,id',
             ]);
             $driver = User::findOrFail($request->driver_id);
