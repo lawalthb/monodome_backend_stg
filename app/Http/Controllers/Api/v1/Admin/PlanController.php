@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PlanResource;
 use Illuminate\Support\Facades\Validator;
 
 class PlanController extends Controller
@@ -16,7 +17,11 @@ class PlanController extends Controller
 
     public function index()
     {
-        return Plan::all();
+        $key = request()->input('search');
+        $perPage = request()->input('per_page', 10);
+
+        $plan  = Plan::latest()->paginate($perPage);
+        return  PlanResource::collection($plan);
     }
 
     public function store(Request $request)
