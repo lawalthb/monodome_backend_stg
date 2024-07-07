@@ -62,7 +62,7 @@ class CardController extends Controller
 
             if(!$card) return $this->error(null, 'Card details not found', 422);
 
-             $authtoken = $card->auth_token;
+             return $authtoken = $card->auth_token;
             $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
 
 
