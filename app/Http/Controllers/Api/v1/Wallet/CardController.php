@@ -48,13 +48,13 @@ class CardController extends Controller
         return $this->success(['cards' => $cards], "All Card details");
     }
 
-    /**
+
+     /**
      * Store a newly created resource in storage.
      */
     public function store(CardRequest  $request)
     {
 
-        dd($request);
         if ($request->card_id != null) {
 
 
@@ -113,12 +113,87 @@ class CardController extends Controller
 
                 $publickey = Setting::where(['slug' => 'publickey'])->first()->value;
 
-                return $this->success(['card' => $encryptedCard, "payment" => topUpWallet($request->amount) ], "Card details Save successfully");
+                return $this->success(['card' => $encryptedCard, "public_key" => $publickey], "Card details Save successfully");
             } else {
                 return $this->error(null, 'Error saving card details', 422);
             }
         }
     }
+
+
+
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    // public function store(CardRequest  $request)
+    // {
+
+    //     dd($request);
+    //     if ($request->card_id != null) {
+
+
+    //         $card =  Card::where(["id"=>$request->card_id,'user_id'=>auth()->user()->id])->first();
+
+    //         if(!$card) return $this->error(null, 'Card details not found', 422);
+
+    //          $authtoken = $card->auth_token;
+    //         $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
+
+
+    //         $url = "https://api.paystack.co/transaction/charge_authorization";
+
+    //         // Define the request data
+    //         $data = [
+    //             'email' => auth()->user()->email,
+    //             'amount' => $request->amount,
+    //             "authorization_code" =>  $authtoken,
+    //         ];
+
+    //         // Set the request headers
+    //         $headers = [
+    //             "Authorization" => "Bearer $secretkey",
+    //             "Cache-Control" => "no-cache",
+    //         ];
+
+    //         // Send the POST request using Laravel's HTTP client
+    //         $response = Http::withHeaders($headers)->post($url, $data);
+
+    //         // Get the response content
+    //         $result = $response->json();
+
+    //         if( $result['status'] ==true){
+
+    //             return $this->success($card, "Card charged successfully");
+    //         }else{
+
+    //             return $this->error(null, 'Error saving card details', 422);
+    //         }
+
+    //     } else {
+
+    //         $encryptedCard = new Card;
+    //         $encryptedCard->user_id = auth()->user()->id;
+    //         $encryptedCard->type = $request->input('type');
+    //         $encryptedCard->card_number = encrypt($request->input('card_number'));
+    //         $encryptedCard->cvv = encrypt($request->input('cvv'));
+    //         $encryptedCard->name_on_card = $request->input('name_on_card');
+    //         $encryptedCard->expiry_month = encrypt($request->input('expiry_month'));
+    //         $encryptedCard->expiry_year = encrypt($request->input('expiry_year'));
+
+    //         if ($encryptedCard->save()) {
+
+    //             $message = "Your Card details was save successfully. Thank you for trusting us";
+    //             auth()->user()->notify(new SendNotification(auth()->user(), $message));
+
+    //             $publickey = Setting::where(['slug' => 'publickey'])->first()->value;
+
+    //             return $this->success(['card' => $encryptedCard, "payment" => topUpWallet($request->amount) ], "Card details Save successfully");
+    //         } else {
+    //             return $this->error(null, 'Error saving card details', 422);
+    //         }
+    //     }
+    // }
 
 
     /**
