@@ -142,13 +142,16 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
         Route::group(['prefix' => 'plans'], function () {
             Route::get('/', [PlanController::class, 'index']);
             Route::post('/', [PlanController::class, 'store']);
+            Route::get('/getTotal', [PlanController::class, 'getTotal']);
+
             Route::get('/{plan}', [PlanController::class, 'show']);
             Route::put('/{plan}', [PlanController::class, 'update']);
             Route::delete('/{plan}', [PlanController::class, 'destroy']);
-            Route::get('/getTotal', [PlanController::class, 'getTotal']); // Corrected route
-            Route::get('/{plan}/getTotalById', [PlanController::class, 'getTotalById']); // Corrected route
-            Route::post('/status/{plan}', [PlanController::class, 'status']);
+
+            Route::get('/{plan}/getTotalById', [PlanController::class, 'getTotalById']);
+            Route::put('/{plan}/status', [PlanController::class, 'status']);
         });
+
 
         //for orders
         Route::group(['prefix' => 'orders'], function () {

@@ -21,7 +21,7 @@ class PlanController extends Controller
         $key = request()->input('search');
         $perPage = request()->input('per_page', 10);
 
-        $plans = Plan::latest()->paginate($perPage);
+        $plans = Plan::withCount('users')->latest()->paginate($perPage);
         return PlanResource::collection($plans);
     }
 
