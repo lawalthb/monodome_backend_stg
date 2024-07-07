@@ -30,6 +30,7 @@ class UserFactory extends Factory
             'address' => fake()->streetAddress(),
             'user_created_by' => NULL,
             'role_id' => '5',
+            'plan_id' => '1',
             'imageUrl' => NULL,
             'user_type' => 'shipping_company',
             'role' => 'super_admin',
