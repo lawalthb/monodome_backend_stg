@@ -54,6 +54,7 @@ class CardController extends Controller
     public function store(CardRequest  $request)
     {
 
+        dd($request);
         if ($request->card_id != null) {
 
 
