@@ -44,7 +44,7 @@ class PlanController extends Controller
         // Handle image upload if provided
         if ($request->hasFile('image')) {
             $imagePath = $this->saveImage('plan', $request->file('image'), 500, 500);
-            $plan->update(['imageUrl' => $imagePath]);
+            $plan->update(['image' => $imagePath]);
         }
 
         return response()->json(['message' => 'Plan created successfully', 'data' => $plan], 201);
@@ -97,7 +97,7 @@ class PlanController extends Controller
         // Handle image upload if provided
         if ($request->hasFile('image')) {
             $imagePath = $this->saveImage('plan', $request->file('image'), 500, 500);
-            $plan->update(['imageUrl' => $imagePath]);
+            $plan->update(['image' => $imagePath]);
         }
 
         return response()->json(['message' => 'Plan updated successfully', 'data' => $plan], 200);
