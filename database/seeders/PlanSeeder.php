@@ -16,6 +16,7 @@ class PlanSeeder extends Seeder
         Plan::create([
             'name' => 'Premium',
             'price' => 2000,
+            'image' => 'uploads/vehicle_image/1698672302qDxhNFotJz.PNG',
             'expired' => rand(1,12),
             'status' => 'active',
         ]);
@@ -23,6 +24,7 @@ class PlanSeeder extends Seeder
         Plan::create([
             'name' => 'Prime',
             'price' => 5000,
+            'image' => 'uploads/vehicle_image/1698672302qDxhNFotJz.PNG',
             'expired' => rand(1,12),
             'status' => 'active',
         ]);
