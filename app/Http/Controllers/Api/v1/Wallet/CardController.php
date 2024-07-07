@@ -85,7 +85,7 @@ class CardController extends Controller
             $response = Http::withHeaders($headers)->post($url, $data);
 
             // Get the response content
-          returnn  $result = $response->json();
+          return $result = $response->json();
 
             if( $result['status'] ==true){
 
