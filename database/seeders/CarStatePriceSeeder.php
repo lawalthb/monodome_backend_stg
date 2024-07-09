@@ -21,7 +21,7 @@ class CarStatePriceSeeder extends Seeder
 
         $initialPrice = 10000;
         $maxPrice = 2000000;
-        $incrementFactor = ($maxPrice - $initialPrice) / (Country::count() - Country::count()-2);
+        $incrementFactor = ($maxPrice - $initialPrice) / Country::count();
 
         foreach ($states as $state) {
         CarStatePrice::create([
