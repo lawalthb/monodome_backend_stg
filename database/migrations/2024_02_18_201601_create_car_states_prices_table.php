@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('car_states_prices', function (Blueprint $table) {
+        Schema::create('car_state_prices', function (Blueprint $table) {
             $table->id();
             $table->string('state_id');
             $table->decimal('price', 10, 2);
