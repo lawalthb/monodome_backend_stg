@@ -506,15 +506,15 @@ class OrderController extends Controller
         $carYearPrice = $carYear->price;
 
         $carCountryPrice = CarCountryPrice::findOrFail($validatedData['country_id'])->price;
-        
-        $total = 0; 
-        
+
+        $total = 0;
+
         if($request->final === "Yes"){
             $carStatePrice = CarStatePrice::findOrFail($validatedData['state_id'])->price;
 
-            $carValuePrice + $carYearPrice + $carCountryPrice + $carStatePrice;
+            $total + $carYearPrice + $carCountryPrice + $carStatePrice;
         }else {
-            $carValuePrice + $carYearPrice + $carCountryPrice;
+            $total + $carYearPrice + $carCountryPrice;
 
         }
 
