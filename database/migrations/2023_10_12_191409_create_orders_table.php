@@ -28,7 +28,7 @@ return new class extends Migration
             $table->enum('admin_approve', ['Yes', 'No'])->default('No');
             $table->enum('payment_type',['wallet','online','offline'])->nullable();
             // $table->enum('payment_note',['wallet','online','offline'])->nullable();
-            $table->enum('payment_status',['Failed', 'Paid','Pending'])->default("Pending");
+            $table->enum('payment_status',['Failed', 'Paid','Pending','Refunded'])->default("Pending");
             $table->unsignedBigInteger('loadable_id');
             $table->string('loadable_type');
             // $table->enum('status', ['Pending', 'Confirmed', 'Processing','Waiting','out_for_delivery','canceled','returned','Delivered','awaiting_confirmation'])->default('Pending');

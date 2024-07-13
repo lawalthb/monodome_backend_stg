@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1\Order;
 use App\Models\Order;
 use App\Models\Setting;
 use App\Models\LoadType;
+use App\Models\LoadBoard;
 use App\Models\WeightPrice;
 use App\Models\CarYearPrice;
 use App\Models\PriceSetting;
@@ -203,6 +204,67 @@ class OrderController extends Controller
 
          });
      }
+
+
+     public function cancelOrder(Request $request,)
+{
+
+    $request->validate([
+        'order_no' => 'required|string',
+    ]);
+
+    return DB::transaction(function () use ($request) {
+        $order = Order::where("order_no", $request->order_no)->first();
+
+        if (!$order) {
+            return $this->error('', 'Order not found', 404);
+        }
+
+        if ($order->payment_type != 'wallet' && $order->payment_type != 'online') {
+            return $this->error('', 'Cancellation allowed only for wallet and online payments', 400);
+        }
+
+        if (!is_null($order->driver_id)) {
+            return $this->error('', 'Order cannot be cancelled once a driver is assigned', 400);
+        }
+
+        // Refund the amount to the user's wallet
+        $user = $order->user;
+
+        if ($order->payment_type == 'wallet' || $order->payment_type == 'online') {
+            $user->wallet->amount += $order->amount;
+            $user->wallet->save();
+
+            // Add a refund entry to the wallet history
+            $walletHistory = new WalletHistory;
+            $walletHistory->wallet_id = $user->wallet->id;
+            $walletHistory->user_id = $user->id;
+            $walletHistory->type = "credit";
+            $walletHistory->payment_type = "wallet";
+            $walletHistory->amount = $order->amount;
+            $walletHistory->closing_balance = $user->wallet->amount;
+            $walletHistory->fee = 0;
+            $walletHistory->description = "Refund for Order ID: " . $order->order_no;
+            $walletHistory->save();
+        }
+
+        // Mark the order as cancelled
+        $order->payment_status = 'Refunded';
+        $order->save();
+
+        $loadBoard = LoadBoard::where("order_no",$order->order_no)->first();
+        $loadBoard->acceptable_id = null;
+        $loadBoard->acceptable_type = null;
+        $loadBoard->status = "pending";
+        $loadBoard->status_comment = "order cancel and money refunded to user wallet";
+        $loadBoard->save();
+
+        $order->user->notify(new SendNotification($order->user, 'Your order was been cancelled and money refunded to user wallet'));
+
+
+        return $this->success(new OrderResource($order), 'Order cancelled and refunded successfully');
+    });
+}
 
 
      public function paywithWallet(){

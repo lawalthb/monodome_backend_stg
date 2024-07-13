@@ -63,6 +63,16 @@ class NombaService
 
     public function  submit($request){
 
+        $validatedData = $request->validate([
+            'amount' => 'required|numeric',
+            'accountNumber' => 'required|numeric',
+            'bankCode' => 'required|string',
+            'accountName' => 'required|string',
+            'merchantTxRef' => 'required|string',
+            'senderName' => 'required|string',
+            'pin' => 'required|numeric',
+        ]);
+
         $nomba = nombaAccessToken();
 
         $response = Http::withHeaders([

@@ -2,62 +2,72 @@
 
 namespace App\Http\Controllers\Api\v1\Wallet;
 
-use App\Models\Card;
-use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Services\NombaService;
+use App\Services\PayStackService;
+use App\Http\Controllers\Controller;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
-use App\Http\Requests\CardRequest;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Http;
-use App\Notifications\SendNotification;
 
 class BankController extends Controller
 {
-
     use ApiStatusTrait, FileUploadTrait;
 
-    public function __construct(private NombaService $nombaService){
+    private $nombaService;
+    private $payStackService;
 
+    public function __construct(NombaService $nombaService, PayStackService $payStackService)
+    {
+        $this->nombaService = $nombaService;
+        $this->payStackService = $payStackService;
     }
 
-    public function list()
+    public function list(Request $request)
     {
+        $service = $this->determineService($request);
 
-       return $this->nombaService->bankList();
-
+        return $service->bankList();
     }
 
     public function lookup(Request $request)
     {
-
         $validatedData = $request->validate([
             'accountNumber' => 'required|numeric',
             'bankCode' => 'required|string',
         ]);
 
-        return $this->nombaService->bankLookUp($request->accountNumber, $request->bankCode);
+        $service = $this->determineService($request);
 
+        return $service->bankLookUp($validatedData['accountNumber'], $validatedData['bankCode']);
     }
 
     public function submit(Request $request)
     {
 
-        $validatedData = $request->validate([
-            'amount' => 'required|numeric',
-            'accountNumber' => 'required|numeric',
-            'bankCode' => 'required|string',
-            'accountName' => 'required|string',
-            'merchantTxRef' => 'required|string',
-            'senderName' => 'required|string',
-            'pin' => 'required|numeric',
-        ]);
+        $service = $this->determineService($request);
 
-        return $this->nombaService->submit($request);
-
+        return $service->submit($request);
     }
 
+    public function finalizeTransfer(Request $request)
+    {
+        $service = $this->determineService($request);
 
+        return $service->finalizeTransfer($request);
+    }
 
+    private function determineService(Request $request)
+    {
+        $routeName = $request->route()->getName();
+
+        if (str_contains($routeName, 'nomba')) {
+            return $this->nombaService;
+        }
+
+        if (str_contains($routeName, 'paystack')) {
+            return $this->payStackService;
+        }
+
+        throw new \Exception('Service not found.');
+    }
 }

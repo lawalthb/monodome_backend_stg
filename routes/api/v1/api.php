@@ -193,6 +193,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
         //load type route
         Route::get('/', [OrderController::class, 'index']);
         Route::post('/', [OrderController::class, 'store']);
+        Route::post('/cancel', [OrderController::class, 'cancelOrder']);
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::post('/{id}', [OrderController::class, 'update']);
         Route::delete('/{id}', [OrderController::class, 'destroy']);
@@ -425,13 +426,18 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
     });
 
+    Route::group(['prefix' => 'transfer/nomba', 'middleware' => 'auth:api'], function () {
+        Route::get('/bank/list', [BankController::class, 'list'])->name('nomba.bank.list');
+        Route::post('/bank/lookup', [BankController::class, 'lookup'])->name('nomba.bank.lookup');
+        Route::post('/bank/submit', [BankController::class, 'submit'])->name('nomba.bank.submit');
+    });
 
-    Route::group(['prefix' => 'transfer', 'middleware' => 'auth:api'], function () {
 
-        Route::get('/bank/list', [BankController::class, 'list']);
-        Route::post('/bank/lookup', [BankController::class, 'lookup']);
-        Route::post('/bank/submit', [BankController::class, 'submit']);
-
+    Route::group(['prefix' => 'transfer/paystack', 'middleware' => 'auth:api'], function () {
+        Route::get('/bank/list', [BankController::class, 'list'])->name('paystack.bank.list');
+        Route::post('/bank/lookup', [BankController::class, 'lookup'])->name('paystack.bank.lookup');
+        Route::post('/bank/submit', [BankController::class, 'submit'])->name('paystack.bank.submit');
+        Route::post('/bank/finalizeTransfer', [BankController::class, 'finalizeTransfer'])->name('paystack.bank.finalizeTransfer');
     });
 
     Route::group(['prefix' => 'notification', 'middleware' => 'auth:api'], function () {
