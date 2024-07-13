@@ -190,56 +190,50 @@ class OrderController extends Controller
     ]);
 }
 
-public function  approveRefundOrder(Request $request)
+public function approveRefundOrder(Request $request)
 {
-
     $validator = Validator::make($request->all(), [
-        'status' => 'required|in:Yes,No',
         'order_no' => 'required|string|exists:orders,order_no',
+        'payment_mode' => 'required|in:full,partial',
+        'amount' => 'required_if:payment_mode,partial|numeric|min:1',
     ]);
 
     if ($validator->fails()) {
         return response()->json(['errors' => $validator->errors()], 422);
     }
 
-    $order = Order::where("order_no",$request->order_no)->first();
+    $order = Order::where("order_no", $request->order_no)->first();
 
-    // Refund the amount to the user's wallet
-    $user = $order->user;
-
-    if ($order->payment_type == 'wallet' || $order->payment_type == 'online') {
-        WalletService::updateWallet($user, [
-            'amount' => $order->amount,
-            'type' => 'credit',
-            'payment_type' => 'wallet',
-            'description' => "Refund for Order ID: " . $order->order_no,
-        ]);
-    }
-
+    // Check if order can be refunded
     if ($order->payment_type != 'wallet' && $order->payment_type != 'online') {
-        return $this->error('', 'Cancellation allowed only for wallet and online payments', 400);
+        return $this->error('', 'Refund allowed only for wallet and online payments', 400);
     }
 
     if (!is_null($order->driver_id)) {
-        return $this->error('', 'Order cannot be cancelled once a driver is assigned', 400);
+        return $this->error('', 'Order cannot be refunded once a driver is assigned', 400);
     }
 
+    // Determine refund amount
+    $refundAmount = $request->payment_mode === 'full' ? $order->amount : $request->amount;
 
-    if($order->save()){
+    // Refund the amount to the user's wallet
+    $user = $order->user;
+    WalletService::updateWallet($user, [
+        'amount' => $refundAmount,
+        'type' => 'credit',
+        'payment_type' => 'wallet',
+        'description' => "Refund for Order ID: " . $order->order_no,
+    ]);
 
-    $order->user->notify(new SendNotification($order->user, 'Your order has been refunded by admin and money is available in wallet '.$request->payment_status.' '));
+    // Update order status to refunded
+    $order->payment_status = 'Refunded';
+    $order->save();
 
+    $order->user->notify(new SendNotification($order->user, 'Your order has been refunded by admin and the amount is available in your wallet.'));
 
-        return response()->json([
-            'data' => new OrderResource($order),
-        ],200);
-    }else{
-        return response()->json([
-            'error' => "unable to update the status.",
-        ],400);
-    }
-
-
+    return response()->json([
+        'data' => new OrderResource($order),
+    ], 200);
 }
 
 
