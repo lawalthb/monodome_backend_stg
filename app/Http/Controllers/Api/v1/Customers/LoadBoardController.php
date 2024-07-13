@@ -190,6 +190,12 @@ class LoadBoardController extends Controller
             return $this->error(null, 'You have already bid for this and is not yet to be confirmed');
         }
 
+        $bid = Bid::where("order_no",$loadBoard->order_no)->where("driver_id",auth()->id())->count();
+
+        if ($bid >=2) {
+            return $this->error(null, 'You cant bid more then twice in a load');
+        }
+
         $bid = new Bid();
 
         $bid->order_no =  $loadBoard->order_no;
