@@ -3,22 +3,19 @@
 namespace App\Http\Controllers\Api\v1\Wallet;
 
 use App\Models\Card;
-use App\Models\User;
-use App\Models\Wallet;
 use App\Models\Setting;
 use Illuminate\Http\Request;
-use App\Models\WalletHistory;
-use App\Traits\ApiStatusTrait;
-use App\Traits\FileUploadTrait;
 use App\Http\Requests\CardRequest;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use App\Notifications\SendNotification;
+use App\Services\WalletService;
+use Illuminate\Support\Facades\DB;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 
 class CardController extends Controller
 {
-
     use ApiStatusTrait, FileUploadTrait;
 
     /**
@@ -28,18 +25,10 @@ class CardController extends Controller
     {
         $cards = Card::where('user_id', auth()->user()->id)->get();
 
-        // Decrypt sensitive card information in each card
-        // foreach ($cards as $card) {
-        //     $card->card_number = decrypt($card->card_number);
-        //     $card->cvv = decrypt($card->cvv);
-        //     $card->expiry_month = decrypt($card->expiry_month);
-        //     $card->expiry_year = decrypt($card->expiry_year);
-        // }
-
         foreach ($cards as $card) {
             // Decrypt card details
             $card->card_number = decrypt($card->card_number);
-            $card->cvv = null ;//decrypt($card->cvv);
+            $card->cvv = null;
             $card->expiry_month = decrypt($card->expiry_month);
             $card->expiry_year = decrypt($card->expiry_year);
 
@@ -48,35 +37,31 @@ class CardController extends Controller
             $card->card_number = $maskedCardNumber;
         }
 
-
         return $this->success(['cards' => $cards], "All Card details");
     }
 
-
-     /**
+    /**
      * Store a newly created resource in storage.
      */
-    public function store(CardRequest  $request)
+    public function store(CardRequest $request)
     {
-
         if ($request->card_id != null) {
+            $card = Card::where(["id" => $request->card_id, 'user_id' => auth()->user()->id])->first();
 
+            if (!$card) {
+                return $this->error(null, 'Card details not found', 422);
+            }
 
-            $card =  Card::where(["id"=>$request->card_id,'user_id'=>auth()->user()->id])->first();
-
-            if(!$card) return $this->error(null, 'Card details not found', 422);
-
-             $authtoken = $card->auth_token;
-            $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
-
+            $authtoken = $card->auth_token;
+            $secretkey = Setting::where('slug', 'secretkey')->first()->value;
 
             $url = "https://api.paystack.co/transaction/charge_authorization";
 
             // Define the request data
             $data = [
                 'email' => auth()->user()->email,
-                'amount' => $request->amount,
-                "authorization_code" =>  $authtoken,
+                'amount' => $request->amount * 100, // Convert amount to kobo
+                'authorization_code' => $authtoken,
             ];
 
             // Set the request headers
@@ -89,81 +74,40 @@ class CardController extends Controller
             $response = Http::withHeaders($headers)->post($url, $data);
 
             // Get the response content
-           $result = $response->json();
-           $data = $result['data'];
+            $result = $response->json();
 
-            if( $result['status'] ==true){
+            if ($result['status'] == true) {
+                $data = $result['data'];
+                $user = auth()->user();
 
-                $user = User::find(auth()->id());
+                DB::beginTransaction();
+                try {
+                    // Update wallet and create wallet history using WalletService
+                    WalletService::updateWallet($user, [
+                        'amount' => $data['amount'] / 100, // Convert amount back to Naira
+                        'type' => 'deposit',
+                        'payment_type' => 'paystack',
+                        'description' => 'Paystack deposit via wallet',
+                        'fee' => $data['fees'] / 100,
+                        'reference' => $data['reference'],
+                    ]);
 
-                if ($user) {
-                    if ($user->wallet) {
-                        // Update the existing wallet
-                        $user->wallet->update([
-                            "amount" => $user->wallet->amount + ($data['amount'] / 100),
-                            "status" => "active",
-                        ]);
+                    // Update card details
+                    $card->auth_token = $data['authorization']['authorization_code'];
+                    $card->customer_code = $data['customer']['customer_code'];
+                    $card->save();
 
-                        // Create a wallet history entry
-                        $walletHistory = new WalletHistory;
-                        $walletHistory->wallet_id = $user->wallet->id;
-                        $walletHistory->user_id =  $user->id;
-                        $walletHistory->type = "deposit";
-                        $walletHistory->paystack_reference =  $data["reference"];
-                        $walletHistory->payment_type = "paystack";
-                        $walletHistory->amount = $data['amount'] / 100;
-                        $walletHistory->closing_balance = $user->wallet->amount;
-                        $walletHistory->fee = $data['fees']/ 100;
-                        $walletHistory->description = "Paystack deposit via wallet";
-                        $walletHistory->save();
-
-                        // Check if the user has a card and update its details
-                        $card = Card::where('user_id', $user->id)->first();
-                        if ($card) {
-                            $card->auth_token = $data['authorization']['authorization_code'];
-                            $card->customer_code = $data['customer']['customer_code'];
-                            $card->save();
-                        }
-                    } else {
-                        // Create a new wallet
-                        $wallet = new Wallet;
-                        $wallet->amount = $data['amount'] / 100;
-                        $wallet->status = 'active';
-                        $wallet->user_id = $user->id;
-                        $wallet->save();
-
-                        // Create a wallet history entry
-                        $walletHistory = new WalletHistory;
-                        $walletHistory->wallet_id = $wallet->id;
-                        $walletHistory->user_id = $user->id;
-                        $walletHistory->type = "deposit";
-                        $walletHistory->payment_type = "paystack";
-                        $walletHistory->amount = $data['amount'] / 100;
-                        $walletHistory->closing_balance = $wallet->amount;
-                        $walletHistory->fee = $data['fees'];
-                        $walletHistory->description = "Paystack deposit";
-                        $walletHistory->save();
-
-                        // Check if the user has a card and update its details
-                        $card = Card::where('user_id', $user->id)->first();
-                        if ($card) {
-                            $card->auth_token = $data['authorization']['authorization_code'];
-                            $card->customer_code = $data['customer']['customer_code'];
-                            $card->save();
-                        }
-                    }
                     DB::commit();
+
+                    return $this->success($card, "Card charged successfully");
+                } catch (\Exception $e) {
+                    DB::rollBack();
+                    return $this->error(null, 'Error processing the transaction', 500);
                 }
-
-
-                return $this->success($card, "Card charged successfully");
-            }else{
-
-                return $this->error(null, 'Error saving card details', 422);
+            } else {
+                return $this->error(null, 'Error charging card', 422);
             }
-
         } else {
-
             $encryptedCard = new Card;
             $encryptedCard->user_id = auth()->user()->id;
             $encryptedCard->type = $request->input('type');
@@ -174,94 +118,17 @@ class CardController extends Controller
             $encryptedCard->expiry_year = encrypt($request->input('expiry_year'));
 
             if ($encryptedCard->save()) {
-
-                $message = "Your Card details was save successfully. Thank you for trusting us";
+                $message = "Your Card details were saved successfully. Thank you for trusting us";
                 auth()->user()->notify(new SendNotification(auth()->user(), $message));
 
-                $publickey = Setting::where(['slug' => 'publickey'])->first()->value;
+                $publickey = Setting::where('slug', 'publickey')->first()->value;
 
-                return $this->success(['card' => $encryptedCard, "public_key" => $publickey], "Card details Save successfully");
+                return $this->success(['card' => $encryptedCard, "public_key" => $publickey], "Card details saved successfully");
             } else {
                 return $this->error(null, 'Error saving card details', 422);
             }
         }
     }
-
-
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    // public function store(CardRequest  $request)
-    // {
-
-    //     dd($request);
-    //     if ($request->card_id != null) {
-
-
-    //         $card =  Card::where(["id"=>$request->card_id,'user_id'=>auth()->user()->id])->first();
-
-    //         if(!$card) return $this->error(null, 'Card details not found', 422);
-
-    //          $authtoken = $card->auth_token;
-    //         $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
-
-
-    //         $url = "https://api.paystack.co/transaction/charge_authorization";
-
-    //         // Define the request data
-    //         $data = [
-    //             'email' => auth()->user()->email,
-    //             'amount' => $request->amount,
-    //             "authorization_code" =>  $authtoken,
-    //         ];
-
-    //         // Set the request headers
-    //         $headers = [
-    //             "Authorization" => "Bearer $secretkey",
-    //             "Cache-Control" => "no-cache",
-    //         ];
-
-    //         // Send the POST request using Laravel's HTTP client
-    //         $response = Http::withHeaders($headers)->post($url, $data);
-
-    //         // Get the response content
-    //         $result = $response->json();
-
-    //         if( $result['status'] ==true){
-
-    //             return $this->success($card, "Card charged successfully");
-    //         }else{
-
-    //             return $this->error(null, 'Error saving card details', 422);
-    //         }
-
-    //     } else {
-
-    //         $encryptedCard = new Card;
-    //         $encryptedCard->user_id = auth()->user()->id;
-    //         $encryptedCard->type = $request->input('type');
-    //         $encryptedCard->card_number = encrypt($request->input('card_number'));
-    //         $encryptedCard->cvv = encrypt($request->input('cvv'));
-    //         $encryptedCard->name_on_card = $request->input('name_on_card');
-    //         $encryptedCard->expiry_month = encrypt($request->input('expiry_month'));
-    //         $encryptedCard->expiry_year = encrypt($request->input('expiry_year'));
-
-    //         if ($encryptedCard->save()) {
-
-    //             $message = "Your Card details was save successfully. Thank you for trusting us";
-    //             auth()->user()->notify(new SendNotification(auth()->user(), $message));
-
-    //             $publickey = Setting::where(['slug' => 'publickey'])->first()->value;
-
-    //             return $this->success(['card' => $encryptedCard, "payment" => topUpWallet($request->amount) ], "Card details Save successfully");
-    //         } else {
-    //             return $this->error(null, 'Error saving card details', 422);
-    //         }
-    //     }
-    // }
-
 
     /**
      * Display the specified resource.
@@ -282,7 +149,6 @@ class CardController extends Controller
 
         return $this->success(['card' => $card], "Card details");
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -327,11 +193,67 @@ class CardController extends Controller
 
     public function payWithExistingCard(Request $request)
     {
-
         $this->validate($request, [
-            "card_id" => 'required|exists,cards',
+            "card_id" => 'required|exists:cards,id',
             "transaction_type" => 'required|in:deposit,withdraw,transfer',
+            "amount" => 'required|numeric|min:1',
         ]);
-        $encryptedCard = Card::where(['user_id' => auth()->user()->id, 'id' => $request->card_id])->first();
+
+        $card = Card::where(['user_id' => auth()->user()->id, 'id' => $request->card_id])->first();
+
+        if (!$card) {
+            return $this->error(null, 'Card details not found', 422);
+        }
+
+        $authtoken = $card->auth_token;
+        $secretkey = Setting::where('slug', 'secretkey')->first()->value;
+
+        $url = "https://api.paystack.co/transaction/charge_authorization";
+
+        // Define the request data
+        $data = [
+            'email' => auth()->user()->email,
+            'amount' => $request->amount * 100, // Convert amount to kobo
+            'authorization_code' => $authtoken,
+        ];
+
+        // Set the request headers
+        $headers = [
+            "Authorization" => "Bearer $secretkey",
+            "Cache-Control" => "no-cache",
+        ];
+
+        // Send the POST request using Laravel's HTTP client
+        $response = Http::withHeaders($headers)->post($url, $data);
+
+        // Get the response content
+        $result = $response->json();
+
+        if ($result['status'] == true) {
+            $data = $result['data'];
+            $user = auth()->user();
+
+            DB::beginTransaction();
+            try {
+                // Update wallet and create wallet history using WalletService
+                WalletService::updateWallet($user, [
+                    'amount' => $data['amount'] / 100, // Convert amount back to Naira
+                    'type' => $request->transaction_type,
+                    'payment_type' => 'paystack',
+                    'description' => 'Paystack ' . $request->transaction_type . ' via wallet',
+                    'fee' => $data['fees'] / 100,
+                    'reference' => $data['reference'],
+                ]);
+
+                DB::commit();
+
+                return $this->success($card, "Card charged successfully");
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return $this->error(null, 'Error processing the transaction', 500);
+            }
+        } else {
+            return $this->error(null, 'Error charging card', 422);
+        }
     }
 }

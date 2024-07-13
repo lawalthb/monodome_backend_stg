@@ -70,7 +70,7 @@ class WalletService
             $wallet = $user->wallet ?: new Wallet(['user_id' => $user->id, 'amount' => 0, 'status' => 'active']);
 
             // Update wallet amount
-            $newAmount = ($data['type'] === 'credit') ? $wallet->amount + $data['amount'] : $wallet->amount - $data['amount'];
+            $newAmount = ($data['type'] === 'credit' || $data['type'] === 'deposit') ? $wallet->amount + $data['amount'] : $wallet->amount - $data['amount'];
             if ($newAmount < 0) {
                 throw new \Exception('Insufficient funds in wallet');
             }
@@ -87,6 +87,7 @@ class WalletService
             $walletHistory->closing_balance = $wallet->amount;
             $walletHistory->fee = $data['fee'] ?? 0;
             $walletHistory->description = $data['description'];
+            $walletHistory->paystack_reference = $data['reference'] ?? null;
             $walletHistory->save();
 
             DB::commit();
