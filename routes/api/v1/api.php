@@ -437,7 +437,13 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
         Route::get('/bank/list', [BankController::class, 'list'])->name('paystack.bank.list');
         Route::post('/bank/lookup', [BankController::class, 'lookup'])->name('paystack.bank.lookup');
         Route::post('/bank/submit', [BankController::class, 'submit'])->name('paystack.bank.submit');
-        Route::post('/bank/finalizeTransfer', [BankController::class, 'finalizeTransfer'])->name('paystack.bank.finalizeTransfer');
+        Route::post('/bank/finalize-transfer', [BankController::class, 'finalizeTransfer'])->name('paystack.bank.finalizeTransfer');
+
+        Route::post('/bank/resend-otp', [BankController::class, 'resendOtp'])->name('paystack.transfer.resendOtp');
+        Route::get('/bank/disable-otp', [BankController::class, 'disableOtp'])->name('paystack.transfer.disableOtp');
+        Route::post('/bank/disable-otp-finalize', [BankController::class, 'disableOtpFinalize'])->name('paystack.transfer.disableOtpFinalize');
+        Route::get('/bank/{transferCode}', [BankController::class, 'getTransferByCode'])->name('paystack.transfer.code');
+        Route::get('/bank/verify/{reference}', [BankController::class, 'getTransferByReference'])->name('paystack.transfer.reference');
     });
 
     Route::group(['prefix' => 'notification', 'middleware' => 'auth:api'], function () {

@@ -43,7 +43,6 @@ class BankController extends Controller
 
     public function submit(Request $request)
     {
-
         $service = $this->determineService($request);
 
         return $service->submit($request);
@@ -54,6 +53,50 @@ class BankController extends Controller
         $service = $this->determineService($request);
 
         return $service->finalizeTransfer($request);
+    }
+
+    public function getTransferByCode(Request $request, $transferCode)
+    {
+        $service = $this->determineService($request);
+
+        return $service->getTransferDetailsByCode($transferCode);
+    }
+
+    public function getTransferByReference(Request $request, $reference)
+    {
+        $service = $this->determineService($request);
+
+        return $service->getTransferDetailsByReference($reference);
+    }
+
+    public function resendOtp(Request $request)
+    {
+        $validatedData = $request->validate([
+            'transferCode' => 'required|string',
+            'reason' => 'required|string',
+        ]);
+
+        $service = $this->determineService($request);
+
+        return $service->resendOtp($validatedData['transferCode'], $validatedData['reason']);
+    }
+
+    public function disableOtp(Request $request)
+    {
+        $service = $this->determineService($request);
+
+        return $service->disableOtp();
+    }
+
+    public function disableOtpFinalize(Request $request)
+    {
+        $validatedData = $request->validate([
+            'otp' => 'required|numeric',
+        ]);
+
+        $service = $this->determineService($request);
+
+        return $service->disableOtpFinalize($validatedData['otp']);
     }
 
     private function determineService(Request $request)

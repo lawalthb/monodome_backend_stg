@@ -23,11 +23,7 @@ class PayStackService
             'currency' => 'NGN'
         ]);
 
-        if ($response->successful()) {
-            return $response->json();
-        } else {
-            return $response->json();
-        }
+        return $response->successful() ? $response->json() : $response->json();
     }
 
     public function bankLookUp($accountNumber, $bankCode)
@@ -43,11 +39,7 @@ class PayStackService
             'currency' => 'NGN',
         ]);
 
-        if ($response->successful()) {
-            return $response->json();
-        } else {
-            return response()->json(['error' => 'Failed to create transfer recipient'], $response->status());
-        }
+        return $response->successful() ? $response->json() : response()->json(['error' => 'Failed to create transfer recipient'], $response->status());
     }
 
     public function submit($request)
@@ -171,5 +163,41 @@ class PayStackService
         }
 
         throw new \Exception('Failed to retrieve transfer amount');
+    }
+
+    // New Methods
+    public function resendOtp($transferCode, $reason)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->secretKey,
+            'Content-Type' => 'application/json',
+        ])->post('https://api.paystack.co/transfer/resend_otp', [
+            'transfer_code' => $transferCode,
+            'reason' => $reason,
+        ]);
+
+        return $response->successful() ? $response->json() : response()->json(['error' => 'Failed to resend OTP'], $response->status());
+    }
+
+    public function disableOtp()
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->secretKey,
+            'Content-Type' => 'application/json',
+        ])->post('https://api.paystack.co/transfer/disable_otp');
+
+        return $response->successful() ? $response->json() : response()->json(['error' => 'Failed to disable OTP'], $response->status());
+    }
+
+    public function disableOtpFinalize($otp)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->secretKey,
+            'Content-Type' => 'application/json',
+        ])->post('https://api.paystack.co/transfer/disable_otp_finalize', [
+            'otp' => $otp,
+        ]);
+
+        return $response->successful() ? $response->json() : response()->json(['error' => 'Failed to finalize OTP disable'], $response->status());
     }
 }
