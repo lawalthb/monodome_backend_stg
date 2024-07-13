@@ -207,18 +207,6 @@ class OrderController extends Controller
                 return $this->error('', 'Order cannot be cancelled once a driver is assigned', 400);
             }
 
-            // Refund the amount to the user's wallet
-            $user = $order->user;
-
-            if ($order->payment_type == 'wallet' || $order->payment_type == 'online') {
-                WalletService::updateWallet($user, [
-                    'amount' => $order->amount,
-                    'type' => 'credit',
-                    'payment_type' => 'wallet',
-                    'description' => "Refund for Order ID: " . $order->order_no,
-                ]);
-            }
-
             // Mark the order as cancelled
             $order->payment_status = 'Refunded';
             $order->save();
@@ -227,10 +215,10 @@ class OrderController extends Controller
             $loadBoard->acceptable_id = null;
             $loadBoard->acceptable_type = null;
             $loadBoard->status = "pending";
-            $loadBoard->status_comment = "Order cancelled and money refunded to user wallet";
+            $loadBoard->status_comment = "Order cancelled by user";
             $loadBoard->save();
 
-            $order->user->notify(new SendNotification($order->user, 'Your order was cancelled and money refunded to your wallet'));
+            $order->user->notify(new SendNotification($order->user, 'Your order was cancelled and your money will be refunded when admin approve it'));
 
             return $this->success(new OrderResource($order), 'Order cancelled and refunded successfully');
         });

@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\LoadBoard;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
+use App\Services\WalletService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Notifications\SendNotification;
@@ -189,6 +190,57 @@ class OrderController extends Controller
     ]);
 }
 
+public function  approveRefundOrder(Request $request)
+{
+
+    $validator = Validator::make($request->all(), [
+        'status' => 'required|in:Yes,No',
+        'order_no' => 'required|string|exists:orders,order_no',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    $order = Order::where("order_no",$request->order_no)->first();
+
+    // Refund the amount to the user's wallet
+    $user = $order->user;
+
+    if ($order->payment_type == 'wallet' || $order->payment_type == 'online') {
+        WalletService::updateWallet($user, [
+            'amount' => $order->amount,
+            'type' => 'credit',
+            'payment_type' => 'wallet',
+            'description' => "Refund for Order ID: " . $order->order_no,
+        ]);
+    }
+
+    if ($order->payment_type != 'wallet' && $order->payment_type != 'online') {
+        return $this->error('', 'Cancellation allowed only for wallet and online payments', 400);
+    }
+
+    if (!is_null($order->driver_id)) {
+        return $this->error('', 'Order cannot be cancelled once a driver is assigned', 400);
+    }
+
+
+    if($order->save()){
+
+    $order->user->notify(new SendNotification($order->user, 'Your order has been refunded by admin and money is available in wallet '.$request->payment_status.' '));
+
+
+        return response()->json([
+            'data' => new OrderResource($order),
+        ],200);
+    }else{
+        return response()->json([
+            'error' => "unable to update the status.",
+        ],400);
+    }
+
+
+}
 
 
 public function  approveOrderStatus(Request $request)
