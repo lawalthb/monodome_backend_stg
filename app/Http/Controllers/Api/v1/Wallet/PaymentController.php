@@ -5,17 +5,15 @@ namespace App\Http\Controllers\Api\v1\Wallet;
 use App\Models\Card;
 use App\Models\User;
 use App\Models\Order;
-use App\Models\Wallet;
 use App\Models\Setting;
 use Illuminate\Http\Request;
-use App\Models\WalletHistory;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Notifications\SendNotification;
-use Illuminate\Support\Facades\Storage;
+use App\Services\WalletService;
 
 class PaymentController extends Controller
 {
@@ -25,73 +23,37 @@ class PaymentController extends Controller
     {
         http_response_code(200);
 
-
-        if ((strtoupper($_SERVER['REQUEST_METHOD']) != 'POST' ) || !array_key_exists('HTTP_X_PAYSTACK_SIGNATURE', $_SERVER) ) exit();
+        if ((strtoupper($_SERVER['REQUEST_METHOD']) != 'POST') || !array_key_exists('HTTP_X_PAYSTACK_SIGNATURE', $_SERVER)) {
+            exit();
+        }
 
         $input = @file_get_contents("php://input");
-        http_response_code(200);
 
-        //get the secretkey from database and check if the hash are thesame else exist
+        // Get the secret key from database and check if the hash is the same, else exit
         $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
-        if($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, $secretkey)) exit();
+        if ($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, $secretkey)) {
+            exit();
+        }
 
         Log::info($request);
 
-        if ($request['event'] == 'charge.success' && $request['data']['metadata']['custom_fields'][0]['from'] =='wallet') {
+        if ($request['event'] == 'charge.success' && $request['data']['metadata']['custom_fields'][0]['from'] == 'wallet') {
 
             try {
-            DB::beginTransaction();
-            $data = $request['data'];
-            $user = User::where('email', $data['customer']['email'])->first();
-            if ($user) {
-                if ($user->wallet) {
-                    // Update the existing wallet
-                    $user->wallet->update([
-                        "amount" => $user->wallet->amount + ($data['amount'] / 100),
-                        "status" => "active",
+                DB::beginTransaction();
+                $data = $request['data'];
+                $user = User::where('email', $data['customer']['email'])->first();
+                if ($user) {
+                    WalletService::updateWallet($user, [
+                        'amount' => $data['amount'] / 100,
+                        'type' => 'deposit',
+                        'payment_type' => 'paystack',
+                        'description' => 'Paystack deposit via wallet',
+                        'reference' => $data['reference'],
+                        'fee' => $data['fees'] / 100,
                     ]);
 
-                    // Create a wallet history entry
-                    $walletHistory = new WalletHistory;
-                    $walletHistory->wallet_id = $user->wallet->id;
-                    $walletHistory->user_id =  $user->id;
-                    $walletHistory->type = "deposit";
-                    $walletHistory->paystack_reference =  $data["reference"];
-                    $walletHistory->payment_type = "paystack";
-                    $walletHistory->amount = $data['amount'] / 100;
-                    $walletHistory->closing_balance = $user->wallet->amount;
-                    $walletHistory->fee = $data['fees']/ 100;
-                    $walletHistory->description = "Paystack deposit via wallet";
-                    $walletHistory->save();
-
-                    // Check if the user has a card and update its details
-                    $card = Card::where('user_id', $user->id)->first();
-                    if ($card) {
-                        $card->auth_token = $data['authorization']['authorization_code'];
-                        $card->customer_code = $data['customer']['customer_code'];
-                        $card->save();
-                    }
-                } else {
-                    // Create a new wallet
-                    $wallet = new Wallet;
-                    $wallet->amount = $data['amount'] / 100;
-                    $wallet->status = 'active';
-                    $wallet->user_id = $user->id;
-                    $wallet->save();
-
-                    // Create a wallet history entry
-                    $walletHistory = new WalletHistory;
-                    $walletHistory->wallet_id = $wallet->id;
-                    $walletHistory->user_id = $user->id;
-                    $walletHistory->type = "deposit";
-                    $walletHistory->payment_type = "paystack";
-                    $walletHistory->amount = $data['amount'] / 100;
-                    $walletHistory->closing_balance = $wallet->amount;
-                    $walletHistory->fee = $data['fees'];
-                    $walletHistory->description = "Paystack deposit";
-                    $walletHistory->save();
-
-                    // Check if the user has a card and update its details
+                    // Update card details if available
                     $card = Card::where('user_id', $user->id)->first();
                     if ($card) {
                         $card->auth_token = $data['authorization']['authorization_code'];
@@ -100,32 +62,14 @@ class PaymentController extends Controller
                     }
                 }
                 DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                Log::info($th->getMessage());
             }
-
-        } catch (\Throwable $th) {
-            DB::rollBack();
-           Log::info($th->getMessage());
-        }
-
-        }elseif($request['event'] == 'charge.success' && $request['data']['metadata']['custom_fields'][0]['from'] =='order'){
-
-            // Log::info("inside order");
-            // Log::info($request['data']);
-            // Log::info($request['event']);
-
-            // $data = $request['data'];
-            // $order_no = $request['data']['metadata']['order_no'];
-
-            // $order = Order::where("order_no",$order_no)->first();
-            // $order->payment_type = 'online';
-            // $order->payment_status = 'Paid';
-            // $order->save();
-            // $order->user->notify(new SendNotification($order->user, 'Your wallet payment order was successful!'));
-
+        } elseif ($request['event'] == 'charge.success' && $request['data']['metadata']['custom_fields'][0]['from'] == 'order') {
             $id = $request['data']['metadata']['id'];
             $order = Order::find($id);
-            Log::info( $order );
-
+            Log::info($order);
 
             if ($order) {
                 $order->update([
@@ -133,18 +77,16 @@ class PaymentController extends Controller
                     'payment_status' => 'Paid',
                 ]);
 
-                $order->user->notify(new SendNotification($order->user, 'Your paystack online payment order was successful!'));
+                $order->user->notify(new SendNotification($order->user, 'Your Paystack online payment order was successful!'));
             }
-
         }
 
         http_response_code(200);
-
         return response()->json(['message' => 'Webhook received successfully'], 200);
     }
 
-
-    public function nombaWebhooks(Request $request) {
+    public function nombaWebhooks(Request $request)
+    {
         http_response_code(200);
 
         Log::info($request);
@@ -161,45 +103,17 @@ class PaymentController extends Controller
                     $user = User::where('email', $data['order']['customerEmail'])->first();
 
                     if ($user) {
-                        // Update user's wallet if exists
-                        if ($user->wallet) {
-                            $user->wallet->update([
-                                "amount" => $user->wallet->amount + ($data['order']['amount']),
-                                "status" => "active",
-                            ]);
-                        } else {
-                            // Create a new wallet if user doesn't have one
-                            $wallet = new Wallet;
-                            $wallet->amount = $data['order']['amount'];
-                            $wallet->status = 'active';
-                            $wallet->user_id = $user->id;
-                            $wallet->save();
-                        }
-
-                        // Create wallet history entry
-                        $walletHistory = new WalletHistory;
-                        $walletHistory->wallet_id = $user->wallet->id;
-                        $walletHistory->user_id = $user->id;
-                        $walletHistory->type = "deposit";
-                        $walletHistory->paystack_reference = $data["order"]["orderId"];
-                        $walletHistory->payment_type = "nomba";
-                        $walletHistory->amount = $data['order']['amount'];
-                        $walletHistory->closing_balance = $user->wallet->amount;
-                        $walletHistory->fee = 0;
-                        $walletHistory->description = "Nomba deposit via wallet orderId".$data["order"]["orderId"]." orderReference ".$data["order"]["orderReference"];
-                        $walletHistory->save();
-
-                        // Update user's card details if necessary
-                        // $card = Card::where('user_id', $user->id)->first();
-                        // if ($card) {
-                        //     $card->auth_token = $data['authorization']['authorization_code'];
-                        //     $card->customer_code = $data['customer']['customer_code'];
-                        //     $card->save();
-                        // }
+                        WalletService::updateWallet($user, [
+                            'amount' => $data['order']['amount'],
+                            'type' => 'deposit',
+                            'payment_type' => 'nomba',
+                            'description' => 'Nomba deposit via wallet orderId ' . $data['order']['orderId'] . ' orderReference ' . $data['order']['orderReference'],
+                            'reference' => $data['order']['orderId'],
+                            'fee' => 0,
+                        ]);
 
                         DB::commit();
                     }
-
                 } catch (\Throwable $th) {
                     DB::rollBack();
                     Log::info($th->getMessage());
@@ -209,5 +123,4 @@ class PaymentController extends Controller
 
         return response()->json(['message' => 'Webhook received'], 200);
     }
-
 }
