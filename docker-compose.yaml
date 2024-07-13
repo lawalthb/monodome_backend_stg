@@ -1,0 +1,194 @@
+name: monodome
+
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      target: base-dev
+    entrypoint: ["/app/deploy.sh"]
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    restart: unless-stopped
+    container_name: php
+    environment:
+      APP_ENV: local
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-app.rule=Host(`monodome.test`)"
+      - "traefik.http.services.api-app.loadbalancer.server.port=8000"
+    volumes:
+      - ./:/app
+    hostname: api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+      - redis
+      - mailpit
+    networks:
+      - api
+
+  traefik:
+    image: traefik:v3.0
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.network=api"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.mtls.acme.httpchallenge=true"
+      - "--certificatesresolvers.mtls.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.mtls.acme.storage=/acme.json"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "18080:8080"
+
+  schedule:
+    build:
+      context: .
+      target: base-dev
+    command: php artisan schedule:work
+    container_name: schedule
+    restart: unless-stopped
+    environment:
+      APP_ENV: local
+    volumes:
+      - ./:/app
+    depends_on:
+      - mysql
+      - redis
+      - mailpit
+    networks:
+      - api
+
+  queue:
+    build:
+      context: .
+      target: base-dev
+    command: php artisan queue:work
+    container_name: queue
+    restart: unless-stopped
+    environment:
+      APP_ENV: local
+    volumes:
+      - ./:/app
+    depends_on:
+      - mysql
+      - redis
+      - mailpit
+    networks:
+      - api
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_DATABASE: app
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - api
+
+  redis:
+    image: redis:6.2-alpine
+    container_name: redis
+    volumes:
+      - redis:/data
+    ports:
+      - "6370:6379"
+    networks:
+      - api
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATA_FILE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mailpit.rule=Host(`mailpit.monodome.test`)"
+      - "traefik.http.services.mailpit.loadbalancer.server.port=8025"
+    volumes:
+      - mailpit:/data
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+      - api
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    command: server /buckets --console-address ":9001"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio.rule=Host(`minio.monodome.test`)"
+      - "traefik.http.services.minio.loadbalancer.server.port=9000"
+    environment:
+      MINIO_ROOT_USER: minio-user
+      MINIO_ROOT_PASSWORD: minio-password
+    volumes:
+      - minio:/buckets
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - api
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.4.2
+    container_name: meilisearch
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.meilisearch.rule=Host(`search.monodome.test`)"
+      - "traefik.http.services.meilisearch.loadbalancer.server.port=7700"
+    environment:
+      MEILI_MASTER_KEY: BsWCYZUUUHGEY0000zu6wFpROmuGzNVOOOOOO
+    ports:
+      - "7700:7700"
+    networks:
+      - api
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pgadmin.rule=Host(`pgadmin.monodome.test`)"
+      - "traefik.http.services.pgadmin.loadbalancer.server.port=8383" # Changed port here
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=8383 # Changed port here
+    ports:
+      - '8383:8383' # Changed port here
+    networks:
+      - api
+
+volumes:
+  mysql:
+    driver: local
+  redis:
+    driver: local
+  mailpit:
+    driver: local
+  minio:
+    driver: local
+
+networks:
+  api:
+    driver: bridge

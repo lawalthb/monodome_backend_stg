@@ -13,25 +13,19 @@ git fetch origin
 git pull origin main
 git clean -fdX
 
-
 # Install composer dependencies
-# composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-composer update
 composer install
 
 # Clear the old cache
-#php artisan clear-compiled
-
-# Recreate cache
 php artisan optimize
-
-# Run database migrations
-# php artisan migrate --force
 
 # Run database migrations and seed
 php artisan migrate:fresh --seed
 
 # Exit maintenance mode
 php artisan up
+
+# Start Laravel development server
+php artisan serve --host=0.0.0.0 --port=8000
 
 echo "Deployment finished!"
