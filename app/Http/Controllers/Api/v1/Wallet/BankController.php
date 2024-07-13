@@ -99,6 +99,14 @@ class BankController extends Controller
         return $service->disableOtpFinalize($validatedData['otp']);
     }
 
+
+    public function enableOtp(Request $request)
+    {
+        $service = $this->determineService($request);
+
+        return $service->enableOtp();
+    }
+
     private function determineService(Request $request)
     {
         $routeName = $request->route()->getName();

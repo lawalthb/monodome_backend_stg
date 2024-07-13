@@ -200,4 +200,14 @@ class PayStackService
 
         return $response->successful() ? $response->json() : response()->json(['error' => 'Failed to finalize OTP disable'], $response->status());
     }
+
+    public function enableOtp()
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->secretKey,
+            'Content-Type' => 'application/json',
+        ])->post('https://api.paystack.co/transfer/enable_otp');
+
+        return $response->successful() ? $response->json() : response()->json(['error' => 'Failed to enable OTP'], $response->status());
+    }
 }
