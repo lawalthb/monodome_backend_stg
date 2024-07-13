@@ -455,6 +455,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
             Route::post('/store', [SpecializedShipmentController::class, 'store']);
             Route::get('/search', [SpecializedShipmentController::class, 'search']);
             Route::post('/status/{id}', [SpecializedShipmentController::class, 'setStatus']);
+            Route::get('/send-to-loadboard/{id}', [SpecializedShipmentController::class, 'sendToLoadBoard']);
             Route::get('/show/{id}', [SpecializedShipmentController::class, 'show']);
             Route::post('/price/{id}', [SpecializedShipmentController::class, 'price']);
             // Route::post('/update/{id}', [SpecializedShipmentController::class, 'update']);

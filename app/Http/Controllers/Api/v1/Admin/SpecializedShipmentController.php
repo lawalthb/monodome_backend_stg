@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
+use App\Events\LoadTypeCreated;
 use App\Models\LoadSpecialized;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
@@ -155,6 +156,27 @@ class SpecializedShipmentController extends Controller
 
         return $this->success(['specialized'=> new LoadSpecializedResource($specialized)], 'specialized status updated successfully');
     }
+
+    public function sendToLoadBoard(Request $request, $specializedId) {
+
+        if ($specializedId == "") {
+            return $this->error('', "id cant be empty", 422);
+        }
+
+        $specialized = LoadSpecialized::find($specializedId);
+
+        if (!$specialized) {
+
+            return $this->error('', 'specialized not found', 422);
+
+        }
+
+
+        event(new LoadTypeCreated( $specialized));
+
+        return $this->success(['specialized'=> new LoadSpecializedResource($specialized)], 'specialized load move to loadBoard successfully');
+    }
+
 
 
     public function price(Request $request, $specializedId) {
