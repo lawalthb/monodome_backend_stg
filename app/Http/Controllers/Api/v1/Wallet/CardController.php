@@ -45,8 +45,10 @@ class CardController extends Controller
      */
     public function store(CardRequest $request)
     {
+        $user = auth()->user();
+
         if ($request->card_id != null) {
-            $card = Card::where(["id" => $request->card_id, 'user_id' => auth()->user()->id])->first();
+            $card = Card::where(["id" => $request->card_id, 'user_id' => $user->id])->first();
 
             if (!$card) {
                 return $this->error(null, 'Card details not found', 422);
@@ -59,7 +61,7 @@ class CardController extends Controller
 
             // Define the request data
             $data = [
-                'email' => auth()->user()->email,
+                'email' => $user->email,
                 'amount' => $request->amount * 100, // Convert amount to kobo
                 'authorization_code' => $authtoken,
             ];
@@ -78,7 +80,6 @@ class CardController extends Controller
 
             if ($result['status'] == true) {
                 $data = $result['data'];
-                $user = auth()->user();
 
                 DB::beginTransaction();
                 try {
@@ -108,8 +109,18 @@ class CardController extends Controller
                 return $this->error(null, 'Error charging card', 422);
             }
         } else {
+            // Check if the card already exists
+            $existingCard = Card::where([
+                ['user_id', '=', $user->id],
+                ['card_number', '=', encrypt($request->input('card_number'))],
+            ])->first();
+
+            if ($existingCard) {
+                return $this->error(null, 'This card is already saved', 422);
+            }
+
             $encryptedCard = new Card;
-            $encryptedCard->user_id = auth()->user()->id;
+            $encryptedCard->user_id = $user->id;
             $encryptedCard->type = $request->input('type');
             $encryptedCard->card_number = encrypt($request->input('card_number'));
             $encryptedCard->cvv = encrypt($request->input('cvv'));
@@ -119,7 +130,7 @@ class CardController extends Controller
 
             if ($encryptedCard->save()) {
                 $message = "Your Card details were saved successfully. Thank you for trusting us";
-                auth()->user()->notify(new SendNotification(auth()->user(), $message));
+                $user->notify(new SendNotification($user, $message));
 
                 $publickey = Setting::where('slug', 'publickey')->first()->value;
 
