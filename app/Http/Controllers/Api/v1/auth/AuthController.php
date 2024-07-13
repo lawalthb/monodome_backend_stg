@@ -235,6 +235,11 @@ class AuthController extends Controller
 
 
 
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->stateless()->redirect();
+    }
+
 
     /**
      * updatePassword
@@ -412,7 +417,6 @@ class AuthController extends Controller
             'user' => new UserResource($user),
         ], "Your Up line is successful");
     }
-
 
     public function delete_user()
     {

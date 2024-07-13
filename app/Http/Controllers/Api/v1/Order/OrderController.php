@@ -208,7 +208,7 @@ class OrderController extends Controller
             }
 
             // Mark the order as cancelled
-            $order->payment_status = 'Refunded';
+            $order->payment_status = 'Pending';
             $order->save();
 
             $loadBoard = LoadBoard::where("order_no", $order->order_no)->first();
