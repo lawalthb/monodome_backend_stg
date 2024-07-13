@@ -5,12 +5,13 @@ namespace App\Models;
 use App\Models\LoadType;
 use Illuminate\Support\Str;
 use App\Models\LocalGovernment;
+use App\Traits\ComputeAddressTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LoadSpecialized extends Model
 {
-    use HasFactory;
+    use HasFactory, ComputeAddressTrait;
 
     public $guarded = [];
 

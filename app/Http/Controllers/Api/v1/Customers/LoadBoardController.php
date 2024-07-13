@@ -585,12 +585,11 @@ class LoadBoardController extends Controller
                $loadBoards->loadable->status = "processing";
                 $loadBoards->order->save();
 
-
                   // Build route for this order and driver with address
                 $orderRoutePlan = new OrderRoutePlan();
                 $orderRoutePlan->acceptable_id = $loadBoards->acceptable_id;
                 $orderRoutePlan->order_no = $loadBoards->order_no;
-                $addresses = $loadBoards->loadable->computeAddress();
+                $addresses = $loadBoards->loadable->computeAddress() ;
                 $orderRoutePlan->data = $addresses;
                 $orderRoutePlan->name = $loadBoards->load_type_name;
                 $orderRoutePlan->status = 'Pending'; // Set the initial status
