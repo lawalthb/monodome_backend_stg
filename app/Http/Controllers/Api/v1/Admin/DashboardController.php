@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Driver;
 use App\Models\Wallet;
 use App\Models\LoadType;
+use App\Models\LoadBoard;
+use App\Models\DriverManger;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
@@ -24,39 +28,60 @@ class DashboardController extends Controller
      */
     public function index()
     {
-     // Total users
-     $totalUsers = User::count();
+       // Total users
+       $totalUsers = User::count();
 
-     // Users per role
-     $roles = Role::all();
-     $usersPerRole = [];
-     foreach ($roles as $role) {
-         $usersPerRole[$role->name] = $role->users()->count();
-     }
+       // Users per role
+       $roles = Role::all();
+       $usersPerRole = [];
+       foreach ($roles as $role) {
+           $usersPerRole[$role->name] = $role->users()->count();
+       }
 
-     // Total wallets
-     $totalWallets = Wallet::count();
-     $totalWalletBalance = Wallet::sum('amount');
+       // Total wallets and total wallet balance
+       $totalWallets = Wallet::count();
+       $totalWalletBalance = Wallet::sum('amount');
 
-     // Load statistics
-     $loadTypes = LoadType::all();
-     $loadsPerType = [];
-     foreach ($loadTypes as $loadType) {
-         $loadsPerType[$loadType->name] = $loadType->loadboards()->count();
-     }
+       // Load statistics per type
+       $loadTypes = LoadType::all();
+       $loadsPerType = [];
+       foreach ($loadTypes as $loadType) {
+           $loadsPerType[$loadType->name] = $loadType->loadboards()->count();
+       }
 
-     $totalTransactions = DB::table('wallet_histories')->count();
-     $totalFees = DB::table('wallet_histories')->sum('fee');
+       // Total transactions and fees in WalletHistory
+       $totalTransactions = DB::table('wallet_histories')->count();
+       $totalFees = DB::table('wallet_histories')->sum('fee');
 
-     return response()->json([
-         'total_users' => $totalUsers,
-         'users_per_role' => $usersPerRole,
-         'total_wallets' => $totalWallets,
-         'total_wallet_balance' => $totalWalletBalance,
-         'loads_per_type' => $loadsPerType,
-         'total_transactions' => $totalTransactions,
-         'total_fees' => $totalFees,
-     ]);
+       // Total orders
+       $totalOrders = Order::count();
+
+       // Statistics for LoadBoards
+       $totalLoadBoards = LoadBoard::count();
+       $pendingLoadBoards = LoadBoard::where('status', 'pending')->count();
+       $activeLoadBoards = LoadBoard::where('status', 'active')->count();
+       $completedLoadBoards = LoadBoard::where('status', 'completed')->count();
+
+       // Total drivers and driver managers
+       $totalDrivers = Driver::count();
+       $totalDriverManagers = DriverManger::count();
+
+       return response()->json([
+           'total_users' => $totalUsers,
+           'users_per_role' => $usersPerRole,
+           'total_wallets' => $totalWallets,
+           'total_wallet_balance' => $totalWalletBalance,
+           'loads_per_type' => $loadsPerType,
+           'total_transactions' => $totalTransactions,
+           'total_fees' => $totalFees,
+           'total_orders' => $totalOrders,
+           'total_load_boards' => $totalLoadBoards,
+           'pending_load_boards' => $pendingLoadBoards,
+           'active_load_boards' => $activeLoadBoards,
+           'completed_load_boards' => $completedLoadBoards,
+           'total_drivers' => $totalDrivers,
+           'total_driver_managers' => $totalDriverManagers,
+       ]);
 
     }
 
