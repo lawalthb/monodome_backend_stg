@@ -178,10 +178,15 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
 
             Route::get('/', [WalletController::class, 'index']);
             Route::get('/wallet-history', [WalletController::class, 'wallet_history']);
+            Route::get('/statistics', [WalletController::class, 'wallet_statistics']);
+            Route::get('/list', [WalletController::class, 'list_all_wallets']);
             Route::post('/update-pin/{id}', [WalletController::class, 'update_pin']);
             Route::post('/topup-balance/{id}', [WalletController::class, 'topup_balance']);
             Route::post('/enable-disable-wallet/{id}', [WalletController::class, 'update_wallet_status']);
 
+
+            Route::post('/wallets-transfer', [WalletController::class, 'transfer_balance']);
+            Route::post('/withdraw/{id}', [WalletController::class, 'withdraw']);
 
             //card endpoint here
             Route::post('/cards', [CardController::class, 'store']);

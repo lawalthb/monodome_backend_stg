@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api\v1\Admin;
 
+use App\Models\User;
 use App\Models\Wallet;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\WalletHistory;
 use App\Traits\ApiStatusTrait;
+use App\Services\WalletService;
 use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WalletResource;
@@ -108,23 +111,19 @@ class WalletController extends Controller
             return $this->error($validator->errors(), "Validation Error", 422);
         }
 
-        $wallet = Wallet::findOrFail($id);
-        $wallet->amount += $request->input('amount');
-        $wallet->save();
-
-        // Record the transaction in wallet history
-        WalletHistory::create([
-            'user_id' => $wallet->user_id,
-            'wallet_id' => $wallet->id,
+        $user = User::findOrFail($id);
+        $data = [
+            'amount' => $request->input('amount'),
             'type' => 'topup',
             'payment_type' => 'wallet',
-            'amount' => $request->input('amount'),
-            'closing_balance' => $wallet->amount,
-            'fee' => 0,
             'description' => 'Wallet top-up',
-        ]);
+            'fees' => 0,
+            'reference' => Str::uuid()
+        ];
 
-        return $this->success(new WalletResource($wallet), "Wallet balance topped up successfully");
+        WalletService::createWalletAndHistory($user, $data);
+
+        return $this->success(new WalletResource($user->wallet), "Wallet balance topped up successfully");
     }
 
     public function update_wallet_status(Request $request, $id)
@@ -144,6 +143,89 @@ class WalletController extends Controller
         $statusMessage = $wallet->status == 'Active' ? 'Wallet enabled successfully' : 'Wallet disabled successfully';
 
         return $this->success(new WalletResource($wallet), $statusMessage);
+    }
+
+    public function transfer_balance(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'from_wallet_id' => 'required|exists:wallets,id',
+            'to_wallet_id' => 'required|exists:wallets,id',
+            'amount' => 'required|numeric|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error($validator->errors(), "Validation Error", 422);
+        }
+
+        $fromWallet = Wallet::findOrFail($request->input('from_wallet_id'));
+        $toWallet = Wallet::findOrFail($request->input('to_wallet_id'));
+        $amount = $request->input('amount');
+
+        if ($fromWallet->amount < $amount) {
+            return $this->error('', "Insufficient balance", 422);
+        }
+
+        WalletService::updateWallet($fromWallet->user, [
+            'type' => 'debit',
+            'amount' => $amount,
+            'payment_type' => 'transfer',
+            'description' => 'Transfer to wallet ID ' . $toWallet->id,
+        ]);
+
+        WalletService::updateWallet($toWallet->user, [
+            'type' => 'credit',
+            'amount' => $amount,
+            'payment_type' => 'transfer',
+            'description' => 'Transfer from wallet ID ' . $fromWallet->id,
+        ]);
+
+        return $this->success([], "Balance transferred successfully");
+    }
+
+
+    public function withdraw(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'amount' => 'required|numeric|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error($validator->errors(), "Validation Error", 422);
+        }
+
+        $user = User::findOrFail($id);
+        $amount = $request->input('amount');
+
+        WalletService::updateWallet($user, [
+            'type' => 'debit',
+            'amount' => $amount,
+            'payment_type' => 'withdrawal',
+            'description' => 'Wallet withdrawal',
+        ]);
+
+        return $this->success(new WalletResource($user->wallet), "Withdrawal successful");
+    }
+
+
+    public function wallet_statistics()
+    {
+        $totalUsers = User::count();
+        $totalWallets = Wallet::count();
+        $totalBalance = Wallet::sum('amount');
+
+        return $this->success([
+            'total_users' => $totalUsers,
+            'total_wallets' => $totalWallets,
+            'total_balance' => $totalBalance,
+        ], "Wallet statistics retrieved successfully");
+    }
+
+    public function list_all_wallets(Request $request)
+    {
+        $perPage = $request->input('per_page', 10);
+        $wallets = Wallet::paginate($perPage);
+
+        return $this->success(WalletResource::collection($wallets), "All wallets retrieved successfully");
     }
 
 }

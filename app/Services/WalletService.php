@@ -56,6 +56,11 @@ class WalletService
 
             }
             DB::commit();
+
+            $message = "Your wallet has been successfully updated. New balance: " . $wallet->amount;
+            $user->notify(new WalletActivityNotification($message));
+
+
             return $wallet;
         }
     }
@@ -91,6 +96,10 @@ class WalletService
             $walletHistory->save();
 
             DB::commit();
+
+            $message = "There has been a wallet " . $data['type'] . ". New balance: " . $wallet->amount;
+            $user->notify(new WalletActivityNotification($message));
+
             return $wallet;
         } catch (\Exception $e) {
             DB::rollBack();
