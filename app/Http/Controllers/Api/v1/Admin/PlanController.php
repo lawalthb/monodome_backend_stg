@@ -137,8 +137,19 @@ class PlanController extends Controller
         $plan = Plan::findOrFail($plan_id);
 
         $perPage = $request->input('per_page', 10);
+        $search = $request->input('search');
 
-        $users = $plan->users()->paginate($perPage);
+        $query = $plan->users();
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('phone_number', 'like', "%{$search}%");
+            });
+        }
+
+        $users = $query->paginate($perPage);
 
         return response()->json([
             'message' => 'Users subscribed to the plan',
