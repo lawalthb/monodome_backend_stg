@@ -132,26 +132,52 @@ class PlanController extends Controller
         return response()->json(['message' => 'Plan deleted successfully'], 200);
     }
 
-    public function getUsersByPlan($plan_id)
+    public function getUsersByPlan($plan_id, Request $request)
     {
         $plan = Plan::findOrFail($plan_id);
 
-        $users = $plan->users;
+        $perPage = $request->input('per_page', 10);
+
+        $users = $plan->users()->paginate($perPage);
 
         return response()->json([
             'message' => 'Users subscribed to the plan',
-            'data' => UserResource::collection($users)
+            'data' => UserResource::collection($users),
+            'meta' => [
+                'current_page' => $users->currentPage(),
+                'last_page' => $users->lastPage(),
+                'per_page' => $users->perPage(),
+                'total' => $users->total(),
+            ],
         ], 200);
     }
 
-    public function getAllUsersWithPlans()
+    public function getAllUsersWithPlans(Request $request)
     {
+        $perPage = $request->input('per_page', 10);
+        $search = $request->input('search');
 
-        $users = User::with('plan')->get();
+        $query = User::with('plan');
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('phone_number', 'like', "%{$search}%");
+            });
+        }
+
+        $users = $query->paginate($perPage);
 
         return response()->json([
             'message' => 'All users with their plans',
-            'data' => UserResource::collection($users)
+            'data' => UserResource::collection($users),
+            'meta' => [
+                'current_page' => $users->currentPage(),
+                'last_page' => $users->lastPage(),
+                'per_page' => $users->perPage(),
+                'total' => $users->total(),
+            ],
         ], 200);
     }
 }
