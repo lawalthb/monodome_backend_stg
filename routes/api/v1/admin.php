@@ -465,7 +465,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
             Route::get('/show/{id}', [SpecializedShipmentController::class, 'show']);
             Route::post('/price/{id}', [SpecializedShipmentController::class, 'price']);
             // Route::post('/update/{id}', [SpecializedShipmentController::class, 'update']);
-            // Route::delete('/destroy/{id}', [SpecializedShipmentController::class, 'destroy']);
+            Route::delete('/destroy/{id}', [SpecializedShipmentController::class, 'destroy']);
         });
 
 
