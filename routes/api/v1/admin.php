@@ -148,8 +148,14 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
             Route::put('/{plan}', [PlanController::class, 'update']);
             Route::delete('/{plan}', [PlanController::class, 'destroy']);
 
+            Route::get('/users/all', [PlanController::class, 'getAllUsersWithPlans']);
+
             Route::get('/{plan}/getTotalById', [PlanController::class, 'getTotalById']);
             Route::put('/{plan}/status', [PlanController::class, 'status']);
+
+            Route::get('/{plan}/users', [PlanController::class, 'getUsersByPlan']);
+
+
         });
 
         //for orders

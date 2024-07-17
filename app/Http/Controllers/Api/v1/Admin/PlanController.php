@@ -10,6 +10,7 @@ use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PlanResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Validator;
 
 class PlanController extends Controller
@@ -129,5 +130,28 @@ class PlanController extends Controller
     {
         $plan->delete();
         return response()->json(['message' => 'Plan deleted successfully'], 200);
+    }
+
+    public function getUsersByPlan($plan_id)
+    {
+        $plan = Plan::findOrFail($plan_id);
+
+        $users = $plan->users;
+
+        return response()->json([
+            'message' => 'Users subscribed to the plan',
+            'data' => UserResource::collection($users)
+        ], 200);
+    }
+
+    public function getAllUsersWithPlans()
+    {
+
+        $users = User::with('plan')->get();
+
+        return response()->json([
+            'message' => 'All users with their plans',
+            'data' => UserResource::collection($users)
+        ], 200);
     }
 }
