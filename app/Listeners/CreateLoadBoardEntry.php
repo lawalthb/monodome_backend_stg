@@ -29,6 +29,14 @@ class CreateLoadBoardEntry
          $loadTypeId = $event->loadType->load_type_id;
          $userId = Auth::user()->id;
 
+        $existingLoadBoard = LoadBoard::where('loadable_id', $event->loadType->id)
+        ->where('loadable_type', get_class($event->loadType))
+        ->first();
+
+        if ($existingLoadBoard) {
+            return;
+        }
+
          $load_board = new LoadBoard();
          $load_board->user_id = $userId;
          $load_board->loadable()->associate($event->loadType);
