@@ -6,10 +6,16 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Wallet;
 use App\Models\WalletHistory;
+use App\Traits\ApiStatusTrait;
+use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\WalletActivityNotification;
 
 class WalletService
 {
+
+    use FileUploadTrait, ApiStatusTrait;
+
     public static function createWalletAndHistory(User $user, $data)
     {
          $wallet = null;

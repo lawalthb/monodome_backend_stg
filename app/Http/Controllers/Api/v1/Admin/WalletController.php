@@ -206,6 +206,7 @@ class WalletController extends Controller
         return $this->success(new WalletResource($user->wallet), "Withdrawal successful");
     }
 
+    
 
     public function wallet_statistics()
     {
