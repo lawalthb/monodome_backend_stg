@@ -18,6 +18,7 @@ class LoadSpecializedResource extends JsonResource
             "id" =>  $this->id,
             "uuid" =>  $this->uuid,
             "order" => $this->order,
+            "inLoadBoard" => $this->isLoadTypeLoadable(),
             'sender_location'=>$this->sender_location,
             'receiver_location'=>$this->receiver_location,
             'distance'=>$this->distance,

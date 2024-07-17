@@ -71,6 +71,11 @@ class LoadPackage extends Model
         return $this->belongsTo(LocalState::class, 'sender_state');
     }
 
+    public function isLoadTypeLoadable()
+    {
+        return $this->loadBoard !== null;
+    }
+
     protected static function boot()
     {
         parent::boot();

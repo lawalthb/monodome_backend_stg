@@ -70,6 +70,11 @@ class LoadBulk extends Model
         return $this->belongsTo(Agent::class,'to_office_id');
     }
 
+    public function isLoadTypeLoadable()
+    {
+        return $this->loadBoard !== null;
+    }
+
     protected static function boot()
     {
         parent::boot();

@@ -23,6 +23,7 @@ class LoadBulkResource extends JsonResource
             'width'=>$this->width,
             'length'=>$this->length,
             'height'=>$this->height,
+            "inLoadBoard" => $this->isLoadTypeLoadable(),
             'insure_it'=>$this->insure_it,
             'insure_amount'=>$this->insure_amount,
             "total_amount" => $this->total_amount,

@@ -30,6 +30,11 @@ class LoadDocument extends Model
         return $this->morphOne(Order::class, 'loadable');
     }
 
+    public function isLoadTypeLoadable()
+    {
+        return $this->loadBoard !== null;
+    }
+
     protected static function boot()
     {
         parent::boot();

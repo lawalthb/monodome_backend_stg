@@ -17,6 +17,7 @@ class LoadCarClearingResource extends JsonResource
         return [
             "id" => $this->id,
             "order" => $this->order,
+            "inLoadBoard" => $this->isLoadTypeLoadable(),
             'sender_location'=>$this->sender_location,
             'receiver_location'=>$this->receiver_location,
             'distance'=>$this->distance,

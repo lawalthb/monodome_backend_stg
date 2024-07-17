@@ -74,6 +74,11 @@ class LoadCarClearing extends Model
         return  $this->belongsTo(State::class, 'deliver_to_city');
     }
 
+    public function isLoadTypeLoadable()
+    {
+        return $this->loadBoard !== null;
+    }
+
 
     //local state
     public function LState()
