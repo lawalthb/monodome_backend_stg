@@ -10,6 +10,8 @@ use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ShippingCompaniesExport;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\ShippingCompanyResource;
 
@@ -127,23 +129,42 @@ class ShippingCompanyController extends Controller
     public function destroy($shippingCompanyId)
     {
         try {
-            // Find the driver by ID
-            $shippingCompany = ShippingCompany::with('user')->find($shippingCompanyId);
+            // Start a transaction
+            DB::beginTransaction();
 
-        if (!$shippingCompany) {
-                return $this->error('', 'shippingCompany not found', 404);
+            // Find the shipping company by ID
+            $shippingCompany = ShippingCompany::with(['user', 'order', 'loadBoard'])->find($shippingCompanyId);
+
+            if (!$shippingCompany) {
+                return $this->error('', 'Shipping company not found', 404);
             }
 
-            if ( $user = $shippingCompany->user) {
-                $shippingCompany->delete();
+            // Delete related order if exists
+            if ($order = $shippingCompany->order) {
+                $order->delete();
+            }
 
+            // Delete related load board entry if exists
+            if ($loadBoard = $shippingCompany->loadBoard) {
+                $loadBoard->delete();
+            }
+
+            // Delete the shipping company
+            $shippingCompany->delete();
+
+            // Optionally, delete the associated user if required
+            if ($user = $shippingCompany->user) {
                 $user->delete();
+            }
 
-            return $this->success([], 'shippingCompany and user deleted successfully');
+            // Commit the transaction
+            DB::commit();
 
-        }
+            return $this->success([], 'Shipping company, related order, and load board entry deleted successfully');
         } catch (\Exception $e) {
-            return $this->error('', 'Unable to delete shippingCompany and user', 500);
+            // Rollback the transaction in case of error
+            DB::rollBack();
+            return $this->error('', 'Unable to delete shipping company and related records', 500);
         }
     }
 
@@ -174,6 +195,12 @@ class ShippingCompanyController extends Controller
         $shippingCompany->save();
 
         return $this->success(['shippingCompany'=> new ShippingCompanyResource($shippingCompany)], 'shippingCompany status updated successfully');
+    }
+
+
+    public function export()
+    {
+        return Excel::download(new ShippingCompaniesExport, 'shipping_companies.xlsx');
     }
 
 }

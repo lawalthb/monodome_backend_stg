@@ -42,7 +42,8 @@ use App\Http\Controllers\Api\v1\Customers\LoadSpecializedController;
 use App\Http\Controllers\Api\v1\DriverManger\DriverMangerController;
 use App\Http\Controllers\Api\v1\ShippingCompany\ShippingCompanyController;
 
-Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
+Route::group(['prefix' => 'v1'], function () {
+
 
     Route::get('/', function (Request $request) {
 
@@ -52,32 +53,30 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
 
     Route::get('/auth', function (Request $request) {
 
-        return response()->json(['message' =>"v1 Server is up and running"]);
+        return response()->json(['message' =>"v1 Server is up and running in auth"]);
        //return "here is the user";
    });
 
-    // user registration namespace
-    Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
+    Route::group(['prefix' => 'auth'], function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
-        Route::get('{provider}', [AuthController::class, 'redirectToProvider']);
-        Route::post('/get-upline/{code}', [AuthController::class, 'getUpLineUser']);
         Route::post('/social-login', [AuthController::class, 'handleProviderCallback']);
 
         Route::post('/forgot-password', [EmailVerificationController::class, 'reset_password_request']);
         Route::post('/send-otp', [EmailVerificationController::class, 'send_otp']);
         Route::post('/verify-otp', [EmailVerificationController::class, 'otp_verification_submit']);
         Route::post('/check-email', [EmailVerificationController::class, 'check_if_email_exist']);
+        // Route::get('/{provider}', [AuthController::class, 'redirectToProvider']);
+        Route::post('/get-upline/{code}', [AuthController::class, 'getUpLineUser']);
     });
 
-    Route::group(['prefix' => 'auth', 'namespace' => 'auth', 'middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'auth', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/is-login', [AuthController::class, 'isLogin']);
         Route::get('/profile', [AuthController::class, 'me']);
         Route::get('/logout', [AuthController::class, 'logout']);
         Route::post('/update-password', [AuthController::class, 'updatePassword']);
         Route::post('/update-profile', [AuthController::class, 'updateProfile']);
-
-        Route::get('user-delete',[AuthController::class,'delete_user']);
+        Route::get('/user-delete', [AuthController::class, 'delete_user']);
     });
 
     // customer Route

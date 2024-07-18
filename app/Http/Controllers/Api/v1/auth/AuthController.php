@@ -345,7 +345,6 @@ class AuthController extends Controller
      */
     public function isLogin(Request $request): JsonResponse
     {
-
         if (Auth::check()) {
 
             return $this->success(true, true);

@@ -35,7 +35,7 @@ use App\Http\Controllers\Api\v1\Admin\Support\SupportController;
 use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
 use App\Http\Controllers\Api\v1\Admin\SpecializedShipmentController;
 
-Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
+Route::group(['prefix' => 'v1/admin'], function () {
 
     Route::get('/', function () {
 
@@ -43,8 +43,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
         //return "here is the user";
     });
 
-    // admin registration namespace
-    Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
+    Route::group(['prefix' => 'auth'], function () {
         Route::post('/login', [AdminAuthController::class, 'login']);
 
         Route::post('/forgot-password', [AdminAuthController::class, 'reset_password_request']);
@@ -152,6 +151,9 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
             Route::put('/{plan}/status', [PlanController::class, 'status']);
 
             Route::get('/{plan}/users', [PlanController::class, 'getUsersByPlan']);
+
+            Route::get('/{plan_id}/export-users', [PlanController::class, 'exportUsersByPlan']);
+
 
 
         });
@@ -362,6 +364,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
         // shipping-company route group
         Route::group(['prefix' => 'shipping-company'], function () {
             Route::get('/', [ShippingCompanyController::class, 'index']);
+            Route::get('/export', [ShippingCompanyController::class, 'export']);
             Route::post('/store', [ShippingCompanyController::class, 'store']);
             Route::get('/search', [ShippingCompanyController::class, 'search']);
             Route::get('/pending', [ShippingCompanyController::class, 'pending']);

@@ -7,10 +7,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use App\Exports\UsersByPlanExport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PlanResource;
 use App\Http\Resources\UserResource;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
 class PlanController extends Controller
@@ -190,5 +192,11 @@ class PlanController extends Controller
                 'total' => $users->total(),
             ],
         ], 200);
+    }
+
+    public function exportUsersByPlan($plan_id)
+    {
+        $plan = Plan::findOrFail($plan_id);
+        return Excel::download(new UsersByPlanExport($plan_id), 'users_by_plan_' . $plan->name . '.xlsx');
     }
 }
