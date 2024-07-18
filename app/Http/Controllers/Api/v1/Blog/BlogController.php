@@ -26,7 +26,7 @@ class BlogController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $blog = Blog::with('comments')->where(function ($q) use ($key) {
+        $blog = Blog::where("status","published")->with('comments')->where(function ($q) use ($key) {
             $q->whereHas('user', function ($userQuery) use ($key) {
                 $userQuery->where('full_name', 'like', "%{$key}%")
                     ->orWhere('email', 'like', "%{$key}%");
@@ -144,7 +144,7 @@ class BlogController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $comments = Comment::where('blog_id', $blogId)->latest()->paginate($perPage);
+        $comments = Comment::where('blog_id', $blogId)->where("status","published")->latest()->paginate($perPage);
         return CommentResource::collection($comments);
     }
 
