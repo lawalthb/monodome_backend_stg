@@ -48,7 +48,7 @@ class CardController extends Controller
         $user = auth()->user();
 
         if ($request->card_id != null) {
-            $card = Card::where(["id" => $request->card_id, 'user_id' => $user->id])->first();
+            $card = Card::where(['id' => $request->card_id, 'user_id' => $user->id])->first();
 
             if (!$card) {
                 return $this->error(null, 'Card details not found', 422);
@@ -109,10 +109,13 @@ class CardController extends Controller
                 return $this->error(null, 'Error charging card', 422);
             }
         } else {
+            // Hash card number for comparison
+            $hashedCardNumber = hash('sha256', $request->input('card_number'));
+
             // Check if the card already exists
             $existingCard = Card::where([
                 ['user_id', '=', $user->id],
-                ['card_number', '=', encrypt($request->input('card_number'))],
+                ['card_hash', '=', $hashedCardNumber],
             ])->first();
 
             if ($existingCard) {
@@ -123,6 +126,7 @@ class CardController extends Controller
             $encryptedCard->user_id = $user->id;
             $encryptedCard->type = $request->input('type');
             $encryptedCard->card_number = encrypt($request->input('card_number'));
+            $encryptedCard->card_hash = $hashedCardNumber;
             $encryptedCard->cvv = encrypt($request->input('cvv'));
             $encryptedCard->name_on_card = $request->input('name_on_card');
             $encryptedCard->expiry_month = encrypt($request->input('expiry_month'));
@@ -140,6 +144,7 @@ class CardController extends Controller
             }
         }
     }
+
 
     /**
      * Display the specified resource.

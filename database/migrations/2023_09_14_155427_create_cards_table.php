@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid();
             $table->unsignedBigInteger('user_id');
             $table->string('card_number', 255);
+            $table->string('card_hash')->unique();
             $table->string('cvv', 200)->nullable();
             $table->string('auth_token', 200)->nullable();
             $table->string('customer_code', 200)->nullable();

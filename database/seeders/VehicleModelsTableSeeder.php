@@ -14,22 +14,22 @@ class VehicleModelsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('vehicle_models')->delete();
-        
+
         \DB::table('vehicle_models')->insert(array (
-            0 => 
+            0 =>
             array (
                 'code' => 'CL_MODELS',
                 'created_at' => NULL,
                 'deleted_at' => NULL,
                 'id' => 1,
-            'name' => 'CL Models (4)',
+                'name' => 'CL Models (4)',
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            1 => 
+            1 =>
             array (
                 'code' => '2.2CL',
                 'created_at' => NULL,
@@ -39,7 +39,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            2 => 
+            2 =>
             array (
                 'code' => '2.3CL',
                 'created_at' => NULL,
@@ -49,7 +49,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            3 => 
+            3 =>
             array (
                 'code' => '3.0CL',
                 'created_at' => NULL,
@@ -59,7 +59,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            4 => 
+            4 =>
             array (
                 'code' => '3.2CL',
                 'created_at' => NULL,
@@ -69,7 +69,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            5 => 
+            5 =>
             array (
                 'code' => 'ILX',
                 'created_at' => NULL,
@@ -79,7 +79,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            6 => 
+            6 =>
             array (
                 'code' => 'INTEG',
                 'created_at' => NULL,
@@ -89,7 +89,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            7 => 
+            7 =>
             array (
                 'code' => 'LEGEND',
                 'created_at' => NULL,
@@ -99,7 +99,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            8 => 
+            8 =>
             array (
                 'code' => 'MDX',
                 'created_at' => NULL,
@@ -109,7 +109,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            9 => 
+            9 =>
             array (
                 'code' => 'NSX',
                 'created_at' => NULL,
@@ -119,7 +119,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            10 => 
+            10 =>
             array (
                 'code' => 'RDX',
                 'created_at' => NULL,
@@ -129,7 +129,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            11 => 
+            11 =>
             array (
                 'code' => 'RL_MODELS',
                 'created_at' => NULL,
@@ -139,7 +139,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            12 => 
+            12 =>
             array (
                 'code' => '3.5RL',
                 'created_at' => NULL,
@@ -149,7 +149,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            13 => 
+            13 =>
             array (
                 'code' => 'RL',
                 'created_at' => NULL,
@@ -159,7 +159,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            14 => 
+            14 =>
             array (
                 'code' => 'RSX',
                 'created_at' => NULL,
@@ -169,7 +169,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            15 => 
+            15 =>
             array (
                 'code' => 'SLX',
                 'created_at' => NULL,
@@ -179,7 +179,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            16 => 
+            16 =>
             array (
                 'code' => 'TL_MODELS',
                 'created_at' => NULL,
@@ -189,7 +189,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            17 => 
+            17 =>
             array (
                 'code' => '2.5TL',
                 'created_at' => NULL,
@@ -199,7 +199,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            18 => 
+            18 =>
             array (
                 'code' => '3.2TL',
                 'created_at' => NULL,
@@ -209,7 +209,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            19 => 
+            19 =>
             array (
                 'code' => 'TL',
                 'created_at' => NULL,
@@ -219,7 +219,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            20 => 
+            20 =>
             array (
                 'code' => 'TSX',
                 'created_at' => NULL,
@@ -229,7 +229,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            21 => 
+            21 =>
             array (
                 'code' => 'VIGOR',
                 'created_at' => NULL,
@@ -239,7 +239,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            22 => 
+            22 =>
             array (
                 'code' => 'ZDX',
                 'created_at' => NULL,
@@ -249,7 +249,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            23 => 
+            23 =>
             array (
                 'code' => 'ACUOTH',
                 'created_at' => NULL,
@@ -259,7 +259,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 1,
             ),
-            24 => 
+            24 =>
             array (
                 'code' => 'ALFA164',
                 'created_at' => NULL,
@@ -269,7 +269,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 2,
             ),
-            25 => 
+            25 =>
             array (
                 'code' => 'ALFA8C',
                 'created_at' => NULL,
@@ -279,7 +279,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 2,
             ),
-            26 => 
+            26 =>
             array (
                 'code' => 'ALFAGT',
                 'created_at' => NULL,
@@ -289,7 +289,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 2,
             ),
-            27 => 
+            27 =>
             array (
                 'code' => 'MIL',
                 'created_at' => NULL,
@@ -299,7 +299,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 2,
             ),
-            28 => 
+            28 =>
             array (
                 'code' => 'SPID',
                 'created_at' => NULL,
@@ -309,7 +309,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 2,
             ),
-            29 => 
+            29 =>
             array (
                 'code' => 'ALFAOTH',
                 'created_at' => NULL,
@@ -319,7 +319,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 2,
             ),
-            30 => 
+            30 =>
             array (
                 'code' => 'AMCALLIAN',
                 'created_at' => NULL,
@@ -329,7 +329,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 3,
             ),
-            31 => 
+            31 =>
             array (
                 'code' => 'CON',
                 'created_at' => NULL,
@@ -339,7 +339,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 3,
             ),
-            32 => 
+            32 =>
             array (
                 'code' => 'EAGLE',
                 'created_at' => NULL,
@@ -349,7 +349,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 3,
             ),
-            33 => 
+            33 =>
             array (
                 'code' => 'AMCENC',
                 'created_at' => NULL,
@@ -359,7 +359,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 3,
             ),
-            34 => 
+            34 =>
             array (
                 'code' => 'AMCSPIRIT',
                 'created_at' => NULL,
@@ -369,7 +369,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 3,
             ),
-            35 => 
+            35 =>
             array (
                 'code' => 'AMCOTH',
                 'created_at' => NULL,
@@ -379,7 +379,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 3,
             ),
-            36 => 
+            36 =>
             array (
                 'code' => 'DB7',
                 'created_at' => NULL,
@@ -389,7 +389,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 4,
             ),
-            37 => 
+            37 =>
             array (
                 'code' => 'DB9',
                 'created_at' => NULL,
@@ -399,7 +399,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 4,
             ),
-            38 => 
+            38 =>
             array (
                 'code' => 'DBS',
                 'created_at' => NULL,
@@ -409,7 +409,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 4,
             ),
-            39 => 
+            39 =>
             array (
                 'code' => 'LAGONDA',
                 'created_at' => NULL,
@@ -419,7 +419,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 4,
             ),
-            40 => 
+            40 =>
             array (
                 'code' => 'RAPIDE',
                 'created_at' => NULL,
@@ -429,7 +429,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 4,
             ),
-            41 => 
+            41 =>
             array (
                 'code' => 'V12VANT',
                 'created_at' => NULL,
@@ -439,7 +439,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 4,
             ),
-            42 => 
+            42 =>
             array (
                 'code' => 'VANTAGE',
                 'created_at' => NULL,
@@ -449,7 +449,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 4,
             ),
-            43 => 
+            43 =>
             array (
                 'code' => 'VANQUISH',
                 'created_at' => NULL,
@@ -459,7 +459,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 4,
             ),
-            44 => 
+            44 =>
             array (
                 'code' => 'VIRAGE',
                 'created_at' => NULL,
@@ -469,7 +469,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 4,
             ),
-            45 => 
+            45 =>
             array (
                 'code' => 'UNAVAILAST',
                 'created_at' => NULL,
@@ -479,7 +479,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 4,
             ),
-            46 => 
+            46 =>
             array (
                 'code' => 'AUDI100',
                 'created_at' => NULL,
@@ -489,7 +489,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            47 => 
+            47 =>
             array (
                 'code' => 'AUDI200',
                 'created_at' => NULL,
@@ -499,7 +499,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            48 => 
+            48 =>
             array (
                 'code' => '4000',
                 'created_at' => NULL,
@@ -509,7 +509,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            49 => 
+            49 =>
             array (
                 'code' => '5000',
                 'created_at' => NULL,
@@ -519,7 +519,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            50 => 
+            50 =>
             array (
                 'code' => '80',
                 'created_at' => NULL,
@@ -529,7 +529,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            51 => 
+            51 =>
             array (
                 'code' => '90',
                 'created_at' => NULL,
@@ -539,7 +539,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            52 => 
+            52 =>
             array (
                 'code' => 'A3',
                 'created_at' => NULL,
@@ -549,7 +549,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            53 => 
+            53 =>
             array (
                 'code' => 'A4',
                 'created_at' => NULL,
@@ -559,7 +559,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            54 => 
+            54 =>
             array (
                 'code' => 'A5',
                 'created_at' => NULL,
@@ -569,7 +569,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            55 => 
+            55 =>
             array (
                 'code' => 'A6',
                 'created_at' => NULL,
@@ -579,7 +579,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            56 => 
+            56 =>
             array (
                 'code' => 'A7',
                 'created_at' => NULL,
@@ -589,7 +589,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            57 => 
+            57 =>
             array (
                 'code' => 'A8',
                 'created_at' => NULL,
@@ -599,7 +599,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            58 => 
+            58 =>
             array (
                 'code' => 'ALLRDQUA',
                 'created_at' => NULL,
@@ -609,7 +609,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            59 => 
+            59 =>
             array (
                 'code' => 'AUDICABRI',
                 'created_at' => NULL,
@@ -619,7 +619,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            60 => 
+            60 =>
             array (
                 'code' => 'AUDICOUPE',
                 'created_at' => NULL,
@@ -629,7 +629,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            61 => 
+            61 =>
             array (
                 'code' => 'Q3',
                 'created_at' => NULL,
@@ -639,7 +639,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            62 => 
+            62 =>
             array (
                 'code' => 'Q5',
                 'created_at' => NULL,
@@ -649,7 +649,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            63 => 
+            63 =>
             array (
                 'code' => 'Q7',
                 'created_at' => NULL,
@@ -659,7 +659,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            64 => 
+            64 =>
             array (
                 'code' => 'QUATTR',
                 'created_at' => NULL,
@@ -669,7 +669,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            65 => 
+            65 =>
             array (
                 'code' => 'R8',
                 'created_at' => NULL,
@@ -679,7 +679,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            66 => 
+            66 =>
             array (
                 'code' => 'RS4',
                 'created_at' => NULL,
@@ -689,7 +689,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            67 => 
+            67 =>
             array (
                 'code' => 'RS5',
                 'created_at' => NULL,
@@ -699,7 +699,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            68 => 
+            68 =>
             array (
                 'code' => 'RS6',
                 'created_at' => NULL,
@@ -709,7 +709,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            69 => 
+            69 =>
             array (
                 'code' => 'S4',
                 'created_at' => NULL,
@@ -719,7 +719,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            70 => 
+            70 =>
             array (
                 'code' => 'S5',
                 'created_at' => NULL,
@@ -729,7 +729,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            71 => 
+            71 =>
             array (
                 'code' => 'S6',
                 'created_at' => NULL,
@@ -739,7 +739,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            72 => 
+            72 =>
             array (
                 'code' => 'S7',
                 'created_at' => NULL,
@@ -749,7 +749,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            73 => 
+            73 =>
             array (
                 'code' => 'S8',
                 'created_at' => NULL,
@@ -759,7 +759,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            74 => 
+            74 =>
             array (
                 'code' => 'TT',
                 'created_at' => NULL,
@@ -769,7 +769,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            75 => 
+            75 =>
             array (
                 'code' => 'TTRS',
                 'created_at' => NULL,
@@ -779,7 +779,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            76 => 
+            76 =>
             array (
                 'code' => 'TTS',
                 'created_at' => NULL,
@@ -789,7 +789,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            77 => 
+            77 =>
             array (
                 'code' => 'V8',
                 'created_at' => NULL,
@@ -799,7 +799,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            78 => 
+            78 =>
             array (
                 'code' => 'AUDOTH',
                 'created_at' => NULL,
@@ -809,7 +809,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 5,
             ),
-            79 => 
+            79 =>
             array (
                 'code' => 'CONVERT',
                 'created_at' => NULL,
@@ -819,7 +819,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 6,
             ),
-            80 => 
+            80 =>
             array (
                 'code' => 'COUPEAVANT',
                 'created_at' => NULL,
@@ -829,7 +829,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 6,
             ),
-            81 => 
+            81 =>
             array (
                 'code' => 'SEDAN',
                 'created_at' => NULL,
@@ -839,7 +839,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 6,
             ),
-            82 => 
+            82 =>
             array (
                 'code' => 'UNAVAILAVA',
                 'created_at' => NULL,
@@ -849,7 +849,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 6,
             ),
-            83 => 
+            83 =>
             array (
                 'code' => 'ARNAGE',
                 'created_at' => NULL,
@@ -859,7 +859,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 7,
             ),
-            84 => 
+            84 =>
             array (
                 'code' => 'AZURE',
                 'created_at' => NULL,
@@ -869,7 +869,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 7,
             ),
-            85 => 
+            85 =>
             array (
                 'code' => 'BROOKLANDS',
                 'created_at' => NULL,
@@ -879,7 +879,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 7,
             ),
-            86 => 
+            86 =>
             array (
                 'code' => 'BENCONT',
                 'created_at' => NULL,
@@ -889,7 +889,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 7,
             ),
-            87 => 
+            87 =>
             array (
                 'code' => 'CORNICHE',
                 'created_at' => NULL,
@@ -899,7 +899,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 7,
             ),
-            88 => 
+            88 =>
             array (
                 'code' => 'BENEIGHT',
                 'created_at' => NULL,
@@ -909,7 +909,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 7,
             ),
-            89 => 
+            89 =>
             array (
                 'code' => 'BENMUL',
                 'created_at' => NULL,
@@ -919,7 +919,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 7,
             ),
-            90 => 
+            90 =>
             array (
                 'code' => 'BENTURBO',
                 'created_at' => NULL,
@@ -929,7 +929,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 7,
             ),
-            91 => 
+            91 =>
             array (
                 'code' => 'UNAVAILBEN',
                 'created_at' => NULL,
@@ -939,7 +939,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 7,
             ),
-            92 => 
+            92 =>
             array (
                 'code' => '1_SERIES',
                 'created_at' => NULL,
@@ -949,7 +949,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            93 => 
+            93 =>
             array (
                 'code' => '128I',
                 'created_at' => NULL,
@@ -959,7 +959,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            94 => 
+            94 =>
             array (
                 'code' => '135I',
                 'created_at' => NULL,
@@ -969,7 +969,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            95 => 
+            95 =>
             array (
                 'code' => '135IS',
                 'created_at' => NULL,
@@ -979,7 +979,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            96 => 
+            96 =>
             array (
                 'code' => '3_SERIES',
                 'created_at' => NULL,
@@ -989,7 +989,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            97 => 
+            97 =>
             array (
                 'code' => '318I',
                 'created_at' => NULL,
@@ -999,7 +999,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            98 => 
+            98 =>
             array (
                 'code' => '318IC',
                 'created_at' => NULL,
@@ -1009,7 +1009,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            99 => 
+            99 =>
             array (
                 'code' => '318IS',
                 'created_at' => NULL,
@@ -1019,7 +1019,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            100 => 
+            100 =>
             array (
                 'code' => '318TI',
                 'created_at' => NULL,
@@ -1029,7 +1029,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            101 => 
+            101 =>
             array (
                 'code' => '320I',
                 'created_at' => NULL,
@@ -1039,7 +1039,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            102 => 
+            102 =>
             array (
                 'code' => '323CI',
                 'created_at' => NULL,
@@ -1049,7 +1049,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            103 => 
+            103 =>
             array (
                 'code' => '323I',
                 'created_at' => NULL,
@@ -1059,7 +1059,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            104 => 
+            104 =>
             array (
                 'code' => '323IS',
                 'created_at' => NULL,
@@ -1069,7 +1069,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            105 => 
+            105 =>
             array (
                 'code' => '323IT',
                 'created_at' => NULL,
@@ -1079,7 +1079,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            106 => 
+            106 =>
             array (
                 'code' => '325CI',
                 'created_at' => NULL,
@@ -1089,7 +1089,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            107 => 
+            107 =>
             array (
                 'code' => '325E',
                 'created_at' => NULL,
@@ -1099,7 +1099,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            108 => 
+            108 =>
             array (
                 'code' => '325ES',
                 'created_at' => NULL,
@@ -1109,7 +1109,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            109 => 
+            109 =>
             array (
                 'code' => '325I',
                 'created_at' => NULL,
@@ -1119,7 +1119,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            110 => 
+            110 =>
             array (
                 'code' => '325IS',
                 'created_at' => NULL,
@@ -1129,7 +1129,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            111 => 
+            111 =>
             array (
                 'code' => '325IX',
                 'created_at' => NULL,
@@ -1139,7 +1139,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            112 => 
+            112 =>
             array (
                 'code' => '325XI',
                 'created_at' => NULL,
@@ -1149,7 +1149,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            113 => 
+            113 =>
             array (
                 'code' => '328CI',
                 'created_at' => NULL,
@@ -1159,7 +1159,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            114 => 
+            114 =>
             array (
                 'code' => '328I',
                 'created_at' => NULL,
@@ -1169,7 +1169,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            115 => 
+            115 =>
             array (
                 'code' => '328IS',
                 'created_at' => NULL,
@@ -1179,7 +1179,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            116 => 
+            116 =>
             array (
                 'code' => '328XI',
                 'created_at' => NULL,
@@ -1189,7 +1189,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            117 => 
+            117 =>
             array (
                 'code' => '330CI',
                 'created_at' => NULL,
@@ -1199,7 +1199,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            118 => 
+            118 =>
             array (
                 'code' => '330I',
                 'created_at' => NULL,
@@ -1209,7 +1209,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            119 => 
+            119 =>
             array (
                 'code' => '330XI',
                 'created_at' => NULL,
@@ -1219,7 +1219,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            120 => 
+            120 =>
             array (
                 'code' => '335D',
                 'created_at' => NULL,
@@ -1229,7 +1229,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            121 => 
+            121 =>
             array (
                 'code' => '335I',
                 'created_at' => NULL,
@@ -1239,7 +1239,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            122 => 
+            122 =>
             array (
                 'code' => '335IS',
                 'created_at' => NULL,
@@ -1249,7 +1249,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            123 => 
+            123 =>
             array (
                 'code' => '335XI',
                 'created_at' => NULL,
@@ -1259,7 +1259,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            124 => 
+            124 =>
             array (
                 'code' => 'ACTIVE3',
                 'created_at' => NULL,
@@ -1269,7 +1269,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            125 => 
+            125 =>
             array (
                 'code' => 'BMW325',
                 'created_at' => NULL,
@@ -1279,7 +1279,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            126 => 
+            126 =>
             array (
                 'code' => '5_SERIES',
                 'created_at' => NULL,
@@ -1289,7 +1289,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            127 => 
+            127 =>
             array (
                 'code' => '524TD',
                 'created_at' => NULL,
@@ -1299,7 +1299,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            128 => 
+            128 =>
             array (
                 'code' => '525I',
                 'created_at' => NULL,
@@ -1309,7 +1309,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            129 => 
+            129 =>
             array (
                 'code' => '525XI',
                 'created_at' => NULL,
@@ -1319,7 +1319,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            130 => 
+            130 =>
             array (
                 'code' => '528E',
                 'created_at' => NULL,
@@ -1329,7 +1329,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            131 => 
+            131 =>
             array (
                 'code' => '528I',
                 'created_at' => NULL,
@@ -1339,7 +1339,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            132 => 
+            132 =>
             array (
                 'code' => '528IT',
                 'created_at' => NULL,
@@ -1349,7 +1349,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            133 => 
+            133 =>
             array (
                 'code' => '528XI',
                 'created_at' => NULL,
@@ -1359,7 +1359,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            134 => 
+            134 =>
             array (
                 'code' => '530I',
                 'created_at' => NULL,
@@ -1369,7 +1369,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            135 => 
+            135 =>
             array (
                 'code' => '530IT',
                 'created_at' => NULL,
@@ -1379,7 +1379,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            136 => 
+            136 =>
             array (
                 'code' => '530XI',
                 'created_at' => NULL,
@@ -1389,7 +1389,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            137 => 
+            137 =>
             array (
                 'code' => '533I',
                 'created_at' => NULL,
@@ -1399,7 +1399,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            138 => 
+            138 =>
             array (
                 'code' => '535I',
                 'created_at' => NULL,
@@ -1409,7 +1409,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            139 => 
+            139 =>
             array (
                 'code' => '535IGT',
                 'created_at' => NULL,
@@ -1419,7 +1419,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            140 => 
+            140 =>
             array (
                 'code' => '535XI',
                 'created_at' => NULL,
@@ -1429,7 +1429,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            141 => 
+            141 =>
             array (
                 'code' => '540I',
                 'created_at' => NULL,
@@ -1439,7 +1439,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            142 => 
+            142 =>
             array (
                 'code' => '545I',
                 'created_at' => NULL,
@@ -1449,7 +1449,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            143 => 
+            143 =>
             array (
                 'code' => '550I',
                 'created_at' => NULL,
@@ -1459,7 +1459,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            144 => 
+            144 =>
             array (
                 'code' => '550IGT',
                 'created_at' => NULL,
@@ -1469,7 +1469,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            145 => 
+            145 =>
             array (
                 'code' => 'ACTIVE5',
                 'created_at' => NULL,
@@ -1479,7 +1479,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            146 => 
+            146 =>
             array (
                 'code' => '6_SERIES',
                 'created_at' => NULL,
@@ -1489,7 +1489,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            147 => 
+            147 =>
             array (
                 'code' => '633CSI',
                 'created_at' => NULL,
@@ -1499,7 +1499,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            148 => 
+            148 =>
             array (
                 'code' => '635CSI',
                 'created_at' => NULL,
@@ -1509,7 +1509,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            149 => 
+            149 =>
             array (
                 'code' => '640I',
                 'created_at' => NULL,
@@ -1519,7 +1519,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            150 => 
+            150 =>
             array (
                 'code' => '640IGC',
                 'created_at' => NULL,
@@ -1529,7 +1529,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            151 => 
+            151 =>
             array (
                 'code' => '645CI',
                 'created_at' => NULL,
@@ -1539,7 +1539,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            152 => 
+            152 =>
             array (
                 'code' => '650I',
                 'created_at' => NULL,
@@ -1549,7 +1549,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            153 => 
+            153 =>
             array (
                 'code' => '650IGC',
                 'created_at' => NULL,
@@ -1559,7 +1559,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            154 => 
+            154 =>
             array (
                 'code' => 'L6',
                 'created_at' => NULL,
@@ -1569,7 +1569,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            155 => 
+            155 =>
             array (
                 'code' => '7_SERIES',
                 'created_at' => NULL,
@@ -1579,7 +1579,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            156 => 
+            156 =>
             array (
                 'code' => '733I',
                 'created_at' => NULL,
@@ -1589,7 +1589,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            157 => 
+            157 =>
             array (
                 'code' => '735I',
                 'created_at' => NULL,
@@ -1599,7 +1599,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            158 => 
+            158 =>
             array (
                 'code' => '735IL',
                 'created_at' => NULL,
@@ -1609,7 +1609,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            159 => 
+            159 =>
             array (
                 'code' => '740I',
                 'created_at' => NULL,
@@ -1619,7 +1619,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            160 => 
+            160 =>
             array (
                 'code' => '740IL',
                 'created_at' => NULL,
@@ -1629,7 +1629,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            161 => 
+            161 =>
             array (
                 'code' => '740LI',
                 'created_at' => NULL,
@@ -1639,7 +1639,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            162 => 
+            162 =>
             array (
                 'code' => '745I',
                 'created_at' => NULL,
@@ -1649,7 +1649,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            163 => 
+            163 =>
             array (
                 'code' => '745LI',
                 'created_at' => NULL,
@@ -1659,7 +1659,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            164 => 
+            164 =>
             array (
                 'code' => '750I',
                 'created_at' => NULL,
@@ -1669,7 +1669,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            165 => 
+            165 =>
             array (
                 'code' => '750IL',
                 'created_at' => NULL,
@@ -1679,7 +1679,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            166 => 
+            166 =>
             array (
                 'code' => '750LI',
                 'created_at' => NULL,
@@ -1689,7 +1689,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            167 => 
+            167 =>
             array (
                 'code' => '760I',
                 'created_at' => NULL,
@@ -1699,7 +1699,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            168 => 
+            168 =>
             array (
                 'code' => '760LI',
                 'created_at' => NULL,
@@ -1709,7 +1709,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            169 => 
+            169 =>
             array (
                 'code' => 'ACTIVE7',
                 'created_at' => NULL,
@@ -1719,7 +1719,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            170 => 
+            170 =>
             array (
                 'code' => 'ALPINAB7',
                 'created_at' => NULL,
@@ -1729,7 +1729,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            171 => 
+            171 =>
             array (
                 'code' => '8_SERIES',
                 'created_at' => NULL,
@@ -1739,7 +1739,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            172 => 
+            172 =>
             array (
                 'code' => '840CI',
                 'created_at' => NULL,
@@ -1749,7 +1749,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            173 => 
+            173 =>
             array (
                 'code' => '850CI',
                 'created_at' => NULL,
@@ -1759,7 +1759,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            174 => 
+            174 =>
             array (
                 'code' => '850CSI',
                 'created_at' => NULL,
@@ -1769,7 +1769,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            175 => 
+            175 =>
             array (
                 'code' => '850I',
                 'created_at' => NULL,
@@ -1779,7 +1779,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            176 => 
+            176 =>
             array (
                 'code' => 'L_SERIES',
                 'created_at' => NULL,
@@ -1789,7 +1789,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            177 => 
+            177 =>
             array (
                 'code' => 'L7',
                 'created_at' => NULL,
@@ -1799,7 +1799,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            178 => 
+            178 =>
             array (
                 'code' => 'M_SERIES',
                 'created_at' => NULL,
@@ -1809,7 +1809,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            179 => 
+            179 =>
             array (
                 'code' => '1SERIESM',
                 'created_at' => NULL,
@@ -1819,7 +1819,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            180 => 
+            180 =>
             array (
                 'code' => 'BMWMCOUPE',
                 'created_at' => NULL,
@@ -1829,7 +1829,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            181 => 
+            181 =>
             array (
                 'code' => 'BMWROAD',
                 'created_at' => NULL,
@@ -1839,7 +1839,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            182 => 
+            182 =>
             array (
                 'code' => 'M3',
                 'created_at' => NULL,
@@ -1849,7 +1849,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            183 => 
+            183 =>
             array (
                 'code' => 'M5',
                 'created_at' => NULL,
@@ -1859,7 +1859,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            184 => 
+            184 =>
             array (
                 'code' => 'M6',
                 'created_at' => NULL,
@@ -1869,7 +1869,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            185 => 
+            185 =>
             array (
                 'code' => 'X5M',
                 'created_at' => NULL,
@@ -1879,7 +1879,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            186 => 
+            186 =>
             array (
                 'code' => 'X6M',
                 'created_at' => NULL,
@@ -1889,7 +1889,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            187 => 
+            187 =>
             array (
                 'code' => 'X_SERIES',
                 'created_at' => NULL,
@@ -1899,7 +1899,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            188 => 
+            188 =>
             array (
                 'code' => 'ACTIVEX6',
                 'created_at' => NULL,
@@ -1909,7 +1909,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            189 => 
+            189 =>
             array (
                 'code' => 'X1',
                 'created_at' => NULL,
@@ -1919,7 +1919,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            190 => 
+            190 =>
             array (
                 'code' => 'X3',
                 'created_at' => NULL,
@@ -1929,7 +1929,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            191 => 
+            191 =>
             array (
                 'code' => 'X5',
                 'created_at' => NULL,
@@ -1939,7 +1939,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            192 => 
+            192 =>
             array (
                 'code' => 'X6',
                 'created_at' => NULL,
@@ -1949,7 +1949,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            193 => 
+            193 =>
             array (
                 'code' => 'Z_SERIES',
                 'created_at' => NULL,
@@ -1959,7 +1959,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            194 => 
+            194 =>
             array (
                 'code' => 'Z3',
                 'created_at' => NULL,
@@ -1969,7 +1969,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            195 => 
+            195 =>
             array (
                 'code' => 'Z4',
                 'created_at' => NULL,
@@ -1979,7 +1979,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            196 => 
+            196 =>
             array (
                 'code' => 'Z8',
                 'created_at' => NULL,
@@ -1989,7 +1989,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            197 => 
+            197 =>
             array (
                 'code' => 'BMWOTH',
                 'created_at' => NULL,
@@ -1999,7 +1999,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 8,
             ),
-            198 => 
+            198 =>
             array (
                 'code' => 'CENT',
                 'created_at' => NULL,
@@ -2009,7 +2009,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            199 => 
+            199 =>
             array (
                 'code' => 'ELEC',
                 'created_at' => NULL,
@@ -2019,7 +2019,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            200 => 
+            200 =>
             array (
                 'code' => 'ENCLAVE',
                 'created_at' => NULL,
@@ -2029,7 +2029,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            201 => 
+            201 =>
             array (
                 'code' => 'BUIENC',
                 'created_at' => NULL,
@@ -2039,7 +2039,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            202 => 
+            202 =>
             array (
                 'code' => 'LACROSSE',
                 'created_at' => NULL,
@@ -2049,7 +2049,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            203 => 
+            203 =>
             array (
                 'code' => 'LESA',
                 'created_at' => NULL,
@@ -2059,7 +2059,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            204 => 
+            204 =>
             array (
                 'code' => 'LUCERNE',
                 'created_at' => NULL,
@@ -2069,7 +2069,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            205 => 
+            205 =>
             array (
                 'code' => 'PARK',
                 'created_at' => NULL,
@@ -2079,7 +2079,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            206 => 
+            206 =>
             array (
                 'code' => 'RAINIER',
                 'created_at' => NULL,
@@ -2089,7 +2089,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            207 => 
+            207 =>
             array (
                 'code' => 'REATTA',
                 'created_at' => NULL,
@@ -2099,7 +2099,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            208 => 
+            208 =>
             array (
                 'code' => 'REG',
                 'created_at' => NULL,
@@ -2109,7 +2109,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            209 => 
+            209 =>
             array (
                 'code' => 'RENDEZVOUS',
                 'created_at' => NULL,
@@ -2119,7 +2119,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            210 => 
+            210 =>
             array (
                 'code' => 'RIV',
                 'created_at' => NULL,
@@ -2129,7 +2129,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            211 => 
+            211 =>
             array (
                 'code' => 'BUICKROAD',
                 'created_at' => NULL,
@@ -2139,7 +2139,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            212 => 
+            212 =>
             array (
                 'code' => 'SKYH',
                 'created_at' => NULL,
@@ -2149,7 +2149,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            213 => 
+            213 =>
             array (
                 'code' => 'SKYL',
                 'created_at' => NULL,
@@ -2159,7 +2159,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            214 => 
+            214 =>
             array (
                 'code' => 'SOMER',
                 'created_at' => NULL,
@@ -2169,7 +2169,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            215 => 
+            215 =>
             array (
                 'code' => 'TERRAZA',
                 'created_at' => NULL,
@@ -2179,7 +2179,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            216 => 
+            216 =>
             array (
                 'code' => 'BUVERANO',
                 'created_at' => NULL,
@@ -2189,7 +2189,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            217 => 
+            217 =>
             array (
                 'code' => 'BUOTH',
                 'created_at' => NULL,
@@ -2199,7 +2199,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 9,
             ),
-            218 => 
+            218 =>
             array (
                 'code' => 'ALLANT',
                 'created_at' => NULL,
@@ -2209,7 +2209,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            219 => 
+            219 =>
             array (
                 'code' => 'ATS',
                 'created_at' => NULL,
@@ -2219,7 +2219,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            220 => 
+            220 =>
             array (
                 'code' => 'BROUGH',
                 'created_at' => NULL,
@@ -2229,7 +2229,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            221 => 
+            221 =>
             array (
                 'code' => 'CATERA',
                 'created_at' => NULL,
@@ -2239,7 +2239,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            222 => 
+            222 =>
             array (
                 'code' => 'CIMA',
                 'created_at' => NULL,
@@ -2249,7 +2249,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            223 => 
+            223 =>
             array (
                 'code' => 'CTS',
                 'created_at' => NULL,
@@ -2259,7 +2259,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            224 => 
+            224 =>
             array (
                 'code' => 'DEV',
                 'created_at' => NULL,
@@ -2269,7 +2269,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            225 => 
+            225 =>
             array (
                 'code' => 'DTS',
                 'created_at' => NULL,
@@ -2279,7 +2279,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            226 => 
+            226 =>
             array (
                 'code' => 'ELDO',
                 'created_at' => NULL,
@@ -2289,7 +2289,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            227 => 
+            227 =>
             array (
                 'code' => 'ESCALA',
                 'created_at' => NULL,
@@ -2299,7 +2299,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            228 => 
+            228 =>
             array (
                 'code' => 'ESCALAESV',
                 'created_at' => NULL,
@@ -2309,7 +2309,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            229 => 
+            229 =>
             array (
                 'code' => 'EXT',
                 'created_at' => NULL,
@@ -2319,7 +2319,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            230 => 
+            230 =>
             array (
                 'code' => 'FLEE',
                 'created_at' => NULL,
@@ -2329,7 +2329,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            231 => 
+            231 =>
             array (
                 'code' => 'SEV',
                 'created_at' => NULL,
@@ -2339,7 +2339,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            232 => 
+            232 =>
             array (
                 'code' => 'SRX',
                 'created_at' => NULL,
@@ -2349,7 +2349,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            233 => 
+            233 =>
             array (
                 'code' => 'STS',
                 'created_at' => NULL,
@@ -2359,7 +2359,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            234 => 
+            234 =>
             array (
                 'code' => 'XLR',
                 'created_at' => NULL,
@@ -2369,7 +2369,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            235 => 
+            235 =>
             array (
                 'code' => 'XTS',
                 'created_at' => NULL,
@@ -2379,7 +2379,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            236 => 
+            236 =>
             array (
                 'code' => 'CADOTH',
                 'created_at' => NULL,
@@ -2389,7 +2389,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 10,
             ),
-            237 => 
+            237 =>
             array (
                 'code' => 'ASTRO',
                 'created_at' => NULL,
@@ -2399,7 +2399,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            238 => 
+            238 =>
             array (
                 'code' => 'AVALNCH',
                 'created_at' => NULL,
@@ -2409,7 +2409,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            239 => 
+            239 =>
             array (
                 'code' => 'AVEO',
                 'created_at' => NULL,
@@ -2419,7 +2419,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            240 => 
+            240 =>
             array (
                 'code' => 'AVEO5',
                 'created_at' => NULL,
@@ -2429,7 +2429,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            241 => 
+            241 =>
             array (
                 'code' => 'BERETT',
                 'created_at' => NULL,
@@ -2439,7 +2439,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            242 => 
+            242 =>
             array (
                 'code' => 'BLAZER',
                 'created_at' => NULL,
@@ -2449,7 +2449,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            243 => 
+            243 =>
             array (
                 'code' => 'CAM',
                 'created_at' => NULL,
@@ -2459,7 +2459,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            244 => 
+            244 =>
             array (
                 'code' => 'CAP',
                 'created_at' => NULL,
@@ -2469,7 +2469,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            245 => 
+            245 =>
             array (
                 'code' => 'CHECAPS',
                 'created_at' => NULL,
@@ -2479,7 +2479,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            246 => 
+            246 =>
             array (
                 'code' => 'CAV',
                 'created_at' => NULL,
@@ -2489,7 +2489,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            247 => 
+            247 =>
             array (
                 'code' => 'CELE',
                 'created_at' => NULL,
@@ -2499,7 +2499,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            248 => 
+            248 =>
             array (
                 'code' => 'CHEVETTE',
                 'created_at' => NULL,
@@ -2509,7 +2509,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            249 => 
+            249 =>
             array (
                 'code' => 'CITATION',
                 'created_at' => NULL,
@@ -2519,7 +2519,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            250 => 
+            250 =>
             array (
                 'code' => 'COBALT',
                 'created_at' => NULL,
@@ -2529,7 +2529,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            251 => 
+            251 =>
             array (
                 'code' => 'COLORADO',
                 'created_at' => NULL,
@@ -2539,7 +2539,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            252 => 
+            252 =>
             array (
                 'code' => 'CORSI',
                 'created_at' => NULL,
@@ -2549,7 +2549,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            253 => 
+            253 =>
             array (
                 'code' => 'CORV',
                 'created_at' => NULL,
@@ -2559,7 +2559,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            254 => 
+            254 =>
             array (
                 'code' => 'CRUZE',
                 'created_at' => NULL,
@@ -2569,7 +2569,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            255 => 
+            255 =>
             array (
                 'code' => 'ELCAM',
                 'created_at' => NULL,
@@ -2579,7 +2579,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            256 => 
+            256 =>
             array (
                 'code' => 'EQUINOX',
                 'created_at' => NULL,
@@ -2589,7 +2589,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            257 => 
+            257 =>
             array (
                 'code' => 'G15EXP',
                 'created_at' => NULL,
@@ -2599,7 +2599,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            258 => 
+            258 =>
             array (
                 'code' => 'G10',
                 'created_at' => NULL,
@@ -2609,7 +2609,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            259 => 
+            259 =>
             array (
                 'code' => 'HHR',
                 'created_at' => NULL,
@@ -2619,7 +2619,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            260 => 
+            260 =>
             array (
                 'code' => 'CHEVIMP',
                 'created_at' => NULL,
@@ -2629,7 +2629,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            261 => 
+            261 =>
             array (
                 'code' => 'KODC4500',
                 'created_at' => NULL,
@@ -2639,7 +2639,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            262 => 
+            262 =>
             array (
                 'code' => 'LUMINA',
                 'created_at' => NULL,
@@ -2649,7 +2649,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            263 => 
+            263 =>
             array (
                 'code' => 'LAPV',
                 'created_at' => NULL,
@@ -2659,7 +2659,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            264 => 
+            264 =>
             array (
                 'code' => 'LUV',
                 'created_at' => NULL,
@@ -2669,7 +2669,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            265 => 
+            265 =>
             array (
                 'code' => 'MALI',
                 'created_at' => NULL,
@@ -2679,7 +2679,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            266 => 
+            266 =>
             array (
                 'code' => 'CHVMETR',
                 'created_at' => NULL,
@@ -2689,7 +2689,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            267 => 
+            267 =>
             array (
                 'code' => 'CHEVMONT',
                 'created_at' => NULL,
@@ -2699,7 +2699,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            268 => 
+            268 =>
             array (
                 'code' => 'NOVA',
                 'created_at' => NULL,
@@ -2709,7 +2709,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            269 => 
+            269 =>
             array (
                 'code' => 'CHEVPRIZM',
                 'created_at' => NULL,
@@ -2719,7 +2719,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            270 => 
+            270 =>
             array (
                 'code' => 'CHVST',
                 'created_at' => NULL,
@@ -2729,7 +2729,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            271 => 
+            271 =>
             array (
                 'code' => 'S10PICKUP',
                 'created_at' => NULL,
@@ -2739,7 +2739,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            272 => 
+            272 =>
             array (
                 'code' => 'CHEV150',
                 'created_at' => NULL,
@@ -2749,7 +2749,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            273 => 
+            273 =>
             array (
                 'code' => 'CHEVC25',
                 'created_at' => NULL,
@@ -2759,7 +2759,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            274 => 
+            274 =>
             array (
                 'code' => 'CH3500PU',
                 'created_at' => NULL,
@@ -2769,7 +2769,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            275 => 
+            275 =>
             array (
                 'code' => 'SONIC',
                 'created_at' => NULL,
@@ -2779,7 +2779,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            276 => 
+            276 =>
             array (
                 'code' => 'SPARK',
                 'created_at' => NULL,
@@ -2789,7 +2789,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            277 => 
+            277 =>
             array (
                 'code' => 'CHEVSPEC',
                 'created_at' => NULL,
@@ -2799,7 +2799,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            278 => 
+            278 =>
             array (
                 'code' => 'CHSPRINT',
                 'created_at' => NULL,
@@ -2809,7 +2809,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            279 => 
+            279 =>
             array (
                 'code' => 'SSR',
                 'created_at' => NULL,
@@ -2819,7 +2819,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            280 => 
+            280 =>
             array (
                 'code' => 'CHEVSUB',
                 'created_at' => NULL,
@@ -2829,7 +2829,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            281 => 
+            281 =>
             array (
                 'code' => 'TAHOE',
                 'created_at' => NULL,
@@ -2839,7 +2839,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            282 => 
+            282 =>
             array (
                 'code' => 'TRACKE',
                 'created_at' => NULL,
@@ -2849,7 +2849,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            283 => 
+            283 =>
             array (
                 'code' => 'TRAILBLZ',
                 'created_at' => NULL,
@@ -2859,7 +2859,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            284 => 
+            284 =>
             array (
                 'code' => 'TRAILBZEXT',
                 'created_at' => NULL,
@@ -2869,7 +2869,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            285 => 
+            285 =>
             array (
                 'code' => 'TRAVERSE',
                 'created_at' => NULL,
@@ -2879,7 +2879,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            286 => 
+            286 =>
             array (
                 'code' => 'UPLANDER',
                 'created_at' => NULL,
@@ -2889,7 +2889,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            287 => 
+            287 =>
             array (
                 'code' => 'VENTUR',
                 'created_at' => NULL,
@@ -2899,7 +2899,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            288 => 
+            288 =>
             array (
                 'code' => 'VOLT',
                 'created_at' => NULL,
@@ -2909,7 +2909,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            289 => 
+            289 =>
             array (
                 'code' => 'CHEOTH',
                 'created_at' => NULL,
@@ -2919,7 +2919,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 11,
             ),
-            290 => 
+            290 =>
             array (
                 'code' => 'CHRYS200',
                 'created_at' => NULL,
@@ -2929,7 +2929,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            291 => 
+            291 =>
             array (
                 'code' => '300',
                 'created_at' => NULL,
@@ -2939,7 +2939,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            292 => 
+            292 =>
             array (
                 'code' => 'CHRY300',
                 'created_at' => NULL,
@@ -2949,7 +2949,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            293 => 
+            293 =>
             array (
                 'code' => 'ASPEN',
                 'created_at' => NULL,
@@ -2959,7 +2959,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            294 => 
+            294 =>
             array (
                 'code' => 'CARAVAN',
                 'created_at' => NULL,
@@ -2969,7 +2969,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            295 => 
+            295 =>
             array (
                 'code' => 'CIRRUS',
                 'created_at' => NULL,
@@ -2979,7 +2979,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            296 => 
+            296 =>
             array (
                 'code' => 'CONC',
                 'created_at' => NULL,
@@ -2989,7 +2989,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            297 => 
+            297 =>
             array (
                 'code' => 'CHRYCONQ',
                 'created_at' => NULL,
@@ -2999,7 +2999,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            298 => 
+            298 =>
             array (
                 'code' => 'CORDOBA',
                 'created_at' => NULL,
@@ -3009,7 +3009,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            299 => 
+            299 =>
             array (
                 'code' => 'CROSSFIRE',
                 'created_at' => NULL,
@@ -3019,7 +3019,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            300 => 
+            300 =>
             array (
                 'code' => 'ECLASS',
                 'created_at' => NULL,
@@ -3029,7 +3029,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            301 => 
+            301 =>
             array (
                 'code' => 'FIFTH',
                 'created_at' => NULL,
@@ -3039,7 +3039,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            302 => 
+            302 =>
             array (
                 'code' => 'CHRYGRANDV',
                 'created_at' => NULL,
@@ -3049,7 +3049,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            303 => 
+            303 =>
             array (
                 'code' => 'IMPE',
                 'created_at' => NULL,
@@ -3059,7 +3059,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            304 => 
+            304 =>
             array (
                 'code' => 'INTREPID',
                 'created_at' => NULL,
@@ -3069,7 +3069,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            305 => 
+            305 =>
             array (
                 'code' => 'CHRYLAS',
                 'created_at' => NULL,
@@ -3079,7 +3079,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            306 => 
+            306 =>
             array (
                 'code' => 'LEBA',
                 'created_at' => NULL,
@@ -3089,7 +3089,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            307 => 
+            307 =>
             array (
                 'code' => 'LHS',
                 'created_at' => NULL,
@@ -3099,7 +3099,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            308 => 
+            308 =>
             array (
                 'code' => 'CHRYNEON',
                 'created_at' => NULL,
@@ -3109,7 +3109,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            309 => 
+            309 =>
             array (
                 'code' => 'NY',
                 'created_at' => NULL,
@@ -3119,7 +3119,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            310 => 
+            310 =>
             array (
                 'code' => 'NEWPORT',
                 'created_at' => NULL,
@@ -3129,7 +3129,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            311 => 
+            311 =>
             array (
                 'code' => 'PACIFICA',
                 'created_at' => NULL,
@@ -3139,7 +3139,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            312 => 
+            312 =>
             array (
                 'code' => 'CHPROWLE',
                 'created_at' => NULL,
@@ -3149,7 +3149,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            313 => 
+            313 =>
             array (
                 'code' => 'PTCRUIS',
                 'created_at' => NULL,
@@ -3159,7 +3159,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            314 => 
+            314 =>
             array (
                 'code' => 'CHRYSEB',
                 'created_at' => NULL,
@@ -3169,7 +3169,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            315 => 
+            315 =>
             array (
                 'code' => 'CHRYTC',
                 'created_at' => NULL,
@@ -3179,7 +3179,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            316 => 
+            316 =>
             array (
                 'code' => 'TANDC',
                 'created_at' => NULL,
@@ -3189,7 +3189,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            317 => 
+            317 =>
             array (
                 'code' => 'VOYAGER',
                 'created_at' => NULL,
@@ -3199,7 +3199,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            318 => 
+            318 =>
             array (
                 'code' => 'CHOTH',
                 'created_at' => NULL,
@@ -3209,7 +3209,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 12,
             ),
-            319 => 
+            319 =>
             array (
                 'code' => 'LANOS',
                 'created_at' => NULL,
@@ -3219,7 +3219,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 13,
             ),
-            320 => 
+            320 =>
             array (
                 'code' => 'LEGANZA',
                 'created_at' => NULL,
@@ -3229,7 +3229,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 13,
             ),
-            321 => 
+            321 =>
             array (
                 'code' => 'NUBIRA',
                 'created_at' => NULL,
@@ -3239,7 +3239,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 13,
             ),
-            322 => 
+            322 =>
             array (
                 'code' => 'DAEOTH',
                 'created_at' => NULL,
@@ -3249,7 +3249,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 13,
             ),
-            323 => 
+            323 =>
             array (
                 'code' => 'CHAR',
                 'created_at' => NULL,
@@ -3259,7 +3259,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 14,
             ),
-            324 => 
+            324 =>
             array (
                 'code' => 'ROCKY',
                 'created_at' => NULL,
@@ -3269,7 +3269,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 14,
             ),
-            325 => 
+            325 =>
             array (
                 'code' => 'DAIHOTH',
                 'created_at' => NULL,
@@ -3279,7 +3279,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 14,
             ),
-            326 => 
+            326 =>
             array (
                 'code' => 'DAT200SX',
                 'created_at' => NULL,
@@ -3289,7 +3289,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            327 => 
+            327 =>
             array (
                 'code' => 'DAT210',
                 'created_at' => NULL,
@@ -3299,7 +3299,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            328 => 
+            328 =>
             array (
                 'code' => '280Z',
                 'created_at' => NULL,
@@ -3309,7 +3309,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            329 => 
+            329 =>
             array (
                 'code' => '300ZX',
                 'created_at' => NULL,
@@ -3319,7 +3319,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            330 => 
+            330 =>
             array (
                 'code' => '310',
                 'created_at' => NULL,
@@ -3329,7 +3329,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            331 => 
+            331 =>
             array (
                 'code' => '510',
                 'created_at' => NULL,
@@ -3339,7 +3339,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            332 => 
+            332 =>
             array (
                 'code' => '720',
                 'created_at' => NULL,
@@ -3349,7 +3349,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            333 => 
+            333 =>
             array (
                 'code' => '810',
                 'created_at' => NULL,
@@ -3359,7 +3359,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            334 => 
+            334 =>
             array (
                 'code' => 'DATMAX',
                 'created_at' => NULL,
@@ -3369,7 +3369,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            335 => 
+            335 =>
             array (
                 'code' => 'DATPU',
                 'created_at' => NULL,
@@ -3379,7 +3379,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            336 => 
+            336 =>
             array (
                 'code' => 'PUL',
                 'created_at' => NULL,
@@ -3389,7 +3389,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            337 => 
+            337 =>
             array (
                 'code' => 'DATSENT',
                 'created_at' => NULL,
@@ -3399,7 +3399,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            338 => 
+            338 =>
             array (
                 'code' => 'STAN',
                 'created_at' => NULL,
@@ -3409,7 +3409,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            339 => 
+            339 =>
             array (
                 'code' => 'DATOTH',
                 'created_at' => NULL,
@@ -3419,7 +3419,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 15,
             ),
-            340 => 
+            340 =>
             array (
                 'code' => 'DMC12',
                 'created_at' => NULL,
@@ -3429,7 +3429,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 16,
             ),
-            341 => 
+            341 =>
             array (
                 'code' => '400',
                 'created_at' => NULL,
@@ -3439,7 +3439,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            342 => 
+            342 =>
             array (
                 'code' => 'DOD600',
                 'created_at' => NULL,
@@ -3449,7 +3449,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            343 => 
+            343 =>
             array (
                 'code' => 'ARI',
                 'created_at' => NULL,
@@ -3459,7 +3459,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            344 => 
+            344 =>
             array (
                 'code' => 'AVENGR',
                 'created_at' => NULL,
@@ -3469,7 +3469,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            345 => 
+            345 =>
             array (
                 'code' => 'CALIBER',
                 'created_at' => NULL,
@@ -3479,7 +3479,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            346 => 
+            346 =>
             array (
                 'code' => 'DODCARA',
                 'created_at' => NULL,
@@ -3489,7 +3489,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            347 => 
+            347 =>
             array (
                 'code' => 'CHALLENGER',
                 'created_at' => NULL,
@@ -3499,7 +3499,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            348 => 
+            348 =>
             array (
                 'code' => 'DODCHAR',
                 'created_at' => NULL,
@@ -3509,7 +3509,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            349 => 
+            349 =>
             array (
                 'code' => 'DODCOLT',
                 'created_at' => NULL,
@@ -3519,7 +3519,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            350 => 
+            350 =>
             array (
                 'code' => 'DODCONQ',
                 'created_at' => NULL,
@@ -3529,7 +3529,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            351 => 
+            351 =>
             array (
                 'code' => 'DODDW',
                 'created_at' => NULL,
@@ -3539,7 +3539,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            352 => 
+            352 =>
             array (
                 'code' => 'DAKOTA',
                 'created_at' => NULL,
@@ -3549,7 +3549,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            353 => 
+            353 =>
             array (
                 'code' => 'DODDART',
                 'created_at' => NULL,
@@ -3559,7 +3559,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            354 => 
+            354 =>
             array (
                 'code' => 'DAY',
                 'created_at' => NULL,
@@ -3569,7 +3569,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            355 => 
+            355 =>
             array (
                 'code' => 'DIPLOMA',
                 'created_at' => NULL,
@@ -3579,7 +3579,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            356 => 
+            356 =>
             array (
                 'code' => 'DURANG',
                 'created_at' => NULL,
@@ -3589,7 +3589,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            357 => 
+            357 =>
             array (
                 'code' => 'DODDYNA',
                 'created_at' => NULL,
@@ -3599,7 +3599,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            358 => 
+            358 =>
             array (
                 'code' => 'GRANDCARAV',
                 'created_at' => NULL,
@@ -3609,7 +3609,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            359 => 
+            359 =>
             array (
                 'code' => 'INTRE',
                 'created_at' => NULL,
@@ -3619,7 +3619,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            360 => 
+            360 =>
             array (
                 'code' => 'JOURNEY',
                 'created_at' => NULL,
@@ -3629,7 +3629,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            361 => 
+            361 =>
             array (
                 'code' => 'LANCERDODG',
                 'created_at' => NULL,
@@ -3639,7 +3639,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            362 => 
+            362 =>
             array (
                 'code' => 'MAGNUM',
                 'created_at' => NULL,
@@ -3649,7 +3649,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            363 => 
+            363 =>
             array (
                 'code' => 'MIRADA',
                 'created_at' => NULL,
@@ -3659,7 +3659,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            364 => 
+            364 =>
             array (
                 'code' => 'MONACO',
                 'created_at' => NULL,
@@ -3669,7 +3669,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            365 => 
+            365 =>
             array (
                 'code' => 'DODNEON',
                 'created_at' => NULL,
@@ -3679,7 +3679,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            366 => 
+            366 =>
             array (
                 'code' => 'NITRO',
                 'created_at' => NULL,
@@ -3689,7 +3689,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            367 => 
+            367 =>
             array (
                 'code' => 'OMNI',
                 'created_at' => NULL,
@@ -3699,7 +3699,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            368 => 
+            368 =>
             array (
                 'code' => 'RAIDER',
                 'created_at' => NULL,
@@ -3709,7 +3709,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            369 => 
+            369 =>
             array (
                 'code' => 'RAM1504WD',
                 'created_at' => NULL,
@@ -3719,7 +3719,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            370 => 
+            370 =>
             array (
                 'code' => 'RAM25002WD',
                 'created_at' => NULL,
@@ -3729,7 +3729,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            371 => 
+            371 =>
             array (
                 'code' => 'RAM3502WD',
                 'created_at' => NULL,
@@ -3739,7 +3739,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            372 => 
+            372 =>
             array (
                 'code' => 'RAM4500',
                 'created_at' => NULL,
@@ -3749,7 +3749,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            373 => 
+            373 =>
             array (
                 'code' => 'DODD50',
                 'created_at' => NULL,
@@ -3759,7 +3759,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            374 => 
+            374 =>
             array (
                 'code' => 'CV',
                 'created_at' => NULL,
@@ -3769,7 +3769,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            375 => 
+            375 =>
             array (
                 'code' => 'RAMSRT10',
                 'created_at' => NULL,
@@ -3779,7 +3779,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            376 => 
+            376 =>
             array (
                 'code' => 'RAMVANV8',
                 'created_at' => NULL,
@@ -3789,7 +3789,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            377 => 
+            377 =>
             array (
                 'code' => 'RAMWAGON',
                 'created_at' => NULL,
@@ -3799,7 +3799,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            378 => 
+            378 =>
             array (
                 'code' => 'RAMCGR',
                 'created_at' => NULL,
@@ -3809,7 +3809,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            379 => 
+            379 =>
             array (
                 'code' => 'RAMPAGE',
                 'created_at' => NULL,
@@ -3819,7 +3819,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            380 => 
+            380 =>
             array (
                 'code' => 'DODSHAD',
                 'created_at' => NULL,
@@ -3829,7 +3829,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            381 => 
+            381 =>
             array (
                 'code' => 'DODSPIR',
                 'created_at' => NULL,
@@ -3839,7 +3839,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            382 => 
+            382 =>
             array (
                 'code' => 'SPRINTER',
                 'created_at' => NULL,
@@ -3849,7 +3849,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            383 => 
+            383 =>
             array (
                 'code' => 'SRT4',
                 'created_at' => NULL,
@@ -3859,7 +3859,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            384 => 
+            384 =>
             array (
                 'code' => 'STREGIS',
                 'created_at' => NULL,
@@ -3869,7 +3869,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            385 => 
+            385 =>
             array (
                 'code' => 'STEAL',
                 'created_at' => NULL,
@@ -3879,7 +3879,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            386 => 
+            386 =>
             array (
                 'code' => 'STRATU',
                 'created_at' => NULL,
@@ -3889,7 +3889,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            387 => 
+            387 =>
             array (
                 'code' => 'VIPER',
                 'created_at' => NULL,
@@ -3899,7 +3899,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            388 => 
+            388 =>
             array (
                 'code' => 'DOOTH',
                 'created_at' => NULL,
@@ -3909,7 +3909,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 17,
             ),
-            389 => 
+            389 =>
             array (
                 'code' => 'EAGLEMED',
                 'created_at' => NULL,
@@ -3919,7 +3919,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 18,
             ),
-            390 => 
+            390 =>
             array (
                 'code' => 'EAGLEPREM',
                 'created_at' => NULL,
@@ -3929,7 +3929,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 18,
             ),
-            391 => 
+            391 =>
             array (
                 'code' => 'SUMMIT',
                 'created_at' => NULL,
@@ -3939,7 +3939,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 18,
             ),
-            392 => 
+            392 =>
             array (
                 'code' => 'TALON',
                 'created_at' => NULL,
@@ -3949,7 +3949,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 18,
             ),
-            393 => 
+            393 =>
             array (
                 'code' => 'VISION',
                 'created_at' => NULL,
@@ -3959,7 +3959,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 18,
             ),
-            394 => 
+            394 =>
             array (
                 'code' => 'EAGOTH',
                 'created_at' => NULL,
@@ -3969,7 +3969,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 18,
             ),
-            395 => 
+            395 =>
             array (
                 'code' => '308GTB',
                 'created_at' => NULL,
@@ -3979,7 +3979,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            396 => 
+            396 =>
             array (
                 'code' => '308TBI',
                 'created_at' => NULL,
@@ -3989,7 +3989,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            397 => 
+            397 =>
             array (
                 'code' => '308GTS',
                 'created_at' => NULL,
@@ -3999,7 +3999,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            398 => 
+            398 =>
             array (
                 'code' => '308TSI',
                 'created_at' => NULL,
@@ -4009,7 +4009,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            399 => 
+            399 =>
             array (
                 'code' => '328GTB',
                 'created_at' => NULL,
@@ -4019,7 +4019,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            400 => 
+            400 =>
             array (
                 'code' => '328GTS',
                 'created_at' => NULL,
@@ -4029,7 +4029,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            401 => 
+            401 =>
             array (
                 'code' => '348GTB',
                 'created_at' => NULL,
@@ -4039,7 +4039,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            402 => 
+            402 =>
             array (
                 'code' => '348GTS',
                 'created_at' => NULL,
@@ -4049,7 +4049,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            403 => 
+            403 =>
             array (
                 'code' => '348SPI',
                 'created_at' => NULL,
@@ -4059,7 +4059,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            404 => 
+            404 =>
             array (
                 'code' => '348TB',
                 'created_at' => NULL,
@@ -4069,7 +4069,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            405 => 
+            405 =>
             array (
                 'code' => '348TS',
                 'created_at' => NULL,
@@ -4079,7 +4079,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            406 => 
+            406 =>
             array (
                 'code' => '360',
                 'created_at' => NULL,
@@ -4089,7 +4089,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            407 => 
+            407 =>
             array (
                 'code' => '456GT',
                 'created_at' => NULL,
@@ -4099,7 +4099,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            408 => 
+            408 =>
             array (
                 'code' => '456MGT',
                 'created_at' => NULL,
@@ -4109,7 +4109,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            409 => 
+            409 =>
             array (
                 'code' => '458ITALIA',
                 'created_at' => NULL,
@@ -4119,7 +4119,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            410 => 
+            410 =>
             array (
                 'code' => '512BBI',
                 'created_at' => NULL,
@@ -4129,7 +4129,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            411 => 
+            411 =>
             array (
                 'code' => '512M',
                 'created_at' => NULL,
@@ -4139,7 +4139,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            412 => 
+            412 =>
             array (
                 'code' => '512TR',
                 'created_at' => NULL,
@@ -4149,7 +4149,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            413 => 
+            413 =>
             array (
                 'code' => '550M',
                 'created_at' => NULL,
@@ -4159,7 +4159,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            414 => 
+            414 =>
             array (
                 'code' => '575M',
                 'created_at' => NULL,
@@ -4169,7 +4169,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            415 => 
+            415 =>
             array (
                 'code' => '599GTB',
                 'created_at' => NULL,
@@ -4179,7 +4179,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            416 => 
+            416 =>
             array (
                 'code' => '599GTO',
                 'created_at' => NULL,
@@ -4189,7 +4189,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            417 => 
+            417 =>
             array (
                 'code' => '612SCAGLIE',
                 'created_at' => NULL,
@@ -4199,7 +4199,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            418 => 
+            418 =>
             array (
                 'code' => 'FERCALIF',
                 'created_at' => NULL,
@@ -4209,7 +4209,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            419 => 
+            419 =>
             array (
                 'code' => 'ENZO',
                 'created_at' => NULL,
@@ -4219,7 +4219,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            420 => 
+            420 =>
             array (
                 'code' => 'F355',
                 'created_at' => NULL,
@@ -4229,7 +4229,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            421 => 
+            421 =>
             array (
                 'code' => 'F40',
                 'created_at' => NULL,
@@ -4239,7 +4239,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            422 => 
+            422 =>
             array (
                 'code' => 'F430',
                 'created_at' => NULL,
@@ -4249,7 +4249,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            423 => 
+            423 =>
             array (
                 'code' => 'F50',
                 'created_at' => NULL,
@@ -4259,7 +4259,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            424 => 
+            424 =>
             array (
                 'code' => 'FERFF',
                 'created_at' => NULL,
@@ -4269,7 +4269,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            425 => 
+            425 =>
             array (
                 'code' => 'MOND',
                 'created_at' => NULL,
@@ -4279,7 +4279,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            426 => 
+            426 =>
             array (
                 'code' => 'TEST',
                 'created_at' => NULL,
@@ -4289,7 +4289,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            427 => 
+            427 =>
             array (
                 'code' => 'UNAVAILFER',
                 'created_at' => NULL,
@@ -4299,7 +4299,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 19,
             ),
-            428 => 
+            428 =>
             array (
                 'code' => '2000',
                 'created_at' => NULL,
@@ -4309,7 +4309,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 20,
             ),
-            429 => 
+            429 =>
             array (
                 'code' => 'FIAT500',
                 'created_at' => NULL,
@@ -4319,7 +4319,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 20,
             ),
-            430 => 
+            430 =>
             array (
                 'code' => 'BERTON',
                 'created_at' => NULL,
@@ -4329,7 +4329,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 20,
             ),
-            431 => 
+            431 =>
             array (
                 'code' => 'BRAVA',
                 'created_at' => NULL,
@@ -4339,7 +4339,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 20,
             ),
-            432 => 
+            432 =>
             array (
                 'code' => 'PININ',
                 'created_at' => NULL,
@@ -4349,7 +4349,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 20,
             ),
-            433 => 
+            433 =>
             array (
                 'code' => 'STRADA',
                 'created_at' => NULL,
@@ -4359,7 +4359,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 20,
             ),
-            434 => 
+            434 =>
             array (
                 'code' => 'FIATX19',
                 'created_at' => NULL,
@@ -4369,7 +4369,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 20,
             ),
-            435 => 
+            435 =>
             array (
                 'code' => 'UNAVAILFIA',
                 'created_at' => NULL,
@@ -4379,7 +4379,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 20,
             ),
-            436 => 
+            436 =>
             array (
                 'code' => 'KARMA',
                 'created_at' => NULL,
@@ -4389,7 +4389,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 21,
             ),
-            437 => 
+            437 =>
             array (
                 'code' => 'AERO',
                 'created_at' => NULL,
@@ -4399,7 +4399,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            438 => 
+            438 =>
             array (
                 'code' => 'ASPIRE',
                 'created_at' => NULL,
@@ -4409,7 +4409,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            439 => 
+            439 =>
             array (
                 'code' => 'BRON',
                 'created_at' => NULL,
@@ -4419,7 +4419,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            440 => 
+            440 =>
             array (
                 'code' => 'B2',
                 'created_at' => NULL,
@@ -4429,7 +4429,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            441 => 
+            441 =>
             array (
                 'code' => 'FOCMAX',
                 'created_at' => NULL,
@@ -4439,7 +4439,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            442 => 
+            442 =>
             array (
                 'code' => 'FORDCLUB',
                 'created_at' => NULL,
@@ -4449,7 +4449,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            443 => 
+            443 =>
             array (
                 'code' => 'CONTOUR',
                 'created_at' => NULL,
@@ -4459,7 +4459,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            444 => 
+            444 =>
             array (
                 'code' => 'COURIER',
                 'created_at' => NULL,
@@ -4469,7 +4469,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            445 => 
+            445 =>
             array (
                 'code' => 'CROWNVIC',
                 'created_at' => NULL,
@@ -4479,7 +4479,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            446 => 
+            446 =>
             array (
                 'code' => 'E150ECON',
                 'created_at' => NULL,
@@ -4489,7 +4489,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            447 => 
+            447 =>
             array (
                 'code' => 'E250ECON',
                 'created_at' => NULL,
@@ -4499,7 +4499,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            448 => 
+            448 =>
             array (
                 'code' => 'E350ECON',
                 'created_at' => NULL,
@@ -4509,7 +4509,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            449 => 
+            449 =>
             array (
                 'code' => 'EDGE',
                 'created_at' => NULL,
@@ -4519,7 +4519,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            450 => 
+            450 =>
             array (
                 'code' => 'ESCAPE',
                 'created_at' => NULL,
@@ -4529,7 +4529,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            451 => 
+            451 =>
             array (
                 'code' => 'ESCO',
                 'created_at' => NULL,
@@ -4539,7 +4539,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            452 => 
+            452 =>
             array (
                 'code' => 'EXCURSION',
                 'created_at' => NULL,
@@ -4549,7 +4549,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            453 => 
+            453 =>
             array (
                 'code' => 'EXP',
                 'created_at' => NULL,
@@ -4559,7 +4559,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            454 => 
+            454 =>
             array (
                 'code' => 'EXPEDI',
                 'created_at' => NULL,
@@ -4569,7 +4569,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            455 => 
+            455 =>
             array (
                 'code' => 'EXPEDIEL',
                 'created_at' => NULL,
@@ -4579,7 +4579,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            456 => 
+            456 =>
             array (
                 'code' => 'EXPLOR',
                 'created_at' => NULL,
@@ -4589,7 +4589,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            457 => 
+            457 =>
             array (
                 'code' => 'SPORTTRAC',
                 'created_at' => NULL,
@@ -4599,7 +4599,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            458 => 
+            458 =>
             array (
                 'code' => 'F100',
                 'created_at' => NULL,
@@ -4609,7 +4609,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            459 => 
+            459 =>
             array (
                 'code' => 'F150PICKUP',
                 'created_at' => NULL,
@@ -4619,7 +4619,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            460 => 
+            460 =>
             array (
                 'code' => 'F250',
                 'created_at' => NULL,
@@ -4629,7 +4629,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            461 => 
+            461 =>
             array (
                 'code' => 'F350',
                 'created_at' => NULL,
@@ -4639,7 +4639,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            462 => 
+            462 =>
             array (
                 'code' => 'F450',
                 'created_at' => NULL,
@@ -4649,7 +4649,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            463 => 
+            463 =>
             array (
                 'code' => 'FAIRM',
                 'created_at' => NULL,
@@ -4659,7 +4659,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            464 => 
+            464 =>
             array (
                 'code' => 'FESTIV',
                 'created_at' => NULL,
@@ -4669,7 +4669,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            465 => 
+            465 =>
             array (
                 'code' => 'FIESTA',
                 'created_at' => NULL,
@@ -4679,7 +4679,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            466 => 
+            466 =>
             array (
                 'code' => 'FIVEHUNDRE',
                 'created_at' => NULL,
@@ -4689,7 +4689,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            467 => 
+            467 =>
             array (
                 'code' => 'FLEX',
                 'created_at' => NULL,
@@ -4699,7 +4699,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            468 => 
+            468 =>
             array (
                 'code' => 'FOCUS',
                 'created_at' => NULL,
@@ -4709,7 +4709,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            469 => 
+            469 =>
             array (
                 'code' => 'FREESTAR',
                 'created_at' => NULL,
@@ -4719,7 +4719,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            470 => 
+            470 =>
             array (
                 'code' => 'FREESTYLE',
                 'created_at' => NULL,
@@ -4729,7 +4729,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            471 => 
+            471 =>
             array (
                 'code' => 'FUSION',
                 'created_at' => NULL,
@@ -4739,7 +4739,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            472 => 
+            472 =>
             array (
                 'code' => 'GRANADA',
                 'created_at' => NULL,
@@ -4749,7 +4749,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            473 => 
+            473 =>
             array (
                 'code' => 'GT',
                 'created_at' => NULL,
@@ -4759,7 +4759,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            474 => 
+            474 =>
             array (
                 'code' => 'LTD',
                 'created_at' => NULL,
@@ -4769,7 +4769,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            475 => 
+            475 =>
             array (
                 'code' => 'MUST',
                 'created_at' => NULL,
@@ -4779,7 +4779,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            476 => 
+            476 =>
             array (
                 'code' => 'PROBE',
                 'created_at' => NULL,
@@ -4789,7 +4789,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            477 => 
+            477 =>
             array (
                 'code' => 'RANGER',
                 'created_at' => NULL,
@@ -4799,7 +4799,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            478 => 
+            478 =>
             array (
                 'code' => 'TAURUS',
                 'created_at' => NULL,
@@ -4809,7 +4809,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            479 => 
+            479 =>
             array (
                 'code' => 'TAURUSX',
                 'created_at' => NULL,
@@ -4819,7 +4819,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            480 => 
+            480 =>
             array (
                 'code' => 'TEMPO',
                 'created_at' => NULL,
@@ -4829,7 +4829,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            481 => 
+            481 =>
             array (
                 'code' => 'TBIRD',
                 'created_at' => NULL,
@@ -4839,7 +4839,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            482 => 
+            482 =>
             array (
                 'code' => 'TRANSCONN',
                 'created_at' => NULL,
@@ -4849,7 +4849,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            483 => 
+            483 =>
             array (
                 'code' => 'WINDST',
                 'created_at' => NULL,
@@ -4859,7 +4859,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            484 => 
+            484 =>
             array (
                 'code' => 'FORDZX2',
                 'created_at' => NULL,
@@ -4869,7 +4869,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            485 => 
+            485 =>
             array (
                 'code' => 'FOOTH',
                 'created_at' => NULL,
@@ -4879,7 +4879,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 22,
             ),
-            486 => 
+            486 =>
             array (
                 'code' => 'FRESPRINT',
                 'created_at' => NULL,
@@ -4889,7 +4889,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 23,
             ),
-            487 => 
+            487 =>
             array (
                 'code' => 'GEOMETRO',
                 'created_at' => NULL,
@@ -4899,7 +4899,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 24,
             ),
-            488 => 
+            488 =>
             array (
                 'code' => 'GEOPRIZM',
                 'created_at' => NULL,
@@ -4909,7 +4909,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 24,
             ),
-            489 => 
+            489 =>
             array (
                 'code' => 'SPECT',
                 'created_at' => NULL,
@@ -4919,7 +4919,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 24,
             ),
-            490 => 
+            490 =>
             array (
                 'code' => 'STORM',
                 'created_at' => NULL,
@@ -4929,7 +4929,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 24,
             ),
-            491 => 
+            491 =>
             array (
                 'code' => 'GEOTRACK',
                 'created_at' => NULL,
@@ -4939,7 +4939,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 24,
             ),
-            492 => 
+            492 =>
             array (
                 'code' => 'GEOOTH',
                 'created_at' => NULL,
@@ -4949,7 +4949,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 24,
             ),
-            493 => 
+            493 =>
             array (
                 'code' => 'ACADIA',
                 'created_at' => NULL,
@@ -4959,7 +4959,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            494 => 
+            494 =>
             array (
                 'code' => 'CABALLERO',
                 'created_at' => NULL,
@@ -4969,7 +4969,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            495 => 
+            495 =>
             array (
                 'code' => 'CANYON',
                 'created_at' => NULL,
@@ -4979,7 +4979,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            496 => 
+            496 =>
             array (
                 'code' => 'ENVOY',
                 'created_at' => NULL,
@@ -4989,7 +4989,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            497 => 
+            497 =>
             array (
                 'code' => 'ENVOYXL',
                 'created_at' => NULL,
@@ -4999,7 +4999,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            498 => 
+            498 =>
             array (
                 'code' => 'ENVOYXUV',
                 'created_at' => NULL,
@@ -5009,7 +5009,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            499 => 
+            499 =>
             array (
                 'code' => 'JIM',
                 'created_at' => NULL,
@@ -5021,7 +5021,7 @@ class VehicleModelsTableSeeder extends Seeder
             ),
         ));
         \DB::table('vehicle_models')->insert(array (
-            0 => 
+            0 =>
             array (
                 'code' => 'RALLYWAG',
                 'created_at' => NULL,
@@ -5031,7 +5031,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            1 => 
+            1 =>
             array (
                 'code' => 'GMCS15',
                 'created_at' => NULL,
@@ -5041,7 +5041,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            2 => 
+            2 =>
             array (
                 'code' => 'S15',
                 'created_at' => NULL,
@@ -5051,7 +5051,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            3 => 
+            3 =>
             array (
                 'code' => 'SAFARIGMC',
                 'created_at' => NULL,
@@ -5061,7 +5061,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            4 => 
+            4 =>
             array (
                 'code' => 'GMCSAVANA',
                 'created_at' => NULL,
@@ -5071,7 +5071,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            5 => 
+            5 =>
             array (
                 'code' => '15SIPU4WD',
                 'created_at' => NULL,
@@ -5081,7 +5081,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            6 => 
+            6 =>
             array (
                 'code' => 'GMCC25PU',
                 'created_at' => NULL,
@@ -5091,7 +5091,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            7 => 
+            7 =>
             array (
                 'code' => 'GMC3500PU',
                 'created_at' => NULL,
@@ -5101,7 +5101,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            8 => 
+            8 =>
             array (
                 'code' => 'SONOMA',
                 'created_at' => NULL,
@@ -5111,7 +5111,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            9 => 
+            9 =>
             array (
                 'code' => 'SUB',
                 'created_at' => NULL,
@@ -5121,7 +5121,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            10 => 
+            10 =>
             array (
                 'code' => 'GMCSYCLON',
                 'created_at' => NULL,
@@ -5131,7 +5131,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            11 => 
+            11 =>
             array (
                 'code' => 'TERRAIN',
                 'created_at' => NULL,
@@ -5141,7 +5141,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            12 => 
+            12 =>
             array (
                 'code' => 'TOPC4500',
                 'created_at' => NULL,
@@ -5151,7 +5151,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            13 => 
+            13 =>
             array (
                 'code' => 'TYPH',
                 'created_at' => NULL,
@@ -5161,7 +5161,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            14 => 
+            14 =>
             array (
                 'code' => 'GMCVANDUR',
                 'created_at' => NULL,
@@ -5171,7 +5171,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            15 => 
+            15 =>
             array (
                 'code' => 'YUKON',
                 'created_at' => NULL,
@@ -5181,7 +5181,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            16 => 
+            16 =>
             array (
                 'code' => 'YUKONXL',
                 'created_at' => NULL,
@@ -5191,7 +5191,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            17 => 
+            17 =>
             array (
                 'code' => 'GMCOTH',
                 'created_at' => NULL,
@@ -5201,7 +5201,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 25,
             ),
-            18 => 
+            18 =>
             array (
                 'code' => 'ACCORD',
                 'created_at' => NULL,
@@ -5211,7 +5211,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            19 => 
+            19 =>
             array (
                 'code' => 'CIVIC',
                 'created_at' => NULL,
@@ -5221,7 +5221,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            20 => 
+            20 =>
             array (
                 'code' => 'CRV',
                 'created_at' => NULL,
@@ -5231,7 +5231,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            21 => 
+            21 =>
             array (
                 'code' => 'CRZ',
                 'created_at' => NULL,
@@ -5241,7 +5241,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            22 => 
+            22 =>
             array (
                 'code' => 'CRX',
                 'created_at' => NULL,
@@ -5251,7 +5251,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            23 => 
+            23 =>
             array (
                 'code' => 'CROSSTOUR_MODELS',
                 'created_at' => NULL,
@@ -5261,7 +5261,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            24 => 
+            24 =>
             array (
                 'code' => 'CROSSTOUR',
                 'created_at' => NULL,
@@ -5271,7 +5271,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            25 => 
+            25 =>
             array (
                 'code' => 'HONCROSS',
                 'created_at' => NULL,
@@ -5281,7 +5281,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            26 => 
+            26 =>
             array (
                 'code' => 'HONDELSOL',
                 'created_at' => NULL,
@@ -5291,7 +5291,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            27 => 
+            27 =>
             array (
                 'code' => 'ELEMENT',
                 'created_at' => NULL,
@@ -5301,7 +5301,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            28 => 
+            28 =>
             array (
                 'code' => 'FIT',
                 'created_at' => NULL,
@@ -5311,7 +5311,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            29 => 
+            29 =>
             array (
                 'code' => 'INSIGHT',
                 'created_at' => NULL,
@@ -5321,7 +5321,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            30 => 
+            30 =>
             array (
                 'code' => 'ODYSSEY',
                 'created_at' => NULL,
@@ -5331,7 +5331,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            31 => 
+            31 =>
             array (
                 'code' => 'PASSPO',
                 'created_at' => NULL,
@@ -5341,7 +5341,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            32 => 
+            32 =>
             array (
                 'code' => 'PILOT',
                 'created_at' => NULL,
@@ -5351,7 +5351,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            33 => 
+            33 =>
             array (
                 'code' => 'PRE',
                 'created_at' => NULL,
@@ -5361,7 +5361,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            34 => 
+            34 =>
             array (
                 'code' => 'RIDGELINE',
                 'created_at' => NULL,
@@ -5371,7 +5371,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            35 => 
+            35 =>
             array (
                 'code' => 'S2000',
                 'created_at' => NULL,
@@ -5381,7 +5381,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            36 => 
+            36 =>
             array (
                 'code' => 'HONOTH',
                 'created_at' => NULL,
@@ -5391,7 +5391,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 26,
             ),
-            37 => 
+            37 =>
             array (
                 'code' => 'HUMMER',
                 'created_at' => NULL,
@@ -5401,7 +5401,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 27,
             ),
-            38 => 
+            38 =>
             array (
                 'code' => 'H2',
                 'created_at' => NULL,
@@ -5411,7 +5411,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 27,
             ),
-            39 => 
+            39 =>
             array (
                 'code' => 'H3',
                 'created_at' => NULL,
@@ -5421,7 +5421,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 27,
             ),
-            40 => 
+            40 =>
             array (
                 'code' => 'H3T',
                 'created_at' => NULL,
@@ -5431,7 +5431,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 27,
             ),
-            41 => 
+            41 =>
             array (
                 'code' => 'AMGOTH',
                 'created_at' => NULL,
@@ -5441,7 +5441,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 27,
             ),
-            42 => 
+            42 =>
             array (
                 'code' => 'ACCENT',
                 'created_at' => NULL,
@@ -5451,7 +5451,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            43 => 
+            43 =>
             array (
                 'code' => 'AZERA',
                 'created_at' => NULL,
@@ -5461,7 +5461,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            44 => 
+            44 =>
             array (
                 'code' => 'ELANTR',
                 'created_at' => NULL,
@@ -5471,7 +5471,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            45 => 
+            45 =>
             array (
                 'code' => 'HYUELANCPE',
                 'created_at' => NULL,
@@ -5481,7 +5481,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            46 => 
+            46 =>
             array (
                 'code' => 'ELANTOUR',
                 'created_at' => NULL,
@@ -5491,7 +5491,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            47 => 
+            47 =>
             array (
                 'code' => 'ENTOURAGE',
                 'created_at' => NULL,
@@ -5501,7 +5501,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            48 => 
+            48 =>
             array (
                 'code' => 'EQUUS',
                 'created_at' => NULL,
@@ -5511,7 +5511,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            49 => 
+            49 =>
             array (
                 'code' => 'HYUEXCEL',
                 'created_at' => NULL,
@@ -5521,7 +5521,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            50 => 
+            50 =>
             array (
                 'code' => 'GENESIS',
                 'created_at' => NULL,
@@ -5531,7 +5531,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            51 => 
+            51 =>
             array (
                 'code' => 'GENESISCPE',
                 'created_at' => NULL,
@@ -5541,7 +5541,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            52 => 
+            52 =>
             array (
                 'code' => 'SANTAFE',
                 'created_at' => NULL,
@@ -5551,7 +5551,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            53 => 
+            53 =>
             array (
                 'code' => 'SCOUPE',
                 'created_at' => NULL,
@@ -5561,7 +5561,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            54 => 
+            54 =>
             array (
                 'code' => 'SONATA',
                 'created_at' => NULL,
@@ -5571,7 +5571,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            55 => 
+            55 =>
             array (
                 'code' => 'TIBURO',
                 'created_at' => NULL,
@@ -5581,7 +5581,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            56 => 
+            56 =>
             array (
                 'code' => 'TUCSON',
                 'created_at' => NULL,
@@ -5591,7 +5591,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            57 => 
+            57 =>
             array (
                 'code' => 'VELOSTER',
                 'created_at' => NULL,
@@ -5601,7 +5601,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            58 => 
+            58 =>
             array (
                 'code' => 'VERACRUZ',
                 'created_at' => NULL,
@@ -5611,7 +5611,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            59 => 
+            59 =>
             array (
                 'code' => 'XG300',
                 'created_at' => NULL,
@@ -5621,7 +5621,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            60 => 
+            60 =>
             array (
                 'code' => 'XG350',
                 'created_at' => NULL,
@@ -5631,7 +5631,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            61 => 
+            61 =>
             array (
                 'code' => 'HYUOTH',
                 'created_at' => NULL,
@@ -5641,7 +5641,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 28,
             ),
-            62 => 
+            62 =>
             array (
                 'code' => 'EX_MODELS',
                 'created_at' => NULL,
@@ -5651,7 +5651,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            63 => 
+            63 =>
             array (
                 'code' => 'EX35',
                 'created_at' => NULL,
@@ -5661,7 +5661,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            64 => 
+            64 =>
             array (
                 'code' => 'EX37',
                 'created_at' => NULL,
@@ -5671,7 +5671,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            65 => 
+            65 =>
             array (
                 'code' => 'FX_MODELS',
                 'created_at' => NULL,
@@ -5681,7 +5681,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            66 => 
+            66 =>
             array (
                 'code' => 'FX35',
                 'created_at' => NULL,
@@ -5691,7 +5691,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            67 => 
+            67 =>
             array (
                 'code' => 'FX37',
                 'created_at' => NULL,
@@ -5701,7 +5701,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            68 => 
+            68 =>
             array (
                 'code' => 'FX45',
                 'created_at' => NULL,
@@ -5711,7 +5711,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            69 => 
+            69 =>
             array (
                 'code' => 'FX50',
                 'created_at' => NULL,
@@ -5721,7 +5721,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            70 => 
+            70 =>
             array (
                 'code' => 'G_MODELS',
                 'created_at' => NULL,
@@ -5731,7 +5731,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            71 => 
+            71 =>
             array (
                 'code' => 'G20',
                 'created_at' => NULL,
@@ -5741,7 +5741,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            72 => 
+            72 =>
             array (
                 'code' => 'G25',
                 'created_at' => NULL,
@@ -5751,7 +5751,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            73 => 
+            73 =>
             array (
                 'code' => 'G35',
                 'created_at' => NULL,
@@ -5761,7 +5761,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            74 => 
+            74 =>
             array (
                 'code' => 'G37',
                 'created_at' => NULL,
@@ -5771,7 +5771,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            75 => 
+            75 =>
             array (
                 'code' => 'I_MODELS',
                 'created_at' => NULL,
@@ -5781,7 +5781,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            76 => 
+            76 =>
             array (
                 'code' => 'I30',
                 'created_at' => NULL,
@@ -5791,7 +5791,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            77 => 
+            77 =>
             array (
                 'code' => 'I35',
                 'created_at' => NULL,
@@ -5801,7 +5801,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            78 => 
+            78 =>
             array (
                 'code' => 'J_MODELS',
                 'created_at' => NULL,
@@ -5811,7 +5811,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            79 => 
+            79 =>
             array (
                 'code' => 'J30',
                 'created_at' => NULL,
@@ -5821,7 +5821,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            80 => 
+            80 =>
             array (
                 'code' => 'JX_MODELS',
                 'created_at' => NULL,
@@ -5831,7 +5831,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            81 => 
+            81 =>
             array (
                 'code' => 'JX35',
                 'created_at' => NULL,
@@ -5841,7 +5841,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            82 => 
+            82 =>
             array (
                 'code' => 'M_MODELS',
                 'created_at' => NULL,
@@ -5851,7 +5851,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            83 => 
+            83 =>
             array (
                 'code' => 'M30',
                 'created_at' => NULL,
@@ -5861,7 +5861,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            84 => 
+            84 =>
             array (
                 'code' => 'M35',
                 'created_at' => NULL,
@@ -5871,7 +5871,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            85 => 
+            85 =>
             array (
                 'code' => 'M35HYBRID',
                 'created_at' => NULL,
@@ -5881,7 +5881,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            86 => 
+            86 =>
             array (
                 'code' => 'M37',
                 'created_at' => NULL,
@@ -5891,7 +5891,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            87 => 
+            87 =>
             array (
                 'code' => 'M45',
                 'created_at' => NULL,
@@ -5901,7 +5901,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            88 => 
+            88 =>
             array (
                 'code' => 'M56',
                 'created_at' => NULL,
@@ -5911,7 +5911,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            89 => 
+            89 =>
             array (
                 'code' => 'Q_MODELS',
                 'created_at' => NULL,
@@ -5921,7 +5921,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            90 => 
+            90 =>
             array (
                 'code' => 'Q45',
                 'created_at' => NULL,
@@ -5931,7 +5931,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            91 => 
+            91 =>
             array (
                 'code' => 'QX_MODELS',
                 'created_at' => NULL,
@@ -5941,7 +5941,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            92 => 
+            92 =>
             array (
                 'code' => 'QX4',
                 'created_at' => NULL,
@@ -5951,7 +5951,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            93 => 
+            93 =>
             array (
                 'code' => 'QX56',
                 'created_at' => NULL,
@@ -5961,7 +5961,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            94 => 
+            94 =>
             array (
                 'code' => 'INFOTH',
                 'created_at' => NULL,
@@ -5971,7 +5971,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 29,
             ),
-            95 => 
+            95 =>
             array (
                 'code' => 'AMIGO',
                 'created_at' => NULL,
@@ -5981,7 +5981,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            96 => 
+            96 =>
             array (
                 'code' => 'ASCENDER',
                 'created_at' => NULL,
@@ -5991,7 +5991,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            97 => 
+            97 =>
             array (
                 'code' => 'AXIOM',
                 'created_at' => NULL,
@@ -6001,7 +6001,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            98 => 
+            98 =>
             array (
                 'code' => 'HOMBRE',
                 'created_at' => NULL,
@@ -6011,7 +6011,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            99 => 
+            99 =>
             array (
                 'code' => 'I280',
                 'created_at' => NULL,
@@ -6021,7 +6021,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            100 => 
+            100 =>
             array (
                 'code' => 'I290',
                 'created_at' => NULL,
@@ -6031,7 +6031,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            101 => 
+            101 =>
             array (
                 'code' => 'I350',
                 'created_at' => NULL,
@@ -6041,7 +6041,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            102 => 
+            102 =>
             array (
                 'code' => 'I370',
                 'created_at' => NULL,
@@ -6051,7 +6051,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            103 => 
+            103 =>
             array (
                 'code' => 'ISUMARK',
                 'created_at' => NULL,
@@ -6061,7 +6061,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            104 => 
+            104 =>
             array (
                 'code' => 'ISUIMP',
                 'created_at' => NULL,
@@ -6071,7 +6071,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            105 => 
+            105 =>
             array (
                 'code' => 'OASIS',
                 'created_at' => NULL,
@@ -6081,7 +6081,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            106 => 
+            106 =>
             array (
                 'code' => 'ISUPU',
                 'created_at' => NULL,
@@ -6091,7 +6091,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            107 => 
+            107 =>
             array (
                 'code' => 'RODEO',
                 'created_at' => NULL,
@@ -6101,7 +6101,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            108 => 
+            108 =>
             array (
                 'code' => 'STYLUS',
                 'created_at' => NULL,
@@ -6111,7 +6111,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            109 => 
+            109 =>
             array (
                 'code' => 'TROOP',
                 'created_at' => NULL,
@@ -6121,7 +6121,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            110 => 
+            110 =>
             array (
                 'code' => 'TRP2',
                 'created_at' => NULL,
@@ -6131,7 +6131,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            111 => 
+            111 =>
             array (
                 'code' => 'VEHICROSS',
                 'created_at' => NULL,
@@ -6141,7 +6141,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            112 => 
+            112 =>
             array (
                 'code' => 'ISUOTH',
                 'created_at' => NULL,
@@ -6151,7 +6151,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 30,
             ),
-            113 => 
+            113 =>
             array (
                 'code' => 'STYPE',
                 'created_at' => NULL,
@@ -6161,7 +6161,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            114 => 
+            114 =>
             array (
                 'code' => 'XTYPE',
                 'created_at' => NULL,
@@ -6171,7 +6171,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            115 => 
+            115 =>
             array (
                 'code' => 'XF',
                 'created_at' => NULL,
@@ -6181,7 +6181,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            116 => 
+            116 =>
             array (
                 'code' => 'XJ_SERIES',
                 'created_at' => NULL,
@@ -6191,7 +6191,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            117 => 
+            117 =>
             array (
                 'code' => 'JAGXJ12',
                 'created_at' => NULL,
@@ -6201,7 +6201,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            118 => 
+            118 =>
             array (
                 'code' => 'JAGXJ6',
                 'created_at' => NULL,
@@ -6211,7 +6211,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            119 => 
+            119 =>
             array (
                 'code' => 'JAGXJR',
                 'created_at' => NULL,
@@ -6221,7 +6221,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            120 => 
+            120 =>
             array (
                 'code' => 'JAGXJRS',
                 'created_at' => NULL,
@@ -6231,7 +6231,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            121 => 
+            121 =>
             array (
                 'code' => 'JAGXJS',
                 'created_at' => NULL,
@@ -6241,7 +6241,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            122 => 
+            122 =>
             array (
                 'code' => 'VANDEN',
                 'created_at' => NULL,
@@ -6251,7 +6251,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            123 => 
+            123 =>
             array (
                 'code' => 'XJ',
                 'created_at' => NULL,
@@ -6261,7 +6261,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            124 => 
+            124 =>
             array (
                 'code' => 'XJ8',
                 'created_at' => NULL,
@@ -6271,7 +6271,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            125 => 
+            125 =>
             array (
                 'code' => 'XJ8L',
                 'created_at' => NULL,
@@ -6281,7 +6281,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            126 => 
+            126 =>
             array (
                 'code' => 'XJSPORT',
                 'created_at' => NULL,
@@ -6291,7 +6291,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            127 => 
+            127 =>
             array (
                 'code' => 'XK_SERIES',
                 'created_at' => NULL,
@@ -6301,7 +6301,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            128 => 
+            128 =>
             array (
                 'code' => 'JAGXK8',
                 'created_at' => NULL,
@@ -6311,7 +6311,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            129 => 
+            129 =>
             array (
                 'code' => 'XK',
                 'created_at' => NULL,
@@ -6321,7 +6321,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            130 => 
+            130 =>
             array (
                 'code' => 'XKR',
                 'created_at' => NULL,
@@ -6331,7 +6331,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            131 => 
+            131 =>
             array (
                 'code' => 'JAGOTH',
                 'created_at' => NULL,
@@ -6341,7 +6341,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 31,
             ),
-            132 => 
+            132 =>
             array (
                 'code' => 'CHER',
                 'created_at' => NULL,
@@ -6351,7 +6351,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            133 => 
+            133 =>
             array (
                 'code' => 'JEEPCJ',
                 'created_at' => NULL,
@@ -6361,7 +6361,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            134 => 
+            134 =>
             array (
                 'code' => 'COMANC',
                 'created_at' => NULL,
@@ -6371,7 +6371,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            135 => 
+            135 =>
             array (
                 'code' => 'COMMANDER',
                 'created_at' => NULL,
@@ -6381,7 +6381,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            136 => 
+            136 =>
             array (
                 'code' => 'COMPASS',
                 'created_at' => NULL,
@@ -6391,7 +6391,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            137 => 
+            137 =>
             array (
                 'code' => 'JEEPGRAND',
                 'created_at' => NULL,
@@ -6401,7 +6401,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            138 => 
+            138 =>
             array (
                 'code' => 'GRWAG',
                 'created_at' => NULL,
@@ -6411,7 +6411,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            139 => 
+            139 =>
             array (
                 'code' => 'LIBERTY',
                 'created_at' => NULL,
@@ -6421,7 +6421,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            140 => 
+            140 =>
             array (
                 'code' => 'PATRIOT',
                 'created_at' => NULL,
@@ -6431,7 +6431,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            141 => 
+            141 =>
             array (
                 'code' => 'JEEPPU',
                 'created_at' => NULL,
@@ -6441,7 +6441,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            142 => 
+            142 =>
             array (
                 'code' => 'SCRAMBLE',
                 'created_at' => NULL,
@@ -6451,7 +6451,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            143 => 
+            143 =>
             array (
                 'code' => 'WAGONE',
                 'created_at' => NULL,
@@ -6461,7 +6461,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            144 => 
+            144 =>
             array (
                 'code' => 'WRANGLER',
                 'created_at' => NULL,
@@ -6471,7 +6471,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            145 => 
+            145 =>
             array (
                 'code' => 'JEOTH',
                 'created_at' => NULL,
@@ -6481,7 +6481,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 32,
             ),
-            146 => 
+            146 =>
             array (
                 'code' => 'AMANTI',
                 'created_at' => NULL,
@@ -6491,7 +6491,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            147 => 
+            147 =>
             array (
                 'code' => 'BORREGO',
                 'created_at' => NULL,
@@ -6501,7 +6501,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            148 => 
+            148 =>
             array (
                 'code' => 'FORTE',
                 'created_at' => NULL,
@@ -6511,7 +6511,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            149 => 
+            149 =>
             array (
                 'code' => 'FORTEKOUP',
                 'created_at' => NULL,
@@ -6521,7 +6521,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            150 => 
+            150 =>
             array (
                 'code' => 'OPTIMA',
                 'created_at' => NULL,
@@ -6531,7 +6531,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            151 => 
+            151 =>
             array (
                 'code' => 'RIO',
                 'created_at' => NULL,
@@ -6541,7 +6541,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            152 => 
+            152 =>
             array (
                 'code' => 'RIO5',
                 'created_at' => NULL,
@@ -6551,7 +6551,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            153 => 
+            153 =>
             array (
                 'code' => 'RONDO',
                 'created_at' => NULL,
@@ -6561,7 +6561,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            154 => 
+            154 =>
             array (
                 'code' => 'SEDONA',
                 'created_at' => NULL,
@@ -6571,7 +6571,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            155 => 
+            155 =>
             array (
                 'code' => 'SEPHIA',
                 'created_at' => NULL,
@@ -6581,7 +6581,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            156 => 
+            156 =>
             array (
                 'code' => 'SORENTO',
                 'created_at' => NULL,
@@ -6591,7 +6591,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            157 => 
+            157 =>
             array (
                 'code' => 'SOUL',
                 'created_at' => NULL,
@@ -6601,7 +6601,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            158 => 
+            158 =>
             array (
                 'code' => 'SPECTRA',
                 'created_at' => NULL,
@@ -6611,7 +6611,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            159 => 
+            159 =>
             array (
                 'code' => 'SPECTRA5',
                 'created_at' => NULL,
@@ -6621,7 +6621,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            160 => 
+            160 =>
             array (
                 'code' => 'SPORTA',
                 'created_at' => NULL,
@@ -6631,7 +6631,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            161 => 
+            161 =>
             array (
                 'code' => 'KIAOTH',
                 'created_at' => NULL,
@@ -6641,7 +6641,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 33,
             ),
-            162 => 
+            162 =>
             array (
                 'code' => 'AVENT',
                 'created_at' => NULL,
@@ -6651,7 +6651,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 34,
             ),
-            163 => 
+            163 =>
             array (
                 'code' => 'COUNT',
                 'created_at' => NULL,
@@ -6661,7 +6661,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 34,
             ),
-            164 => 
+            164 =>
             array (
                 'code' => 'DIABLO',
                 'created_at' => NULL,
@@ -6671,7 +6671,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 34,
             ),
-            165 => 
+            165 =>
             array (
                 'code' => 'GALLARDO',
                 'created_at' => NULL,
@@ -6681,7 +6681,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 34,
             ),
-            166 => 
+            166 =>
             array (
                 'code' => 'JALPA',
                 'created_at' => NULL,
@@ -6691,7 +6691,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 34,
             ),
-            167 => 
+            167 =>
             array (
                 'code' => 'LM002',
                 'created_at' => NULL,
@@ -6701,7 +6701,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 34,
             ),
-            168 => 
+            168 =>
             array (
                 'code' => 'MURCIELAGO',
                 'created_at' => NULL,
@@ -6711,7 +6711,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 34,
             ),
-            169 => 
+            169 =>
             array (
                 'code' => 'UNAVAILLAM',
                 'created_at' => NULL,
@@ -6721,7 +6721,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 34,
             ),
-            170 => 
+            170 =>
             array (
                 'code' => 'BETA',
                 'created_at' => NULL,
@@ -6731,7 +6731,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 35,
             ),
-            171 => 
+            171 =>
             array (
                 'code' => 'ZAGATO',
                 'created_at' => NULL,
@@ -6741,7 +6741,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 35,
             ),
-            172 => 
+            172 =>
             array (
                 'code' => 'UNAVAILLAN',
                 'created_at' => NULL,
@@ -6751,7 +6751,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 35,
             ),
-            173 => 
+            173 =>
             array (
                 'code' => 'DEFEND',
                 'created_at' => NULL,
@@ -6761,7 +6761,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 36,
             ),
-            174 => 
+            174 =>
             array (
                 'code' => 'DISCOV',
                 'created_at' => NULL,
@@ -6771,7 +6771,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 36,
             ),
-            175 => 
+            175 =>
             array (
                 'code' => 'FRELNDR',
                 'created_at' => NULL,
@@ -6781,7 +6781,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 36,
             ),
-            176 => 
+            176 =>
             array (
                 'code' => 'LR2',
                 'created_at' => NULL,
@@ -6791,7 +6791,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 36,
             ),
-            177 => 
+            177 =>
             array (
                 'code' => 'LR3',
                 'created_at' => NULL,
@@ -6801,7 +6801,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 36,
             ),
-            178 => 
+            178 =>
             array (
                 'code' => 'LR4',
                 'created_at' => NULL,
@@ -6811,7 +6811,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 36,
             ),
-            179 => 
+            179 =>
             array (
                 'code' => 'RANGE',
                 'created_at' => NULL,
@@ -6821,7 +6821,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 36,
             ),
-            180 => 
+            180 =>
             array (
                 'code' => 'EVOQUE',
                 'created_at' => NULL,
@@ -6831,7 +6831,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 36,
             ),
-            181 => 
+            181 =>
             array (
                 'code' => 'RANGESPORT',
                 'created_at' => NULL,
@@ -6841,7 +6841,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 36,
             ),
-            182 => 
+            182 =>
             array (
                 'code' => 'ROVOTH',
                 'created_at' => NULL,
@@ -6851,7 +6851,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 36,
             ),
-            183 => 
+            183 =>
             array (
                 'code' => 'CT_MODELS',
                 'created_at' => NULL,
@@ -6861,7 +6861,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            184 => 
+            184 =>
             array (
                 'code' => 'CT200H',
                 'created_at' => NULL,
@@ -6871,7 +6871,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            185 => 
+            185 =>
             array (
                 'code' => 'ES_MODELS',
                 'created_at' => NULL,
@@ -6881,7 +6881,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            186 => 
+            186 =>
             array (
                 'code' => 'ES250',
                 'created_at' => NULL,
@@ -6891,7 +6891,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            187 => 
+            187 =>
             array (
                 'code' => 'ES300',
                 'created_at' => NULL,
@@ -6901,7 +6901,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            188 => 
+            188 =>
             array (
                 'code' => 'ES300H',
                 'created_at' => NULL,
@@ -6911,7 +6911,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            189 => 
+            189 =>
             array (
                 'code' => 'ES330',
                 'created_at' => NULL,
@@ -6921,7 +6921,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            190 => 
+            190 =>
             array (
                 'code' => 'ES350',
                 'created_at' => NULL,
@@ -6931,7 +6931,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            191 => 
+            191 =>
             array (
                 'code' => 'GS_MODELS',
                 'created_at' => NULL,
@@ -6941,7 +6941,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            192 => 
+            192 =>
             array (
                 'code' => 'GS300',
                 'created_at' => NULL,
@@ -6951,7 +6951,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            193 => 
+            193 =>
             array (
                 'code' => 'GS350',
                 'created_at' => NULL,
@@ -6961,7 +6961,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            194 => 
+            194 =>
             array (
                 'code' => 'GS400',
                 'created_at' => NULL,
@@ -6971,7 +6971,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            195 => 
+            195 =>
             array (
                 'code' => 'GS430',
                 'created_at' => NULL,
@@ -6981,7 +6981,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            196 => 
+            196 =>
             array (
                 'code' => 'GS450H',
                 'created_at' => NULL,
@@ -6991,7 +6991,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            197 => 
+            197 =>
             array (
                 'code' => 'GS460',
                 'created_at' => NULL,
@@ -7001,7 +7001,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            198 => 
+            198 =>
             array (
                 'code' => 'GX_MODELS',
                 'created_at' => NULL,
@@ -7011,7 +7011,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            199 => 
+            199 =>
             array (
                 'code' => 'GX460',
                 'created_at' => NULL,
@@ -7021,7 +7021,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            200 => 
+            200 =>
             array (
                 'code' => 'GX470',
                 'created_at' => NULL,
@@ -7031,7 +7031,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            201 => 
+            201 =>
             array (
                 'code' => 'HS_MODELS',
                 'created_at' => NULL,
@@ -7041,7 +7041,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            202 => 
+            202 =>
             array (
                 'code' => 'HS250H',
                 'created_at' => NULL,
@@ -7051,7 +7051,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            203 => 
+            203 =>
             array (
                 'code' => 'IS_MODELS',
                 'created_at' => NULL,
@@ -7061,7 +7061,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            204 => 
+            204 =>
             array (
                 'code' => 'IS250',
                 'created_at' => NULL,
@@ -7071,7 +7071,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            205 => 
+            205 =>
             array (
                 'code' => 'IS250C',
                 'created_at' => NULL,
@@ -7081,7 +7081,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            206 => 
+            206 =>
             array (
                 'code' => 'IS300',
                 'created_at' => NULL,
@@ -7091,7 +7091,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            207 => 
+            207 =>
             array (
                 'code' => 'IS350',
                 'created_at' => NULL,
@@ -7101,7 +7101,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            208 => 
+            208 =>
             array (
                 'code' => 'IS350C',
                 'created_at' => NULL,
@@ -7111,7 +7111,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            209 => 
+            209 =>
             array (
                 'code' => 'ISF',
                 'created_at' => NULL,
@@ -7121,7 +7121,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            210 => 
+            210 =>
             array (
                 'code' => 'LEXLFA',
                 'created_at' => NULL,
@@ -7131,7 +7131,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            211 => 
+            211 =>
             array (
                 'code' => 'LS_MODELS',
                 'created_at' => NULL,
@@ -7141,7 +7141,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            212 => 
+            212 =>
             array (
                 'code' => 'LS400',
                 'created_at' => NULL,
@@ -7151,7 +7151,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            213 => 
+            213 =>
             array (
                 'code' => 'LS430',
                 'created_at' => NULL,
@@ -7161,7 +7161,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            214 => 
+            214 =>
             array (
                 'code' => 'LS460',
                 'created_at' => NULL,
@@ -7171,7 +7171,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            215 => 
+            215 =>
             array (
                 'code' => 'LS600H',
                 'created_at' => NULL,
@@ -7181,7 +7181,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            216 => 
+            216 =>
             array (
                 'code' => 'LX_MODELS',
                 'created_at' => NULL,
@@ -7191,7 +7191,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            217 => 
+            217 =>
             array (
                 'code' => 'LX450',
                 'created_at' => NULL,
@@ -7201,7 +7201,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            218 => 
+            218 =>
             array (
                 'code' => 'LX470',
                 'created_at' => NULL,
@@ -7211,7 +7211,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            219 => 
+            219 =>
             array (
                 'code' => 'LX570',
                 'created_at' => NULL,
@@ -7221,7 +7221,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            220 => 
+            220 =>
             array (
                 'code' => 'RX_MODELS',
                 'created_at' => NULL,
@@ -7231,7 +7231,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            221 => 
+            221 =>
             array (
                 'code' => 'RX300',
                 'created_at' => NULL,
@@ -7241,7 +7241,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            222 => 
+            222 =>
             array (
                 'code' => 'RX330',
                 'created_at' => NULL,
@@ -7251,7 +7251,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            223 => 
+            223 =>
             array (
                 'code' => 'RX350',
                 'created_at' => NULL,
@@ -7261,7 +7261,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            224 => 
+            224 =>
             array (
                 'code' => 'RX400H',
                 'created_at' => NULL,
@@ -7271,7 +7271,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            225 => 
+            225 =>
             array (
                 'code' => 'RX450H',
                 'created_at' => NULL,
@@ -7281,7 +7281,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            226 => 
+            226 =>
             array (
                 'code' => 'SC_MODELS',
                 'created_at' => NULL,
@@ -7291,7 +7291,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            227 => 
+            227 =>
             array (
                 'code' => 'SC300',
                 'created_at' => NULL,
@@ -7301,7 +7301,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            228 => 
+            228 =>
             array (
                 'code' => 'SC400',
                 'created_at' => NULL,
@@ -7311,7 +7311,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            229 => 
+            229 =>
             array (
                 'code' => 'SC430',
                 'created_at' => NULL,
@@ -7321,7 +7321,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            230 => 
+            230 =>
             array (
                 'code' => 'LEXOTH',
                 'created_at' => NULL,
@@ -7331,7 +7331,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 37,
             ),
-            231 => 
+            231 =>
             array (
                 'code' => 'AVIATOR',
                 'created_at' => NULL,
@@ -7341,7 +7341,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            232 => 
+            232 =>
             array (
                 'code' => 'BLKWOOD',
                 'created_at' => NULL,
@@ -7351,7 +7351,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            233 => 
+            233 =>
             array (
                 'code' => 'CONT',
                 'created_at' => NULL,
@@ -7361,7 +7361,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            234 => 
+            234 =>
             array (
                 'code' => 'LSLINCOLN',
                 'created_at' => NULL,
@@ -7371,7 +7371,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            235 => 
+            235 =>
             array (
                 'code' => 'MARKLT',
                 'created_at' => NULL,
@@ -7381,7 +7381,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            236 => 
+            236 =>
             array (
                 'code' => 'MARK6',
                 'created_at' => NULL,
@@ -7391,7 +7391,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            237 => 
+            237 =>
             array (
                 'code' => 'MARK7',
                 'created_at' => NULL,
@@ -7401,7 +7401,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            238 => 
+            238 =>
             array (
                 'code' => 'MARK8',
                 'created_at' => NULL,
@@ -7411,7 +7411,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            239 => 
+            239 =>
             array (
                 'code' => 'MKS',
                 'created_at' => NULL,
@@ -7421,7 +7421,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            240 => 
+            240 =>
             array (
                 'code' => 'MKT',
                 'created_at' => NULL,
@@ -7431,7 +7431,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            241 => 
+            241 =>
             array (
                 'code' => 'MKX',
                 'created_at' => NULL,
@@ -7441,7 +7441,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            242 => 
+            242 =>
             array (
                 'code' => 'MKZ',
                 'created_at' => NULL,
@@ -7451,7 +7451,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            243 => 
+            243 =>
             array (
                 'code' => 'NAVIGA',
                 'created_at' => NULL,
@@ -7461,7 +7461,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            244 => 
+            244 =>
             array (
                 'code' => 'NAVIGAL',
                 'created_at' => NULL,
@@ -7471,7 +7471,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            245 => 
+            245 =>
             array (
                 'code' => 'LINCTC',
                 'created_at' => NULL,
@@ -7481,7 +7481,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            246 => 
+            246 =>
             array (
                 'code' => 'ZEPHYR',
                 'created_at' => NULL,
@@ -7491,7 +7491,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            247 => 
+            247 =>
             array (
                 'code' => 'LINOTH',
                 'created_at' => NULL,
@@ -7501,7 +7501,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 38,
             ),
-            248 => 
+            248 =>
             array (
                 'code' => 'ELAN',
                 'created_at' => NULL,
@@ -7511,7 +7511,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 39,
             ),
-            249 => 
+            249 =>
             array (
                 'code' => 'LOTELISE',
                 'created_at' => NULL,
@@ -7521,7 +7521,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 39,
             ),
-            250 => 
+            250 =>
             array (
                 'code' => 'ESPRIT',
                 'created_at' => NULL,
@@ -7531,7 +7531,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 39,
             ),
-            251 => 
+            251 =>
             array (
                 'code' => 'EVORA',
                 'created_at' => NULL,
@@ -7541,7 +7541,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 39,
             ),
-            252 => 
+            252 =>
             array (
                 'code' => 'EXIGE',
                 'created_at' => NULL,
@@ -7551,7 +7551,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 39,
             ),
-            253 => 
+            253 =>
             array (
                 'code' => 'UNAVAILLOT',
                 'created_at' => NULL,
@@ -7561,7 +7561,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 39,
             ),
-            254 => 
+            254 =>
             array (
                 'code' => '430',
                 'created_at' => NULL,
@@ -7571,7 +7571,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 40,
             ),
-            255 => 
+            255 =>
             array (
                 'code' => 'BITRBO',
                 'created_at' => NULL,
@@ -7581,7 +7581,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 40,
             ),
-            256 => 
+            256 =>
             array (
                 'code' => 'COUPEMAS',
                 'created_at' => NULL,
@@ -7591,7 +7591,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 40,
             ),
-            257 => 
+            257 =>
             array (
                 'code' => 'GRANSPORT',
                 'created_at' => NULL,
@@ -7601,7 +7601,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 40,
             ),
-            258 => 
+            258 =>
             array (
                 'code' => 'GRANTURISM',
                 'created_at' => NULL,
@@ -7611,7 +7611,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 40,
             ),
-            259 => 
+            259 =>
             array (
                 'code' => 'QP',
                 'created_at' => NULL,
@@ -7621,7 +7621,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 40,
             ),
-            260 => 
+            260 =>
             array (
                 'code' => 'SPYDER',
                 'created_at' => NULL,
@@ -7631,7 +7631,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 40,
             ),
-            261 => 
+            261 =>
             array (
                 'code' => 'UNAVAILMAS',
                 'created_at' => NULL,
@@ -7641,7 +7641,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 40,
             ),
-            262 => 
+            262 =>
             array (
                 'code' => '57MAYBACH',
                 'created_at' => NULL,
@@ -7651,7 +7651,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 41,
             ),
-            263 => 
+            263 =>
             array (
                 'code' => '62MAYBACH',
                 'created_at' => NULL,
@@ -7661,7 +7661,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 41,
             ),
-            264 => 
+            264 =>
             array (
                 'code' => 'UNAVAILMAY',
                 'created_at' => NULL,
@@ -7671,7 +7671,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 41,
             ),
-            265 => 
+            265 =>
             array (
                 'code' => 'MAZDA323',
                 'created_at' => NULL,
@@ -7681,7 +7681,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            266 => 
+            266 =>
             array (
                 'code' => 'MAZDA626',
                 'created_at' => NULL,
@@ -7691,7 +7691,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            267 => 
+            267 =>
             array (
                 'code' => '929',
                 'created_at' => NULL,
@@ -7701,7 +7701,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            268 => 
+            268 =>
             array (
                 'code' => 'B-SERIES',
                 'created_at' => NULL,
@@ -7711,7 +7711,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            269 => 
+            269 =>
             array (
                 'code' => 'CX-5',
                 'created_at' => NULL,
@@ -7721,7 +7721,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            270 => 
+            270 =>
             array (
                 'code' => 'CX-7',
                 'created_at' => NULL,
@@ -7731,7 +7731,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            271 => 
+            271 =>
             array (
                 'code' => 'CX-9',
                 'created_at' => NULL,
@@ -7741,7 +7741,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            272 => 
+            272 =>
             array (
                 'code' => 'GLC',
                 'created_at' => NULL,
@@ -7751,7 +7751,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            273 => 
+            273 =>
             array (
                 'code' => 'MAZDA2',
                 'created_at' => NULL,
@@ -7761,7 +7761,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            274 => 
+            274 =>
             array (
                 'code' => 'MAZDA3',
                 'created_at' => NULL,
@@ -7771,7 +7771,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            275 => 
+            275 =>
             array (
                 'code' => 'MAZDA5',
                 'created_at' => NULL,
@@ -7781,7 +7781,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            276 => 
+            276 =>
             array (
                 'code' => 'MAZDA6',
                 'created_at' => NULL,
@@ -7791,7 +7791,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            277 => 
+            277 =>
             array (
                 'code' => 'MAZDASPD3',
                 'created_at' => NULL,
@@ -7801,7 +7801,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            278 => 
+            278 =>
             array (
                 'code' => 'MAZDASPD6',
                 'created_at' => NULL,
@@ -7811,7 +7811,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            279 => 
+            279 =>
             array (
                 'code' => 'MIATA',
                 'created_at' => NULL,
@@ -7821,7 +7821,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            280 => 
+            280 =>
             array (
                 'code' => 'MILL',
                 'created_at' => NULL,
@@ -7831,7 +7831,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            281 => 
+            281 =>
             array (
                 'code' => 'MPV',
                 'created_at' => NULL,
@@ -7841,7 +7841,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            282 => 
+            282 =>
             array (
                 'code' => 'MX3',
                 'created_at' => NULL,
@@ -7851,7 +7851,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            283 => 
+            283 =>
             array (
                 'code' => 'MX6',
                 'created_at' => NULL,
@@ -7861,7 +7861,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            284 => 
+            284 =>
             array (
                 'code' => 'NAVAJO',
                 'created_at' => NULL,
@@ -7871,7 +7871,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            285 => 
+            285 =>
             array (
                 'code' => 'PROTE',
                 'created_at' => NULL,
@@ -7881,7 +7881,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            286 => 
+            286 =>
             array (
                 'code' => 'PROTE5',
                 'created_at' => NULL,
@@ -7891,7 +7891,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            287 => 
+            287 =>
             array (
                 'code' => 'RX7',
                 'created_at' => NULL,
@@ -7901,7 +7901,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            288 => 
+            288 =>
             array (
                 'code' => 'RX8',
                 'created_at' => NULL,
@@ -7911,7 +7911,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            289 => 
+            289 =>
             array (
                 'code' => 'TRIBUTE',
                 'created_at' => NULL,
@@ -7921,7 +7921,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            290 => 
+            290 =>
             array (
                 'code' => 'MAZOTH',
                 'created_at' => NULL,
@@ -7931,7 +7931,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 42,
             ),
-            291 => 
+            291 =>
             array (
                 'code' => 'MP4',
                 'created_at' => NULL,
@@ -7941,7 +7941,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 43,
             ),
-            292 => 
+            292 =>
             array (
                 'code' => '190_CLASS',
                 'created_at' => NULL,
@@ -7951,7 +7951,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            293 => 
+            293 =>
             array (
                 'code' => '190D',
                 'created_at' => NULL,
@@ -7961,7 +7961,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            294 => 
+            294 =>
             array (
                 'code' => '190E',
                 'created_at' => NULL,
@@ -7971,7 +7971,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            295 => 
+            295 =>
             array (
                 'code' => '240_CLASS',
                 'created_at' => NULL,
@@ -7981,7 +7981,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            296 => 
+            296 =>
             array (
                 'code' => '240D',
                 'created_at' => NULL,
@@ -7991,7 +7991,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            297 => 
+            297 =>
             array (
                 'code' => '300_CLASS_E_CLASS',
                 'created_at' => NULL,
@@ -8001,7 +8001,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            298 => 
+            298 =>
             array (
                 'code' => '300CD',
                 'created_at' => NULL,
@@ -8011,7 +8011,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            299 => 
+            299 =>
             array (
                 'code' => '300CE',
                 'created_at' => NULL,
@@ -8021,7 +8021,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            300 => 
+            300 =>
             array (
                 'code' => '300D',
                 'created_at' => NULL,
@@ -8031,7 +8031,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            301 => 
+            301 =>
             array (
                 'code' => '300E',
                 'created_at' => NULL,
@@ -8041,7 +8041,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            302 => 
+            302 =>
             array (
                 'code' => '300TD',
                 'created_at' => NULL,
@@ -8051,7 +8051,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            303 => 
+            303 =>
             array (
                 'code' => '300TE',
                 'created_at' => NULL,
@@ -8061,7 +8061,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            304 => 
+            304 =>
             array (
                 'code' => 'C_CLASS',
                 'created_at' => NULL,
@@ -8071,7 +8071,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            305 => 
+            305 =>
             array (
                 'code' => 'C220',
                 'created_at' => NULL,
@@ -8081,7 +8081,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            306 => 
+            306 =>
             array (
                 'code' => 'C230',
                 'created_at' => NULL,
@@ -8091,7 +8091,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            307 => 
+            307 =>
             array (
                 'code' => 'C240',
                 'created_at' => NULL,
@@ -8101,7 +8101,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            308 => 
+            308 =>
             array (
                 'code' => 'C250',
                 'created_at' => NULL,
@@ -8111,7 +8111,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            309 => 
+            309 =>
             array (
                 'code' => 'C280',
                 'created_at' => NULL,
@@ -8121,7 +8121,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            310 => 
+            310 =>
             array (
                 'code' => 'C300',
                 'created_at' => NULL,
@@ -8131,7 +8131,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            311 => 
+            311 =>
             array (
                 'code' => 'C320',
                 'created_at' => NULL,
@@ -8141,7 +8141,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            312 => 
+            312 =>
             array (
                 'code' => 'C32AMG',
                 'created_at' => NULL,
@@ -8151,7 +8151,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            313 => 
+            313 =>
             array (
                 'code' => 'C350',
                 'created_at' => NULL,
@@ -8161,7 +8161,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            314 => 
+            314 =>
             array (
                 'code' => 'C36AMG',
                 'created_at' => NULL,
@@ -8171,7 +8171,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            315 => 
+            315 =>
             array (
                 'code' => 'C43AMG',
                 'created_at' => NULL,
@@ -8181,7 +8181,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            316 => 
+            316 =>
             array (
                 'code' => 'C55AMG',
                 'created_at' => NULL,
@@ -8191,7 +8191,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            317 => 
+            317 =>
             array (
                 'code' => 'C63AMG',
                 'created_at' => NULL,
@@ -8201,7 +8201,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            318 => 
+            318 =>
             array (
                 'code' => 'CL_CLASS',
                 'created_at' => NULL,
@@ -8211,7 +8211,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            319 => 
+            319 =>
             array (
                 'code' => 'CL500',
                 'created_at' => NULL,
@@ -8221,7 +8221,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            320 => 
+            320 =>
             array (
                 'code' => 'CL550',
                 'created_at' => NULL,
@@ -8231,7 +8231,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            321 => 
+            321 =>
             array (
                 'code' => 'CL55AMG',
                 'created_at' => NULL,
@@ -8241,7 +8241,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            322 => 
+            322 =>
             array (
                 'code' => 'CL600',
                 'created_at' => NULL,
@@ -8251,7 +8251,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            323 => 
+            323 =>
             array (
                 'code' => 'CL63AMG',
                 'created_at' => NULL,
@@ -8261,7 +8261,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            324 => 
+            324 =>
             array (
                 'code' => 'CL65AMG',
                 'created_at' => NULL,
@@ -8271,7 +8271,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            325 => 
+            325 =>
             array (
                 'code' => 'CLK_CLASS',
                 'created_at' => NULL,
@@ -8281,7 +8281,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            326 => 
+            326 =>
             array (
                 'code' => 'CLK320',
                 'created_at' => NULL,
@@ -8291,7 +8291,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            327 => 
+            327 =>
             array (
                 'code' => 'CLK350',
                 'created_at' => NULL,
@@ -8301,7 +8301,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            328 => 
+            328 =>
             array (
                 'code' => 'CLK430',
                 'created_at' => NULL,
@@ -8311,7 +8311,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            329 => 
+            329 =>
             array (
                 'code' => 'CLK500',
                 'created_at' => NULL,
@@ -8321,7 +8321,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            330 => 
+            330 =>
             array (
                 'code' => 'CLK550',
                 'created_at' => NULL,
@@ -8331,7 +8331,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            331 => 
+            331 =>
             array (
                 'code' => 'CLK55AMG',
                 'created_at' => NULL,
@@ -8341,7 +8341,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            332 => 
+            332 =>
             array (
                 'code' => 'CLK63AMG',
                 'created_at' => NULL,
@@ -8351,7 +8351,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            333 => 
+            333 =>
             array (
                 'code' => 'CLS_CLASS',
                 'created_at' => NULL,
@@ -8361,7 +8361,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            334 => 
+            334 =>
             array (
                 'code' => 'CLS500',
                 'created_at' => NULL,
@@ -8371,7 +8371,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            335 => 
+            335 =>
             array (
                 'code' => 'CLS550',
                 'created_at' => NULL,
@@ -8381,7 +8381,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            336 => 
+            336 =>
             array (
                 'code' => 'CLS55AMG',
                 'created_at' => NULL,
@@ -8391,7 +8391,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            337 => 
+            337 =>
             array (
                 'code' => 'CLS63AMG',
                 'created_at' => NULL,
@@ -8401,7 +8401,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            338 => 
+            338 =>
             array (
                 'code' => 'E_CLASS',
                 'created_at' => NULL,
@@ -8411,7 +8411,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            339 => 
+            339 =>
             array (
                 'code' => '260E',
                 'created_at' => NULL,
@@ -8421,7 +8421,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            340 => 
+            340 =>
             array (
                 'code' => '280CE',
                 'created_at' => NULL,
@@ -8431,7 +8431,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            341 => 
+            341 =>
             array (
                 'code' => '280E',
                 'created_at' => NULL,
@@ -8441,7 +8441,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            342 => 
+            342 =>
             array (
                 'code' => '400E',
                 'created_at' => NULL,
@@ -8451,7 +8451,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            343 => 
+            343 =>
             array (
                 'code' => '500E',
                 'created_at' => NULL,
@@ -8461,7 +8461,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            344 => 
+            344 =>
             array (
                 'code' => 'E300',
                 'created_at' => NULL,
@@ -8471,7 +8471,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            345 => 
+            345 =>
             array (
                 'code' => 'E320',
                 'created_at' => NULL,
@@ -8481,7 +8481,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            346 => 
+            346 =>
             array (
                 'code' => 'E320BLUE',
                 'created_at' => NULL,
@@ -8491,7 +8491,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            347 => 
+            347 =>
             array (
                 'code' => 'E320CDI',
                 'created_at' => NULL,
@@ -8501,7 +8501,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            348 => 
+            348 =>
             array (
                 'code' => 'E350',
                 'created_at' => NULL,
@@ -8511,7 +8511,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            349 => 
+            349 =>
             array (
                 'code' => 'E350BLUE',
                 'created_at' => NULL,
@@ -8521,7 +8521,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            350 => 
+            350 =>
             array (
                 'code' => 'E400',
                 'created_at' => NULL,
@@ -8531,7 +8531,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            351 => 
+            351 =>
             array (
                 'code' => 'E420',
                 'created_at' => NULL,
@@ -8541,7 +8541,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            352 => 
+            352 =>
             array (
                 'code' => 'E430',
                 'created_at' => NULL,
@@ -8551,7 +8551,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            353 => 
+            353 =>
             array (
                 'code' => 'E500',
                 'created_at' => NULL,
@@ -8561,7 +8561,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            354 => 
+            354 =>
             array (
                 'code' => 'E550',
                 'created_at' => NULL,
@@ -8571,7 +8571,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            355 => 
+            355 =>
             array (
                 'code' => 'E55AMG',
                 'created_at' => NULL,
@@ -8581,7 +8581,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            356 => 
+            356 =>
             array (
                 'code' => 'E63AMG',
                 'created_at' => NULL,
@@ -8591,7 +8591,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            357 => 
+            357 =>
             array (
                 'code' => 'G_CLASS',
                 'created_at' => NULL,
@@ -8601,7 +8601,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            358 => 
+            358 =>
             array (
                 'code' => 'G500',
                 'created_at' => NULL,
@@ -8611,7 +8611,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            359 => 
+            359 =>
             array (
                 'code' => 'G550',
                 'created_at' => NULL,
@@ -8621,7 +8621,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            360 => 
+            360 =>
             array (
                 'code' => 'G55AMG',
                 'created_at' => NULL,
@@ -8631,7 +8631,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            361 => 
+            361 =>
             array (
                 'code' => 'G63AMG',
                 'created_at' => NULL,
@@ -8641,7 +8641,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            362 => 
+            362 =>
             array (
                 'code' => 'GL_CLASS',
                 'created_at' => NULL,
@@ -8651,7 +8651,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            363 => 
+            363 =>
             array (
                 'code' => 'GL320BLUE',
                 'created_at' => NULL,
@@ -8661,7 +8661,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            364 => 
+            364 =>
             array (
                 'code' => 'GL320CDI',
                 'created_at' => NULL,
@@ -8671,7 +8671,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            365 => 
+            365 =>
             array (
                 'code' => 'GL350BLUE',
                 'created_at' => NULL,
@@ -8681,7 +8681,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            366 => 
+            366 =>
             array (
                 'code' => 'GL450',
                 'created_at' => NULL,
@@ -8691,7 +8691,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            367 => 
+            367 =>
             array (
                 'code' => 'GL550',
                 'created_at' => NULL,
@@ -8701,7 +8701,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            368 => 
+            368 =>
             array (
                 'code' => 'GLK_CLASS',
                 'created_at' => NULL,
@@ -8711,7 +8711,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            369 => 
+            369 =>
             array (
                 'code' => 'GLK350',
                 'created_at' => NULL,
@@ -8721,7 +8721,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            370 => 
+            370 =>
             array (
                 'code' => 'M_CLASS',
                 'created_at' => NULL,
@@ -8731,7 +8731,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            371 => 
+            371 =>
             array (
                 'code' => 'ML320',
                 'created_at' => NULL,
@@ -8741,7 +8741,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            372 => 
+            372 =>
             array (
                 'code' => 'ML320BLUE',
                 'created_at' => NULL,
@@ -8751,7 +8751,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            373 => 
+            373 =>
             array (
                 'code' => 'ML320CDI',
                 'created_at' => NULL,
@@ -8761,7 +8761,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            374 => 
+            374 =>
             array (
                 'code' => 'ML350',
                 'created_at' => NULL,
@@ -8771,7 +8771,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            375 => 
+            375 =>
             array (
                 'code' => 'ML350BLUE',
                 'created_at' => NULL,
@@ -8781,7 +8781,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            376 => 
+            376 =>
             array (
                 'code' => 'ML430',
                 'created_at' => NULL,
@@ -8791,7 +8791,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            377 => 
+            377 =>
             array (
                 'code' => 'ML450HY',
                 'created_at' => NULL,
@@ -8801,7 +8801,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            378 => 
+            378 =>
             array (
                 'code' => 'ML500',
                 'created_at' => NULL,
@@ -8811,7 +8811,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            379 => 
+            379 =>
             array (
                 'code' => 'ML550',
                 'created_at' => NULL,
@@ -8821,7 +8821,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            380 => 
+            380 =>
             array (
                 'code' => 'ML55AMG',
                 'created_at' => NULL,
@@ -8831,7 +8831,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            381 => 
+            381 =>
             array (
                 'code' => 'ML63AMG',
                 'created_at' => NULL,
@@ -8841,7 +8841,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            382 => 
+            382 =>
             array (
                 'code' => 'R_CLASS',
                 'created_at' => NULL,
@@ -8851,7 +8851,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            383 => 
+            383 =>
             array (
                 'code' => 'R320BLUE',
                 'created_at' => NULL,
@@ -8861,7 +8861,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            384 => 
+            384 =>
             array (
                 'code' => 'R320CDI',
                 'created_at' => NULL,
@@ -8871,7 +8871,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            385 => 
+            385 =>
             array (
                 'code' => 'R350',
                 'created_at' => NULL,
@@ -8881,7 +8881,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            386 => 
+            386 =>
             array (
                 'code' => 'R350BLUE',
                 'created_at' => NULL,
@@ -8891,7 +8891,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            387 => 
+            387 =>
             array (
                 'code' => 'R500',
                 'created_at' => NULL,
@@ -8901,7 +8901,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            388 => 
+            388 =>
             array (
                 'code' => 'R63AMG',
                 'created_at' => NULL,
@@ -8911,7 +8911,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            389 => 
+            389 =>
             array (
                 'code' => 'S_CLASS',
                 'created_at' => NULL,
@@ -8921,7 +8921,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            390 => 
+            390 =>
             array (
                 'code' => '300SD',
                 'created_at' => NULL,
@@ -8931,7 +8931,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            391 => 
+            391 =>
             array (
                 'code' => '300SDL',
                 'created_at' => NULL,
@@ -8941,7 +8941,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            392 => 
+            392 =>
             array (
                 'code' => '300SE',
                 'created_at' => NULL,
@@ -8951,7 +8951,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            393 => 
+            393 =>
             array (
                 'code' => '300SEL',
                 'created_at' => NULL,
@@ -8961,7 +8961,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            394 => 
+            394 =>
             array (
                 'code' => '350SD',
                 'created_at' => NULL,
@@ -8971,7 +8971,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            395 => 
+            395 =>
             array (
                 'code' => '350SDL',
                 'created_at' => NULL,
@@ -8981,7 +8981,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            396 => 
+            396 =>
             array (
                 'code' => '380SE',
                 'created_at' => NULL,
@@ -8991,7 +8991,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            397 => 
+            397 =>
             array (
                 'code' => '380SEC',
                 'created_at' => NULL,
@@ -9001,7 +9001,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            398 => 
+            398 =>
             array (
                 'code' => '380SEL',
                 'created_at' => NULL,
@@ -9011,7 +9011,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            399 => 
+            399 =>
             array (
                 'code' => '400SE',
                 'created_at' => NULL,
@@ -9021,7 +9021,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            400 => 
+            400 =>
             array (
                 'code' => '400SEL',
                 'created_at' => NULL,
@@ -9031,7 +9031,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            401 => 
+            401 =>
             array (
                 'code' => '420SEL',
                 'created_at' => NULL,
@@ -9041,7 +9041,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            402 => 
+            402 =>
             array (
                 'code' => '500SEC',
                 'created_at' => NULL,
@@ -9051,7 +9051,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            403 => 
+            403 =>
             array (
                 'code' => '500SEL',
                 'created_at' => NULL,
@@ -9061,7 +9061,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            404 => 
+            404 =>
             array (
                 'code' => '560SEC',
                 'created_at' => NULL,
@@ -9071,7 +9071,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            405 => 
+            405 =>
             array (
                 'code' => '560SEL',
                 'created_at' => NULL,
@@ -9081,7 +9081,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            406 => 
+            406 =>
             array (
                 'code' => '600SEC',
                 'created_at' => NULL,
@@ -9091,7 +9091,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            407 => 
+            407 =>
             array (
                 'code' => '600SEL',
                 'created_at' => NULL,
@@ -9101,7 +9101,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            408 => 
+            408 =>
             array (
                 'code' => 'S320',
                 'created_at' => NULL,
@@ -9111,7 +9111,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            409 => 
+            409 =>
             array (
                 'code' => 'S350',
                 'created_at' => NULL,
@@ -9121,7 +9121,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            410 => 
+            410 =>
             array (
                 'code' => 'S350BLUE',
                 'created_at' => NULL,
@@ -9131,7 +9131,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            411 => 
+            411 =>
             array (
                 'code' => 'S400HY',
                 'created_at' => NULL,
@@ -9141,7 +9141,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            412 => 
+            412 =>
             array (
                 'code' => 'S420',
                 'created_at' => NULL,
@@ -9151,7 +9151,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            413 => 
+            413 =>
             array (
                 'code' => 'S430',
                 'created_at' => NULL,
@@ -9161,7 +9161,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            414 => 
+            414 =>
             array (
                 'code' => 'S500',
                 'created_at' => NULL,
@@ -9171,7 +9171,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            415 => 
+            415 =>
             array (
                 'code' => 'S550',
                 'created_at' => NULL,
@@ -9181,7 +9181,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            416 => 
+            416 =>
             array (
                 'code' => 'S55AMG',
                 'created_at' => NULL,
@@ -9191,7 +9191,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            417 => 
+            417 =>
             array (
                 'code' => 'S600',
                 'created_at' => NULL,
@@ -9201,7 +9201,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            418 => 
+            418 =>
             array (
                 'code' => 'S63AMG',
                 'created_at' => NULL,
@@ -9211,7 +9211,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            419 => 
+            419 =>
             array (
                 'code' => 'S65AMG',
                 'created_at' => NULL,
@@ -9221,7 +9221,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            420 => 
+            420 =>
             array (
                 'code' => 'SL_CLASS',
                 'created_at' => NULL,
@@ -9231,7 +9231,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            421 => 
+            421 =>
             array (
                 'code' => '300SL',
                 'created_at' => NULL,
@@ -9241,7 +9241,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            422 => 
+            422 =>
             array (
                 'code' => '380SL',
                 'created_at' => NULL,
@@ -9251,7 +9251,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            423 => 
+            423 =>
             array (
                 'code' => '380SLC',
                 'created_at' => NULL,
@@ -9261,7 +9261,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            424 => 
+            424 =>
             array (
                 'code' => '500SL',
                 'created_at' => NULL,
@@ -9271,7 +9271,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            425 => 
+            425 =>
             array (
                 'code' => '560SL',
                 'created_at' => NULL,
@@ -9281,7 +9281,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            426 => 
+            426 =>
             array (
                 'code' => '600SL',
                 'created_at' => NULL,
@@ -9291,7 +9291,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            427 => 
+            427 =>
             array (
                 'code' => 'SL320',
                 'created_at' => NULL,
@@ -9301,7 +9301,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            428 => 
+            428 =>
             array (
                 'code' => 'SL500',
                 'created_at' => NULL,
@@ -9311,7 +9311,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            429 => 
+            429 =>
             array (
                 'code' => 'SL550',
                 'created_at' => NULL,
@@ -9321,7 +9321,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            430 => 
+            430 =>
             array (
                 'code' => 'SL55AMG',
                 'created_at' => NULL,
@@ -9331,7 +9331,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            431 => 
+            431 =>
             array (
                 'code' => 'SL600',
                 'created_at' => NULL,
@@ -9341,7 +9341,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            432 => 
+            432 =>
             array (
                 'code' => 'SL63AMG',
                 'created_at' => NULL,
@@ -9351,7 +9351,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            433 => 
+            433 =>
             array (
                 'code' => 'SL65AMG',
                 'created_at' => NULL,
@@ -9361,7 +9361,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            434 => 
+            434 =>
             array (
                 'code' => 'SLK_CLASS',
                 'created_at' => NULL,
@@ -9371,7 +9371,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            435 => 
+            435 =>
             array (
                 'code' => 'SLK230',
                 'created_at' => NULL,
@@ -9381,7 +9381,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            436 => 
+            436 =>
             array (
                 'code' => 'SLK250',
                 'created_at' => NULL,
@@ -9391,7 +9391,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            437 => 
+            437 =>
             array (
                 'code' => 'SLK280',
                 'created_at' => NULL,
@@ -9401,7 +9401,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            438 => 
+            438 =>
             array (
                 'code' => 'SLK300',
                 'created_at' => NULL,
@@ -9411,7 +9411,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            439 => 
+            439 =>
             array (
                 'code' => 'SLK320',
                 'created_at' => NULL,
@@ -9421,7 +9421,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            440 => 
+            440 =>
             array (
                 'code' => 'SLK32AMG',
                 'created_at' => NULL,
@@ -9431,7 +9431,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            441 => 
+            441 =>
             array (
                 'code' => 'SLK350',
                 'created_at' => NULL,
@@ -9441,7 +9441,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            442 => 
+            442 =>
             array (
                 'code' => 'SLK55AMG',
                 'created_at' => NULL,
@@ -9451,7 +9451,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            443 => 
+            443 =>
             array (
                 'code' => 'SLR_CLASS',
                 'created_at' => NULL,
@@ -9461,7 +9461,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            444 => 
+            444 =>
             array (
                 'code' => 'SLR',
                 'created_at' => NULL,
@@ -9471,7 +9471,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            445 => 
+            445 =>
             array (
                 'code' => 'SLS_CLASS',
                 'created_at' => NULL,
@@ -9481,7 +9481,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            446 => 
+            446 =>
             array (
                 'code' => 'SLSAMG',
                 'created_at' => NULL,
@@ -9491,7 +9491,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            447 => 
+            447 =>
             array (
                 'code' => 'SPRINTER_CLASS',
                 'created_at' => NULL,
@@ -9501,7 +9501,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            448 => 
+            448 =>
             array (
                 'code' => 'MBSPRINTER',
                 'created_at' => NULL,
@@ -9511,7 +9511,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            449 => 
+            449 =>
             array (
                 'code' => 'MBOTH',
                 'created_at' => NULL,
@@ -9521,7 +9521,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 44,
             ),
-            450 => 
+            450 =>
             array (
                 'code' => 'CAPRI',
                 'created_at' => NULL,
@@ -9531,7 +9531,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            451 => 
+            451 =>
             array (
                 'code' => 'COUGAR',
                 'created_at' => NULL,
@@ -9541,7 +9541,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            452 => 
+            452 =>
             array (
                 'code' => 'MERCGRAND',
                 'created_at' => NULL,
@@ -9551,7 +9551,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            453 => 
+            453 =>
             array (
                 'code' => 'LYNX',
                 'created_at' => NULL,
@@ -9561,7 +9561,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            454 => 
+            454 =>
             array (
                 'code' => 'MARAUDER',
                 'created_at' => NULL,
@@ -9571,7 +9571,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            455 => 
+            455 =>
             array (
                 'code' => 'MARINER',
                 'created_at' => NULL,
@@ -9581,7 +9581,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            456 => 
+            456 =>
             array (
                 'code' => 'MARQ',
                 'created_at' => NULL,
@@ -9591,7 +9591,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            457 => 
+            457 =>
             array (
                 'code' => 'MILAN',
                 'created_at' => NULL,
@@ -9601,7 +9601,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            458 => 
+            458 =>
             array (
                 'code' => 'MONTEGO',
                 'created_at' => NULL,
@@ -9611,7 +9611,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            459 => 
+            459 =>
             array (
                 'code' => 'MONTEREY',
                 'created_at' => NULL,
@@ -9621,7 +9621,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            460 => 
+            460 =>
             array (
                 'code' => 'MOUNTA',
                 'created_at' => NULL,
@@ -9631,7 +9631,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            461 => 
+            461 =>
             array (
                 'code' => 'MYSTIQ',
                 'created_at' => NULL,
@@ -9641,7 +9641,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            462 => 
+            462 =>
             array (
                 'code' => 'SABLE',
                 'created_at' => NULL,
@@ -9651,7 +9651,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            463 => 
+            463 =>
             array (
                 'code' => 'TOPAZ',
                 'created_at' => NULL,
@@ -9661,7 +9661,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            464 => 
+            464 =>
             array (
                 'code' => 'TRACER',
                 'created_at' => NULL,
@@ -9671,7 +9671,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            465 => 
+            465 =>
             array (
                 'code' => 'VILLA',
                 'created_at' => NULL,
@@ -9681,7 +9681,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            466 => 
+            466 =>
             array (
                 'code' => 'MERCZEP',
                 'created_at' => NULL,
@@ -9691,7 +9691,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            467 => 
+            467 =>
             array (
                 'code' => 'MEOTH',
                 'created_at' => NULL,
@@ -9701,7 +9701,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 45,
             ),
-            468 => 
+            468 =>
             array (
                 'code' => 'SCORP',
                 'created_at' => NULL,
@@ -9711,7 +9711,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 46,
             ),
-            469 => 
+            469 =>
             array (
                 'code' => 'XR4TI',
                 'created_at' => NULL,
@@ -9721,7 +9721,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 46,
             ),
-            470 => 
+            470 =>
             array (
                 'code' => 'MEROTH',
                 'created_at' => NULL,
@@ -9731,7 +9731,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 46,
             ),
-            471 => 
+            471 =>
             array (
                 'code' => 'COOPRCLUB_MODELS',
                 'created_at' => NULL,
@@ -9741,7 +9741,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            472 => 
+            472 =>
             array (
                 'code' => 'COOPERCLUB',
                 'created_at' => NULL,
@@ -9751,7 +9751,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            473 => 
+            473 =>
             array (
                 'code' => 'COOPRCLUBS',
                 'created_at' => NULL,
@@ -9761,7 +9761,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            474 => 
+            474 =>
             array (
                 'code' => 'COOPCOUNTRY_MODELS',
                 'created_at' => NULL,
@@ -9771,7 +9771,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            475 => 
+            475 =>
             array (
                 'code' => 'COUNTRYMAN',
                 'created_at' => NULL,
@@ -9781,7 +9781,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            476 => 
+            476 =>
             array (
                 'code' => 'COUNTRYMNS',
                 'created_at' => NULL,
@@ -9791,7 +9791,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            477 => 
+            477 =>
             array (
                 'code' => 'COOPCOUP_MODELS',
                 'created_at' => NULL,
@@ -9801,7 +9801,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            478 => 
+            478 =>
             array (
                 'code' => 'MINICOUPE',
                 'created_at' => NULL,
@@ -9811,7 +9811,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            479 => 
+            479 =>
             array (
                 'code' => 'MINISCOUPE',
                 'created_at' => NULL,
@@ -9821,7 +9821,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            480 => 
+            480 =>
             array (
                 'code' => 'COOPER_MODELS',
                 'created_at' => NULL,
@@ -9831,7 +9831,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            481 => 
+            481 =>
             array (
                 'code' => 'COOPER',
                 'created_at' => NULL,
@@ -9841,7 +9841,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            482 => 
+            482 =>
             array (
                 'code' => 'COOPERS',
                 'created_at' => NULL,
@@ -9851,7 +9851,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            483 => 
+            483 =>
             array (
                 'code' => 'COOPRROAD_MODELS',
                 'created_at' => NULL,
@@ -9861,7 +9861,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            484 => 
+            484 =>
             array (
                 'code' => 'COOPERROAD',
                 'created_at' => NULL,
@@ -9871,7 +9871,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            485 => 
+            485 =>
             array (
                 'code' => 'COOPERSRD',
                 'created_at' => NULL,
@@ -9881,7 +9881,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 47,
             ),
-            486 => 
+            486 =>
             array (
                 'code' => '3000GT',
                 'created_at' => NULL,
@@ -9891,7 +9891,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            487 => 
+            487 =>
             array (
                 'code' => 'CORD',
                 'created_at' => NULL,
@@ -9901,7 +9901,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            488 => 
+            488 =>
             array (
                 'code' => 'DIAMAN',
                 'created_at' => NULL,
@@ -9911,7 +9911,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            489 => 
+            489 =>
             array (
                 'code' => 'ECLIP',
                 'created_at' => NULL,
@@ -9921,7 +9921,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            490 => 
+            490 =>
             array (
                 'code' => 'ENDEAVOR',
                 'created_at' => NULL,
@@ -9931,7 +9931,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            491 => 
+            491 =>
             array (
                 'code' => 'MITEXP',
                 'created_at' => NULL,
@@ -9941,7 +9941,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            492 => 
+            492 =>
             array (
                 'code' => 'GALANT',
                 'created_at' => NULL,
@@ -9951,7 +9951,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            493 => 
+            493 =>
             array (
                 'code' => 'MITI',
                 'created_at' => NULL,
@@ -9961,7 +9961,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            494 => 
+            494 =>
             array (
                 'code' => 'LANCERMITS',
                 'created_at' => NULL,
@@ -9971,7 +9971,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            495 => 
+            495 =>
             array (
                 'code' => 'LANCEREVO',
                 'created_at' => NULL,
@@ -9981,7 +9981,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            496 => 
+            496 =>
             array (
                 'code' => 'MITPU',
                 'created_at' => NULL,
@@ -9991,7 +9991,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            497 => 
+            497 =>
             array (
                 'code' => 'MIRAGE',
                 'created_at' => NULL,
@@ -10001,7 +10001,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            498 => 
+            498 =>
             array (
                 'code' => 'MONT',
                 'created_at' => NULL,
@@ -10011,7 +10011,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            499 => 
+            499 =>
             array (
                 'code' => 'MONTSPORT',
                 'created_at' => NULL,
@@ -10023,7 +10023,7 @@ class VehicleModelsTableSeeder extends Seeder
             ),
         ));
         \DB::table('vehicle_models')->insert(array (
-            0 => 
+            0 =>
             array (
                 'code' => 'OUTLANDER',
                 'created_at' => NULL,
@@ -10033,7 +10033,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            1 => 
+            1 =>
             array (
                 'code' => 'OUTLANDSPT',
                 'created_at' => NULL,
@@ -10043,7 +10043,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            2 => 
+            2 =>
             array (
                 'code' => 'PRECIS',
                 'created_at' => NULL,
@@ -10053,7 +10053,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            3 => 
+            3 =>
             array (
                 'code' => 'RAIDERMITS',
                 'created_at' => NULL,
@@ -10063,7 +10063,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            4 => 
+            4 =>
             array (
                 'code' => 'SIGMA',
                 'created_at' => NULL,
@@ -10073,7 +10073,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            5 => 
+            5 =>
             array (
                 'code' => 'MITSTAR',
                 'created_at' => NULL,
@@ -10083,7 +10083,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            6 => 
+            6 =>
             array (
                 'code' => 'TRED',
                 'created_at' => NULL,
@@ -10093,7 +10093,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            7 => 
+            7 =>
             array (
                 'code' => 'MITVAN',
                 'created_at' => NULL,
@@ -10103,7 +10103,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            8 => 
+            8 =>
             array (
                 'code' => 'MITOTH',
                 'created_at' => NULL,
@@ -10113,7 +10113,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 48,
             ),
-            9 => 
+            9 =>
             array (
                 'code' => 'NIS200SX',
                 'created_at' => NULL,
@@ -10123,7 +10123,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            10 => 
+            10 =>
             array (
                 'code' => '240SX',
                 'created_at' => NULL,
@@ -10133,7 +10133,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            11 => 
+            11 =>
             array (
                 'code' => '300ZXTURBO',
                 'created_at' => NULL,
@@ -10143,7 +10143,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            12 => 
+            12 =>
             array (
                 'code' => '350Z',
                 'created_at' => NULL,
@@ -10153,7 +10153,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            13 => 
+            13 =>
             array (
                 'code' => '370Z',
                 'created_at' => NULL,
@@ -10163,7 +10163,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            14 => 
+            14 =>
             array (
                 'code' => 'ALTIMA',
                 'created_at' => NULL,
@@ -10173,7 +10173,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            15 => 
+            15 =>
             array (
                 'code' => 'PATHARMADA',
                 'created_at' => NULL,
@@ -10183,7 +10183,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            16 => 
+            16 =>
             array (
                 'code' => 'AXXESS',
                 'created_at' => NULL,
@@ -10193,7 +10193,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            17 => 
+            17 =>
             array (
                 'code' => 'CUBE',
                 'created_at' => NULL,
@@ -10203,7 +10203,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            18 => 
+            18 =>
             array (
                 'code' => 'FRONTI',
                 'created_at' => NULL,
@@ -10213,7 +10213,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            19 => 
+            19 =>
             array (
                 'code' => 'GT-R',
                 'created_at' => NULL,
@@ -10223,7 +10223,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            20 => 
+            20 =>
             array (
                 'code' => 'JUKE',
                 'created_at' => NULL,
@@ -10233,7 +10233,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            21 => 
+            21 =>
             array (
                 'code' => 'LEAF',
                 'created_at' => NULL,
@@ -10243,7 +10243,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            22 => 
+            22 =>
             array (
                 'code' => 'MAX',
                 'created_at' => NULL,
@@ -10253,7 +10253,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            23 => 
+            23 =>
             array (
                 'code' => 'MURANO',
                 'created_at' => NULL,
@@ -10263,7 +10263,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            24 => 
+            24 =>
             array (
                 'code' => 'MURANOCROS',
                 'created_at' => NULL,
@@ -10273,7 +10273,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            25 => 
+            25 =>
             array (
                 'code' => 'NV',
                 'created_at' => NULL,
@@ -10283,7 +10283,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            26 => 
+            26 =>
             array (
                 'code' => 'NX',
                 'created_at' => NULL,
@@ -10293,7 +10293,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            27 => 
+            27 =>
             array (
                 'code' => 'PATH',
                 'created_at' => NULL,
@@ -10303,7 +10303,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            28 => 
+            28 =>
             array (
                 'code' => 'NISPU',
                 'created_at' => NULL,
@@ -10313,7 +10313,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            29 => 
+            29 =>
             array (
                 'code' => 'PULSAR',
                 'created_at' => NULL,
@@ -10323,7 +10323,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            30 => 
+            30 =>
             array (
                 'code' => 'QUEST',
                 'created_at' => NULL,
@@ -10333,7 +10333,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            31 => 
+            31 =>
             array (
                 'code' => 'ROGUE',
                 'created_at' => NULL,
@@ -10343,7 +10343,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            32 => 
+            32 =>
             array (
                 'code' => 'SENTRA',
                 'created_at' => NULL,
@@ -10353,7 +10353,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            33 => 
+            33 =>
             array (
                 'code' => 'STANZA',
                 'created_at' => NULL,
@@ -10363,7 +10363,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            34 => 
+            34 =>
             array (
                 'code' => 'TITAN',
                 'created_at' => NULL,
@@ -10373,7 +10373,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            35 => 
+            35 =>
             array (
                 'code' => 'NISVAN',
                 'created_at' => NULL,
@@ -10383,7 +10383,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            36 => 
+            36 =>
             array (
                 'code' => 'VERSA',
                 'created_at' => NULL,
@@ -10393,7 +10393,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            37 => 
+            37 =>
             array (
                 'code' => 'XTERRA',
                 'created_at' => NULL,
@@ -10403,7 +10403,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            38 => 
+            38 =>
             array (
                 'code' => 'NISSOTH',
                 'created_at' => NULL,
@@ -10413,7 +10413,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 49,
             ),
-            39 => 
+            39 =>
             array (
                 'code' => '88',
                 'created_at' => NULL,
@@ -10423,7 +10423,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            40 => 
+            40 =>
             array (
                 'code' => 'ACHIEV',
                 'created_at' => NULL,
@@ -10433,7 +10433,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            41 => 
+            41 =>
             array (
                 'code' => 'ALERO',
                 'created_at' => NULL,
@@ -10443,7 +10443,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            42 => 
+            42 =>
             array (
                 'code' => 'AURORA',
                 'created_at' => NULL,
@@ -10453,7 +10453,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            43 => 
+            43 =>
             array (
                 'code' => 'BRAV',
                 'created_at' => NULL,
@@ -10463,7 +10463,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            44 => 
+            44 =>
             array (
                 'code' => 'CUCR',
                 'created_at' => NULL,
@@ -10473,7 +10473,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            45 => 
+            45 =>
             array (
                 'code' => 'OLDCUS',
                 'created_at' => NULL,
@@ -10483,7 +10483,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            46 => 
+            46 =>
             array (
                 'code' => 'OLDCALAIS',
                 'created_at' => NULL,
@@ -10493,7 +10493,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            47 => 
+            47 =>
             array (
                 'code' => 'CIERA',
                 'created_at' => NULL,
@@ -10503,7 +10503,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            48 => 
+            48 =>
             array (
                 'code' => 'CSUPR',
                 'created_at' => NULL,
@@ -10513,7 +10513,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            49 => 
+            49 =>
             array (
                 'code' => 'OLDSFIR',
                 'created_at' => NULL,
@@ -10523,7 +10523,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            50 => 
+            50 =>
             array (
                 'code' => 'INTRIG',
                 'created_at' => NULL,
@@ -10533,7 +10533,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            51 => 
+            51 =>
             array (
                 'code' => '98',
                 'created_at' => NULL,
@@ -10543,7 +10543,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            52 => 
+            52 =>
             array (
                 'code' => 'OMEG',
                 'created_at' => NULL,
@@ -10553,7 +10553,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            53 => 
+            53 =>
             array (
                 'code' => 'REGEN',
                 'created_at' => NULL,
@@ -10563,7 +10563,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            54 => 
+            54 =>
             array (
                 'code' => 'SILHO',
                 'created_at' => NULL,
@@ -10573,7 +10573,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            55 => 
+            55 =>
             array (
                 'code' => 'TORO',
                 'created_at' => NULL,
@@ -10583,7 +10583,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            56 => 
+            56 =>
             array (
                 'code' => 'OLDOTH',
                 'created_at' => NULL,
@@ -10593,7 +10593,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 50,
             ),
-            57 => 
+            57 =>
             array (
                 'code' => '405',
                 'created_at' => NULL,
@@ -10603,7 +10603,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 51,
             ),
-            58 => 
+            58 =>
             array (
                 'code' => '504',
                 'created_at' => NULL,
@@ -10613,7 +10613,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 51,
             ),
-            59 => 
+            59 =>
             array (
                 'code' => '505',
                 'created_at' => NULL,
@@ -10623,7 +10623,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 51,
             ),
-            60 => 
+            60 =>
             array (
                 'code' => '604',
                 'created_at' => NULL,
@@ -10633,7 +10633,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 51,
             ),
-            61 => 
+            61 =>
             array (
                 'code' => 'UNAVAILPEU',
                 'created_at' => NULL,
@@ -10643,7 +10643,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 51,
             ),
-            62 => 
+            62 =>
             array (
                 'code' => 'ACC',
                 'created_at' => NULL,
@@ -10653,7 +10653,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            63 => 
+            63 =>
             array (
                 'code' => 'ARROW',
                 'created_at' => NULL,
@@ -10663,7 +10663,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            64 => 
+            64 =>
             array (
                 'code' => 'BREEZE',
                 'created_at' => NULL,
@@ -10673,7 +10673,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            65 => 
+            65 =>
             array (
                 'code' => 'CARAVE',
                 'created_at' => NULL,
@@ -10683,7 +10683,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            66 => 
+            66 =>
             array (
                 'code' => 'CHAMP',
                 'created_at' => NULL,
@@ -10693,7 +10693,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            67 => 
+            67 =>
             array (
                 'code' => 'COLT',
                 'created_at' => NULL,
@@ -10703,7 +10703,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            68 => 
+            68 =>
             array (
                 'code' => 'PLYMCONQ',
                 'created_at' => NULL,
@@ -10713,7 +10713,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            69 => 
+            69 =>
             array (
                 'code' => 'GRANFURY',
                 'created_at' => NULL,
@@ -10723,7 +10723,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            70 => 
+            70 =>
             array (
                 'code' => 'PLYMGRANV',
                 'created_at' => NULL,
@@ -10733,7 +10733,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            71 => 
+            71 =>
             array (
                 'code' => 'HORI',
                 'created_at' => NULL,
@@ -10743,7 +10743,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            72 => 
+            72 =>
             array (
                 'code' => 'LASER',
                 'created_at' => NULL,
@@ -10753,7 +10753,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            73 => 
+            73 =>
             array (
                 'code' => 'NEON',
                 'created_at' => NULL,
@@ -10763,7 +10763,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            74 => 
+            74 =>
             array (
                 'code' => 'PROWLE',
                 'created_at' => NULL,
@@ -10773,7 +10773,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            75 => 
+            75 =>
             array (
                 'code' => 'RELI',
                 'created_at' => NULL,
@@ -10783,7 +10783,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            76 => 
+            76 =>
             array (
                 'code' => 'SAPPOROPLY',
                 'created_at' => NULL,
@@ -10793,7 +10793,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            77 => 
+            77 =>
             array (
                 'code' => 'SCAMP',
                 'created_at' => NULL,
@@ -10803,7 +10803,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            78 => 
+            78 =>
             array (
                 'code' => 'SUNDAN',
                 'created_at' => NULL,
@@ -10813,7 +10813,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            79 => 
+            79 =>
             array (
                 'code' => 'TRAILDUST',
                 'created_at' => NULL,
@@ -10823,7 +10823,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            80 => 
+            80 =>
             array (
                 'code' => 'VOYA',
                 'created_at' => NULL,
@@ -10833,7 +10833,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            81 => 
+            81 =>
             array (
                 'code' => 'PLYOTH',
                 'created_at' => NULL,
@@ -10843,7 +10843,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 52,
             ),
-            82 => 
+            82 =>
             array (
                 'code' => 'T-1000',
                 'created_at' => NULL,
@@ -10853,7 +10853,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            83 => 
+            83 =>
             array (
                 'code' => '6000',
                 'created_at' => NULL,
@@ -10863,7 +10863,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            84 => 
+            84 =>
             array (
                 'code' => 'AZTEK',
                 'created_at' => NULL,
@@ -10873,7 +10873,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            85 => 
+            85 =>
             array (
                 'code' => 'BON',
                 'created_at' => NULL,
@@ -10883,7 +10883,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            86 => 
+            86 =>
             array (
                 'code' => 'CATALINA',
                 'created_at' => NULL,
@@ -10893,7 +10893,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            87 => 
+            87 =>
             array (
                 'code' => 'FIERO',
                 'created_at' => NULL,
@@ -10903,7 +10903,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            88 => 
+            88 =>
             array (
                 'code' => 'FBIRD',
                 'created_at' => NULL,
@@ -10913,7 +10913,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            89 => 
+            89 =>
             array (
                 'code' => 'G3',
                 'created_at' => NULL,
@@ -10923,7 +10923,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            90 => 
+            90 =>
             array (
                 'code' => 'G5',
                 'created_at' => NULL,
@@ -10933,7 +10933,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            91 => 
+            91 =>
             array (
                 'code' => 'G6',
                 'created_at' => NULL,
@@ -10943,7 +10943,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            92 => 
+            92 =>
             array (
                 'code' => 'G8',
                 'created_at' => NULL,
@@ -10953,7 +10953,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            93 => 
+            93 =>
             array (
                 'code' => 'GRNDAM',
                 'created_at' => NULL,
@@ -10963,7 +10963,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            94 => 
+            94 =>
             array (
                 'code' => 'GP',
                 'created_at' => NULL,
@@ -10973,7 +10973,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            95 => 
+            95 =>
             array (
                 'code' => 'GTO',
                 'created_at' => NULL,
@@ -10983,7 +10983,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            96 => 
+            96 =>
             array (
                 'code' => 'J2000',
                 'created_at' => NULL,
@@ -10993,7 +10993,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            97 => 
+            97 =>
             array (
                 'code' => 'LEMANS',
                 'created_at' => NULL,
@@ -11003,7 +11003,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            98 => 
+            98 =>
             array (
                 'code' => 'MONTANA',
                 'created_at' => NULL,
@@ -11013,7 +11013,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            99 => 
+            99 =>
             array (
                 'code' => 'PARISI',
                 'created_at' => NULL,
@@ -11023,7 +11023,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            100 => 
+            100 =>
             array (
                 'code' => 'PHOENIX',
                 'created_at' => NULL,
@@ -11033,7 +11033,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            101 => 
+            101 =>
             array (
                 'code' => 'SAFARIPONT',
                 'created_at' => NULL,
@@ -11043,7 +11043,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            102 => 
+            102 =>
             array (
                 'code' => 'SOLSTICE',
                 'created_at' => NULL,
@@ -11053,7 +11053,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            103 => 
+            103 =>
             array (
                 'code' => 'SUNBIR',
                 'created_at' => NULL,
@@ -11063,7 +11063,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            104 => 
+            104 =>
             array (
                 'code' => 'SUNFIR',
                 'created_at' => NULL,
@@ -11073,7 +11073,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            105 => 
+            105 =>
             array (
                 'code' => 'TORRENT',
                 'created_at' => NULL,
@@ -11083,7 +11083,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            106 => 
+            106 =>
             array (
                 'code' => 'TS',
                 'created_at' => NULL,
@@ -11093,7 +11093,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            107 => 
+            107 =>
             array (
                 'code' => 'VIBE',
                 'created_at' => NULL,
@@ -11103,7 +11103,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            108 => 
+            108 =>
             array (
                 'code' => 'PONOTH',
                 'created_at' => NULL,
@@ -11113,7 +11113,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 53,
             ),
-            109 => 
+            109 =>
             array (
                 'code' => '911',
                 'created_at' => NULL,
@@ -11123,7 +11123,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 54,
             ),
-            110 => 
+            110 =>
             array (
                 'code' => '924',
                 'created_at' => NULL,
@@ -11133,7 +11133,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 54,
             ),
-            111 => 
+            111 =>
             array (
                 'code' => '928',
                 'created_at' => NULL,
@@ -11143,7 +11143,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 54,
             ),
-            112 => 
+            112 =>
             array (
                 'code' => '944',
                 'created_at' => NULL,
@@ -11153,7 +11153,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 54,
             ),
-            113 => 
+            113 =>
             array (
                 'code' => '968',
                 'created_at' => NULL,
@@ -11163,7 +11163,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 54,
             ),
-            114 => 
+            114 =>
             array (
                 'code' => 'BOXSTE',
                 'created_at' => NULL,
@@ -11173,7 +11173,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 54,
             ),
-            115 => 
+            115 =>
             array (
                 'code' => 'CARRERAGT',
                 'created_at' => NULL,
@@ -11183,7 +11183,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 54,
             ),
-            116 => 
+            116 =>
             array (
                 'code' => 'CAYENNE',
                 'created_at' => NULL,
@@ -11193,7 +11193,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 54,
             ),
-            117 => 
+            117 =>
             array (
                 'code' => 'CAYMAN',
                 'created_at' => NULL,
@@ -11203,7 +11203,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 54,
             ),
-            118 => 
+            118 =>
             array (
                 'code' => 'PANAMERA',
                 'created_at' => NULL,
@@ -11213,7 +11213,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 54,
             ),
-            119 => 
+            119 =>
             array (
                 'code' => 'POROTH',
                 'created_at' => NULL,
@@ -11223,7 +11223,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 54,
             ),
-            120 => 
+            120 =>
             array (
                 'code' => 'RAM1504WD',
                 'created_at' => NULL,
@@ -11233,7 +11233,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 55,
             ),
-            121 => 
+            121 =>
             array (
                 'code' => 'RAM25002WD',
                 'created_at' => NULL,
@@ -11243,7 +11243,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 55,
             ),
-            122 => 
+            122 =>
             array (
                 'code' => 'RAM3502WD',
                 'created_at' => NULL,
@@ -11253,7 +11253,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 55,
             ),
-            123 => 
+            123 =>
             array (
                 'code' => 'RAM4500',
                 'created_at' => NULL,
@@ -11263,7 +11263,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 55,
             ),
-            124 => 
+            124 =>
             array (
                 'code' => '18I',
                 'created_at' => NULL,
@@ -11273,7 +11273,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 56,
             ),
-            125 => 
+            125 =>
             array (
                 'code' => 'FU',
                 'created_at' => NULL,
@@ -11283,7 +11283,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 56,
             ),
-            126 => 
+            126 =>
             array (
                 'code' => 'LECAR',
                 'created_at' => NULL,
@@ -11293,7 +11293,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 56,
             ),
-            127 => 
+            127 =>
             array (
                 'code' => 'R18',
                 'created_at' => NULL,
@@ -11303,7 +11303,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 56,
             ),
-            128 => 
+            128 =>
             array (
                 'code' => 'RENSPORT',
                 'created_at' => NULL,
@@ -11313,7 +11313,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 56,
             ),
-            129 => 
+            129 =>
             array (
                 'code' => 'UNAVAILREN',
                 'created_at' => NULL,
@@ -11323,7 +11323,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 56,
             ),
-            130 => 
+            130 =>
             array (
                 'code' => 'CAMAR',
                 'created_at' => NULL,
@@ -11333,7 +11333,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 57,
             ),
-            131 => 
+            131 =>
             array (
                 'code' => 'CORN',
                 'created_at' => NULL,
@@ -11343,7 +11343,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 57,
             ),
-            132 => 
+            132 =>
             array (
                 'code' => 'GHOST',
                 'created_at' => NULL,
@@ -11353,7 +11353,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 57,
             ),
-            133 => 
+            133 =>
             array (
                 'code' => 'PARKWARD',
                 'created_at' => NULL,
@@ -11363,7 +11363,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 57,
             ),
-            134 => 
+            134 =>
             array (
                 'code' => 'PHANT',
                 'created_at' => NULL,
@@ -11373,7 +11373,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 57,
             ),
-            135 => 
+            135 =>
             array (
                 'code' => 'DAWN',
                 'created_at' => NULL,
@@ -11383,7 +11383,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 57,
             ),
-            136 => 
+            136 =>
             array (
                 'code' => 'SILSERAPH',
                 'created_at' => NULL,
@@ -11393,7 +11393,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 57,
             ),
-            137 => 
+            137 =>
             array (
                 'code' => 'RRSPIR',
                 'created_at' => NULL,
@@ -11403,7 +11403,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 57,
             ),
-            138 => 
+            138 =>
             array (
                 'code' => 'SPUR',
                 'created_at' => NULL,
@@ -11413,7 +11413,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 57,
             ),
-            139 => 
+            139 =>
             array (
                 'code' => 'UNAVAILRR',
                 'created_at' => NULL,
@@ -11423,7 +11423,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 57,
             ),
-            140 => 
+            140 =>
             array (
                 'code' => '9-2X',
                 'created_at' => NULL,
@@ -11433,7 +11433,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 58,
             ),
-            141 => 
+            141 =>
             array (
                 'code' => '9-3',
                 'created_at' => NULL,
@@ -11443,7 +11443,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 58,
             ),
-            142 => 
+            142 =>
             array (
                 'code' => '9-4X',
                 'created_at' => NULL,
@@ -11453,7 +11453,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 58,
             ),
-            143 => 
+            143 =>
             array (
                 'code' => '9-5',
                 'created_at' => NULL,
@@ -11463,7 +11463,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 58,
             ),
-            144 => 
+            144 =>
             array (
                 'code' => '97X',
                 'created_at' => NULL,
@@ -11473,7 +11473,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 58,
             ),
-            145 => 
+            145 =>
             array (
                 'code' => '900',
                 'created_at' => NULL,
@@ -11483,7 +11483,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 58,
             ),
-            146 => 
+            146 =>
             array (
                 'code' => '9000',
                 'created_at' => NULL,
@@ -11493,7 +11493,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 58,
             ),
-            147 => 
+            147 =>
             array (
                 'code' => 'SAOTH',
                 'created_at' => NULL,
@@ -11503,7 +11503,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 58,
             ),
-            148 => 
+            148 =>
             array (
                 'code' => 'ASTRA',
                 'created_at' => NULL,
@@ -11513,7 +11513,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            149 => 
+            149 =>
             array (
                 'code' => 'AURA',
                 'created_at' => NULL,
@@ -11523,7 +11523,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            150 => 
+            150 =>
             array (
                 'code' => 'ION',
                 'created_at' => NULL,
@@ -11533,7 +11533,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            151 => 
+            151 =>
             array (
                 'code' => 'L_SERIES',
                 'created_at' => NULL,
@@ -11543,7 +11543,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            152 => 
+            152 =>
             array (
                 'code' => 'L100',
                 'created_at' => NULL,
@@ -11553,7 +11553,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            153 => 
+            153 =>
             array (
                 'code' => 'L200',
                 'created_at' => NULL,
@@ -11563,7 +11563,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            154 => 
+            154 =>
             array (
                 'code' => 'L300',
                 'created_at' => NULL,
@@ -11573,7 +11573,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            155 => 
+            155 =>
             array (
                 'code' => 'LSSATURN',
                 'created_at' => NULL,
@@ -11583,7 +11583,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            156 => 
+            156 =>
             array (
                 'code' => 'LW_SERIES',
                 'created_at' => NULL,
@@ -11593,7 +11593,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            157 => 
+            157 =>
             array (
                 'code' => 'LW',
                 'created_at' => NULL,
@@ -11603,7 +11603,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            158 => 
+            158 =>
             array (
                 'code' => 'LW2',
                 'created_at' => NULL,
@@ -11613,7 +11613,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            159 => 
+            159 =>
             array (
                 'code' => 'LW200',
                 'created_at' => NULL,
@@ -11623,7 +11623,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            160 => 
+            160 =>
             array (
                 'code' => 'LW300',
                 'created_at' => NULL,
@@ -11633,7 +11633,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            161 => 
+            161 =>
             array (
                 'code' => 'OUTLOOK',
                 'created_at' => NULL,
@@ -11643,7 +11643,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            162 => 
+            162 =>
             array (
                 'code' => 'RELAY',
                 'created_at' => NULL,
@@ -11653,7 +11653,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            163 => 
+            163 =>
             array (
                 'code' => 'SC_SERIES',
                 'created_at' => NULL,
@@ -11663,7 +11663,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            164 => 
+            164 =>
             array (
                 'code' => 'SC1',
                 'created_at' => NULL,
@@ -11673,7 +11673,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            165 => 
+            165 =>
             array (
                 'code' => 'SC2',
                 'created_at' => NULL,
@@ -11683,7 +11683,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            166 => 
+            166 =>
             array (
                 'code' => 'SKY',
                 'created_at' => NULL,
@@ -11693,7 +11693,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            167 => 
+            167 =>
             array (
                 'code' => 'SL_SERIES',
                 'created_at' => NULL,
@@ -11703,7 +11703,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            168 => 
+            168 =>
             array (
                 'code' => 'SL',
                 'created_at' => NULL,
@@ -11713,7 +11713,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            169 => 
+            169 =>
             array (
                 'code' => 'SL1',
                 'created_at' => NULL,
@@ -11723,7 +11723,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            170 => 
+            170 =>
             array (
                 'code' => 'SL2',
                 'created_at' => NULL,
@@ -11733,7 +11733,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            171 => 
+            171 =>
             array (
                 'code' => 'SW_SERIES',
                 'created_at' => NULL,
@@ -11743,7 +11743,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            172 => 
+            172 =>
             array (
                 'code' => 'SW1',
                 'created_at' => NULL,
@@ -11753,7 +11753,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            173 => 
+            173 =>
             array (
                 'code' => 'SW2',
                 'created_at' => NULL,
@@ -11763,7 +11763,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            174 => 
+            174 =>
             array (
                 'code' => 'VUE',
                 'created_at' => NULL,
@@ -11773,7 +11773,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            175 => 
+            175 =>
             array (
                 'code' => 'SATOTH',
                 'created_at' => NULL,
@@ -11783,7 +11783,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 59,
             ),
-            176 => 
+            176 =>
             array (
                 'code' => 'SCIFRS',
                 'created_at' => NULL,
@@ -11793,7 +11793,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 60,
             ),
-            177 => 
+            177 =>
             array (
                 'code' => 'IQ',
                 'created_at' => NULL,
@@ -11803,7 +11803,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 60,
             ),
-            178 => 
+            178 =>
             array (
                 'code' => 'TC',
                 'created_at' => NULL,
@@ -11813,7 +11813,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 60,
             ),
-            179 => 
+            179 =>
             array (
                 'code' => 'XA',
                 'created_at' => NULL,
@@ -11823,7 +11823,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 60,
             ),
-            180 => 
+            180 =>
             array (
                 'code' => 'XB',
                 'created_at' => NULL,
@@ -11833,7 +11833,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 60,
             ),
-            181 => 
+            181 =>
             array (
                 'code' => 'XD',
                 'created_at' => NULL,
@@ -11843,7 +11843,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 60,
             ),
-            182 => 
+            182 =>
             array (
                 'code' => 'FORTWO',
                 'created_at' => NULL,
@@ -11853,7 +11853,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 61,
             ),
-            183 => 
+            183 =>
             array (
                 'code' => 'SMOTH',
                 'created_at' => NULL,
@@ -11863,7 +11863,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 61,
             ),
-            184 => 
+            184 =>
             array (
                 'code' => 'SRTVIPER',
                 'created_at' => NULL,
@@ -11873,7 +11873,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 62,
             ),
-            185 => 
+            185 =>
             array (
                 'code' => '825',
                 'created_at' => NULL,
@@ -11883,7 +11883,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 63,
             ),
-            186 => 
+            186 =>
             array (
                 'code' => '827',
                 'created_at' => NULL,
@@ -11893,7 +11893,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 63,
             ),
-            187 => 
+            187 =>
             array (
                 'code' => 'UNAVAILSTE',
                 'created_at' => NULL,
@@ -11903,7 +11903,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 63,
             ),
-            188 => 
+            188 =>
             array (
                 'code' => 'BAJA',
                 'created_at' => NULL,
@@ -11913,7 +11913,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            189 => 
+            189 =>
             array (
                 'code' => 'BRAT',
                 'created_at' => NULL,
@@ -11923,7 +11923,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            190 => 
+            190 =>
             array (
                 'code' => 'SUBBRZ',
                 'created_at' => NULL,
@@ -11933,7 +11933,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            191 => 
+            191 =>
             array (
                 'code' => 'FOREST',
                 'created_at' => NULL,
@@ -11943,7 +11943,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            192 => 
+            192 =>
             array (
                 'code' => 'IMPREZ',
                 'created_at' => NULL,
@@ -11953,7 +11953,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            193 => 
+            193 =>
             array (
                 'code' => 'IMPWRX',
                 'created_at' => NULL,
@@ -11963,7 +11963,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            194 => 
+            194 =>
             array (
                 'code' => 'JUSTY',
                 'created_at' => NULL,
@@ -11973,7 +11973,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            195 => 
+            195 =>
             array (
                 'code' => 'SUBL',
                 'created_at' => NULL,
@@ -11983,7 +11983,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            196 => 
+            196 =>
             array (
                 'code' => 'LEGACY',
                 'created_at' => NULL,
@@ -11993,7 +11993,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            197 => 
+            197 =>
             array (
                 'code' => 'LOYALE',
                 'created_at' => NULL,
@@ -12003,7 +12003,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            198 => 
+            198 =>
             array (
                 'code' => 'SUBOUTBK',
                 'created_at' => NULL,
@@ -12013,7 +12013,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            199 => 
+            199 =>
             array (
                 'code' => 'SVX',
                 'created_at' => NULL,
@@ -12023,7 +12023,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            200 => 
+            200 =>
             array (
                 'code' => 'B9TRIBECA',
                 'created_at' => NULL,
@@ -12033,7 +12033,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            201 => 
+            201 =>
             array (
                 'code' => 'XT',
                 'created_at' => NULL,
@@ -12043,7 +12043,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            202 => 
+            202 =>
             array (
                 'code' => 'XVCRSSTREK',
                 'created_at' => NULL,
@@ -12053,7 +12053,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            203 => 
+            203 =>
             array (
                 'code' => 'SUBOTH',
                 'created_at' => NULL,
@@ -12063,7 +12063,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 64,
             ),
-            204 => 
+            204 =>
             array (
                 'code' => 'AERIO',
                 'created_at' => NULL,
@@ -12073,7 +12073,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            205 => 
+            205 =>
             array (
                 'code' => 'EQUATOR',
                 'created_at' => NULL,
@@ -12083,7 +12083,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            206 => 
+            206 =>
             array (
                 'code' => 'ESTEEM',
                 'created_at' => NULL,
@@ -12093,7 +12093,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            207 => 
+            207 =>
             array (
                 'code' => 'FORENZA',
                 'created_at' => NULL,
@@ -12103,7 +12103,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            208 => 
+            208 =>
             array (
                 'code' => 'GRANDV',
                 'created_at' => NULL,
@@ -12113,7 +12113,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            209 => 
+            209 =>
             array (
                 'code' => 'KIZASHI',
                 'created_at' => NULL,
@@ -12123,7 +12123,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            210 => 
+            210 =>
             array (
                 'code' => 'RENO',
                 'created_at' => NULL,
@@ -12133,7 +12133,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            211 => 
+            211 =>
             array (
                 'code' => 'SAMUR',
                 'created_at' => NULL,
@@ -12143,7 +12143,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            212 => 
+            212 =>
             array (
                 'code' => 'SIDE',
                 'created_at' => NULL,
@@ -12153,7 +12153,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            213 => 
+            213 =>
             array (
                 'code' => 'SWIFT',
                 'created_at' => NULL,
@@ -12163,7 +12163,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            214 => 
+            214 =>
             array (
                 'code' => 'SX4',
                 'created_at' => NULL,
@@ -12173,7 +12173,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            215 => 
+            215 =>
             array (
                 'code' => 'VERONA',
                 'created_at' => NULL,
@@ -12183,7 +12183,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            216 => 
+            216 =>
             array (
                 'code' => 'VITARA',
                 'created_at' => NULL,
@@ -12193,7 +12193,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            217 => 
+            217 =>
             array (
                 'code' => 'X90',
                 'created_at' => NULL,
@@ -12203,7 +12203,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            218 => 
+            218 =>
             array (
                 'code' => 'XL7',
                 'created_at' => NULL,
@@ -12213,7 +12213,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            219 => 
+            219 =>
             array (
                 'code' => 'SUZOTH',
                 'created_at' => NULL,
@@ -12223,7 +12223,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 65,
             ),
-            220 => 
+            220 =>
             array (
                 'code' => 'ROADSTER',
                 'created_at' => NULL,
@@ -12233,7 +12233,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 66,
             ),
-            221 => 
+            221 =>
             array (
                 'code' => '4RUN',
                 'created_at' => NULL,
@@ -12243,7 +12243,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            222 => 
+            222 =>
             array (
                 'code' => 'AVALON',
                 'created_at' => NULL,
@@ -12253,7 +12253,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            223 => 
+            223 =>
             array (
                 'code' => 'CAMRY',
                 'created_at' => NULL,
@@ -12263,7 +12263,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            224 => 
+            224 =>
             array (
                 'code' => 'CELICA',
                 'created_at' => NULL,
@@ -12273,7 +12273,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            225 => 
+            225 =>
             array (
                 'code' => 'COROL',
                 'created_at' => NULL,
@@ -12283,7 +12283,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            226 => 
+            226 =>
             array (
                 'code' => 'CORONA',
                 'created_at' => NULL,
@@ -12293,7 +12293,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            227 => 
+            227 =>
             array (
                 'code' => 'CRESS',
                 'created_at' => NULL,
@@ -12303,7 +12303,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            228 => 
+            228 =>
             array (
                 'code' => 'ECHO',
                 'created_at' => NULL,
@@ -12313,7 +12313,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            229 => 
+            229 =>
             array (
                 'code' => 'FJCRUIS',
                 'created_at' => NULL,
@@ -12323,7 +12323,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            230 => 
+            230 =>
             array (
                 'code' => 'HIGHLANDER',
                 'created_at' => NULL,
@@ -12333,7 +12333,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            231 => 
+            231 =>
             array (
                 'code' => 'LC',
                 'created_at' => NULL,
@@ -12343,7 +12343,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            232 => 
+            232 =>
             array (
                 'code' => 'MATRIX',
                 'created_at' => NULL,
@@ -12353,7 +12353,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            233 => 
+            233 =>
             array (
                 'code' => 'MR2',
                 'created_at' => NULL,
@@ -12363,7 +12363,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            234 => 
+            234 =>
             array (
                 'code' => 'MR2SPYDR',
                 'created_at' => NULL,
@@ -12373,7 +12373,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            235 => 
+            235 =>
             array (
                 'code' => 'PASEO',
                 'created_at' => NULL,
@@ -12383,7 +12383,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            236 => 
+            236 =>
             array (
                 'code' => 'PICKUP',
                 'created_at' => NULL,
@@ -12393,7 +12393,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            237 => 
+            237 =>
             array (
                 'code' => 'PREVIA',
                 'created_at' => NULL,
@@ -12403,7 +12403,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            238 => 
+            238 =>
             array (
                 'code' => 'PRIUS',
                 'created_at' => NULL,
@@ -12413,7 +12413,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            239 => 
+            239 =>
             array (
                 'code' => 'PRIUSC',
                 'created_at' => NULL,
@@ -12423,7 +12423,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            240 => 
+            240 =>
             array (
                 'code' => 'PRIUSV',
                 'created_at' => NULL,
@@ -12433,7 +12433,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            241 => 
+            241 =>
             array (
                 'code' => 'RAV4',
                 'created_at' => NULL,
@@ -12443,7 +12443,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            242 => 
+            242 =>
             array (
                 'code' => 'SEQUOIA',
                 'created_at' => NULL,
@@ -12453,7 +12453,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            243 => 
+            243 =>
             array (
                 'code' => 'SIENNA',
                 'created_at' => NULL,
@@ -12463,7 +12463,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            244 => 
+            244 =>
             array (
                 'code' => 'SOLARA',
                 'created_at' => NULL,
@@ -12473,7 +12473,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            245 => 
+            245 =>
             array (
                 'code' => 'STARLET',
                 'created_at' => NULL,
@@ -12483,7 +12483,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            246 => 
+            246 =>
             array (
                 'code' => 'SUPRA',
                 'created_at' => NULL,
@@ -12493,7 +12493,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            247 => 
+            247 =>
             array (
                 'code' => 'T100',
                 'created_at' => NULL,
@@ -12503,7 +12503,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            248 => 
+            248 =>
             array (
                 'code' => 'TACOMA',
                 'created_at' => NULL,
@@ -12513,7 +12513,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            249 => 
+            249 =>
             array (
                 'code' => 'TERCEL',
                 'created_at' => NULL,
@@ -12523,7 +12523,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            250 => 
+            250 =>
             array (
                 'code' => 'TUNDRA',
                 'created_at' => NULL,
@@ -12533,7 +12533,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            251 => 
+            251 =>
             array (
                 'code' => 'TOYVAN',
                 'created_at' => NULL,
@@ -12543,7 +12543,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            252 => 
+            252 =>
             array (
                 'code' => 'VENZA',
                 'created_at' => NULL,
@@ -12553,7 +12553,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            253 => 
+            253 =>
             array (
                 'code' => 'YARIS',
                 'created_at' => NULL,
@@ -12563,7 +12563,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            254 => 
+            254 =>
             array (
                 'code' => 'TOYOTH',
                 'created_at' => NULL,
@@ -12573,7 +12573,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 67,
             ),
-            255 => 
+            255 =>
             array (
                 'code' => 'TR7',
                 'created_at' => NULL,
@@ -12583,7 +12583,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 68,
             ),
-            256 => 
+            256 =>
             array (
                 'code' => 'TR8',
                 'created_at' => NULL,
@@ -12593,7 +12593,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 68,
             ),
-            257 => 
+            257 =>
             array (
                 'code' => 'TRIOTH',
                 'created_at' => NULL,
@@ -12603,7 +12603,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 68,
             ),
-            258 => 
+            258 =>
             array (
                 'code' => 'BEETLE',
                 'created_at' => NULL,
@@ -12613,7 +12613,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            259 => 
+            259 =>
             array (
                 'code' => 'VOLKSCAB',
                 'created_at' => NULL,
@@ -12623,7 +12623,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            260 => 
+            260 =>
             array (
                 'code' => 'CAB',
                 'created_at' => NULL,
@@ -12633,7 +12633,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            261 => 
+            261 =>
             array (
                 'code' => 'CC',
                 'created_at' => NULL,
@@ -12643,7 +12643,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            262 => 
+            262 =>
             array (
                 'code' => 'CORR',
                 'created_at' => NULL,
@@ -12653,7 +12653,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            263 => 
+            263 =>
             array (
                 'code' => 'DASHER',
                 'created_at' => NULL,
@@ -12663,7 +12663,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            264 => 
+            264 =>
             array (
                 'code' => 'EOS',
                 'created_at' => NULL,
@@ -12673,7 +12673,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            265 => 
+            265 =>
             array (
                 'code' => 'EUROVAN',
                 'created_at' => NULL,
@@ -12683,7 +12683,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            266 => 
+            266 =>
             array (
                 'code' => 'VOLKSFOX',
                 'created_at' => NULL,
@@ -12693,7 +12693,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            267 => 
+            267 =>
             array (
                 'code' => 'GLI',
                 'created_at' => NULL,
@@ -12703,7 +12703,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            268 => 
+            268 =>
             array (
                 'code' => 'GOLFR',
                 'created_at' => NULL,
@@ -12713,7 +12713,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            269 => 
+            269 =>
             array (
                 'code' => 'GTI',
                 'created_at' => NULL,
@@ -12723,7 +12723,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            270 => 
+            270 =>
             array (
                 'code' => 'GOLFANDRABBITMODELS',
                 'created_at' => NULL,
@@ -12733,7 +12733,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            271 => 
+            271 =>
             array (
                 'code' => 'GOLF',
                 'created_at' => NULL,
@@ -12743,7 +12743,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            272 => 
+            272 =>
             array (
                 'code' => 'RABBIT',
                 'created_at' => NULL,
@@ -12753,7 +12753,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            273 => 
+            273 =>
             array (
                 'code' => 'JET',
                 'created_at' => NULL,
@@ -12763,7 +12763,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            274 => 
+            274 =>
             array (
                 'code' => 'PASS',
                 'created_at' => NULL,
@@ -12773,7 +12773,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            275 => 
+            275 =>
             array (
                 'code' => 'PHAETON',
                 'created_at' => NULL,
@@ -12783,7 +12783,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            276 => 
+            276 =>
             array (
                 'code' => 'RABBITPU',
                 'created_at' => NULL,
@@ -12793,7 +12793,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            277 => 
+            277 =>
             array (
                 'code' => 'QUAN',
                 'created_at' => NULL,
@@ -12803,7 +12803,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            278 => 
+            278 =>
             array (
                 'code' => 'R32',
                 'created_at' => NULL,
@@ -12813,7 +12813,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            279 => 
+            279 =>
             array (
                 'code' => 'ROUTAN',
                 'created_at' => NULL,
@@ -12823,7 +12823,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            280 => 
+            280 =>
             array (
                 'code' => 'SCIR',
                 'created_at' => NULL,
@@ -12833,7 +12833,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            281 => 
+            281 =>
             array (
                 'code' => 'TIGUAN',
                 'created_at' => NULL,
@@ -12843,7 +12843,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            282 => 
+            282 =>
             array (
                 'code' => 'TOUAREG',
                 'created_at' => NULL,
@@ -12853,7 +12853,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            283 => 
+            283 =>
             array (
                 'code' => 'VANAG',
                 'created_at' => NULL,
@@ -12863,7 +12863,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            284 => 
+            284 =>
             array (
                 'code' => 'VWOTH',
                 'created_at' => NULL,
@@ -12873,7 +12873,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 69,
             ),
-            285 => 
+            285 =>
             array (
                 'code' => '240',
                 'created_at' => NULL,
@@ -12883,7 +12883,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            286 => 
+            286 =>
             array (
                 'code' => '260',
                 'created_at' => NULL,
@@ -12893,7 +12893,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            287 => 
+            287 =>
             array (
                 'code' => '740',
                 'created_at' => NULL,
@@ -12903,7 +12903,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            288 => 
+            288 =>
             array (
                 'code' => '760',
                 'created_at' => NULL,
@@ -12913,7 +12913,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            289 => 
+            289 =>
             array (
                 'code' => '780',
                 'created_at' => NULL,
@@ -12923,7 +12923,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            290 => 
+            290 =>
             array (
                 'code' => '850',
                 'created_at' => NULL,
@@ -12933,7 +12933,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            291 => 
+            291 =>
             array (
                 'code' => '940',
                 'created_at' => NULL,
@@ -12943,7 +12943,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            292 => 
+            292 =>
             array (
                 'code' => '960',
                 'created_at' => NULL,
@@ -12953,7 +12953,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            293 => 
+            293 =>
             array (
                 'code' => 'C30',
                 'created_at' => NULL,
@@ -12963,7 +12963,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            294 => 
+            294 =>
             array (
                 'code' => 'C70',
                 'created_at' => NULL,
@@ -12973,7 +12973,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            295 => 
+            295 =>
             array (
                 'code' => 'S40',
                 'created_at' => NULL,
@@ -12983,7 +12983,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            296 => 
+            296 =>
             array (
                 'code' => 'S60',
                 'created_at' => NULL,
@@ -12993,7 +12993,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            297 => 
+            297 =>
             array (
                 'code' => 'S70',
                 'created_at' => NULL,
@@ -13003,7 +13003,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            298 => 
+            298 =>
             array (
                 'code' => 'S80',
                 'created_at' => NULL,
@@ -13013,7 +13013,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            299 => 
+            299 =>
             array (
                 'code' => 'S90',
                 'created_at' => NULL,
@@ -13023,7 +13023,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            300 => 
+            300 =>
             array (
                 'code' => 'V40',
                 'created_at' => NULL,
@@ -13033,7 +13033,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            301 => 
+            301 =>
             array (
                 'code' => 'V50',
                 'created_at' => NULL,
@@ -13043,7 +13043,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            302 => 
+            302 =>
             array (
                 'code' => 'V70',
                 'created_at' => NULL,
@@ -13053,7 +13053,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            303 => 
+            303 =>
             array (
                 'code' => 'V90',
                 'created_at' => NULL,
@@ -13063,7 +13063,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            304 => 
+            304 =>
             array (
                 'code' => 'XC60',
                 'created_at' => NULL,
@@ -13073,7 +13073,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            305 => 
+            305 =>
             array (
                 'code' => 'XC',
                 'created_at' => NULL,
@@ -13083,7 +13083,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            306 => 
+            306 =>
             array (
                 'code' => 'XC90',
                 'created_at' => NULL,
@@ -13093,7 +13093,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            307 => 
+            307 =>
             array (
                 'code' => 'VOLOTH',
                 'created_at' => NULL,
@@ -13103,7 +13103,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 70,
             ),
-            308 => 
+            308 =>
             array (
                 'code' => 'GV',
                 'created_at' => NULL,
@@ -13113,7 +13113,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 71,
             ),
-            309 => 
+            309 =>
             array (
                 'code' => 'GVC',
                 'created_at' => NULL,
@@ -13123,7 +13123,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 71,
             ),
-            310 => 
+            310 =>
             array (
                 'code' => 'GVL',
                 'created_at' => NULL,
@@ -13133,7 +13133,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 71,
             ),
-            311 => 
+            311 =>
             array (
                 'code' => 'GVS',
                 'created_at' => NULL,
@@ -13143,7 +13143,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 71,
             ),
-            312 => 
+            312 =>
             array (
                 'code' => 'GVX',
                 'created_at' => NULL,
@@ -13153,7 +13153,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'vehicle_make_id' => 71,
             ),
-            313 => 
+            313 =>
             array (
                 'code' => 'YUOTH',
                 'created_at' => NULL,
@@ -13164,7 +13164,7 @@ class VehicleModelsTableSeeder extends Seeder
                 'vehicle_make_id' => 71,
             ),
         ));
-        
-        
+
+
     }
 }
