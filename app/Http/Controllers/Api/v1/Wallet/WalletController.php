@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\WalletHistory;
 use App\Models\RequestPayment;
 use App\Traits\ApiStatusTrait;
+use App\Services\WalletService;
 use App\Traits\FileUploadTrait;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\BeneficiaryBankDetail;
 use App\Http\Resources\WalletResource;
 use App\Notifications\SendNotification;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\WalletHistoryResource;
 use App\Http\Resources\RequestPaymentResource;
 
@@ -167,6 +169,42 @@ class WalletController extends Controller
             'message' => 'Request payment created successfully',
             'request_payment' => $requestPayment,
         ]);
+    }
+
+    public function transfer_balance(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'to_user_id' => 'required|exists:wallets,user_id',
+            'amount' => 'required|numeric|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error($validator->errors(), "Validation Error", 422);
+        }
+
+        $fromWallet = Wallet::where("user_id",auth()->id())->first();
+        $toWallet = Wallet::where("user_id",$request->to_user_id)->first();
+        $amount = $request->input('amount');
+
+        if ($fromWallet->amount < $amount) {
+            return $this->error('', "Insufficient balance", 422);
+        }
+
+        WalletService::updateWallet($fromWallet->user, [
+            'type' => 'debit',
+            'amount' => $amount,
+            'payment_type' => 'transfer',
+            'description' => 'Transfer to wallet ID ' . $toWallet->id,
+        ]);
+
+        WalletService::updateWallet($toWallet->user, [
+            'type' => 'credit',
+            'amount' => $amount,
+            'payment_type' => 'transfer',
+            'description' => 'Transfer from wallet ID ' . $fromWallet->id,
+        ]);
+
+        return $this->success([], "Balance transferred successfully");
     }
 
 

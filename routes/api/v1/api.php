@@ -475,6 +475,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
         Route::post('/update-pin', [WalletController::class, 'update_pin']);
         Route::get('/wallet-history', [WalletController::class, 'wallet_history']);
         Route::post('/request-money', [WalletController::class, 'requestMoney']);
+        Route::post('/wallets-transfer', [WalletController::class, 'transfer_balance']);
         Route::get('/request-inbox', [WalletController::class, 'requestInbox']);
         Route::get('/sent-request', [WalletController::class, 'sendRequest']);
         Route::get('/all-money-request', [WalletController::class, 'allMoneyRequest']);
