@@ -110,25 +110,45 @@ class SpecializedShipmentController extends Controller
     public function destroy($specializedId)
     {
         try {
-            // Find the driver by ID
-            $specialized = LoadSpecialized::with('user')->find($specializedId);
+            // Start a transaction
+            DB::beginTransaction();
 
-        if (!$specialized) {
-                return $this->error('', 'specialized not found', 404);
+            // Find the specialized shipment by ID
+            $specialized = LoadSpecialized::with(['order', 'loadBoard', 'user'])->find($specializedId);
+
+            if (!$specialized) {
+                return $this->error('', 'Specialized shipment not found', 404);
             }
 
-            if ( $user = $specialized->user) {
-                $specialized->delete();
+            // Delete related order if exists
+            if ($order = $specialized->order) {
+                $order->delete();
+            }
 
+            // Delete related load board entry if exists
+            if ($loadBoard = $specialized->loadBoard) {
+                $loadBoard->delete();
+            }
+
+            // Delete the specialized shipment
+            $specialized->delete();
+
+            // Optionally, delete the associated user if required
+            if ($user = $specialized->user) {
                 $user->delete();
+            }
 
-            return $this->success([], 'specialized and user deleted successfully');
+            // Commit the transaction
+            DB::commit();
 
-        }
+            return $this->success([], 'Specialized shipment, related order, and load board entry deleted successfully');
         } catch (\Exception $e) {
-            return $this->error('', 'Unable to delete specialized and user', 500);
+            // Rollback the transaction in case of error
+            DB::rollBack();
+            return $this->error('', 'Unable to delete specialized shipment and related records', 500);
         }
     }
+
 
 
     public function setStatus(Request $request, $specializedId) {
