@@ -509,6 +509,7 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1'], function () {
         Route::get('/model/{id}', [VehicleModelController::class, 'show']);
         Route::post('/model/{id}', [VehicleModelController::class, 'update']);
         Route::delete('/model/{id}', [VehicleModelController::class, 'destroy']);
+        Route::get('/model/car-by-Make/{id}', [VehicleModelController::class, 'getModelByMake']);
 
         // route for vehicle type
         Route::get('/type', [VehicleTypeController::class, 'index']);

@@ -81,4 +81,12 @@ class VehicleModelController extends Controller
             "Vehicle model deleted successfully"
         );
     }
+
+    public function getModelByMake($id)
+    {
+        $model = VehicleModel::where("vehicle_make_id",$id)->get();
+
+        return VehicleModelResource::collection($model);
+
+    }
 }
