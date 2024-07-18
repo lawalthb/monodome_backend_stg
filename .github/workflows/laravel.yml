@@ -52,8 +52,8 @@ jobs:
           # composer install
            php artisan migrate:fresh --seed --force
            php artisan optimize:clear
-          # php artisan route:clear
-          # php artisan config:clear
+          php artisan route:clear
+          php artisan config:clear
           #pwd
           #ls -la
           #chmod +x deploy.sh
