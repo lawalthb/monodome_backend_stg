@@ -49,6 +49,9 @@ class DashboardController extends Controller
            $loadsPerType[$loadType->name] = $loadType->loadboards()->count();
        }
 
+       $loadStats = $this->getLoadStatistics();
+
+
        // Total transactions and fees in WalletHistory
        $totalTransactions = DB::table('wallet_histories')->count();
        $totalFees = DB::table('wallet_histories')->sum('fee');
@@ -72,6 +75,7 @@ class DashboardController extends Controller
            'total_wallets' => $totalWallets,
            'total_wallet_balance' => $totalWalletBalance,
            'loads_per_type' => $loadsPerType,
+           'load_stats' => $loadStats,
            'total_transactions' => $totalTransactions,
            'total_fees' => $totalFees,
            'total_orders' => $totalOrders,
@@ -85,36 +89,99 @@ class DashboardController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    // Method to get order transactions for chart data
+    public function getOrderTransactionStats(Request $request)
     {
-        //
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Filter orders by date range if provided
+        $orders = Order::query();
+        if ($startDate) {
+            $orders->whereDate('created_at', '>=', $startDate);
+        }
+        if ($endDate) {
+            $orders->whereDate('created_at', '<=', $endDate);
+        }
+
+        // Group by day and sum the amounts
+        $orderStats = $orders->select(
+            DB::raw('DATE(created_at) as date'),
+            DB::raw('SUM(amount) as total_amount'),
+            DB::raw('COUNT(*) as total_orders')
+        )
+        ->groupBy('date')
+        ->orderBy('date')
+        ->get();
+
+        return response()->json([
+            'data' => $orderStats
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Method to get wallet transaction statistics
+    public function getWalletTransactionStats(Request $request)
     {
-        //
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Filter wallet histories by date range if provided
+        $walletHistories = DB::table('wallet_histories')->where(function($query) use ($startDate, $endDate) {
+            if ($startDate) {
+                $query->whereDate('created_at', '>=', $startDate);
+            }
+            if ($endDate) {
+                $query->whereDate('created_at', '<=', $endDate);
+            }
+        });
+
+        // Group by day and sum the amounts
+        $walletStats = $walletHistories->select(
+            DB::raw('DATE(created_at) as date'),
+            DB::raw('SUM(amount) as total_amount'),
+            DB::raw('COUNT(*) as total_transactions'),
+            DB::raw('SUM(fee) as total_fees')
+        )
+        ->groupBy('date')
+        ->orderBy('date')
+        ->get();
+
+        return response()->json([
+            'data' => $walletStats
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    private function getLoadStatistics()
     {
-        //
-    }
+        $periods = [
+            'daily' => DB::raw('DATE(created_at)'),
+            'weekly' => DB::raw('YEARWEEK(created_at)'),
+            'monthly' => DB::raw('YEAR(created_at), MONTH(created_at)'),
+            'yearly' => DB::raw('YEAR(created_at)')
+        ];
 
+        $loadTypes = LoadType::all();
+        $stats = [];
+
+        foreach ($loadTypes as $loadType) {
+            $loadTypeStats = [];
+
+            foreach ($periods as $periodName => $period) {
+                $loadTypeStats[$periodName] = LoadBoard::where('load_type_id', $loadType->id)
+                    ->select($period, DB::raw('COUNT(*) as count'))
+                    ->groupBy($period)
+                    ->get()
+                    ->pluck('count', $periodName === 'daily' ? 'DATE(created_at)' : ($periodName === 'weekly' ? 'YEARWEEK(created_at)' : ($periodName === 'monthly' ? 'MONTH(created_at)' : 'YEAR(created_at)')))
+                    ->toArray();
+            }
+
+            $stats[$loadType->name] = $loadTypeStats;
+        }
+
+        return $stats;
+    }
 }
+
+

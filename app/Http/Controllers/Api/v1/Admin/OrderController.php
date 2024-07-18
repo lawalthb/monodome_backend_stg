@@ -98,7 +98,6 @@ class OrderController extends Controller
         return response()->json(['message' => 'Order deleted successfully']);
     }
 
-
     public function all_user_orders($id)
     {
         $user = User::findOrFail($id); // Retrieve the authenticated user

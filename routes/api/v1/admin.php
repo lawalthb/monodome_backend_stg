@@ -59,10 +59,8 @@ Route::group(['namespace' => 'api\v1', 'prefix' => 'v1/admin'], function () {
         //setting route group
         Route::group(['prefix' => 'dashboard'], function () {
             Route::get('/', [DashboardController::class, 'index']);
-            Route::get('/{id}', [DashboardController::class, 'show']);
-            Route::delete('/{id}', [DashboardController::class, 'delete']);
-            Route::post('/store', [DashboardController::class, 'store']);
-            Route::post('/update/{id}', [DashboardController::class, 'update']);
+            Route::get('/order-transactions', [DashboardController::class, 'getOrderTransactionStats']);
+            Route::get('/wallet-transactions', [DashboardController::class, 'getWalletTransactionStats']);
         });
 
 
