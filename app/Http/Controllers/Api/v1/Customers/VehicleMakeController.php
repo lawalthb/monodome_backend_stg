@@ -21,7 +21,7 @@ class VehicleMakeController extends Controller
         $makes = VehicleMake::where(function ($q) use ($key) {
             $q->where('name', 'like', "%{$key}%")
             ->orWhere('code', 'like', "%{$key}%");
-        })->latest()->get();
+        })->get();
 
         //
         return VehicleMakeResource::collection($makes);
