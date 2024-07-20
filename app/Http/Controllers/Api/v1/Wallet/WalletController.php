@@ -221,13 +221,26 @@ class WalletController extends Controller
                 $senderWallet = Wallet::where('user_id', $requestPayment->request_receiver)->lockForUpdate()->first();
 
                 // Check if the requester has sufficient funds if it's a cash-out request
-                if ($requestPayment->type === 'cash-out' && $request->accept_amount > $senderWallet->amount) {
-                    return response()->json(['error' => 'Insufficient funds in wallet'], 422);
+                if ($requestPayment->type === 'cash-out' && $requestPayment->amount > $senderWallet->amount) {
+                    return response()->json(['error' => 'Agent has Insufficient funds in wallet'], 422);
+                }
+
+                  // Check if the requester has sufficient funds if it's a cash-out request
+                  if ($requestPayment->type === 'cash-out' && $requestPayment->amount > $receiverWallet->amount) {
+                    return response()->json(['error' => 'User has Insufficient funds in wallet'], 422);
                 }
 
                 // Process the cash-out request
                 if ($requestPayment->type === 'cash-out') {
                     $receiverData = [
+                        'type' => 'debit',
+                        'amount' => $requestPayment->amount,
+                        'payment_type' => 'wallet',
+                        'description' => 'Sent payment with the following ID: ' . $requestPayment->uuid,
+                        'fee' => 0,
+                    ];
+
+                    $senderData = [
                         'type' => 'credit',
                         'amount' => $requestPayment->amount,
                         'payment_type' => 'wallet',
@@ -235,13 +248,10 @@ class WalletController extends Controller
                         'fee' => 0,
                     ];
 
-                    $senderData = [
-                        'type' => 'debit',
-                        'amount' => $requestPayment->amount,
-                        'payment_type' => 'wallet',
-                        'description' => 'Sent payment with the following ID: ' . $requestPayment->uuid,
-                        'fee' => 0,
-                    ];
+                        // Update the wallets using WalletService
+                   WalletService::updateWallet($receiverWallet->user, $receiverData);
+                   WalletService::updateWallet($senderWallet->user, $senderData);
+
                 }
 
                 // Process the request payment
@@ -261,11 +271,13 @@ class WalletController extends Controller
                         'description' => 'Sent payment with the following ID: ' . $requestPayment->uuid,
                         'fee' => 0,
                     ];
+
+                        // Update the wallets using WalletService
+                  WalletService::updateWallet($receiverWallet->user, $receiverData);
+                  WalletService::updateWallet($senderWallet->user, $senderData);
+
                 }
 
-                // Update the wallets using WalletService
-                WalletService::updateWallet($receiverWallet->user, $receiverData);
-                WalletService::updateWallet($senderWallet->user, $senderData);
 
                 // Update the request payment details
                 $requestPayment->accept_amount = $request->accept_amount;
