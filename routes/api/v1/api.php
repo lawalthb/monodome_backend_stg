@@ -365,12 +365,12 @@ Route::group(['prefix' => 'v1'], function () {
         });
     });
 
-    Route::group(['prefix' => 'clearing-agent','middleware' => 'auth:api','role:agent'], function () {
+    Route::group(['prefix' => 'clearing-agent', 'middleware' => ['auth:api', 'role:Clearing and Forwarding Agent']], function () {
 
         Route::get('/order', [ClearingAgentController::class, 'my_order']);
-        Route::post('/store', [ClearingAgentController::class, 'store'])->withoutMiddleware("auth:api");
+        Route::post('/store', [ClearingAgentController::class, 'store'])->withoutMiddleware(['auth:api', 'role:Clearing and Forwarding Agent']);
         Route::post('/order-assign', [ClearingAgentController::class, 'orderAssign']);
-        Route::post('/accept-order', [ClearingAgentController::class, 'acceptOrder']);
+        Route::post('/accept-order',  [LoadBoardController::class, 'acceptOrder']);
         Route::post('/upload-docs', [ClearingAgentController::class, 'uploadDocs']);
         Route::post('/order-reassign', [ClearingAgentController::class, 'orderReAssign']);
         Route::get('/broadcast', [ClearingAgentController::class, 'broadcast']);

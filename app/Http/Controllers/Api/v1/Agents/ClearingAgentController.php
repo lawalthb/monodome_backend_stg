@@ -35,18 +35,18 @@ class ClearingAgentController extends Controller
         /**
      * Display the specified resource.
      */
-    public function my_order()
+    public function my_order(Request $request)
     {
+        $perPage = $request->input('per_page', 10);
 
-        $order = Order::where("acceptable_id",auth()->user()->agent->id)->get();
+        $order = LoadBoard::orderBy('created_at', 'desc');
 
-        if (!$order) {
+        $loadBoards = $order->whereIn('load_type_id', [3, 4])
+            ->where('acceptable_id', auth()->user()->id)
+            ->latest()
+            ->paginate($perPage);
 
-            return $this->error('', 'No order not found', 422);
-
-        }
-
-        return OrderResource::collection($order);
+        return OrderResource::collection($loadBoards);
     }
 
 
@@ -61,7 +61,10 @@ class ClearingAgentController extends Controller
 
         $loadBoards = $query->whereIn('load_type_id',[3,4])
         ->where('acceptable_id', auth()->user()->id)
-        ->where('acceptable_type', Agent::class)->latest()->paginate($perPage);
+        ->whereHas('user', function($query){
+            $query->where('isPremium',true);
+        })
+        ->latest()->paginate($perPage);
 
         return LoadBoardResource::collection($loadBoards);
     }
