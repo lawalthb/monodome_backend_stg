@@ -202,6 +202,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/price/get-distance', [OrderController::class, 'distancePrice']);
         Route::post('/price/calculate', [OrderController::class, 'calculatePrice']);
         Route::post('/price/calculateCarClearing', [OrderController::class, 'calculateCarClearing']);
+        Route::post('/price/calculateContainer', [OrderController::class, 'calculateContainer']);
     });
 
 

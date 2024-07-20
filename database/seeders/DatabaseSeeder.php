@@ -64,6 +64,9 @@ class DatabaseSeeder extends Seeder
         $this->call(CarStatePriceSeeder::class);
         $this->call(CarCountryPriceSeeder::class);
         $this->call(CarYearPriceSeeder::class);
+        $this->call(CarsContainerValuePriceSeeder::class);
+        $this->call(OtherContainerValuePriceSeeder::class);
+
         $this->call(PlanSeeder::class);
         $this->call(AgentCommissionSeeder::class);
 
