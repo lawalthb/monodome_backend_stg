@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Api\v1\Wallet;
 use App\Models\Card;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use App\Traits\ApiStatusTrait;
+use App\Services\WalletService;
+use App\Traits\FileUploadTrait;
 use App\Http\Requests\CardRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use App\Notifications\SendNotification;
-use App\Services\WalletService;
-use Illuminate\Support\Facades\DB;
-use App\Traits\ApiStatusTrait;
-use App\Traits\FileUploadTrait;
 
 class CardController extends Controller
 {
@@ -79,9 +80,9 @@ class CardController extends Controller
             $result = $response->json();
 
             if ($result['status'] == true) {
-                $data = $result['data'];
 
-                DB::beginTransaction();
+                    Log::info($result);
+                // DB::beginTransaction();
                 try {
                     // Update wallet and create wallet history using WalletService
                     WalletService::updateWallet($user, [
@@ -98,11 +99,11 @@ class CardController extends Controller
                     $card->customer_code = $data['customer']['customer_code'];
                     $card->save();
 
-                    DB::commit();
+                   /// DB::commit();
 
                     return $this->success($card, "Card charged successfully");
                 } catch (\Exception $e) {
-                    DB::rollBack();
+                 //   DB::rollBack();
                     return $this->error(null, 'Error processing the transaction', 500);
                 }
             } else {
