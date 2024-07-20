@@ -22,6 +22,7 @@ class PaymentController extends Controller
     public function paystackWebhooks(Request $request)
     {
         http_response_code(200);
+        http_response_code(201);
 
         if ((strtoupper($_SERVER['REQUEST_METHOD']) != 'POST') || !array_key_exists('HTTP_X_PAYSTACK_SIGNATURE', $_SERVER)) {
             exit();
@@ -34,8 +35,6 @@ class PaymentController extends Controller
         if ($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, $secretkey)) {
             exit();
         }
-
-        Log::info($request);
 
         if ($request['event'] == 'charge.success' && $request['data']['metadata']['custom_fields'][0]['from'] == 'wallet') {
 

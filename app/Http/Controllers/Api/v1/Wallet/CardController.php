@@ -81,7 +81,6 @@ class CardController extends Controller
 
             if ($result['status'] == true) {
 
-                    Log::info($result);
                 // DB::beginTransaction();
                 try {
                     // Update wallet and create wallet history using WalletService
