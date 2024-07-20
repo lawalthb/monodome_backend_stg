@@ -412,14 +412,14 @@ class OrderController extends Controller
     $carValuePriceAmount = $carValuePrice->price;
     $otherValuePriceAmount = $otherValuePrice->price;
 
-   return $total_price = $carValuePriceAmount + $otherValuePriceAmount;
+    $total_price = $carValuePriceAmount + $otherValuePriceAmount;
 
     // Return the calculated values along with the total amounts
     return response()->json([
         'success' => true,
         'message' => 'Price calculation successful',
         'data' => [
-            'total_price' => $total_price,
+            'final_price' => $total_price,
             'total_car_amount' => $totalCarAmount,
             'car_value_price' => $carValuePriceAmount,
             'total_other_amount' => $totalOtherAmount,
