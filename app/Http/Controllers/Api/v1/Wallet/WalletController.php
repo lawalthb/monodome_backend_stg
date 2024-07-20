@@ -153,7 +153,15 @@ class WalletController extends Controller
             'request_receiver' => ['required', 'integer', Rule::notIn([auth()->id()])],
             'amount' => 'required|numeric|min:0',
             'comment' => 'nullable|string|max:255',
+            'type' => 'required|string|in:cash-out,request',
         ]);
+
+        $cashOutUserWallet = Wallet::where("user_id",auth()->id())->first();
+
+        if ($request->type === 'cash-out' && $request->amount > $cashOutUserWallet->amount) {
+
+            return $this->error(null, 'Insufficient funds in wallet', 422);
+        }
 
         // Create a new request payment
         $requestPayment = RequestPayment::create([
@@ -161,6 +169,7 @@ class WalletController extends Controller
             'request_receiver' => $request->input('request_receiver'),
             'amount' => $request->input('amount'),
             'comment' => $request->input('comment'),
+            'type' => $request->input('type'), // Set the type (cash-out or request)
             'status' => 'Pending', // Set the default status
         ]);
 
@@ -170,6 +179,91 @@ class WalletController extends Controller
             'request_payment' => $requestPayment,
         ]);
     }
+
+
+    public function approveRequest(Request $request, $id)
+{
+    // Validate the inputs
+    $request->validate([
+        'accept_amount' => 'required|numeric|min:0',
+        'status' => 'required|string|in:Pending,Success,Refund,Blocked',
+        'comment' => 'nullable|string|max:255',
+    ]);
+
+    // Find the request payment by ID and ensure it belongs to the authenticated user
+    $requestPayment = RequestPayment::where('id', $id)
+        ->where('request_receiver', auth()->id())
+        ->firstOrFail();
+
+    // Check if the request status is already Refund or Success
+    if (in_array($requestPayment->status, ['Refund', 'Success'])) {
+        return response()->json(['message' => 'Payment request is already Refund or Successfully!'], 404);
+    }
+
+    // Update the request payment status and comment for Refund or Blocked requests
+    if (in_array($request->input('status'), ['Blocked'])) {
+        $requestPayment->status = $request->input('status');
+        $requestPayment->comment = $request->input('comment');
+        $requestPayment->save();
+        return response()->json(['status' => true, 'data' => new RequestPaymentResource($requestPayment)], 200);
+    }
+
+    // Process the request if the status is Success
+    if ($request->input('status') === 'Success') {
+        // Use a database transaction to ensure atomicity
+        DB::beginTransaction();
+
+        try {
+            // Lock the receiver's and requester's wallets for update
+            $receiverWallet = Wallet::where('user_id', $requestPayment->request_sender)->lockForUpdate()->first();
+            $senderWallet = Wallet::where('user_id', $requestPayment->request_receiver)->lockForUpdate()->first();
+
+            // Check if the requester has sufficient funds if it's a cash-out request
+            if ($requestPayment->type === 'cash-out' && $request->accept_amount > $senderWallet->amount) {
+                return $this->error(null, 'Insufficient funds in wallet in his wallet', 422);
+            }
+
+            // Update the wallets using WalletService
+            $receiverData = [
+                'type' => 'credit',
+                'amount' => $request->accept_amount,
+                'payment_type' => 'wallet',
+                'description' => 'Received payment with the following ID: ' . $requestPayment->uuid,
+                'fee' => 0,
+            ];
+
+            $senderData = [
+                'type' => 'debit',
+                'amount' => $request->accept_amount,
+                'payment_type' => 'wallet',
+                'description' => 'Sent payment with the following ID: ' . $requestPayment->uuid,
+                'fee' => 0,
+            ];
+
+            WalletService::updateWallet($receiverWallet->user, $receiverData);
+            WalletService::updateWallet($senderWallet->user, $senderData);
+
+            // Update the request payment details
+            $requestPayment->accept_amount = $request->accept_amount;
+            $requestPayment->status = 'Success';
+            $requestPayment->comment = $request->input('comment');
+            $requestPayment->save();
+
+            DB::commit();
+
+            // Return success response
+            return response()->json(['wallet_amount' => $senderWallet->amount, 'requestPayment' => new RequestPaymentResource($requestPayment)]);
+        } catch (\Exception $e) {
+            // Roll back the transaction on error
+            DB::rollBack();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    // Return a default response if the request does not fall into any of the above conditions
+    return response()->json(['message' => 'Request not processed'], 400);
+}
+
 
     public function transfer_balance(Request $request)
     {
@@ -269,108 +363,88 @@ class WalletController extends Controller
 
       }
 
+    //   public function approveRequest(Request $request, $id)
+    //   {
+    //       // Validate the inputs
+    //       $request->validate([
+    //           'accept_amount' => 'required|numeric|min:0',
+    //           'status' => 'required|string|in:Pending,Success,Refund,Blocked',
+    //           'comment' => 'nullable|string|max:255',
+    //       ]);
 
-      public function approveRequest(Request $request, $id)
-{
-    // Validate the inputs
-    $request->validate([
-        'accept_amount' => 'required|numeric|min:0',
-        'status' => 'required|string|in:Pending,Success,Refund,Blocked',
-        'comment' => 'nullable|string|max:255',
-    ]);
+    //       // Find the request payment by ID and ensure it belongs to the authenticated user
+    //       $requestPayment = RequestPayment::where('id', $id)
+    //           ->where('request_receiver', auth()->id())
+    //           ->firstOrFail();
 
-    // Find the request payment by ID and ensure it belongs to the authenticated user
-    $requestPayment = RequestPayment::where('id', $id)
-        ->where('request_receiver', auth()->id())
-        ->firstOrFail();
+    //       // Check if the request status is already Refund or Success
+    //       if (in_array($requestPayment->status, ['Refund', 'Success'])) {
+    //           return response()->json(['message' => 'Payment request is already Refund or Successfully!'], 404);
+    //       }
 
-    // Check if the request status is already Refund or Success
-    if (in_array($requestPayment->status, ['Refund', 'Success'])) {
-        return response()->json(['message' => 'Payment request is already Refund or Successfully!'], 404);
-    }
+    //       // Update the request payment status and comment for Refund or Blocked requests
+    //       if (in_array($request->input('status'), ['Blocked'])) {
+    //           $requestPayment->status = $request->input('status');
+    //           $requestPayment->comment = $request->input('comment');
+    //           $requestPayment->save();
+    //           return response()->json(['status' => true, 'data' => new RequestPaymentResource($requestPayment)], 200);
+    //       }
 
-    // Update the request payment status and comment for Refund or Blocked requests
-    if (in_array($requestPayment->status, ['Blocked'])) {
-        $requestPayment->status = $request->input('status');
-        $requestPayment->comment = $request->input('comment');
-        $requestPayment->save();
-        return response()->json(['status' => true, 'data' => new RequestPaymentResource($requestPayment)], 200);
-    }
+    //       // Process the request if the status is Success
+    //       if ($request->input('status') === 'Success') {
+    //           // Use a database transaction to ensure atomicity
+    //           DB::beginTransaction();
 
-    // Process the request if the status is Success
-    if ($request->input('status') === 'Success') {
-        // Use a database transaction to ensure atomicity
-        DB::beginTransaction();
+    //           try {
+    //               // Lock the receiver's and requester's wallets for update
+    //               $receiverWallet = Wallet::where('user_id', $requestPayment->request_sender)->lockForUpdate()->first();
+    //               $senderWallet = Wallet::where('user_id', $requestPayment->request_receiver)->lockForUpdate()->first();
 
-        try {
-            // Lock the receiver's and requester's wallets for update
-            $receiverWallet = Wallet::where('user_id', $requestPayment->request_sender)->lockForUpdate()->first();
-            $SenderWallet = Wallet::where('user_id', $requestPayment->request_receiver)->lockForUpdate()->first();
+    //               // Check if the requester has sufficient funds
+    //               if ($request->accept_amount > $senderWallet->amount) {
+    //                   throw new \Exception('Insufficient funds in wallet');
+    //               }
 
-            // Check if the requester has sufficient funds
-            if ($request->accept_amount > $SenderWallet->amount) {
-                throw new \Exception('Insufficient funds in wallet');
-            }
+    //               // Update the wallets using WalletService
+    //               $receiverData = [
+    //                   'type' => 'credit',
+    //                   'amount' => $request->accept_amount,
+    //                   'payment_type' => 'wallet',
+    //                   'description' => 'Received payment with the following ID: ' . $requestPayment->uuid,
+    //                   'fee' => 0,
+    //               ];
 
-            // Update the wallets
-            $receiverWallet->amount += $request->accept_amount;
-            $SenderWallet->amount -= $request->accept_amount;
+    //               $senderData = [
+    //                   'type' => 'debit',
+    //                   'amount' => $request->accept_amount,
+    //                   'payment_type' => 'wallet',
+    //                   'description' => 'Sent payment with the following ID: ' . $requestPayment->uuid,
+    //                   'fee' => 0,
+    //               ];
 
-            $receiverWallet->save();
-            $SenderWallet->save();
+    //               WalletService::updateWallet($receiverWallet->user, $receiverData);
+    //               WalletService::updateWallet($senderWallet->user, $senderData);
 
-            // the ammount the user later accept
-            $requestPayment->accept_amount = $request->accept_amount;
-            $requestPayment->save();
+    //               // Update the request payment details
+    //               $requestPayment->accept_amount = $request->accept_amount;
+    //               $requestPayment->status = 'Success';
+    //               $requestPayment->comment = $request->input('comment');
+    //               $requestPayment->save();
 
-            // Update the request payment status and comment
-            $requestPayment->status = 'Success';
-            $requestPayment->comment = $request->input('comment');
-            $requestPayment->save();
+    //               DB::commit();
 
-            // Update wallet history for the receiver
-            $receiverWalletHistory = new WalletHistory;
-            $receiverWalletHistory->wallet_id = $receiverWallet->id;
-            $receiverWalletHistory->user_id = $receiverWallet->user_id;
-            $receiverWalletHistory->type = 'credit';
-            $receiverWalletHistory->payment_type = 'wallet';
-            $receiverWalletHistory->amount = $request->accept_amount;
-            $receiverWalletHistory->closing_balance = $receiverWallet->amount;
-            $receiverWalletHistory->fee = 0;
-            $receiverWalletHistory->description = 'Received payment with the following ID: ' . $requestPayment->uuid;
-            $receiverWalletHistory->save();
+    //               // Return success response
+    //               return response()->json(['wallet_amount' => $senderWallet->amount, 'requestPayment' => new RequestPaymentResource($requestPayment)]);
+    //           } catch (\Exception $e) {
+    //               // Roll back the transaction on error
+    //               DB::rollBack();
+    //               return response()->json(['error' => $e->getMessage()], 500);
+    //           }
+    //       }
 
-            // Update wallet history for the requester
-            $SenderWalletHistory = new WalletHistory;
-            $SenderWalletHistory->wallet_id = $SenderWallet->id;
-            $SenderWalletHistory->user_id = $SenderWallet->user_id;
-            $SenderWalletHistory->type = 'debit';
-            $SenderWalletHistory->payment_type = 'wallet';
-            $SenderWalletHistory->amount = $request->accept_amount;
-            $SenderWalletHistory->closing_balance = $SenderWallet->amount;
-            $SenderWalletHistory->fee = 0;
-            $SenderWalletHistory->description = 'Sent payment with the following ID: ' . $requestPayment->uuid;
-            $SenderWalletHistory->save();
-
-            // Notify the requester and receiver
-            $SenderWalletHistory->user->notify(new SendNotification($SenderWalletHistory->user, 'Request payment was successful!'));
-            $receiverWalletHistory->user->notify(new SendNotification($receiverWalletHistory->user, 'Received payment was successful!'));
-
-            DB::commit();
-
-            // Return success response
-            return response()->json(['wallet_amount' => $SenderWallet->amount, 'requestPayment' => new RequestPaymentResource($requestPayment)]);
-        } catch (\Exception $e) {
-            // Roll back the transaction on error
-            DB::rollBack();
-
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-
-    // Return a default response if the request does not fall into any of the above conditions
-    return response()->json(['message' => 'Request not processed'], 400);
-}
+    //       // Return a default response if the request does not fall into any of the above conditions
+    //       return response()->json(['message' => 'Request not processed'], 400);
+    //   }
 
 
     //   public function approveRequest(Request $request, $id)

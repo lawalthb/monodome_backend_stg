@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('purpose')->nullable();
+            $table->enum('type',  ['cash-out','request'])->nullable();
             $table->text('comment')->nullable();
             $table->enum('status', ['Pending','Success','Refund','Blocked'])->default('Pending')->comment('Pending, Success, Refund, Blocked');
             $table->timestamps();
