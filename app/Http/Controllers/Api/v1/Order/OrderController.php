@@ -104,7 +104,7 @@ class OrderController extends Controller
             // Remove money from wallet of users
             if ($request->payment_type == "wallet") {
                 WalletService::updateWallet($load->user, [
-                    'amount' => -$loadTotalAmount,
+                    'amount' => $loadTotalAmount,
                     'type' => 'debit',
                     'payment_type' => 'wallet',
                     'description' => "Payment for Order ID: " . $load->id,
@@ -134,12 +134,6 @@ class OrderController extends Controller
                 $order->payment_status = 'Paid';
                 $order->save();
 
-                WalletService::updateWallet($load->user, [
-                    'amount' => -$load->total_amount,
-                    'type' => 'debit',
-                    'payment_type' => 'wallet',
-                    'description' => "Payment for Order ID: " . $order->order_no,
-                ]);
 
                 $order->user->notify(new SendNotification($order->user, 'Your wallet payment order was successful!'));
 
