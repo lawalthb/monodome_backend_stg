@@ -46,8 +46,8 @@ class ClearingAgentController extends Controller
             ->latest()
             ->paginate($perPage);
 
-        return OrderResource::collection($loadBoards);
-    }
+            return LoadBoardResource::collection($loadBoards);
+        }
 
 
     public function broadcast(Request $request)
