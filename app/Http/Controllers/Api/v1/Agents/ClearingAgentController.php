@@ -295,36 +295,45 @@ class ClearingAgentController extends Controller
 
     }
 
-    public function uploadDocs(Request $request){
-
-        if ($request->hasFile('documents')) {
-            $agent = Agent::find(auth()->id());
-            $documents = [];
-
-            foreach ($request->file('documents') as $file) {
-
-                $file = $this->uploadFileWithDetails('load_documents', $file);
-                $path = $file['path'];
-                $name = $file['file_name'];
-
-                // Create a record in the load_documents table
-                $document = new LoadDocument([
-                    'name' => $name,
-                    'path' => $path,
-                ]);
-
-                // Associate the document with the clearing Agent
-                $agent->loadDocuments()->save($document);
-            }
-
-
-            return $this->success( new AgentResource($agent), 'Document uploaded successfully');
-
-        }else{
-            return $this->error([
-            ], "Document File is empty!");
-        }
+    public function uploadDocs(Request $request)
+{
+    // Check if the request has files under 'documents'
+    if (!$request->hasFile('documents')) {
+        return $this->error([], "Document File is empty!");
     }
+
+    // Attempt to find the Agent by the authenticated user's ID
+    $agent = Agent::find(auth()->id());
+
+    // Check if an Agent was found
+    if (!$agent) {
+        return $this->error([], "Agent not found.");
+    }
+
+    // Initialize an array to hold the documents
+    $documents = [];
+
+    // Iterate over each uploaded file
+    foreach ($request->file('documents') as $file) {
+        // Upload the file and get its details
+        $fileDetails = $this->uploadFileWithDetails('load_documents', $file);
+        $path = $fileDetails['path'];
+        $name = $fileDetails['file_name'];
+
+        // Create a new LoadDocument instance with the file details
+        $document = new LoadDocument([
+            'name' => $name,
+            'path' => $path,
+        ]);
+
+        // Associate the document with the Agent
+        $agent->loadDocuments()->save($document);
+    }
+
+    // Return a success response with the updated Agent resource
+    return $this->success(new AgentResource($agent), 'Document uploaded successfully');
+}
+
 
 
 }
