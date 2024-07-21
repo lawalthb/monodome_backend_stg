@@ -203,12 +203,12 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => '2023-10-30 13:22:23',
             ),
 
-            5 =>
+            6=>
             array (
-                'id' => 6,
+                'id' => 7,
                 'full_name' => 'Clearing and Forwarding Agent',
                 'email' => 'clearing@gmail.com',
-                'phone_number' => "+234708474427",
+                'phone_number' => "+2347084712127",
                 'email_verified_at' => now(),
                 'password' => '$2y$10$ls19QB7MfG39OL0BmrkLVuzgN1VbAyQ/UlkzIfGbWBCyu/5cFIfTG',
                 'provider_id' => NULL,
@@ -219,7 +219,36 @@ class UsersTableSeeder extends Seeder
                 'referral_code' => generateReferralCode(),
                 'role_id' => NULL,
                 'imageUrl' => NULL,
-                'user_type' => 'company_transport',
+                'user_type' => 'clearing_and_forwarding_agent',
+                'role' => 'super_admin',
+                'location' => NULL,
+                'user_agent' => NULL,
+                'isPremium' => 1,
+                'plan_id' => 1,
+                'status' => 'Confirmed',
+                'remember_token' => NULL,
+                'deleted_at' => NULL,
+                'created_at' => '2023-10-30 13:22:23',
+                'updated_at' => '2023-10-30 13:22:23',
+            ),
+
+            7=>
+            array (
+                'id' => 8,
+                'full_name' => 'Agent Agent',
+                'email' => 'agent@gmail.com',
+                'phone_number' => "+23470812127",
+                'email_verified_at' => now(),
+                'password' => '$2y$10$ls19QB7MfG39OL0BmrkLVuzgN1VbAyQ/UlkzIfGbWBCyu/5cFIfTG',
+                'provider_id' => NULL,
+                'provider' => NULL,
+                'address' => NULL,
+                'user_created_by' => NULL,
+                'ref_by' => 1,
+                'referral_code' => generateReferralCode(),
+                'role_id' => NULL,
+                'imageUrl' => NULL,
+                'user_type' => 'agent',
                 'role' => 'super_admin',
                 'location' => NULL,
                 'user_agent' => NULL,
@@ -258,8 +287,8 @@ class UsersTableSeeder extends Seeder
         User::find(4)->assignRole('Driver');
         User::find(5)->assignRole('Driver Manager');
         User::find(6)->assignRole('Company Transport');
-        User::find(7)->assignRole('Agent');
-        User::find(8)->assignRole('Clearing and Forwarding Agent');
+        User::find(7)->assignRole('Clearing and Forwarding Agent');
+        User::find(8)->assignRole('Agent');
 
 
         $statuses = ['Pending', 'Confirmed'];
