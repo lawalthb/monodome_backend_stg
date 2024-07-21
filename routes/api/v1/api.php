@@ -370,10 +370,10 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::get('/order', [ClearingAgentController::class, 'my_order']);
         Route::post('/store', [ClearingAgentController::class, 'store'])->withoutMiddleware(['auth:api', 'role:Clearing and Forwarding Agent']);
-        Route::post('/order-assign', [ClearingAgentController::class, 'orderAssign']);
+        Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
         Route::post('/accept-order',  [LoadBoardController::class, 'acceptOrder']);
         Route::post('/upload-docs', [ClearingAgentController::class, 'uploadDocs']);
-        Route::post('/order-reassign', [ClearingAgentController::class, 'orderReAssign']);
+        Route::post('/order-reassign', [LoadBoardController::class, 'orderReAssign']);
         Route::get('/broadcast', [ClearingAgentController::class, 'broadcast']);
         Route::get('/broadcast/{id}', [ClearingAgentController::class, 'singleBroadcast']);
 
