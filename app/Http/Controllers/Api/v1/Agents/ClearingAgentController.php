@@ -72,21 +72,28 @@ class ClearingAgentController extends Controller
     public function singleBroadcast(Request $request, $id)
     {
 
-        return LoadBoard::where("id", $id)->first();
-        // Build the query to find the LoadBoard with the specified id and load type
-        $query = LoadBoard::where("id", $id)->whereIn('load_type_id', [3, 4]);
-
-        if ($request->has('order_no')) {
-            $query->where('order_no', $request->input('order_no'));
-        }
-
-        $loadBoard = $query->first();
+        $loadBoard =  LoadBoard::where("id", $id)->first();
 
         if ($loadBoard) {
             return new LoadBoardResource($loadBoard);
         } else {
             return response()->json(['message' => 'LoadBoard record not found'], 404);
         }
+
+        // Build the query to find the LoadBoard with the specified id and load type
+        // $query = LoadBoard::where("id", $id)->whereIn('load_type_id', [3, 4]);
+
+        // if ($request->has('order_no')) {
+        //     $query->where('order_no', $request->input('order_no'));
+        // }
+
+        // $loadBoard = $query->first();
+
+        // if ($loadBoard) {
+        //     return new LoadBoardResource($loadBoard);
+        // } else {
+        //     return response()->json(['message' => 'LoadBoard record not found'], 404);
+        // }
     }
 
 
