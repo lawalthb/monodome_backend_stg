@@ -83,7 +83,6 @@ class ClearingAgentController extends Controller
         if ($loadBoard) {
             return new LoadBoardResource($loadBoard);
         } else {
-            // If no matching LoadBoard is found, return a 404 error with a message
             return response()->json(['message' => 'LoadBoard record not found'], 404);
         }
     }
