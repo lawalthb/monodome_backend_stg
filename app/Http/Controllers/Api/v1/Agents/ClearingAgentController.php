@@ -303,7 +303,7 @@ class ClearingAgentController extends Controller
     }
 
     // Attempt to find the Agent by the authenticated user's ID
-    $agent = Agent::find(auth()->id());
+    $agent = Agent::where("user_id",auth()->id())->first();
 
     // Check if an Agent was found
     if (!$agent) {
