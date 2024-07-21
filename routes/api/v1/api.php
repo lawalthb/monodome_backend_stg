@@ -372,6 +372,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/store', [ClearingAgentController::class, 'store'])->withoutMiddleware(['auth:api', 'role:Clearing and Forwarding Agent']);
         Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
         Route::post('/accept-order',  [LoadBoardController::class, 'acceptOrder']);
+        Route::post('/reject-order', [LoadBoardController::class, 'rejectOrder']);
         Route::post('/upload-docs', [ClearingAgentController::class, 'uploadDocs']);
         Route::post('/order-reassign', [LoadBoardController::class, 'orderReAssign']);
         Route::get('/broadcast', [ClearingAgentController::class, 'broadcast']);
