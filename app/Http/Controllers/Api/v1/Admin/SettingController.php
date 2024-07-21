@@ -94,7 +94,7 @@ class SettingController extends Controller
         $setting = new Setting;
         $setting->name = $request->name;
         $setting->value = $request->value;
-        $setting->slug = Str::studly($request->name);
+        $setting->slug = Str::camel($request->name);
         $setting->save();
         return $setting;
     }
@@ -115,7 +115,7 @@ class SettingController extends Controller
 
             $setting->name = $request->name;
             $setting->value = $request->value;
-            $setting->slug = Str::studly($request->name);
+         //   $setting->slug = Str::camel($request->name);
             $setting->save();
             return $setting;
         }else{

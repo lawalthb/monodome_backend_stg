@@ -108,7 +108,7 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'name' => 'Transaction Fees',
-                'value' => '1',
+                'value' => 100,
                 'slug' => 'transactionFees',
                 'created_at' => null,
                 'updated_at' => null,
@@ -172,7 +172,23 @@ class SettingsSeeder extends Seeder
             [
                 'name' => 'Map Api Server Key',
                 'value' => 'AIzaSyDMl9gMhFdQ8yel_p9EREkl-i9ocbBf178',
-                'slug' => 'map_api_key_server',
+                'slug' => 'mapApiKey',
+                'created_at' => '2020-01-07 18:30:00',
+                'updated_at' => null,
+            ],
+
+            [
+                'name' => 'Wallet Max Withdrawal Limit',
+                'value' => 500000,
+                'slug' => 'maxWithdrawLimit',
+                'created_at' => '2020-01-07 18:30:00',
+                'updated_at' => null,
+            ],
+
+            [
+                'name' => 'Wallet Max Withdrawal Limit',
+                'value' => 100,
+                'slug' => 'maxWithdrawLimit',
                 'created_at' => '2020-01-07 18:30:00',
                 'updated_at' => null,
             ],

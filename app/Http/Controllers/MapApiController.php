@@ -14,7 +14,7 @@ class MapApiController extends Controller
 
     public function getKey()
     {
-        $api_key = get_business_settings('map_api_key_server');
+        $api_key = get_business_settings('mapApiKey');
         return response()->json(['message' => 'successfully','key'=>$api_key], 200);
     }
 
@@ -26,7 +26,7 @@ class MapApiController extends Controller
         if ($validator->errors()->count() > 0) {
             return response()->json(['errors' => error_processor($validator)], 403);
         }
-        $api_key = get_business_settings('map_api_key_server');
+        $api_key = get_business_settings('mapApiKey');
         $response = Http::get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' . $request['search_text'] . '&key=' . $api_key);
         return $response->json();
     }
@@ -43,7 +43,7 @@ class MapApiController extends Controller
         if ($validator->errors()->count() > 0) {
             return response()->json(['errors' => error_processor($validator)], 403);
         }
-        $api_key = get_business_settings('map_api_key_server');
+        $api_key = get_business_settings('mapApiKey');
         $response = Http::get('https://maps.googleapis.com/maps/api/distancematrix/json?origins=' . $request['origin_lat'] . ',' . $request['origin_lng'] . '&destinations=' . $request['destination_lat'] . ',' . $request['destination_lng'] . '&key=' . $api_key);
         return $response->json();
     }
@@ -56,7 +56,7 @@ class MapApiController extends Controller
         if ($validator->errors()->count() > 0) {
             return response()->json(['errors' => error_processor($validator)], 403);
         }
-        $api_key = get_business_settings('map_api_key_server');
+        $api_key = get_business_settings('mapApiKey');
         $response = Http::get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' . $request['placeid'] . '&key=' . $api_key);
         return $response->json();
     }
@@ -70,7 +70,7 @@ class MapApiController extends Controller
         if ($validator->errors()->count() > 0) {
             return response()->json(['errors' => error_processor($validator)], 403);
         }
-        $api_key = get_business_settings('map_api_key_server');
+        $api_key = get_business_settings('mapApiKey');
         $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $request->lat . ',' . $request->lng . '&key=' . $api_key);
         return $response->json();
     }

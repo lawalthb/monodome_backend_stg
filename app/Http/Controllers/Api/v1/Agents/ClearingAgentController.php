@@ -60,10 +60,10 @@ class ClearingAgentController extends Controller
         $perPage = $request->input('per_page', 10);
 
         $loadBoards = $query->whereIn('load_type_id',[3,4])
-        ->where('acceptable_id', auth()->user()->id)
-        ->whereHas('user', function($query){
-            $query->where('isPremium',true);
-        })
+     //   ->where('acceptable_id', auth()->user()->id)
+        // ->whereHas('user', function($query){
+        //     $query->where('isPremium',true);
+        // })
         ->latest()->paginate($perPage);
 
         return LoadBoardResource::collection($loadBoards);
