@@ -71,9 +71,13 @@ class ClearingAgentController extends Controller
 
     public function singleBroadcast(Request $request, $id)
     {
+
+        return $id;
+        
         $query = LoadBoard::where("id", $id)
-        ->where('acceptable_id', auth()->user()->id)
-        ->where('acceptable_type', Agent::class)->whereIn('load_type_id',[3,4]);
+        //->where('acceptable_id', auth()->user()->id)
+        //->where('acceptable_type', Agent::class)
+        ->whereIn('load_type_id',[3,4]);
 
         if ($request->has('order_no')) {
             $query->where('order_no', $request->input('order_no'));
