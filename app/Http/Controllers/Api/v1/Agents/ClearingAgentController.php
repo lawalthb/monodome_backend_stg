@@ -71,6 +71,8 @@ class ClearingAgentController extends Controller
 
     public function singleBroadcast(Request $request, $id)
     {
+
+        return LoadBoard::where("id", $id)->first();
         // Build the query to find the LoadBoard with the specified id and load type
         $query = LoadBoard::where("id", $id)->whereIn('load_type_id', [3, 4]);
 
