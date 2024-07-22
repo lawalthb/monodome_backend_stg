@@ -206,7 +206,7 @@ class WalletController extends Controller
         return $this->success(new WalletResource($user->wallet), "Withdrawal successful");
     }
 
-    
+
 
     public function wallet_statistics()
     {
@@ -214,10 +214,16 @@ class WalletController extends Controller
         $totalWallets = Wallet::count();
         $totalBalance = Wallet::sum('amount');
 
+        // Calculate total credit and debit
+        $totalCredit = WalletHistory::where('type', 'credit')->sum('amount');
+        $totalDebt = WalletHistory::where('type', 'debit')->sum('amount');
+
         return $this->success([
             'total_users' => $totalUsers,
             'total_wallets' => $totalWallets,
             'total_balance' => $totalBalance,
+            'total_credit' => $totalCredit,
+            'total_debt' => $totalDebt,
         ], "Wallet statistics retrieved successfully");
     }
 
