@@ -28,7 +28,7 @@ class WalletController extends Controller
         $maxAmount = $request->input('max_amount');
         $perPage = $request->input('per_page', 10);
 
-        $wallet = Wallet::where(function ($q) use ($key, $status, $minAmount, $maxAmount) {
+        $walletQuery = Wallet::where(function ($q) use ($key, $status, $minAmount, $maxAmount) {
             if ($key) {
                 $q->whereHas('user', function ($userQuery) use ($key) {
                     $userQuery->where('full_name', 'like', "%{$key}%")
@@ -45,16 +45,22 @@ class WalletController extends Controller
                 $q->where('amount', '<=', $maxAmount);
             }
         })
-        ->latest()
-        ->paginate($perPage);
+        ->latest();
 
-        $totalAmount = $wallet->sum('amount');
+        // Paginate the query
+        $wallet = $walletQuery->paginate($perPage);
+
+        // Calculate the total amount
+        $totalAmount = $walletQuery->sum('amount');
+
+        // Return the paginated response along with total amount
         return $this->success([
             'total_amount' => $totalAmount,
-            'wallet' => WalletResource::collection($wallet),
+            'wallet' => WalletResource::collection($wallet)->response()->getData(true),
         ],
         "Wallet Dashboard details");
     }
+
 
 
     public function wallet_history(Request $request){
