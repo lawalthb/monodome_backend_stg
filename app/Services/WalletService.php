@@ -63,7 +63,7 @@ class WalletService
             }
             DB::commit();
 
-            $message = "Your wallet has been successfully updated. New balance: " . $wallet->amount;
+            $message = "Your wallet has been successfully updated. New balance: " . $user->wallet->amount;
             $user->notify(new WalletActivityNotification($message));
 
 
