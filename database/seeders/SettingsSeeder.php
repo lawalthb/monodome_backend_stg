@@ -186,9 +186,17 @@ class SettingsSeeder extends Seeder
             ],
 
             [
-                'name' => 'Wallet Max Withdrawal Limit',
+                'name' => 'Wallet Min Withdrawal Limit',
                 'value' => 100,
-                'slug' => 'maxWithdrawLimit',
+                'slug' => 'minWithdrawLimit',
+                'created_at' => '2020-01-07 18:30:00',
+                'updated_at' => null,
+            ],
+
+            [
+                'name' => 'Enable or Disable Wallet',
+                'value' => "Yes",
+                'slug' => 'EnableOrDisable',
                 'created_at' => '2020-01-07 18:30:00',
                 'updated_at' => null,
             ],

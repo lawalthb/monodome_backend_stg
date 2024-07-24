@@ -23,7 +23,7 @@ class SettingController extends Controller
     public function index(Request $request)
     {
         $key = $request->input('search');
-        $perPage = $request->input('per_page', 10);
+        $perPage = $request->input('per_page', 30);
 
         $settings = Setting::where(function ($q) use ($key) {
             // Assuming there's a relationship between Agent and User
