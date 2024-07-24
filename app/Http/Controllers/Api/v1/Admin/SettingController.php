@@ -36,7 +36,7 @@ class SettingController extends Controller
                 [
                     "settings" => $settings
                 ],
-                "Login Successfully"
+                "Setting Successfully"
             );
     }
 
