@@ -241,39 +241,40 @@ class WalletController extends Controller
         return $this->success(WalletResource::collection($wallets), "All wallets retrieved successfully");
     }
 
-    /**
-     * Get a single user's wallet and wallet history.
-     *
-     * @param int $userId
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function userWalletAndHistory(Request $request, $userId)
-    {
+ /**
+ * Get a single user's wallet and wallet history.
+ *
+ * @param int $userId
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function userWalletAndHistory(Request $request, $userId)
+{
+    $perPage = $request->input('per_page', 15);
 
-        $perPage = $request->input('per_page', 15);
+    // Fetch the user
+    $user = User::findOrFail($userId);
 
-        // Fetch the user
-        $user = User::findOrFail($userId);
+    // Fetch the user's wallet
+    $wallet = Wallet::where('user_id', $userId)->firstOrFail();
 
-        // Fetch the user's wallet
-        $wallet = Wallet::where('user_id', $userId)->firstOrFail();
-
-        // Fetch the user's wallet history
-        $walletHistory = WalletHistory::where('user_id', $userId) ->latest()
+    // Fetch the user's wallet history with pagination
+    $walletHistory = WalletHistory::where('user_id', $userId)
+        ->latest()
         ->paginate($perPage);
 
+    // Calculate total amounts for the entire wallet history
+    $walletHistoryQuery = WalletHistory::where('user_id', $userId);
+    $totalAmount = $walletHistoryQuery->sum('amount');
+    $totalFee = $walletHistoryQuery->sum('fee');
+    $totalCloseBalance = $walletHistoryQuery->sum('closing_balance');
 
-        // Calculate total amounts for the wallet history
-        $totalAmount = $walletHistory->sum('amount');
-        $totalFee = $walletHistory->sum('fee');
-        $totalCloseBalance = $walletHistory->sum('closing_balance');
+    return $this->success([
+        'wallet' => new WalletResource($wallet),
+        'total_walletHistory_amount' => $totalAmount,
+        'total_walletHistory_fee' => $totalFee,
+        'total_walletHistory_closeBalance' => $totalCloseBalance,
+        'walletHistory' => WalletHistoryResource::collection($walletHistory)->response()->getData(true),
+    ], "User wallet and wallet history details retrieved successfully");
+}
 
-        return $this->success([
-            'wallet' => new WalletResource($wallet),
-            'total_walletHistory_amount' => $totalAmount,
-            'total_walletHistory_fee' => $totalFee,
-            'total_walletHistory_closeBalance' => $totalCloseBalance,
-            'walletHistory' => WalletHistoryResource::collection($walletHistory),
-        ], "User wallet and wallet history details retrieved successfully");
-    }
 }
