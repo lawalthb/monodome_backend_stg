@@ -241,8 +241,11 @@ class WalletController extends Controller
      * @param int $userId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function userWalletAndHistory($userId)
+    public function userWalletAndHistory(Request $request, $userId)
     {
+
+        $perPage = $request->input('per_page', 15);
+
         // Fetch the user
         $user = User::findOrFail($userId);
 
@@ -250,7 +253,9 @@ class WalletController extends Controller
         $wallet = Wallet::where('user_id', $userId)->firstOrFail();
 
         // Fetch the user's wallet history
-        $walletHistory = WalletHistory::where('user_id', $userId)->latest()->get();
+        $walletHistory = WalletHistory::where('user_id', $userId) ->latest()
+        ->paginate($perPage);
+
 
         // Calculate total amounts for the wallet history
         $totalAmount = $walletHistory->sum('amount');
