@@ -12,6 +12,10 @@ class Wallet extends Model
 
     public $guarded = [];
 
+    protected $casts = [
+        'limits' => 'array',
+    ];
+
 
     public function user()
     {

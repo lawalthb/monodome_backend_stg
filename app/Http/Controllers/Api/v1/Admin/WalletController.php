@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\User;
 use App\Models\Wallet;
+use App\Models\KycLimit;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\WalletHistory;
@@ -276,5 +277,83 @@ public function userWalletAndHistory(Request $request, $userId)
         'walletHistory' => WalletHistoryResource::collection($walletHistory)->response()->getData(true),
     ], "User wallet and wallet history details retrieved successfully");
 }
+
+
+ /**
+     * Update the min and max limits of a wallet.
+     *
+     * @param Request $request
+     * @param int $walletId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateLimits(Request $request, $walletId)
+    {
+        // Validate the request
+        $request->validate([
+            'min_limit' => 'required|numeric|min:0',
+            'max_limit' => 'required|numeric|min:0|gte:min_limit',
+        ]);
+
+        // Find the wallet by its ID
+        $wallet = Wallet::findOrFail($walletId);
+
+        // Update the limits
+        $wallet->limits = [
+            'min_limit' => $request->input('min_limit'),
+            'max_limit' => $request->input('max_limit'),
+        ];
+
+        // Save the changes
+        $wallet->save();
+
+        return response()->json([
+            'message' => 'Wallet limits updated successfully',
+            'wallet' => WalletResource::collection($wallet),
+        ]);
+    }
+
+    public function allKycLimit()
+    {
+        $kycLimits = KycLimit::all();
+        return response()->json($kycLimits);
+    }
+
+    public function storeKycLimit(Request $request)
+    {
+        $request->validate([
+            'kyc_level' => 'required|string|max:255',
+            'min_limit' => 'required|numeric',
+            'max_limit' => 'required|numeric',
+        ]);
+
+        $kycLimit = KycLimit::create($request->all());
+        return response()->json($kycLimit, 201);
+    }
+
+    public function showKycLimit($id)
+    {
+        $kycLimit = KycLimit::findOrFail($id);
+        return response()->json($kycLimit);
+    }
+
+    public function updateKycLimit(Request $request, $id)
+    {
+        $request->validate([
+            'kyc_level' => 'required|string|max:255',
+            'min_limit' => 'required|numeric',
+            'max_limit' => 'required|numeric',
+        ]);
+
+        $kycLimit = KycLimit::findOrFail($id);
+        $kycLimit->update($request->all());
+        return response()->json($kycLimit);
+    }
+
+    public function destroyKycLimit($id)
+    {
+        $kycLimit = KycLimit::findOrFail($id);
+        $kycLimit->delete();
+        return response()->json(null, 204);
+    }
 
 }

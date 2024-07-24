@@ -80,11 +80,27 @@ class WalletService
             // Fetch or create the user's wallet
             $wallet = $user->wallet ?: new Wallet(['user_id' => $user->id, 'amount' => 0, 'status' => 'active']);
 
-            // Update wallet amount
+            // Check if the wallet status is active
+            if ($wallet->status !== 'Active') {
+                throw new \Exception('Wallet is not active. Please contact support.');
+            }
+
+            // Fetch the user's KYC level and the corresponding limits
+            $kycLevel = $user->kyc_level;
+            $kycLimit = KycLimit::where('kyc_level', $kycLevel)->firstOrFail();
+
+            // Calculate the new wallet amount
             $newAmount = ($data['type'] === 'credit' || $data['type'] === 'deposit') ? $wallet->amount + $data['amount'] : $wallet->amount - $data['amount'];
+
+            // Validate the transaction amount based on KYC level limits
             if ($newAmount < 0) {
                 throw new \Exception('Insufficient funds in wallet');
             }
+            if ($data['amount'] < $kycLimit->min_limit || $data['amount'] > $kycLimit->max_limit) {
+                throw new \Exception('Transaction amount must be between ' . $kycLimit->min_limit . ' and ' . $kycLimit->max_limit . ' based on your KYC level');
+            }
+
+            // Update wallet amount
             $wallet->amount = $newAmount;
             $wallet->save();
 
@@ -112,6 +128,7 @@ class WalletService
             throw $e;
         }
     }
+
 }
 
 

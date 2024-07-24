@@ -174,6 +174,17 @@ Route::group(['prefix' => 'v1/admin'], function () {
             Route::get('/{id}', [OrderController::class, 'single_transactions']);
         });
 
+
+        Route::group(['prefix' => 'kyc', 'middleware' => 'auth:api'], function () {
+
+            Route::get('/', [WalletController::class, 'allKycLimit']);
+            Route::post('/', [WalletController::class, 'storeKycLimit']);
+            Route::get('/{id)', [WalletController::class, 'showKycLimit']);
+            Route::put('/{id)', [WalletController::class, 'updateKycLimit']);
+            Route::delete('/{id)', [WalletController::class, 'destroyKycLimit']);
+
+        });
+
         Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {
 
             Route::get('/', [WalletController::class, 'index']);
@@ -183,8 +194,8 @@ Route::group(['prefix' => 'v1/admin'], function () {
             Route::post('/update-pin/{id}', [WalletController::class, 'update_pin']);
             Route::post('/topup-balance/{id}', [WalletController::class, 'topup_balance']);
             Route::post('/enable-disable-wallet/{id}', [WalletController::class, 'update_wallet_status']);
+            Route::put('/{walletId}/limits', [WalletController::class, 'updateLimits']);
             Route::get('user/{userId}/wallet-history', [WalletController::class, 'userWalletAndHistory']);
-
 
 
             Route::post('/wallets-transfer', [WalletController::class, 'transfer_balance']);
