@@ -35,6 +35,7 @@ class UserFactory extends Factory
             'user_type' => 'shipping_company',
             'role' => 'super_admin',
             'location' => NULL,
+            'kyc_level' => 'basic',
             'user_agent' => NULL,
             'status' => 'Pending',
             'remember_token' => Str::random(10),

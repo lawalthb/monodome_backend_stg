@@ -298,7 +298,10 @@ class ClearingAgentController extends Controller
     public function uploadDocs(Request $request){
 
         if ($request->hasFile('documents')) {
-            $agent = Agent::find(auth()->id());
+
+            $user = auth()->user()->id;
+            $agent = Agent::where("user_id",$user)->first();
+
             $documents = [];
 
             foreach ($request->file('documents') as $file) {
