@@ -88,7 +88,7 @@ class WalletService
 
             // Fetch the user's KYC level and the corresponding limits
             $kycLevel = $user->kyc_level;
-           // $kycLimit = KycLimit::where('kyc_level', $kycLevel)->firstOrFail();
+           $kycLimit = KycLimit::where('kyc_level', $kycLevel)->firstOrFail();
 
             // Calculate the new wallet amount
             $newAmount = ($data['type'] === 'credit' || $data['type'] === 'deposit') ? $wallet->amount + $data['amount'] : $wallet->amount - $data['amount'];
@@ -97,9 +97,9 @@ class WalletService
             if ($newAmount < 0) {
                 throw new \Exception('Insufficient funds in wallet');
             }
-            // if ($data['amount'] < $kycLimit->min_limit || $data['amount'] > $kycLimit->max_limit) {
-            //     throw new \Exception('Transaction amount must be between ' . $kycLimit->min_limit . ' and ' . $kycLimit->max_limit . ' based on your KYC level');
-            // }
+            if ($data['amount'] < $kycLimit->min_limit || $data['amount'] > $kycLimit->max_limit) {
+                throw new \Exception('Transaction amount must be between ' . $kycLimit->min_limit . ' and ' . $kycLimit->max_limit . ' based on your KYC level');
+            }
 
             // Update wallet amount
             $wallet->amount = $newAmount;
