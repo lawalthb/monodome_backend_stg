@@ -21,6 +21,7 @@ class WalletResource extends JsonResource
             "amount" => $this->amount,
             "user" => new UserResource($this->user),
             "status" => $this->status,
+            "limits" => $this->limits,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
 
