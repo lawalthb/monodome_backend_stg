@@ -308,7 +308,7 @@ public function userWalletAndHistory(Request $request, $userId)
 
         return response()->json([
             'message' => 'Wallet limits updated successfully',
-            'wallet' => WalletResource::collection($wallet),
+            'wallet' => new WalletResource($wallet),
         ]);
     }
 
