@@ -74,7 +74,7 @@ jobs:
         host: ${{ secrets.MONODOM5_IP }}
         username: ${{ secrets.MONODOM5_USER }}
         password: ${{ secrets.MONODOM5_PASS }}
-        port: ${{ secrets.MONODOM5_PORT }}
+        # port: ${{ secrets.MONODOM5_PORT }}
         script: |
           cd /home/monodom5/api.monodome.co/
           # # git pull
