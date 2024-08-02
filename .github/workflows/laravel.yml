@@ -77,6 +77,25 @@ jobs:
         # port: ${{ secrets.MONODOM5_PORT }}
         script: |
           cd /home/monodom5/api.monodome.co/
+
+          if [ ! "$(ls -A /home/monodom5/api.monodome.co/)" ]; then
+              git clone git@github.com:talosmart/monodome_backend_users.git .
+            else
+              git pull
+              composer install
+            fi
+
+          if [ ! -f .env ]; then
+              # If it doesn't exist, create .env
+              # touch .env
+
+              # Populate .env with GitHub secret content
+              echo "${{ secrets.MY_ENV }}" >> .env
+              php artisan migrate:fresh --seed --force
+              composer update && composer dumpautoload && php artisan migrate
+              # Add more secret variables as needed
+            fi
+
           # # git pull
           # git fetch origin main
           # git reset --hard origin/main
