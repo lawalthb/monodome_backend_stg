@@ -34,6 +34,7 @@ use App\Http\Controllers\Api\v1\Admin\ShippingCompanyController;
 use App\Http\Controllers\Api\v1\Admin\Support\SupportController;
 use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
 use App\Http\Controllers\Api\v1\Admin\SpecializedShipmentController;
+use App\Http\Controllers\Api\v1\Admin\ContainerValuePriceController;
 
 Route::group(['prefix' => 'v1/admin'], function () {
 
@@ -82,13 +83,12 @@ Route::group(['prefix' => 'v1/admin'], function () {
         });
 
 
-        Route::prefix('car-year-prices')->group(function () {
-            Route::get('/', [PriceController::class, 'allCarYearPrice']);
-            Route::post('/', [PriceController::class, 'CarYearPriceStore']);
-            Route::get('/{id}', [PriceController::class, 'CarYearPriceShow']);
-            Route::put('/{id}', [PriceController::class, 'CarYearPriceUpdate']);
-            Route::delete('/{id}', [PriceController::class, 'CarYearPriceDestroy']);
-            Route::put('/status/{id}', [PriceController::class, 'CarYearPriceStatusUpdate']);
+        Route::prefix('container-value-prices')->group(function () {
+            Route::get('/', [ContainerValuePriceController::class, 'index']);
+            Route::post('/', [ContainerValuePriceController::class, 'store']);
+            Route::get('/{id}', [ContainerValuePriceController::class, 'show']);
+            Route::put('/{id}', [ContainerValuePriceController::class, 'update']);
+            Route::delete('/{id}', [ContainerValuePriceController::class, 'destroy']);
         });
 
         Route::prefix('commissions')->group(function () {
