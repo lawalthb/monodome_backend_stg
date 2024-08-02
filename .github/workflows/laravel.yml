@@ -29,6 +29,37 @@
 #           private-ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
 #           destination-path: "/home/payljenl/sso.paylodr.com/"
 
+# name: remote ssh command
+# on: [push]
+# jobs:
+
+#   build:
+#     name: Build
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: executing remote ssh commands using password
+#       uses: appleboy/ssh-action@v1.0.0
+#       with:
+#         host: ${{ secrets.REMOTE_HOST }}
+#         username: ${{ secrets.REMOTE_USER }}
+#         password: ${{ secrets.REMOTE_PASSWORD }}
+#         port: ${{ secrets.REMOTE_PORT }}
+#         script: |
+#           cd /home/kaysolak/www/monolog.kaysolaknigventures.com/
+#           # git pull
+#           git fetch origin main
+#           git reset --hard origin/main
+#           composer install
+#           php artisan migrate:fresh --seed --force
+#           php artisan optimize:clear
+#           php artisan route:clear
+#           php artisan config:clear
+#           #pwd
+#           #ls -la
+#           #chmod +x deploy.sh
+#           #sh deploy.sh
+
+
 name: remote ssh command
 on: [push]
 jobs:
@@ -40,23 +71,22 @@ jobs:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.0
       with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        password: ${{ secrets.REMOTE_PASSWORD }}
-        port: ${{ secrets.REMOTE_PORT }}
+        host: ${{ secrets.MONODOM5_IP }}
+        username: ${{ secrets.MONODOM5_USER }}
+        password: ${{ secrets.MONODOM5_PASS }}
+        port: ${{ secrets.MONODOM5_PORT }}
         script: |
-          cd /home/kaysolak/www/monolog.kaysolaknigventures.com/
-          # git pull
-          git fetch origin main
-          git reset --hard origin/main
-          composer install
-          php artisan migrate:fresh --seed --force
-          php artisan optimize:clear
-          php artisan route:clear
-          php artisan config:clear
-          #pwd
-          #ls -la
+          cd /home/monodom5/api.monodome.co/
+          # # git pull
+          # git fetch origin main
+          # git reset --hard origin/main
+          # composer install
+          # php artisan migrate:fresh --seed --force
+          # php artisan optimize:clear
+          # php artisan route:clear
+          # php artisan config:clear
+          pwd
+          ls -la
           #chmod +x deploy.sh
           #sh deploy.sh
-
 

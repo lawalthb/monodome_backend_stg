@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Wallet;
 use App\Models\KycLimit;
 use Illuminate\Support\Str;
+use App\Traits\Verification;
 use Illuminate\Http\Request;
 use App\Models\WalletHistory;
 use App\Traits\ApiStatusTrait;
@@ -13,13 +14,14 @@ use App\Services\WalletService;
 use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WalletResource;
+use App\Jobs\SendLoginNotificationJob;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\WalletHistoryResource;
 
 class WalletController extends Controller
 {
 
-    use ApiStatusTrait,FileUploadTrait;
+    use FileUploadTrait, ApiStatusTrait,Verification;
 
     public function index(Request $request)
     {
@@ -107,6 +109,22 @@ class WalletController extends Controller
 
         return $this->success(new WalletResource($wallet), "Wallet pin updated successfully");
     }
+
+
+    public function update_pin_link($id)
+    {
+
+        $user = User::findOrFail($id);
+
+        $this->sendVerificationCode( $user->email);
+
+        $message = "Use this pin to reset you wallet pin in " . config('app.name');
+            // $user->notify(new SendNotification($user, $message));
+          //  dispatch(new SendLoginNotificationJob($user, $message));
+
+        return $this->success([], "email sent successfully");
+    }
+
 
     public function topup_balance(Request $request, $id)
     {

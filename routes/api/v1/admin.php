@@ -194,6 +194,7 @@ Route::group(['prefix' => 'v1/admin'], function () {
             Route::post('/update-pin/{id}', [WalletController::class, 'update_pin']);
             Route::post('/topup-balance/{id}', [WalletController::class, 'topup_balance']);
             Route::post('/enable-disable-wallet/{id}', [WalletController::class, 'update_wallet_status']);
+            Route::get('/update-pin/via-link/{id}', [WalletController::class, 'update_pin_link']);
             Route::post('/{walletId}/limits', [WalletController::class, 'updateLimits']);
             Route::get('user/{userId}/wallet-history', [WalletController::class, 'userWalletAndHistory']);
 
