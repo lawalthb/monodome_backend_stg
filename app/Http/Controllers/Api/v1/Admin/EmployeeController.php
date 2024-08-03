@@ -60,6 +60,70 @@ class EmployeeController extends Controller
         return response()->json(['data' => new EmployeeResource($employee)], 201);
     }
 
+
+    public function search(Request $request)
+{
+    // Get query parameters from the request
+    $sort = $request->input('sort');
+    $email = $request->input('email');
+    $fullName = $request->input('full_name');
+    $department = $request->input('department');
+    $status = $request->input('status');
+    $startDate = $request->input('start_date');
+    $endDate = $request->input('end_date');
+    $date = $request->input('date');
+
+    // Apply filters to the Employee query
+    $employee = Employee::query();
+
+    // Filter by 'sort' parameter
+    if ($sort) {
+        $employee->orderBy($sort);
+    }
+
+    // Filter by 'email' parameter
+    if ($email) {
+        $employee->where('email', 'like', "%$email%");
+    }
+
+    // Filter by 'full_name' parameter
+    if ($fullName) {
+        $employee->where('full_name', 'like', "%$fullName%");
+    }
+
+    // Filter by 'department' parameter
+    if ($department) {
+        $employee->where('department', 'like', "%$department%");
+    }
+
+    // Filter by 'status' parameter
+    if ($status) {
+        $employee->where('status', $status);
+    }
+
+    // Filter by 'date' parameter (created_at date)
+    if ($date) {
+        $employee->whereDate('created_at', $date);
+    }
+
+    // Filter by date range
+    if ($startDate) {
+        $employee->whereDate('created_at', '>=', $startDate);
+    }
+
+    if ($endDate) {
+        $employee->whereDate('created_at', '<=', $endDate);
+    }
+
+    $perPage = $request->input('per_page', 10);
+
+    // Retrieve and paginate the results
+    $employee = $employee->latest()->paginate($perPage);
+
+    return EmployeeResource::collection($employee);
+}
+
+
     public function update(Request $request, $id)
     {
         $employee = Employee::findOrFail($id);
@@ -175,7 +239,7 @@ class EmployeeController extends Controller
     }
 
 
-    
+
     public function removeAdmin(Request $request)
     {
         $validator = Validator::make($request->all(), [
