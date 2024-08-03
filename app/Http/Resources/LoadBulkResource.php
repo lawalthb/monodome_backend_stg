@@ -29,6 +29,7 @@ class LoadBulkResource extends JsonResource
             "total_amount" => $this->total_amount,
             "delivery_fee" => $this->delivery_fee,
             "order" => $this->order,
+            "driver" => $this->order->driver ?? null,
             'is_fragile'=>$this->is_fragile,
             'sender_location'=>$this->sender_location,
             'receiver_location'=>$this->receiver_location,
