@@ -43,50 +43,59 @@ class PayStackService
     }
 
     public function submit($request)
-    {
-        $validated = $request->validate([
-            'amount' => 'required|numeric|min:1',
-            'recipient' => 'required|string',
-            'reason' => 'nullable|string',
-        ]);
+{
+    $validated = $request->validate([
+        'amount' => 'required|numeric|min:1',
+        'recipient' => 'required|string',
+        'reason' => 'nullable|string',
+    ]);
 
-        $user = auth()->user();
-        $wallet = $user->wallet;
+    $user = auth()->user();
+    $wallet = $user->wallet;
 
-        if ($wallet->amount < $request->amount) {
-            return response()->json(['error' => 'Insufficient funds in wallet'], 400);
-        }
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->secretKey,
-            'Content-Type' => 'application/json',
-        ])->post('https://api.paystack.co/transfer', [
-            'source' => 'balance',
-            'amount' => $request->amount * 100,
-            'reference' => Str::uuid(),
-            'recipient' => $request->recipient,
-            'reason' => $request->reason,
-        ]);
-
-        if ($response->successful()) {
-            if ($response['data']['status'] == "otp") {
-                return $response->json();
-            }
-
-            // Deduct the amount from the user's wallet
-            WalletService::updateWallet($user, [
-                'amount' => $request->amount,
-                'type' => 'debit',
-                'payment_type' => 'wallet',
-                'description' => 'Transfer to recipient',
-                'fee' => 0,
-            ]);
-
-            return response()->json(['message' => 'Transfer has been queued', 'data' => $response->json()]);
-        } else {
-            return response()->json(['error' => 'Failed to initiate transfer'], $response->status());
-        }
+    if ($wallet->amount < $request->amount) {
+        return response()->json(['error' => 'Insufficient funds in wallet'], 400);
     }
+
+    $transactionFees = get_business_settings('transactionFees');
+    $feeAmount = ($transactionFees / 100) * $request->amount;
+    $totalDeduction = $request->amount + $feeAmount;
+
+    if ($wallet->amount < $totalDeduction) {
+        return response()->json(['error' => 'Insufficient funds to cover the transaction fees'], 400);
+    }
+
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . $this->secretKey,
+        'Content-Type' => 'application/json',
+    ])->post('https://api.paystack.co/transfer', [
+        'source' => 'balance',
+        'amount' => $request->amount * 100, // Amount in kobo
+        'reference' => Str::uuid(),
+        'recipient' => $request->recipient,
+        'reason' => $request->reason,
+    ]);
+
+    if ($response->successful()) {
+        if ($response['data']['status'] == "otp") {
+            return $response->json();
+        }
+
+        // Deduct the amount and fee from the user's wallet
+        WalletService::updateWallet($user, [
+            'amount' => $totalDeduction,
+            'type' => 'debit',
+            'payment_type' => 'wallet',
+            'description' => 'Transfer to recipient',
+            'fee' => $feeAmount,
+        ]);
+
+        return response()->json(['message' => 'Transfer has been queued', 'data' => $response->json()]);
+    } else {
+        return response()->json(['error' => 'Failed to initiate transfer'], $response->status());
+    }
+}
+
 
     public function finalizeTransfer($request)
     {
@@ -107,15 +116,19 @@ class PayStackService
             $user = auth()->user();
             $transferAmount = $this->getTransferAmount($request->transferCode);
 
-            // Deduct the amount from the user's wallet
+            $transactionFees = get_business_settings('transactionFees');
+
+            $feeAmount = ($transactionFees / 100) * $transferAmount;
+            $totalDeduction = $transferAmount + $feeAmount;
+
+            // Deduct the amount and fee from the user's wallet
             WalletService::updateWallet($user, [
-                'amount' => $transferAmount / 100, // Amount is in kobo, convert to Naira
+                'amount' => $totalDeduction,
                 'type' => 'debit',
                 'payment_type' => 'wallet',
                 'description' => 'Transfer to recipient',
-                'fee' => 0,
+                'fee' => $feeAmount,
             ]);
-
             return response()->json(['message' => 'Transfer finalized successfully', 'data' => $response->json()]);
         } else {
             return response()->json(['error' => 'Failed to finalize transfer'], $response->status());
