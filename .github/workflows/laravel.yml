@@ -96,14 +96,14 @@ jobs:
               # Add more secret variables as needed
             fi
 
-          # # git pull
-          # git fetch origin main
-          # git reset --hard origin/main
+          #git pull
+          git fetch origin main
+          git reset --hard origin/main
           # composer install
           php artisan migrate:fresh --seed --force
-          # php artisan optimize:clear
-          # php artisan route:clear
-          # php artisan config:clear
+          php artisan optimize:clear
+          php artisan route:clear
+          php artisan config:clear
           pwd
           ls -la
           #chmod +x deploy.sh

@@ -108,7 +108,7 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'name' => 'Transaction Fees',
-                'value' => 100,
+                'value' => 2,
                 'slug' => 'transactionFees',
                 'created_at' => null,
                 'updated_at' => null,
