@@ -166,14 +166,14 @@ class AuthController extends Controller
                     $wallet->save();
                 }
 
-                // else {
-                //     // Update the wallet limits if wallet already exists
-                //     $limits = json_decode($user->wallet->limits, true) ?? [];
-                //     $limits['max'] = $maxWithdrawLimit;
-                //     $limits['min'] = $minWithdrawLimit;
-                //     $user->wallet->limits = json_encode($limits);
-                //     $user->wallet->save();
-                // }
+                else {
+                    // Update the wallet limits if wallet already exists
+                    $limits = json_decode($user->wallet->limits, true) ?? [];
+                    $limits['max'] = $maxWithdrawLimit;
+                    $limits['min'] = $minWithdrawLimit;
+                    $user->wallet->limits = json_encode($limits);
+                    $user->wallet->save();
+                }
 
                 $token = $user->createToken('monodomebackend' . $request->email)->plainTextToken;
 
