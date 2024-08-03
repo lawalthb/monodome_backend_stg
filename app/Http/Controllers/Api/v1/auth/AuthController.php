@@ -153,13 +153,27 @@ class AuthController extends Controller
                 $user->user_agent = $request->header('User-Agent');
                 $user->save();
 
+                $maxWithdrawLimit = get_business_settings('maxWithdrawLimit');
+                $minWithdrawLimit = get_business_settings('minWithdrawLimit');
+
+
                 if (!$user->wallet) {
                     $wallet = new Wallet;
                     $wallet->amount = 0;
                     $wallet->status = 'active';
                     $wallet->user_id = $user->id;
+                    $wallet->limits = json_encode(['max_limit' => $maxWithdrawLimit, 'min_limit' => $minWithdrawLimit]);
                     $wallet->save();
                 }
+
+                // else {
+                //     // Update the wallet limits if wallet already exists
+                //     $limits = json_decode($user->wallet->limits, true) ?? [];
+                //     $limits['max'] = $maxWithdrawLimit;
+                //     $limits['min'] = $minWithdrawLimit;
+                //     $user->wallet->limits = json_encode($limits);
+                //     $user->wallet->save();
+                // }
 
                 $token = $user->createToken('monodomebackend' . $request->email)->plainTextToken;
 
