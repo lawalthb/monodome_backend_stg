@@ -33,8 +33,9 @@ use App\Http\Controllers\Api\v1\Admin\AgentCommissionController;
 use App\Http\Controllers\Api\v1\Admin\ShippingCompanyController;
 use App\Http\Controllers\Api\v1\Admin\Support\SupportController;
 use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
-use App\Http\Controllers\Api\v1\Admin\SpecializedShipmentController;
+use App\Http\Controllers\Api\v1\Admin\OrderPriceSettingController;
 use App\Http\Controllers\Api\v1\Admin\ContainerValuePriceController;
+use App\Http\Controllers\Api\v1\Admin\SpecializedShipmentController;
 
 Route::group(['prefix' => 'v1/admin'], function () {
 
@@ -219,6 +220,12 @@ Route::group(['prefix' => 'v1/admin'], function () {
             Route::post('/store', [SettingController::class, 'store']);
             Route::post('/update/{id}', [SettingController::class, 'update']);
         });
+
+        Route::group(['prefix' => 'order-price'], function () {
+            Route::apiResource('settings', OrderPriceSettingController::class);
+        });
+
+
 
         Route::group(['prefix' => 'private-load'], function () {
 

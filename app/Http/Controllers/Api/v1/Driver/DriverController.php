@@ -14,8 +14,10 @@ use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Models\OrderRoutePlan;
 use App\Traits\ApiStatusTrait;
+use App\Services\WalletService;
 use App\Traits\FileUploadTrait;
 use Illuminate\Validation\Rule;
+use App\Models\OrderPriceSetting;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
@@ -592,6 +594,35 @@ public function loadBoardOrderStatus(Request $request)
     $loadBoard->status_comment = $request->status_comment;
 
     if($loadBoard->save()){
+
+        if($loadBoard->order->driver){
+            $user = User::find($loadBoard->order->driver_id);
+
+            if (!$user) {
+
+                Log::error('User not found for ID: ' . $loadBoard->order->driver_id);
+                return response()->json(['error' => 'Driver not found'], 404);
+            }
+
+            $orderPriceSetting = OrderPriceSetting::where('slug', 'driver')->first();
+
+            if (!$orderPriceSetting) {
+
+                Log::error('Order price settings for drivers not found');
+                return response()->json(['error' => 'Payment settings not found'], 404);
+            }
+
+            $driverShare = ($orderPriceSetting->price / 100) * $loadBoard->order->amount;
+
+            WalletService::updateWallet($user, [
+                'amount' => $driverShare,
+                'type' => 'credit',
+                'payment_type' => 'wallet',
+                'description' => "Payment for Order ID: " . $loadBoard->order_no,
+            ]);
+        }
+
+
 
         $loadBoard->user->notify(new SendNotification($loadBoard->user, 'Your order status has been changed to!'.$request->status.' '));
 

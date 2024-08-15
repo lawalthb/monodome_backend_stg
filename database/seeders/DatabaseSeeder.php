@@ -9,6 +9,7 @@ use Database\Seeders\AdminSeeder;
 use Database\Seeders\CityOneSeeder;
 use Database\Seeders\SettingsSeeder;
 use Database\Seeders\CarValuePriceSeeder;
+use Database\Seeders\OrderPriceSettingSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -69,6 +70,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PlanSeeder::class);
         $this->call(AgentCommissionSeeder::class);
+        $this->call(OrderPriceSettingSeeder::class);
 
         $this->call(EmployeesTableSeeder::class);
        //$this->call(OrdersTableSeeder::class);
