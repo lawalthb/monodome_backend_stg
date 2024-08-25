@@ -49,6 +49,7 @@ return new class extends Migration
             $table->decimal('suggested_amount', 20)->nullable()->default(0);
             $table->decimal('delivery_fee', 20)->nullable()->default(0);
             $table->decimal('total_amount', 20)->nullable()->default(0);
+            $table->enum('insure_it', ['Yes', 'No'])->default('No')->nullable();
             $table->enum('status', ['Pending', 'Confirmed', 'Rejected','Failed','Approved','Processing','Waiting'])->default('Pending');
             $table->timestamps();
         });

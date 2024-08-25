@@ -42,6 +42,12 @@ class Order extends Model
         return $this->hasMany(QrCode::class,'order_no');
     }
 
+    public function insured(){
+
+        return $this->hasMany(insurance::class,'order_no');
+    }
+
+
     protected static function boot()
     {
         parent::boot();

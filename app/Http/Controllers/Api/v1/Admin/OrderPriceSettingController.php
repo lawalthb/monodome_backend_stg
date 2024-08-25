@@ -1,88 +1,113 @@
 <?php
-
 namespace App\Http\Controllers\Api\v1\Admin;
 
-use App\Models\Setting;
-use App\Models\LoadType;
-use Illuminate\Support\Str;
-use App\Models\PriceSetting;
-use Illuminate\Http\Request;
-use App\Traits\ApiStatusTrait;
-use App\Models\DistanceSetting;
-use App\Traits\FileUploadTrait;
 use App\Models\OrderPriceSetting;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\PriceSettingResource;
-use App\Http\Resources\DistanceSettingResource;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class OrderPriceSettingController extends Controller
 {
-
-    use FileUploadTrait, ApiStatusTrait;
     public function index()
     {
+        // Retrieve all active order price settings
         $settings = OrderPriceSetting::where('status', 'active')->get();
 
         return response()->json($settings);
     }
 
-
     public function store(Request $request)
     {
-        $request->validate([
+        // Validate the incoming request
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
-            'price' => 'required|integer',
+            'level' => 'required|string|max:255',
+            'percentage' => 'required|json',
             'status' => 'required|in:active,inActive'
         ]);
 
-        $setting = OrderPriceSetting::create($request->all());
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        // Create a new order price setting
+        $setting = OrderPriceSetting::create([
+            'name' => $request->name,
+            'level' => $request->level,
+            'percentage' => $request->percentage,
+            'status' => $request->status
+        ]);
+
         return response()->json($setting, Response::HTTP_CREATED);
     }
 
     public function show($id)
     {
+        // Find the specific order price setting by ID
         $setting = OrderPriceSetting::find($id);
+
         if (!$setting) {
             return response()->json(['message' => 'Not found'], Response::HTTP_NOT_FOUND);
         }
+
         return response()->json($setting);
     }
 
     public function update(Request $request, $id)
     {
+        // Find the specific order price setting by ID
         $setting = OrderPriceSetting::find($id);
+
         if (!$setting) {
             return response()->json(['message' => 'Not found'], Response::HTTP_NOT_FOUND);
         }
 
-        $request->validate([
+        // Validate the incoming request
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
-            'price' => 'required|integer',
+            'level' => 'required|string|max:255',
+            'percentage' => 'required|json',
             'status' => 'required|in:active,inActive'
         ]);
 
-        $setting->update($request->all());
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        // Update the existing order price setting
+        $setting->update([
+            'name' => $request->name,
+            'level' => $request->level,
+            'percentage' => $request->percentage,
+            'status' => $request->status
+        ]);
+
         return response()->json($setting);
     }
 
     public function destroy($id)
-    {
-        $setting = OrderPriceSetting::find($id);
+{
+    // Find the specific order price setting by ID
+    $setting = OrderPriceSetting::find($id);
 
-        if ($setting->is_default) {
-            return response()->json(['message' => 'Default settings cannot be deleted.'], 403);
-        }
-
-        if (!$setting) {
-            return response()->json(['message' => 'Not found'], Response::HTTP_NOT_FOUND);
-        }
-
-        $setting->delete();
-        return response()->json(['message' => 'Deleted successfully'], Response::HTTP_OK);
+    if (!$setting) {
+        return response()->json(['message' => 'Not found'], Response::HTTP_NOT_FOUND);
     }
+
+    // Prevent deletion of settings with IDs 1 to 4
+    if (in_array($id, [1, 2, 3, 4])) {
+        return response()->json(['message' => 'This setting cannot be deleted.'], Response::HTTP_FORBIDDEN);
+    }
+
+    if ($setting->is_default) {
+        return response()->json(['message' => 'Default settings cannot be deleted.'], Response::HTTP_FORBIDDEN);
+    }
+
+    // Delete the order price setting
+    $setting->delete();
+
+    return response()->json(['message' => 'Deleted successfully'], Response::HTTP_OK);
+}
 
 }

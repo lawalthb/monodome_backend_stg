@@ -42,6 +42,7 @@ return new class extends Migration
             $table->string('city', 30)->nullable();
             $table->string('street', 30)->nullable();
             $table->text('add_info')->nullable();
+            $table->enum('insure_it', ['Yes', 'No'])->default('No')->nullable();
             $table->decimal('suggested_amount', 20)->nullable()->default(0);
             $table->decimal('delivery_fee', 20)->nullable()->default(0);
             $table->decimal('total_amount', 20)->nullable()->default(0);

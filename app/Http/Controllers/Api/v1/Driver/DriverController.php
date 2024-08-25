@@ -619,7 +619,7 @@ public function loadBoardOrderStatus(Request $request)
     private function processPaymentSplits($loadBoard)
     {
         $order = $loadBoard->order;
-        $amount = $order->amount;
+        $amount = $order->fee;
 
         // Determine the level and fetch the corresponding percentage configuration
         if ($order->agent_id) {
