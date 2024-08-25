@@ -589,6 +589,12 @@ public function loadBoardOrderStatus(Request $request)
         ],400);
     }
 
+    if ($loadBoard->status == "delivered") {
+
+        return response()->json(['error' => 'Order already delivered, Contact admin if any issues'], 404);
+    }
+
+
 
     $loadBoard->status = $request->status;
     $loadBoard->status_comment = $request->status_comment;
