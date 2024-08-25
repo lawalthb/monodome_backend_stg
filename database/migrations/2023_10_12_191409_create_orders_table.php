@@ -18,8 +18,11 @@ return new class extends Migration
             $table->string('order_no');
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('driver_id')->unsigned()->nullable();
-            $table->bigInteger('placed_by_id')->unsigned()->nullable();
+            $table->bigInteger('agent_id')->unsigned()->nullable();
+            $table->bigInteger('clearing_id')->unsigned()->nullable();
+            $table->bigInteger('driver_manager_id')->unsigned()->nullable();
             $table->bigInteger('truck_by_id')->unsigned()->nullable();
+            $table->bigInteger('placed_by_id')->unsigned()->nullable();
           //  $table->enum('accepted', ['Yes', 'No', 'Rejected'])->default('No');
             $table->decimal('amount', 10, 2)->default(0)->unsigned()->nullable();
             $table->decimal('fee',38, 2)->default(0)->unsigned()->nullable();

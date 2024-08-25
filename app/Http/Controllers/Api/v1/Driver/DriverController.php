@@ -570,79 +570,120 @@ public function paymentOrderStatus(Request $request)
 }
 
 public function loadBoardOrderStatus(Request $request)
-{
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|in:pending,on_transit,delivered,rejected,delayed',
+            'order_no' => 'required|string|exists:load_boards,order_no',
+            'status_comment' => 'nullable|string'
+        ]);
 
-    $validator = Validator::make($request->all(), [
-        'status' => 'required|in:pending,on_transit,delivered,rejected,delayed',
-        'order_no' => 'required|string|exists:load_boards,order_no',
-        'status_comment' => 'nullable|string'
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 422);
-    }
-
-    $loadBoard = LoadBoard::where("order_no",$request->order_no)->where('acceptable_id', auth()->id())->first();
-    if(!$loadBoard){
-        return response()->json([
-            'error' => "Order your found or order is not yours",
-        ],400);
-    }
-
-    if ($loadBoard->status == "delivered") {
-
-        return response()->json(['error' => 'Order already delivered, Contact admin if any issues'], 404);
-    }
-
-
-
-    $loadBoard->status = $request->status;
-    $loadBoard->status_comment = $request->status_comment;
-
-    if($loadBoard->save()){
-
-        if($loadBoard->order->driver){
-            $user = User::find($loadBoard->order->driver_id);
-
-            if (!$user) {
-
-                Log::error('User not found for ID: ' . $loadBoard->order->driver_id);
-                return response()->json(['error' => 'Driver not found'], 404);
-            }
-
-            $orderPriceSetting = OrderPriceSetting::where('slug', 'driver')->first();
-
-            if (!$orderPriceSetting) {
-
-                Log::error('Order price settings for drivers not found');
-                return response()->json(['error' => 'Payment settings not found'], 404);
-            }
-
-            $driverShare = ($orderPriceSetting->price / 100) * $loadBoard->order->amount;
-
-            WalletService::updateWallet($user, [
-                'amount' => $driverShare,
-                'type' => 'credit',
-                'payment_type' => 'wallet',
-                'description' => "Payment for Order ID: " . $loadBoard->order_no,
-            ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        $loadBoard = LoadBoard::where("order_no", $request->order_no)
+                              ->where('acceptable_id', auth()->id())
+                              ->first();
 
+        if (!$loadBoard) {
+            return response()->json([
+                'error' => "Order not found or order is not yours",
+            ], 400);
+        }
 
-        $loadBoard->user->notify(new SendNotification($loadBoard->user, 'Your order status has been changed to!'.$request->status.' '));
+        if ($loadBoard->status == "delivered") {
+            return response()->json(['error' => 'Order already delivered, contact admin if any issues'], 404);
+        }
 
-        return response()->json([
-            'data' => new LoadBoardResource($loadBoard),
-        ],200);
-    }else{
-        return response()->json([
-            'error' => "unable to update the status on loadBoard.",
-        ],400);
+        $loadBoard->status = $request->status;
+        $loadBoard->status_comment = $request->status_comment;
+
+        if ($loadBoard->save()) {
+
+            if ($loadBoard->order->driver && $request->status == 'delivered') {
+                $this->processPaymentSplits($loadBoard);
+            }
+
+            $loadBoard->user->notify(new SendNotification($loadBoard->user, 'Your order status has been changed to: '.$request->status));
+
+            return response()->json([
+                'data' => new LoadBoardResource($loadBoard),
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => "Unable to update the status on loadBoard.",
+            ], 400);
+        }
     }
 
-}
+    private function processPaymentSplits($loadBoard)
+    {
+        $order = $loadBoard->order;
+        $amount = $order->amount;
 
+        // Determine the level and fetch the corresponding percentage configuration
+        if ($order->agent_id) {
+            $percentageConfig = OrderPriceSetting::where('level', 'level_four')->where('status', 'active')->value('percentage');
+        } elseif ($order->driver_manager_id && $order->driver_id) {
+            $percentageConfig = OrderPriceSetting::where('level', 'level_three')->where('status', 'active')->value('percentage');
+        } elseif ($order->clearing_id) {
+            $percentageConfig = OrderPriceSetting::where('level', 'level_two')->where('status', 'active')->value('percentage');
+        } else {
+            $percentageConfig = OrderPriceSetting::where('level', 'level_one')->where('status', 'active')->value('percentage');
+        }
+
+        // Decode JSON percentage configuration
+        $percentages = json_decode($percentageConfig, true);
+
+        // Calculate and update each role's wallet based on the percentage
+        foreach ($percentages as $role => $percentage) {
+            $share = ($percentage / 100) * $amount;
+
+            switch ($role) {
+                case 'agent':
+                    if ($order->agent_id) {
+                        $this->updateUserWallet($order->agent_id, $share, $order->order_no);
+                    }
+                    break;
+                case 'driver_manager':
+                    if ($order->driver_manager_id) {
+                        $this->updateUserWallet($order->driver_manager_id, $share, $order->order_no);
+                    }
+                    break;
+                case 'clearing_and_forwarding':
+                    if ($order->clearing_id) {
+                        $this->updateUserWallet($order->clearing_id, $share, $order->order_no);
+                    }
+                    break;
+                case 'driver':
+                    if ($order->driver_id) {
+                        $this->updateUserWallet($order->driver_id, $share, $order->order_no);
+                    }
+                    break;
+                case 'system':
+                    // Assuming the system wallet is handled internally or via a specific system user ID
+                    $this->updateUserWallet(1,$share, $order->order_no);
+                    break;
+            }
+        }
+    }
+
+    private function updateUserWallet($userId, $amount, $orderNo)
+    {
+        $user = User::find($userId);
+
+        if (!$user) {
+            Log::error('User not found for ID: ' . $userId);
+            return;
+        }
+
+        WalletService::updateWallet($user, [
+            'amount' => $amount,
+            'type' => 'credit',
+            'payment_type' => 'wallet',
+            'description' => "Payment for Order No: " . $orderNo,
+        ]);
+    }
 public function deleteAccount(Request $request) {
     try {
         DB::beginTransaction();

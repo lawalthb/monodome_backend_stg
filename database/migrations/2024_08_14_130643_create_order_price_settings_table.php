@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('order_price_settings', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->comment('Possible values: driver, agent, driver_manager, truck');
-            $table->integer('price')->comment('percentage');
-            $table->boolean('is_default')->default(false);
-            $table->string('status')->default('active')->comment('active , inActive');
+            $table->string('level')->comment('Possible values: level_one, level_two, level_three');
+            $table->json('percentage')->comment('JSON format for percentage allocations');
+            $table->enum('status', ['active', 'inactive'])->default('active')->comment('Status of this setting');
             $table->timestamps();
         });
     }

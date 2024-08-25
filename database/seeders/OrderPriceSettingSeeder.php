@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class OrderPriceSettingSeeder extends Seeder
 {
@@ -12,43 +13,33 @@ class OrderPriceSettingSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('order_price_settings')->insert([
+        DB::table('order_price_settings')->insert([
             [
-                'name' => 'Monodome Admin Commission',
-                'slug' => 'admin',
-                'price' => 10,
-                'is_default' => true,
-                'status' => 'active'
+                'name' => 'First level',
+                'level' => 'level_one',
+                'percentage' => json_encode(["driver" => "80", "system" => "20"]),
+                'status' => 'active',
             ],
             [
-                'name' => 'Driver Commission',
-                'slug' => 'driver',
-                'price' => 70,
-                'is_default' => true,
-                'status' => 'active'
+                'name' => 'Second level',
+                'level' => 'level_two',
+                'percentage' => json_encode(["clearing_and_forwarding" => "80", "system" => "20"]),
+                'status' => 'active',
             ],
             [
-                'name' => 'Agent Fee',
-                'slug' => 'agent',
-                'price' => 15,
-                'is_default' => true,
-                'status' => 'active'
+                'name' => 'Third level',
+                'level' => 'level_three',
+                'percentage' => json_encode(["driver_manager" => "40", "driver" => "40", "system" => "20"]),
+                'status' => 'active',
             ],
             [
-                'name' => 'Driver Manager Fee',
-                'slug' => 'driver_manager',
-                'price' => 20,
-                'is_default' => true,
-                'status' => 'active'
-            ],
-            [
-                'name' => 'Truck Maintenance',
-                'slug' => 'truck',
-                'price' => 60,
-                'is_default' => true,
-                'status' => 'active'
+                'name' => 'Fourth level',
+                'level' => 'level_four',
+                'percentage' => json_encode(["agent" => "20", "driver_manager" => "32", "driver" => "32", "system" => "16"]),
+                'status' => 'active',
             ]
         ]);
+
     }
 
 }
