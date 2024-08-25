@@ -577,6 +577,11 @@ class LoadBoardController extends Controller
         ->whereNull('acceptable_type')->first();
 
         if($loadBoards){
+
+            if($loadBoards->order->admin_approve == "No"){
+                return $this->error([
+                ], "Load is yet to be approved by admin!");
+            }
             $user = User::find(auth()->id());
 
             $loadBoards->acceptable_id = $user->id;
