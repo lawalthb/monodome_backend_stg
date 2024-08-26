@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use App\Models\DriverManger;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
+use App\Mail\SendUserPassword;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
 use Doctrine\DBAL\DriverManager;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\TruckResource;
@@ -163,6 +165,95 @@ class DriverMangerController extends Controller
             return $this->error('An error occurred while registering the driver Manager and guarantors.');
         }
     }
+
+
+    public function storeDriver(Request $request)
+{
+    // Validate the incoming request data
+    $validator = Validator::make($request->all(), [
+        'full_name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'phone_number' => 'required|string|max:15|unique:users,phone_number',
+        'street' => 'required|string|max:255',
+        'state_id' => 'required|numeric',
+        'lga' => 'required|string|max:255',
+        'nin_number' => 'nullable|numeric',
+        'license_number' => 'nullable|numeric',
+        'have_motor' => 'required|in:Yes,No',
+        // 'guarantors.*.full_name' => 'required|string|max:255',
+        // 'guarantors.*.email' => 'required|email',
+        // 'guarantors.*.phone_number' => 'required|string|max:15',
+        // 'guarantors.*.street' => 'required|string|max:255',
+        // 'guarantors.*.state' => 'required|numeric',
+        // 'guarantors.*.lga' => 'required|string|max:255',
+        // 'guarantors.*.state_of_residence' => 'nullable|numeric',
+        // 'guarantors.*.city_of_residence' => 'nullable|string|max:255',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    try {
+        // Generate a random password
+        $password = Str::random(10);
+
+        // Create the user
+        $user = User::create([
+            'full_name' => $request->input('full_name'),
+            'email' => $request->input('email'),
+            'phone_number' => $request->input('phone_number'),
+            'password' => Hash::make($password),
+            'user_created_by' => auth()->user()->id,
+            'role_id' => 8,
+            'role' => 'driver',
+            'referral_code' => generateReferralCode(),
+            'user_type' => 'driver',
+            'ref_by' => auth()->user()->id,
+            'status' => 'Pending',
+        ]);
+
+        // Create the driver details
+        $driver = Driver::create([
+            'uuid' => (string) Str::uuid(),
+            'user_id' => $user->id,
+            'state_id' => $request->input('state_id'),
+            'have_motor' => $request->input('have_motor'),
+            'street' => $request->input('street'),
+            'lga' => $request->input('lga'),
+            'nin_number' => $request->input('nin_number'),
+            'license_number' => $request->input('license_number'),
+            'status' => 'Pending',
+        ]);
+
+        // // Insert guarantors if needed
+        // foreach ($request->input('guarantors', []) as $guarantor) {
+        //     // Assuming you have a Guarantor model and relationship with Driver
+        //     $driver->guarantors()->create([
+        //         'full_name' => $guarantor['full_name'],
+        //         'email' => $guarantor['email'],
+        //         'phone_number' => $guarantor['phone_number'],
+        //         'street' => $guarantor['street'],
+        //         'state' => $guarantor['state'],
+        //         'lga' => $guarantor['lga'],
+        //         'state_of_residence' => $guarantor['state_of_residence'],
+        //         'city_of_residence' => $guarantor['city_of_residence'],
+        //     ]);
+        // }
+
+        // Optionally, send the password to the user via email
+        Mail::to($user->email)->send(new SendUserPassword($user, $password));
+
+        return response()->json([
+            'message' => 'Driver created successfully',
+            'user' => $user,
+            'driver' => $driver,
+        ], 201);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
 
 
     public function my_drivers(Request $request)
