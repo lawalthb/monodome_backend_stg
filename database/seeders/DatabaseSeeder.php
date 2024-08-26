@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PriceSettingsSeeder::class);
         $this->call(DistanceSeeder::class);
         //  $this->call(StateSeeder::class);
-         $this->call(CityOneSeeder::class);
+        $this->call(CityOneSeeder::class);
         sleep(5);
         $this->call(CityTwoSeeder::class);
         sleep(5);
@@ -55,11 +55,11 @@ class DatabaseSeeder extends Seeder
         $this->call(VehicleModelsTableSeeder::class);
         $this->call(SettingsSeeder::class);
 
-        $this->call(AdminSeeder::class);
-        $this->call(UsersTableSeeder::class);
-        $this->call(BlogsTableSeeder::class);
-        $this->call(TrackingsTableSeeder::class);
-        $this->call(ChatSeeder::class);
+        //$this->call(AdminSeeder::class);
+        // $this->call(UsersTableSeeder::class);
+        //$this->call(BlogsTableSeeder::class);
+        //  $this->call(TrackingsTableSeeder::class);
+        // $this->call(ChatSeeder::class);
 
         $this->call(CarValuePriceSeeder::class);
         $this->call(CarStatePriceSeeder::class);
@@ -72,12 +72,12 @@ class DatabaseSeeder extends Seeder
         $this->call(AgentCommissionSeeder::class);
         $this->call(OrderPriceSettingSeeder::class);
 
-        $this->call(EmployeesTableSeeder::class);
-       //$this->call(OrdersTableSeeder::class);
-       //$this->call(LoadBoardsTableSeeder::class);
-       //$this->call(LoadPackagesTableSeeder::class);
-        $this->call(WalletsTableSeeder::class);
-        $this->call(WalletHistoriesTableSeeder::class);
-        $this->call(RequestPaymentsTableSeeder::class);
+        //  $this->call(EmployeesTableSeeder::class);
+        //$this->call(OrdersTableSeeder::class);
+        //$this->call(LoadBoardsTableSeeder::class);
+        //$this->call(LoadPackagesTableSeeder::class);
+        //  $this->call(WalletsTableSeeder::class);
+        // $this->call(WalletHistoriesTableSeeder::class);
+        // $this->call(RequestPaymentsTableSeeder::class);
     }
 }

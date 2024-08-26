@@ -14,20 +14,20 @@ class ChatSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        // $faker = Faker::create();
 
-        // Insert sample data into the 'chats' table
-        for ($i = 1; $i <= 50; $i++) {
-            DB::table('chats')->insert([
-                'sender_id' => $faker->numberBetween(1, 10), // Assuming users table has 10 records
-                'receiver_id' => $faker->numberBetween(1, 10),
-                'message' => $faker->text,
-                'file_path' => $faker->imageUrl(), // Replace with appropriate file path generation logic
-                'loadable_id' => $faker->numberBetween(1, 20), // Assuming some loadable records exist
-                'loadable_type' => 'App\Models\LoadableModel', // Replace with your actual loadable model class
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
+        // // Insert sample data into the 'chats' table
+        // for ($i = 1; $i <= 50; $i++) {
+        //     DB::table('chats')->insert([
+        //         'sender_id' => $faker->numberBetween(1, 10), // Assuming users table has 10 records
+        //         'receiver_id' => $faker->numberBetween(1, 10),
+        //         'message' => $faker->text,
+        //         'file_path' => $faker->imageUrl(), // Replace with appropriate file path generation logic
+        //         'loadable_id' => $faker->numberBetween(1, 20), // Assuming some loadable records exist
+        //         'loadable_type' => 'App\Models\LoadableModel', // Replace with your actual loadable model class
+        //         'created_at' => now(),
+        //         'updated_at' => now(),
+        //     ]);
+        // }
     }
 }
