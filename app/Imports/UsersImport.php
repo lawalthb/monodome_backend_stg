@@ -27,12 +27,14 @@ class UsersImport implements ToModel,WithHeadingRow ,WithValidation
     {
         $ref_by = User::where("referral_code", $row['ref_by'])->first();
 
+        $password = Str::random(10);
+
         $user = new User([
             'full_name' => $row['full_name'],
             'email' => $row['email'],
             'phone_number' => $row['phone_number'],
             'address' => $row['address'] ?? null,
-            'password' => Hash::make($row['password']),
+            'password' => Hash::make($password),
             'role_id' => $row['role_id'],
             'ref_by' => $ref_by ? $ref_by->id : null,
             'referral_code' => generateReferralCode(),

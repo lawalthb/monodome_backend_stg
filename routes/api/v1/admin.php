@@ -375,6 +375,7 @@ Route::group(['prefix' => 'v1/admin'], function () {
         Route::group(['prefix' => 'driver-manager'], function () {
             Route::get('/', [DriverManagerController::class, 'index']);
             Route::post('/store', [DriverManagerController::class, 'store']);
+            Route::post('/bulk-upload', [DriverManagerController::class, 'bulkUpload']);
             Route::get('/search', [DriverManagerController::class, 'search']);
             Route::get('/pending', [DriverManagerController::class, 'pending']);
             Route::post('/status/{id}', [DriverManagerController::class, 'setStatus']);

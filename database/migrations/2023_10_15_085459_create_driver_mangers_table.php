@@ -28,6 +28,10 @@ return new class extends Migration
             $table->string('inside_office_image')->nullable();
             $table->string('registration_documents')->nullable();
             $table->string('cac_certificate')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('company_address')->nullable();
+            $table->string('company_state')->nullable();
+            $table->string('company_lga')->nullable();
             $table->enum('status', ['Pending', 'Confirmed', 'Approved', 'Rejected','Failed'])->default('Pending');
             $table->timestamps();
             $table->softDeletes();
