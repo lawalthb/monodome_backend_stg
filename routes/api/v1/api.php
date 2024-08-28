@@ -392,7 +392,7 @@ Route::group(['prefix' => 'v1'], function () {
          // Route::get('/request', [DriverMangerController::class, 'updateRequest']);
         Route::get('/request/{driverID}/{managerID}/{status}', [DriverMangerController::class, 'updateRequest']);
 
-        Route::middleware(['auth:api'])->group(function () {
+        Route::middleware(['auth:api','role:Driver Manager'])->group(function () {
        //  Route::get('/your-url', function () {
 
            Route::get('/', [DriverMangerController::class, 'index']);

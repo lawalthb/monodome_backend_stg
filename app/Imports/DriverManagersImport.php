@@ -1,41 +1,56 @@
 <?php
-
 namespace App\Imports;
 
 use App\Models\User;
 use Illuminate\Support\Str;
 use App\Models\DriverManger;
-use App\Models\DriverManager;
 use App\Mail\SendUserPassword;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class DriverManagersImport implements ToModel, WithHeadingRow, WithValidation
+class DriverManagersImport implements ToModel, WithHeadingRow, WithValidation, WithChunkReading, ShouldQueue
 {
     public function model(array $row)
     {
-        // Check if the user already exists
-        $user = User::where('email', $row['email'])->first();
+        // Validate the email before proceeding
+        $validator = Validator::make($row, [
+            'email' => 'required|email',
+            'phone_number' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            // Skip this row if the email or phone number is invalid
+            return null;
+        }
+
+        // Check if the user already exists by either email or phone number
+        $user = User::where('email', $row['email'])
+                    ->orWhere('phone_number', $row['phone_number'])
+                    ->first();
 
         if (!$user) {
-            $ref_by = User::where("referral_code", $row['referral_code'])->first();
+            $referralCode = $row['referral_code'] ?? null;
+            $ref_by = User::where("referral_code", $referralCode)->first();
             // Generate a random password
             $password = Str::random(10);
 
             // Create the user if it doesn't exist
             $user = new User([
-                'full_name' => $row['first_name'] . ' ' . $row['last_name'],
+                'full_name' => $row['name'] ?? $row['first_name'] . ' ' . $row['last_name'],
                 'email' => $row['email'],
                 'phone_number' => $row['phone_number'],
                 'address' => $row['address'] ?? null,
                 'password' => Hash::make($password),
                 'role_id' => 9,
                 'ref_by' => $ref_by->id ?? null,
-                'referral_code' => $row['referral_code'] ?? generateReferralCode(),
+                'referral_code' => $referralCode ?? generateReferralCode(),
                 'user_agent' => request()->header('User-Agent'),
             ]);
 
@@ -50,8 +65,8 @@ class DriverManagersImport implements ToModel, WithHeadingRow, WithValidation
 
             $user->save();
 
-            // Send the password to the user via email
-            Mail::to($user->email)->send(new SendUserPassword($user, $password));
+            // Optionally send the password to the user via email
+            // Mail::to($user->email)->send(new SendUserPassword($user, $password));
         }
 
         // Create the DriverManager and link it to the user
@@ -71,21 +86,25 @@ class DriverManagersImport implements ToModel, WithHeadingRow, WithValidation
         ]);
     }
 
+    public function chunkSize(): int
+    {
+        return 50;
+    }
     public function rules(): array
     {
         return [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone_number' => 'required|max:15',
-            'state' => 'required|max:255',
-            'lga' => 'nullable|string|max:255',
-            'company_name' => 'nullable|string|max:255',
-            'company_address' => 'nullable|string|max:255',
-            'company_state' => 'nullable|max:255',
-            'company_lga' => 'nullable|string|max:255',
-            'address' => 'nullable|string|max:255',
-            'referral_code' => 'nullable|string|max:10',
+            'first_name' => 'nullable|string',
+            'last_name' => 'nullable|string',
+            'email' => 'required',
+            'phone_number' => 'nullable',
+            'state' => 'nullable|string',
+            'lga' => 'nullable|string',
+            'company_name' => 'nullable|string',
+            'company_address' => 'nullable|string',
+            'company_state' => 'nullable|string',
+            'company_lga' => 'nullable|string',
+            'address' => 'nullable|string',
+            'referral_code' => 'nullable|string',
         ];
     }
 
