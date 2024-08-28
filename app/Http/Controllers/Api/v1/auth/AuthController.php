@@ -98,8 +98,8 @@ class AuthController extends Controller
                 WalletService::createWalletAndHistory($ref_by, $data);
             }
 
-            $message = "Thank you for Registering with " . config('app.name');
             // $user->notify(new SendNotification($user, $message));
+            $message = "Thank you for Registering with " . config('app.name');
             dispatch(new SendLoginNotificationJob($user, $message));
             //Mail::to($event->user->email)->send(new NewUserMail($user));
 

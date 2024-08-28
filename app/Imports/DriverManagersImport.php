@@ -66,7 +66,7 @@ class DriverManagersImport implements ToModel, WithHeadingRow, WithValidation, W
             $user->save();
 
             // Optionally send the password to the user via email
-            // Mail::to($user->email)->send(new SendUserPassword($user, $password));
+            Mail::to($user->email)->send(new SendUserPassword($user, $password));
         }
 
         // Create the DriverManager and link it to the user
@@ -88,7 +88,7 @@ class DriverManagersImport implements ToModel, WithHeadingRow, WithValidation, W
 
     public function chunkSize(): int
     {
-        return 50;
+        return 100;
     }
     public function rules(): array
     {

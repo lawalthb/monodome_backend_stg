@@ -13,10 +13,12 @@ use Illuminate\Support\Facades\Hash;
 use App\Jobs\SendLoginNotificationJob;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Stevebauman\Location\Facades\Location;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class UsersImport implements ToModel,WithHeadingRow ,WithValidation
+class UsersImport implements ToModel,WithHeadingRow ,WithValidation, WithChunkReading, ShouldQueue
 {
     /**
     * @param array $row
@@ -88,6 +90,10 @@ class UsersImport implements ToModel,WithHeadingRow ,WithValidation
         // );
     }
 
+    public function chunkSize(): int
+    {
+        return 100;
+    }
 
     public function driverData($user, $row){
 

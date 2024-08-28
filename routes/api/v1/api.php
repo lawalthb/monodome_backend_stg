@@ -404,6 +404,7 @@ Route::group(['prefix' => 'v1'], function () {
            Route::get('/available-truck', [DriverMangerController::class, 'available_truck']);
            Route::post('/send-request', [DriverMangerController::class, 'sendRequest']);
            Route::post('/store-driver', [DriverMangerController::class, 'storeDriver']);
+           Route::post('/store-driver-info', [DriverMangerController::class, 'storeDriverInfo']);
 
            Route::get('/order', [LoadBoardController::class, 'order']);
            Route::post('/reject-order', [LoadBoardController::class, 'rejectOrder']);

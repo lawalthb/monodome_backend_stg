@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\DriverManger;
 
+use in;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Truck;
@@ -10,6 +11,7 @@ use App\Models\Guarantor;
 use App\Models\LoadBoard;
 use Illuminate\Support\Str;
 use App\Models\DriverManger;
+use App\Models\LoadDocument;
 use Illuminate\Http\Request;
 use App\Mail\SendPasswordMail;
 use App\Mail\SendUserPassword;
@@ -255,6 +257,132 @@ class DriverMangerController extends Controller
     }
 }
 
+
+public function storeDriverInfo(Request $request)
+{
+
+    // Validate the incoming request data
+    $validator = Validator::make($request->all(), [
+        'full_name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'phone_number' => 'required|string|max:15|unique:users,phone_number',
+        'street' => 'required|string|max:255',
+        'state_id' => 'required|numeric',
+        'lga' => 'required|string|max:255',
+        'nin_number' => 'nullable|numeric',
+        'license_number' => 'nullable|numeric',
+        'have_motor' => 'required|in:Yes,No',
+        'guarantors.*.full_name' => 'required|string|max:255',
+        'guarantors.*.email' => 'required|email',
+        'guarantors.*.phone_number' => 'required|string|max:15',
+        'guarantors.*.street' => 'required|string|max:255',
+        'guarantors.*.state' => 'required|numeric',
+        'guarantors.*.lga' => 'required|string|max:255',
+        'guarantors.*.state_of_residence' => 'nullable|numeric',
+        'guarantors.*.city_of_residence' => 'nullable|string|max:255',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    try {
+        // Generate a random password
+        $password = Str::random(10);
+
+        // Create the user
+        $user = User::create([
+            'full_name' => $request->input('full_name'),
+            'email' => $request->input('email'),
+            'phone_number' => $request->input('phone_number'),
+            'password' => Hash::make($password),
+            'user_created_by' => auth()->user()->id,
+            'role_id' => 8,
+            'role' => 'driver',
+            'referral_code' => generateReferralCode(),
+            'user_type' => 'driver',
+            'ref_by' => auth()->user()->id,
+            'status' => 'Pending',
+        ]);
+
+        // Create the driver details
+        $driver = Driver::create([
+            'uuid' => (string) Str::uuid(),
+            'user_id' => $user->id,
+            'state_id' => $request->input('state_id'),
+            'have_motor' => $request->input('have_motor'),
+            'street' => $request->input('street'),
+            'lga' => $request->input('lga'),
+            'nin_number' => $request->input('nin_number'),
+            'license_number' => $request->input('license_number'),
+            'status' => 'Pending',
+        ]);
+
+        $driver->proof_of_license = $this->uploadFile('driver/driver_images', $request->file('proof_of_license'));
+        $driver->profile_picture = $this->uploadFile('driver/driver_images', $request->file('profile_picture'));
+        $driver->save();
+
+
+        if ($request->hasFile('vehicle_image')) {
+            $documents = [];
+
+            foreach ($request->file('vehicle_image') as $file) {
+
+                $file = $this->uploadFileWithDetails('vehicle_image', $file);
+                $path = $file['path'];
+                $name = $file['file_name'];
+
+                // Create a record in the load_documents table
+                $document = new LoadDocument([
+                    'name' => $name,
+                    'path' => $path,
+                   // 'loadable_id' => $driver->id, // Set the loadable_id to the driver's ID
+                     //'loadable_type' => Driver::class, //
+                ]);
+
+                // Associate the document with the LoadBulk
+                $driver->loadDocuments()->save($document);
+            }
+        }
+
+        $guarantorProfilePictures = [];
+
+        foreach ($request->input('guarantors') as $key => $guarantorData) {
+            $guarantor = new Guarantor([
+                'full_name' => $guarantorData['full_name'],
+                'phone_number' => $guarantorData['phone_number'],
+                'email' => $guarantorData['email'],
+                'street' => $guarantorData['street'],
+                'state' => $guarantorData['state'],
+                'lga' => $guarantorData['lga'],
+            ]);
+
+            $guarantor->loadable()->associate($driver);
+
+            $guarantorProfilePictures[] = $this->uploadFile('driver/guarantor_images', $request->file("guarantors.$key.profile_picture"));
+
+            $driver->guarantors()->save($guarantor);
+        }
+
+        foreach ($driver->guarantors as $key => $guarantor) {
+            $guarantor->profile_picture = $guarantorProfilePictures[$key];
+            $guarantor->save();
+        }
+
+        // Optionally, send the password to the user via email
+        Mail::to($user->email)->send(new SendUserPassword($user, $password));
+
+        return response()->json([
+            'message' => 'Driver created successfully',
+
+            // 'user' => $user,
+            'driver' => new DriverResource ($driver),
+        ], 201);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
 
     public function my_drivers(Request $request)
     {
