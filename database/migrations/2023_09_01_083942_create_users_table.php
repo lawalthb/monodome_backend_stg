@@ -32,9 +32,9 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->string('referral_code')->nullable();
             $table->string('role_id')->nullable();
+            $table->string('role')->nullable();
             $table->string('imageUrl')->nullable();
             $table->string('user_type')->nullable();
-            $table->string('role')->nullable();
             $table->string('isPremium')->default(false);
             $table->integer('plan_id')->nullable();
             $table->text('location')->nullable();

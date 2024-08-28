@@ -6,12 +6,14 @@ use App\Models\DriverManger;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
 use App\Traits\FileUploadTrait;
+use Doctrine\DBAL\DriverManager;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\DriverManagersImport;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\DriverMangerResource;
-use Doctrine\DBAL\DriverManager;
 
 class DriverManagerController extends Controller
 {
@@ -191,4 +193,19 @@ class DriverManagerController extends Controller
 
         return $this->success(['driver'=> new DriverMangerResource($driver)], 'Driver status updated successfully');
     }
+
+
+    public function bulkUpload(Request $request)
+{
+    $request->validate([
+        'file' => 'required|file|mimes:xlsx,csv,txt'
+    ]);
+
+    try {
+        Excel::import(new DriverManagersImport, $request->file('file'));
+        return $this->success([], "Driver Managers imported successfully");
+    } catch (\Throwable $th) {
+        return $this->error(['error' => $th->getMessage()]);
+    }
+}
 }
