@@ -389,7 +389,7 @@ class DriverMangerController extends Controller
     {
         // Validate the incoming request data
         $validator = Validator::make($request->all(), [
-            'full_name' => 'required|string|max:255',
+         
             'email' => 'required|email|unique:users,email',
             'phone_number' => 'required|string|max:15|unique:users,phone_number',
             'street' => 'required|string|max:255',
