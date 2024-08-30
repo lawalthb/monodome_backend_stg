@@ -189,8 +189,8 @@ class DriverMangerController extends Controller
             'guarantors.*.street' => 'required|string|max:255',
             'guarantors.*.state' => 'required|numeric',
             'guarantors.*.lga' => 'required|string|max:255',
-            'guarantors.*.state_of_residence' => 'nullable|numeric',
-            'guarantors.*.city_of_residence' => 'nullable|string|max:255',
+            // 'guarantors.*.state_of_residence' => 'nullable|numeric',
+            // 'guarantors.*.city_of_residence' => 'nullable|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -239,8 +239,8 @@ class DriverMangerController extends Controller
                     'street' => $guarantor['street'],
                     'state' => $guarantor['state'],
                     'lga' => $guarantor['lga'],
-                    'state_of_residence' => $guarantor['state_of_residence'],
-                    'city_of_residence' => $guarantor['city_of_residence'],
+                    // 'state_of_residence' => $guarantor['state_of_residence'],
+                    // 'city_of_residence' => $guarantor['city_of_residence'],
                 ]);
             }
 
@@ -278,8 +278,8 @@ class DriverMangerController extends Controller
             'guarantors.*.street' => 'required|string|max:255',
             'guarantors.*.state' => 'required|numeric',
             'guarantors.*.lga' => 'required|string|max:255',
-            'guarantors.*.state_of_residence' => 'nullable|numeric',
-            'guarantors.*.city_of_residence' => 'nullable|string|max:255',
+            // 'guarantors.*.state_of_residence' => 'nullable|numeric',
+            // 'guarantors.*.city_of_residence' => 'nullable|string|max:255',
         ]);
 
         if ($validator->fails()) {
