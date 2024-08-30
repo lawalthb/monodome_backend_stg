@@ -389,7 +389,7 @@ class DriverMangerController extends Controller
     {
         // Validate the incoming request data
         $validator = Validator::make($request->all(), [
-         
+
             'email' => 'required|email|unique:users,email',
             'phone_number' => 'required|string|max:15|unique:users,phone_number',
             'street' => 'required|string|max:255',
@@ -479,9 +479,9 @@ class DriverMangerController extends Controller
             Mail::to($user->email)->send(new SendUserPassword($user, $password));
 
             return response()->json([
-                'message' => 'Driver created successfully',
+                'message' => 'Vehicle created successfully',
                 'user' => $user,
-                'driver' => $truck,
+                'vehicle' => $truck,
             ], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
