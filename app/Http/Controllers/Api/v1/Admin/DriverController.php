@@ -294,7 +294,7 @@ class DriverController extends Controller
         // Update the status
         $driver->user->status = $request->status;
         // update user_created_by
-        if ($driver->ref_by == NULL) {
+        if ($driver->user->ref_by == NULL) {
             $driver->user->user_created_by = $driver->ref_by;
         }
         $driver->user->save();
