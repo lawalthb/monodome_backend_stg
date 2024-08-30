@@ -383,6 +383,111 @@ class DriverMangerController extends Controller
         }
     }
 
+
+    // fro driver manager to create his person vehicle
+    public function storeTruck(Request $request)
+    {
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone_number' => 'required|string|max:15|unique:users,phone_number',
+            'street' => 'required|string|max:255',
+            'state_id' => 'required|numeric',
+            'lga' => 'required|string|max:255',
+
+            'truck_name' => 'required|string|max:255',
+            'truck_type' => 'required|string|max:255',
+            'truck_location' => 'required|string|max:255',
+            'truck_make' => 'required|string|max:255',
+            'plate_number' => 'required|string|max:255',
+            'cac_number' => 'required|string|max:255',
+            'truck_description' => 'required|string|max:255',
+            'business_name' => 'required|string|max:255',
+
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        try {
+            // Generate a random password
+            $password = Str::random(10);
+
+            // Create the user
+            $user = User::create([
+                'full_name' => $request->input('business_name'),
+                'email' => $request->input('email'),
+                'phone_number' => $request->input('phone_number'),
+                'password' => Hash::make($password),
+                'user_created_by' => auth()->user()->id,
+                'role_id' => 11,
+                'role' => 'super_admin',
+                'referral_code' => generateReferralCode(),
+                'user_type' => 'truck',
+                'ref_by' => auth()->user()->id,
+                'status' => 'Pending',
+            ]);
+
+            // Create the truck details
+            $truck = Truck::updateOrCreate(
+
+                [
+                    'uuid' => (string) Str::uuid(),
+                    'user_id' => $user->id,
+                    'phone_number' => $request->input('phone_number'),
+                    'state_id' => $request->input('state_id'),
+                    'street' => $request->input('street'),
+                    'lga' => $request->input('lga'),
+                    'status' => 'Pending',
+                    'truck_name' => $request->input('truck_name'),
+                    'truck_type' => $request->input('truck_type'),
+                    'truck_location' => $request->input('truck_location'),
+                    'truck_make' => $request->input('truck_make'),
+                    'plate_number' => $request->input('plate_number'),
+                    'cac_number' => $request->input('cac_number'),
+                    'truck_description' => $request->input('truck_description'),
+                    'business_name' => $request->input('business_name'),
+                ]
+            );
+
+            $truck->profile_picture = $this->uploadFile('truck/truck_images', $request->file('profile_picture'));
+            $truck->save();
+
+            if ($request->input('documents')) {
+                foreach ($request->input('documents') as $key => $fileData) {
+                    $file = $this->uploadFileWithDetails('load_documents', $request->file("documents.$key.file"));
+                    $path = $file['path'];
+                    $name = $fileData['document_type'];
+
+                    // Create a record in the load_documents table
+                    $document = new LoadDocument([
+                        'name' => $name,
+                        'path' => $path,
+                    ]);
+
+                    // Associate the document with the LoadBulk
+                    $truck->loadDocuments()->save($document);
+                }
+            }
+
+
+
+            // Optionally, send the password to the user via email
+            Mail::to($user->email)->send(new SendUserPassword($user, $password));
+
+            return response()->json([
+                'message' => 'Driver created successfully',
+                'user' => $user,
+                'driver' => $truck,
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
     public function my_drivers(Request $request)
     {
 
