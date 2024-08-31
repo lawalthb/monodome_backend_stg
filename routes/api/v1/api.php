@@ -35,6 +35,7 @@ use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
 use App\Http\Controllers\Api\v1\Customers\VehicleMakeController;
 use App\Http\Controllers\Api\v1\Customers\VehicleTypeController;
 use App\Http\Controllers\Api\v1\auth\EmailVerificationController;
+use App\Http\Controllers\Api\v1\ContactUs\ContactUsController;
 use App\Http\Controllers\Api\v1\Customers\VehicleModelController;
 use App\Http\Controllers\Api\v1\Customers\LoadContainerController;
 use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
@@ -50,7 +51,7 @@ Route::group(['prefix' => 'v1'], function () {
         return response()->json(['message' => "v1 Server is up and running"]);
         //return "here is the user";
     });
-
+    Route::post('/contact_us', [ContactUsController::class, 'send']);
     Route::get('/auth', function (Request $request) {
 
         return response()->json(['message' => "v1 Server is up and running in auth"]);
