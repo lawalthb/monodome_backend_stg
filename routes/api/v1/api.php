@@ -51,7 +51,10 @@ Route::group(['prefix' => 'v1'], function () {
         return response()->json(['message' => "v1 Server is up and running"]);
         //return "here is the user";
     });
+    //monolog contact us page
     Route::post('/contact_us', [ContactUsController::class, 'send']);
+
+
     Route::get('/auth', function (Request $request) {
 
         return response()->json(['message' => "v1 Server is up and running in auth"]);
