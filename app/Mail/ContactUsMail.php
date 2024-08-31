@@ -14,37 +14,37 @@ class ContactUsMail extends Mailable
   public $fullname;
   public $email;
   public $phone;
-  public $message;
+  public $body;
 
   /**
-   * Create a new message instance.
+   * Create a new body instance.
    *
    * @param User $user
    * @param string $password
    * @return void
    */
-  public function __construct(string $fullname, string $email, string $phone, string $message)
+  public function __construct($fullname,  $email,  $phone,  $body)
   {
     $this->fullname = $fullname;
     $this->email = $email;
     $this->phone = $phone;
-    $this->message = $message;
+    $this->body = $body;
   }
 
   /**
-   * Build the message.
+   * Build the body.
    *
    * @return $this
    */
   public function build()
   {
-    return $this->subject('Monolog Contact Message  by ' . $this->fullname)
+    return $this->subject('Monolog Contact message  by ' . $this->fullname)
       ->view('mail.contact_us')
       ->with([
         'fullname' => $this->fullname,
         'email' => $this->email,
         'phone' => $this->phone,
-        'message' => $this->message,
+        'body' => $this->body,
       ]);
   }
 }

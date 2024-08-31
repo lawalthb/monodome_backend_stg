@@ -16,13 +16,29 @@ class ContactUsController extends Controller
   public function send(Request $request)
   {
     $request->validate([
-      'fullname' => 'required|string',
-      'phone' => 'required|string',
-      'message' => 'required|string',
-      'email' => 'required|string',
+      'fullname' => 'required',
+      'phone' => 'required',
+      'body' => 'required',
+      'email' => 'required',
     ]);
 
+    $fullname = $request->fullname;
 
-    Mail::to('lawalthb@gmail.com')->send(new ContactUsMail($request->fullname, $request->email, $request->phone, $request->message));
+    $email = $request->email;
+
+    $phone = $request->phone;
+
+    $body = $request->body;
+
+
+    try {
+      Mail::to('lawalthb@gmail.com')->send(new ContactUsMail($fullname, $email, $phone, $body));
+      return response()->json([
+        'message' => 'Message sent successfully',
+
+      ], 201);
+    } catch (\Exception $e) {
+      return response()->json(['error' => $e->getMessage()], 500);
+    }
   }
 }
