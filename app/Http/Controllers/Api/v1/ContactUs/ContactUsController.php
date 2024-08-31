@@ -32,7 +32,7 @@ class ContactUsController extends Controller
 
 
     try {
-      Mail::to('lawalthb@gmail.com')->send(new ContactUsMail($fullname, $email, $phone, $body));
+      Mail::to(env('SUPPORT_EMAIL'))->send(new ContactUsMail($fullname, $email, $phone, $body));
       return response()->json([
         'message' => 'Message sent successfully',
 
