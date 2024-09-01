@@ -336,6 +336,17 @@ class AuthController extends Controller
         return $this->success(['user' => new UserResource($user)], "Successfully");
     }
 
+
+    public function getDownLineUser(Request $request)
+    {
+
+        $key = $request->input('search');
+        $perPage = $request->input('per_page', 10);
+        $user = User::where("referral_code",auth()->user()->referral_code)->paginate( $perPage);
+
+        return  UserResource::collection($user);
+    }
+
     /**
      * logout
      *

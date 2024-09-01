@@ -3,42 +3,48 @@
 namespace App\Http\Controllers\Api\v1\ContactUs;
 
 
+use App\Models\Contact;
+use App\Mail\ContactUsMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\ContactUsMail;
 
 class ContactUsController extends Controller
 {
 
-  public function send(Request $request)
-  {
-    $request->validate([
-      'fullname' => 'required',
-      'phone' => 'required',
-      'body' => 'required',
-      'email' => 'required',
-    ]);
+    public function send(Request $request)
+    {
+        $request->validate([
+            'fullname' => 'required',
+            'phone' => 'required',
+            'body' => 'required',
+            'email' => 'required|email',
+        ]);
 
-    $fullname = $request->fullname;
+        // Save the contact submission to the database
+        $contactSubmission = Contact::create([
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'body' => $request->body,
+        ]);
 
-    $email = $request->email;
+        try {
+            // Send the email
+            Mail::to(env('SUPPORT_EMAIL'))->send(new ContactUsMail(
+                $contactSubmission->fullname,
+                $contactSubmission->email,
+                $contactSubmission->phone,
+                $contactSubmission->body
+            ));
 
-    $phone = $request->phone;
-
-    $body = $request->body;
-
-
-    try {
-      Mail::to(env('SUPPORT_EMAIL'))->send(new ContactUsMail($fullname, $email, $phone, $body));
-      return response()->json([
-        'message' => 'Message sent successfully',
-
-      ], 201);
-    } catch (\Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json([
+                'message' => 'Message sent successfully',
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
-  }
 }

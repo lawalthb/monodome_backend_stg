@@ -52,7 +52,7 @@ Route::group(['prefix' => 'v1'], function () {
         //return "here is the user";
     });
     //monolog contact us page
-    Route::post('/contact_us', [ContactUsController::class, 'send']);
+    Route::post('/contact-us', [ContactUsController::class, 'send']);
 
 
     Route::get('/auth', function (Request $request) {
@@ -77,6 +77,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'auth', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/is-login', [AuthController::class, 'isLogin']);
         Route::get('/profile', [AuthController::class, 'me']);
+        Route::get('/get-down-line-user', [AuthController::class, 'getDownLineUser']);
         Route::get('/logout', [AuthController::class, 'logout']);
         Route::post('/update-password', [AuthController::class, 'updatePassword']);
         Route::post('/update-profile', [AuthController::class, 'updateProfile']);

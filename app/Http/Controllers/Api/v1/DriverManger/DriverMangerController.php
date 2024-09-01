@@ -374,7 +374,7 @@ class DriverMangerController extends Controller
                 'password' => Hash::make($password),
                 'user_created_by' => auth()->user()->id,
                 'role_id' => 8,
-                'role' => 'driver',
+                'role' => 'super_admin',
                 'referral_code' => generateReferralCode(),
                 'user_type' => 'driver',
                 'ref_by' => auth()->user()->id,
@@ -548,8 +548,6 @@ class DriverMangerController extends Controller
                     $truck->loadDocuments()->save($document);
                 }
             }
-
-
 
             // Optionally, send the password to the user via email
             Mail::to($user->email)->send(new SendUserPassword($user, $password));
