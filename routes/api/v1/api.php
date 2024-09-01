@@ -337,6 +337,7 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::get('/', [DriverController::class, 'index']);
         Route::post('/store', [DriverController::class, 'store']);
+        
         Route::post('/store', [DriverController::class, 'store']);
         Route::get('/show/{id}', [DriverController::class, 'show']);
         Route::post('/update/{id}', [DriverController::class, 'update']);
