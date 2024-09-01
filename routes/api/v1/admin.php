@@ -33,6 +33,7 @@ use App\Http\Controllers\Api\v1\Admin\AgentCommissionController;
 use App\Http\Controllers\Api\v1\Admin\ShippingCompanyController;
 use App\Http\Controllers\Api\v1\Admin\Support\SupportController;
 use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
+use App\Http\Controllers\Api\v1\Admin\ContactSubmissionController;
 use App\Http\Controllers\Api\v1\Admin\OrderPriceSettingController;
 use App\Http\Controllers\Api\v1\Admin\ContainerValuePriceController;
 use App\Http\Controllers\Api\v1\Admin\SpecializedShipmentController;
@@ -289,7 +290,13 @@ Route::group(['prefix' => 'v1/admin'], function () {
             Route::delete('/{id}', [DistancePriceController::class, 'destroy']);
         });
 
-
+        Route::group(['prefix' => 'contact', 'middleware' => 'auth:api'], function () {
+            Route::get('/', [ContactSubmissionController::class, 'index']);
+            Route::get('/{id}/reply', [ContactSubmissionController::class, 'reply']);
+            Route::post('/', [ContactSubmissionController::class, 'store']);
+            Route::put('/{id}', [ContactSubmissionController::class, 'update']);
+            Route::delete('/{id}', [ContactSubmissionController::class, 'destroy']);
+        });
 
         Route::group(['prefix' => 'support', 'middleware' => 'auth:api'], function () {
 
