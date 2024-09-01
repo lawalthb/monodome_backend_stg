@@ -35,6 +35,7 @@ use App\Http\Controllers\Api\v1\Customers\LoadPackageController;
 use App\Http\Controllers\Api\v1\Customers\VehicleMakeController;
 use App\Http\Controllers\Api\v1\Customers\VehicleTypeController;
 use App\Http\Controllers\Api\v1\auth\EmailVerificationController;
+use App\Http\Controllers\Api\v1\ContactUs\ContactUsController;
 use App\Http\Controllers\Api\v1\Customers\VehicleModelController;
 use App\Http\Controllers\Api\v1\Customers\LoadContainerController;
 use App\Http\Controllers\Api\v1\Customers\LoadCarClearingController;
@@ -47,15 +48,18 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::get('/', function (Request $request) {
 
-         return response()->json(['message' =>"v1 Server is up and running"]);
+        return response()->json(['message' => "v1 Server is up and running"]);
         //return "here is the user";
     });
+    //monolog contact us page
+    Route::post('/contact-us', [ContactUsController::class, 'send']);
+
 
     Route::get('/auth', function (Request $request) {
 
-        return response()->json(['message' =>"v1 Server is up and running in auth"]);
-       //return "here is the user";
-   });
+        return response()->json(['message' => "v1 Server is up and running in auth"]);
+        //return "here is the user";
+    });
 
     Route::group(['prefix' => 'auth'], function () {
         Route::post('/register', [AuthController::class, 'register']);
@@ -73,6 +77,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'auth', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/is-login', [AuthController::class, 'isLogin']);
         Route::get('/profile', [AuthController::class, 'me']);
+        Route::get('/get-down-line-user', [AuthController::class, 'getDownLineUser']);
         Route::get('/logout', [AuthController::class, 'logout']);
         Route::post('/update-password', [AuthController::class, 'updatePassword']);
         Route::post('/update-profile', [AuthController::class, 'updateProfile']);
@@ -144,7 +149,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/load-board/{loadBulk}', [LoadBoardController::class, 'update']);
         Route::delete('/load-board/{id}', [LoadBoardController::class, 'destroy']);
         Route::get('/load-board/accept/{loadBoard}', [LoadBoardController::class, 'accept']);
-
     });
 
     Route::group(['prefix' => 'bid', 'middleware' => 'auth:api'], function () {
@@ -161,20 +165,18 @@ Route::group(['prefix' => 'v1'], function () {
         Route::delete('/delete/{id}', [ChatController::class, 'destroy']);
         Route::get('/show/{id}', [ChatController::class, 'show']);
         Route::post('/update/{id}', [ChatController::class, 'update']);
-
     });
 
 
     Route::group(['prefix' => 'support', 'middleware' => 'auth:api'], function () {
 
         Route::get('/get', [SupportController::class, 'index']);
-      //  Route::get('/get/{id}', [SupportController::class, 'index']);
+        //  Route::get('/get/{id}', [SupportController::class, 'index']);
         Route::post('/store', [SupportController::class, 'store']);
         Route::post('/reply/{id}', [SupportController::class, 'replyTicket']);
         Route::delete('/delete/{id}', [SupportController::class, 'destroy']);
         Route::get('/show/{id}', [SupportController::class, 'show']);
         Route::get('/download/{ticket}', [SupportController::class, 'ticketDownload']);
-
     });
 
     Route::group(['prefix' => 'order/tracking'], function () {
@@ -184,7 +186,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/{id}', [TrackingController::class, 'show']);
         Route::post('/{id}', [TrackingController::class, 'update'])->middleware('auth:api');
         Route::delete('/{id}', [TrackingController::class, 'destroy'])->middleware('auth:api');
-
     });
 
 
@@ -206,7 +207,7 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
 
-     // broker route group
+    // broker route group
     Route::group(['prefix' => 'broker'], function () {
 
         Route::get('/', [BrokerController::class, 'index']);
@@ -216,14 +217,14 @@ Route::group(['prefix' => 'v1'], function () {
         Route::delete('/destroy/{id}', [BrokerController::class, 'destroy']);
     });
 
-     // company route group
+    // company route group
     Route::group(['prefix' => 'company'], function () {
 
         Route::post('/store', [CompanyController::class, 'store']);
         ///  Route::post('/update/{id}', [CompanyController::class, 'update']);
         //   Route::delete('/destroy/{id}', [CompanyController::class, 'destroy']);
 
-        Route::group(['middleware' => 'auth:api' ,'role:Company Transport'], function(){
+        Route::group(['middleware' => 'auth:api', 'role:Company Transport'], function () {
             Route::get('/', [CompanyController::class, 'index']);
 
             Route::get('/my-info', [CompanyController::class, 'my_info']);
@@ -269,7 +270,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::get('/move-truck-workshop', [CompanyController::class, 'truckInWorkshop']);
 
 
-               // load package route
+            // load package route
             Route::get('/load-package', [LoadPackageController::class, 'index']);
             Route::post('/load-package', [CompanyController::class, 'privateLoadPackageStore']);
             Route::get('/load-package/{id}', [LoadPackageController::class, 'show']);
@@ -282,7 +283,6 @@ Route::group(['prefix' => 'v1'], function () {
             Route::get('/load-bulk/{id}', [LoadBulkController::class, 'show']);
             Route::post('/load-bulk/{loadBulk}', [LoadBulkController::class, 'update']);
             Route::delete('/load-bulk/{id}', [LoadBulkController::class, 'destroy']);
-
         });
     });
 
@@ -295,12 +295,12 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/update/{id}', [ShippingCompanyController::class, 'update']);
         Route::delete('/destroy/{id}', [ShippingCompanyController::class, 'destroy']);
 
-        Route::group(['middleware' => 'auth:api','role:Shipping Company'], function () {
+        Route::group(['middleware' => 'auth:api', 'role:Shipping Company'], function () {
 
-        Route::post('/addUser', [ShippingCompanyController::class, 'createUser']);
-        Route::get('/myUsers', [ShippingCompanyController::class, 'myUsers']);
-        Route::post('/changeRole', [ShippingCompanyController::class, 'changeRole']);
-    });
+            Route::post('/addUser', [ShippingCompanyController::class, 'createUser']);
+            Route::get('/myUsers', [ShippingCompanyController::class, 'myUsers']);
+            Route::post('/changeRole', [ShippingCompanyController::class, 'changeRole']);
+        });
     });
 
     // agent route group
@@ -309,20 +309,20 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/', [AgentController::class, 'index']);
         Route::post('/store', [AgentController::class, 'store']);
 
-        Route::group(['middleware' => 'auth:api','role:agent'], function () {
+        Route::group(['middleware' => 'auth:api', 'role:agent'], function () {
 
-        Route::get('/my-order', [AgentController::class, 'my_order']);
-        Route::get('/show/{id}', [AgentController::class, 'show']);
-        Route::get('/show-single-order/{id}', [AgentController::class, 'showSingleOrder']);
-        Route::get('/show/{id}', [AgentController::class, 'show']);
-        Route::post('/update/{id}', [AgentController::class, 'update']);
-        Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
+            Route::get('/my-order', [AgentController::class, 'my_order']);
+            Route::get('/show/{id}', [AgentController::class, 'show']);
+            Route::get('/show-single-order/{id}', [AgentController::class, 'showSingleOrder']);
+            Route::get('/show/{id}', [AgentController::class, 'show']);
+            Route::post('/update/{id}', [AgentController::class, 'update']);
+            Route::delete('/destroy/{id}', [AgentController::class, 'destroy']);
+        });
     });
-    });
 
 
-      // agent route group
-      Route::group(['prefix' => 'truck'], function () {
+    // agent route group
+    Route::group(['prefix' => 'truck'], function () {
 
         Route::get('/', [TruckController::class, 'index']);
         Route::post('/store', [TruckController::class, 'store']);
@@ -338,13 +338,14 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::get('/', [DriverController::class, 'index']);
         Route::post('/store', [DriverController::class, 'store']);
+        
         Route::post('/store', [DriverController::class, 'store']);
         Route::get('/show/{id}', [DriverController::class, 'show']);
         Route::post('/update/{id}', [DriverController::class, 'update']);
         Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
         Route::get('/broadcast/{id}', [DriverController::class, 'singleBroadcast']);
 
-        Route::group(['middleware' => 'auth:api','role:Driver'], function () {
+        Route::group(['middleware' => 'auth:api', 'role:Driver'], function () {
 
             Route::get('/request', [DriverController::class, 'pendingRequest']);
             Route::post('/request', [DriverController::class, 'acceptRequest']);
@@ -388,49 +389,50 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'driver-manager'], function () {
         Route::post('/store', [DriverMangerController::class, 'store']);
+        Route::post('/store-new', [DriverMangerController::class, 'storeNew']);
 
-         // Route::get('/request', [DriverMangerController::class, 'updateRequest']);
+        // Route::get('/request', [DriverMangerController::class, 'updateRequest']);
         Route::get('/request/{driverID}/{managerID}/{status}', [DriverMangerController::class, 'updateRequest']);
 
-        Route::middleware(['auth:api','role:Driver Manager'])->group(function () {
-       //  Route::get('/your-url', function () {
+        Route::middleware(['auth:api', 'role:Driver Manager'])->group(function () {
+            //  Route::get('/your-url', function () {
 
-           Route::get('/', [DriverMangerController::class, 'index']);
+            Route::get('/', [DriverMangerController::class, 'index']);
 
-           Route::get('/my-drivers', [DriverMangerController::class, 'my_drivers']);
-           Route::get('/delete-account', [DriverMangerController::class, 'deleteUserAndDriver']);
-           Route::get('/available-drivers', [DriverMangerController::class, 'available_drivers']);
-           Route::get('/my-truck', [DriverMangerController::class, 'my_truck']);
-           Route::get('/available-truck', [DriverMangerController::class, 'available_truck']);
-           Route::post('/send-request', [DriverMangerController::class, 'sendRequest']);
-           Route::post('/store-driver', [DriverMangerController::class, 'storeDriver']);
-           Route::post('/store-driver-info', [DriverMangerController::class, 'storeDriverInfo']);
+            Route::get('/my-drivers', [DriverMangerController::class, 'my_drivers']);
+            Route::get('/delete-account', [DriverMangerController::class, 'deleteUserAndDriver']);
+            Route::get('/available-drivers', [DriverMangerController::class, 'available_drivers']);
+            Route::get('/my-truck', [DriverMangerController::class, 'my_truck']);
+            Route::get('/available-truck', [DriverMangerController::class, 'available_truck']);
+            Route::post('/send-request', [DriverMangerController::class, 'sendRequest']);
+            Route::post('/store-driver', [DriverMangerController::class, 'storeDriver']);
+            Route::post('/store-driver-info', [DriverMangerController::class, 'storeDriverInfo']);
+            Route::post('/store-truck', [DriverMangerController::class, 'storeTruck']);
 
-           Route::get('/order', [LoadBoardController::class, 'order']);
-           Route::post('/reject-order', [LoadBoardController::class, 'rejectOrder']);
-           Route::get('/all-driver-assign-orders', [LoadBoardController::class, 'allDriverAssignOrders']);
-           Route::get('/all-driver-truck', [DriverMangerController::class, 'driverWithTruck']);
-           Route::post('/assign-driver-truck', [DriverMangerController::class, 'assignDriverToTruck']);
-           Route::post('/driver-truck', [DriverMangerController::class, 'singleDriverTrucks']);
-        //    Route::post('/assign-driver-truck', [LoadBoardController::class, 'assignDriverToTruck']);
-           Route::post('/re-assign-driver-truck', [LoadBoardController::class, 'reAssignDriverToTruck']);
-           Route::post('/accept-order', [LoadBoardController::class, 'acceptOrder']);
-           Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
-           Route::post('/order-re-assign', [LoadBoardController::class, 'orderReAssign']);
-           Route::post('/remove-order', [LoadBoardController::class, 'removeOrder']);
-           Route::post('/remove-truck', [LoadBoardController::class, 'removeTruck']);
-           Route::post('/order-reassign', [DriverMangerController::class, 'orderReAssign']);
-           Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
-           Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);
-           Route::get('/driver-orders/{user}', [LoadBoardController::class, 'allUserOrder']);
-           // Route::get('/show/{id}', [DriverMangerController::class, 'show']);
-           Route::post('/update/{id}', [DriverMangerController::class, 'update']);
-           // Route::delete('/destroy/{id}', [DriverMangerController::class, 'destroy']);
+            Route::get('/order', [LoadBoardController::class, 'order']);
+            Route::post('/reject-order', [LoadBoardController::class, 'rejectOrder']);
+            Route::get('/all-driver-assign-orders', [LoadBoardController::class, 'allDriverAssignOrders']);
+            Route::get('/all-driver-truck', [DriverMangerController::class, 'driverWithTruck']);
+            Route::post('/assign-driver-truck', [DriverMangerController::class, 'assignDriverToTruck']);
+            Route::post('/driver-truck', [DriverMangerController::class, 'singleDriverTrucks']);
+            //    Route::post('/assign-driver-truck', [LoadBoardController::class, 'assignDriverToTruck']);
+            Route::post('/re-assign-driver-truck', [LoadBoardController::class, 'reAssignDriverToTruck']);
+            Route::post('/accept-order', [LoadBoardController::class, 'acceptOrder']);
+            Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
+            Route::post('/order-re-assign', [LoadBoardController::class, 'orderReAssign']);
+            Route::post('/remove-order', [LoadBoardController::class, 'removeOrder']);
+            Route::post('/remove-truck', [LoadBoardController::class, 'removeTruck']);
+            Route::post('/order-reassign', [DriverMangerController::class, 'orderReAssign']);
+            Route::get('/broadcast', [DriverMangerController::class, 'broadcast']);
+            Route::get('/broadcast/{id}', [DriverMangerController::class, 'singleBroadcast']);
+            Route::get('/driver-orders/{user}', [LoadBoardController::class, 'allUserOrder']);
+            // Route::get('/show/{id}', [DriverMangerController::class, 'show']);
+            Route::post('/update/{id}', [DriverMangerController::class, 'update']);
+            // Route::delete('/destroy/{id}', [DriverMangerController::class, 'destroy']);
 
 
-           //   });
+            //   });
         });
-
     });
 
     Route::group(['prefix' => 'transfer/nomba', 'middleware' => 'auth:api'], function () {
@@ -456,11 +458,10 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'notification', 'middleware' => 'auth:api'], function () {
         Route::get('/', [NotificationController::class, 'index']);
         Route::get('/read/{id}', [NotificationController::class, 'readNotification']);
-
     });
     Route::group(['prefix' => 'settings', 'middleware' => 'auth:api'], function () {
-         Route::get('/', [SettingController::class, 'index']);
-         Route::get('/{id}', [SettingController::class, 'show']);
+        Route::get('/', [SettingController::class, 'index']);
+        Route::get('/{id}', [SettingController::class, 'show']);
     });
 
 
@@ -496,12 +497,11 @@ Route::group(['prefix' => 'v1'], function () {
             Route::put('/{id}', [CardController::class, 'update']);
             Route::delete('/{id}', [CardController::class, 'destroy']);
         });
-
     });
 
     //vehicle route group here
     // Route::group(['prefix' => 'vehicle', 'middleware' => 'auth:api'], function () {
-     Route::group(['prefix' => 'vehicle'], function () {
+    Route::group(['prefix' => 'vehicle'], function () {
 
         // route for vehicle make
         Route::get('/make', [VehicleMakeController::class, 'index']);
@@ -564,20 +564,20 @@ Route::group(['prefix' => 'v1'], function () {
 
     //map api
     Route::group(['prefix' => 'mapapi'], function () {
-        Route::get('get-api-key', [MapApiController::class,'getKey']);
-        Route::post('place-api-autocomplete', [MapApiController::class,'place_api_autocomplete']);
+        Route::get('get-api-key', [MapApiController::class, 'getKey']);
+        Route::post('place-api-autocomplete', [MapApiController::class, 'place_api_autocomplete']);
         Route::post('distance-api', [MapApiController::class, 'distance_api']);
-        Route::post('place-api-details', [MapApiController::class,'place_api_details']);
-        Route::post('geocode-api', [MapApiController::class,'geocode_api']);
+        Route::post('place-api-details', [MapApiController::class, 'place_api_details']);
+        Route::post('geocode-api', [MapApiController::class, 'geocode_api']);
     });
 
     //categories
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index']);
-      //  Route::post('/', [CategoryController::class, 'store']);
+        //  Route::post('/', [CategoryController::class, 'store']);
         Route::get('/{category}', [CategoryController::class, 'show']);
-     //   Route::put('/{category}', [CategoryController::class, 'update']);
-       // Route::delete('/{category}', [CategoryController::class, 'destroy']);
+        //   Route::put('/{category}', [CategoryController::class, 'update']);
+        // Route::delete('/{category}', [CategoryController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'blog'], function () {
@@ -588,35 +588,31 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/comment', [BlogController::class, 'getComments']);
         Route::get('/comment/{id}', [BlogController::class, 'getComments']);
         Route::get('/{category}/related', [BlogController::class, 'getRelatedBlogs']);
+    });
 
-        });
-
-    Route::group(['prefix' => 'blog','middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'blog', 'middleware' => 'auth:api'], function () {
 
         Route::post('/', [BlogController::class, 'store']);
         Route::put('/{id}', [BlogController::class, 'update']);
         Route::delete('/{id}', [BlogController::class, 'destroy']);
         Route::post('/comment', [BlogController::class, 'storeComment']);
-      //  Route::put('/comment/{id}', [BlogController::class, 'updateComment']);
-       // Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);
+        //  Route::put('/comment/{id}', [BlogController::class, 'updateComment']);
+        // Route::delete('/comment/{id}', [BlogController::class, 'destroyComment']);
 
         Route::get('/pending', [BlogController::class, 'pendingBlog']);
     });
 
     Route::group(['prefix' => 'wipe'], function () {
-        Route::get('/', function(){
+        Route::get('/', function () {
 
-          //  Artisan::call('migrate:fresh --seed');
+            //  Artisan::call('migrate:fresh --seed');
 
-          Artisan::call('migrate:fresh');
-          Artisan::call('db:seed');
+            Artisan::call('migrate:fresh');
+            Artisan::call('db:seed');
 
             return response()->json([
                 'message' => 'Database migrated and seeded successfully.'
             ]);
         });
-
     });
-
 });
-

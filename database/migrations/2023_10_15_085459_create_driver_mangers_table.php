@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('city_of_residence')->nullable();
             $table->string('office_front_image')->nullable();
             $table->string('inside_office_image')->nullable();
+            $table->string('profile_picture')->nullable();
             $table->string('registration_documents')->nullable();
             $table->string('cac_certificate')->nullable();
             $table->string('company_name')->nullable();
