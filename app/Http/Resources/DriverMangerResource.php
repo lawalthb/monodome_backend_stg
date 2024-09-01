@@ -21,6 +21,7 @@ class DriverMangerResource extends JsonResource
           'cac_certificate' =>  getImageFile($this->cac_certificate),
           'inside_office_image' => getImageFile($this->inside_office_image),
           'inside_store_image' => getImageFile($this->inside_store_image),
+            'profile_picture' => getImageFile($this->profile_picture),
           'status' => $this->status,
           'total_user_manage' => $this->user_created_by->count(),
           'created_at' => $this->created_at,

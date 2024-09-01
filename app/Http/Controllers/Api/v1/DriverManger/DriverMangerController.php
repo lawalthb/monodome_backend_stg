@@ -169,6 +169,82 @@ class DriverMangerController extends Controller
         }
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function storeNew(DriverMangerRequest $request)
+    {
+
+
+        try {
+            DB::beginTransaction();
+
+            $user = User::firstOrNew(['email' => $request->input('email')]);
+            $ref_by = null;
+
+            if ($request->has('ref_by')) {
+                $ref_by = User::where("referral_code", $request->ref_by)->first();
+            }
+
+
+            if (!$user->exists) {
+                // User doesn't exist, so create a new user
+                $user->full_name = $request->input('full_name');
+                $user->email = $request->input('email');
+                $user->date_of_birth = $request->input('date_of_birth');
+                $user->gender = $request->input('gender');
+                $user->ref_by = $ref_by ? $ref_by->id : null;
+                $user->referral_code = $request->referral_code ?? generateReferralCode();
+                $user->address = $request->input('address');
+                $user->phone_number = $request->input('phone_number');
+                $password  = Str::random(16);
+                $user->password = $password;
+                $user->user_type = 'driver_manager';
+                $user->save();
+
+                $data = [
+                    "full_name" => $request->input('full_name'),
+                    "password" => $password,
+                    "message" => "",
+                ];
+                Mail::to($user->email)->send(
+                    new SendPasswordMail($data)
+                );
+                $role = Role::where('name', 'Agent')->first();
+
+                if ($role) {
+                    $user->assignRole($role);
+                }
+            }
+
+            $driverManager = new DriverManger([
+                'user_id' => $user->id,
+                'phone_number' => $request->input('phone_number'),
+                'state_id' => $request->input('state_id'),
+                'street' => $request->input('street'),
+                'status' => 'Pending',
+                'business_name' =>  $request->input('business_name'),
+                'lga' => $request->input('lga'),
+                'company_name' =>  $request->input('company_name'),
+                'company_state' =>  $request->input('company_state'),
+                'company_lga' =>  $request->input('company_lga'),
+            ]);
+
+            $driverManager->profile_picture = $this->uploadFile('driver_manager', $request->file('profile_picture'));
+
+            $driverManager->save();
+
+            DB::commit();
+
+            return $this->success(new DriverMangerResource($driverManager), 'Driver Manager and guarantors registered successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+
+            return $this->error('An error occurred while registering the driver Manager and guarantors.');
+        }
+    }
+
 
     public function storeDriver(Request $request)
     {

@@ -387,6 +387,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'driver-manager'], function () {
         Route::post('/store', [DriverMangerController::class, 'store']);
+        Route::post('/store-new', [DriverMangerController::class, 'storeNew']);
 
         // Route::get('/request', [DriverMangerController::class, 'updateRequest']);
         Route::get('/request/{driverID}/{managerID}/{status}', [DriverMangerController::class, 'updateRequest']);
