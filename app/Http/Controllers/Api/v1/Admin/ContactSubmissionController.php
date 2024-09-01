@@ -11,12 +11,13 @@ use App\Mail\ReplyToContactSubmissionMail;
 class ContactSubmissionController extends Controller
 {
 
-
-    // Get all contact submissions
     public function index()
     {
-        $submissions = Contact::all();
-        return response()->json($submissions);
+        $key = request()->input('search');
+        $perPage = request()->input('per_page', 10);
+
+        $submissions = Contact::latest()->paginate($perPage);
+        return $submissions;
     }
 
     // Show a specific contact submission by ID

@@ -292,10 +292,10 @@ Route::group(['prefix' => 'v1/admin'], function () {
 
         Route::group(['prefix' => 'contact', 'middleware' => 'auth:api'], function () {
             Route::get('/', [ContactSubmissionController::class, 'index']);
-            Route::get('/{id}/reply', [ContactSubmissionController::class, 'reply']);
-            Route::post('/', [ContactSubmissionController::class, 'store']);
-            Route::put('/{id}', [ContactSubmissionController::class, 'update']);
+            Route::get('/{id}', [ContactSubmissionController::class, 'show']);
             Route::delete('/{id}', [ContactSubmissionController::class, 'destroy']);
+            Route::post('{id}/reply', [ContactSubmissionController::class, 'reply']);
+            Route::post('{id}/status', [ContactSubmissionController::class, 'updateStatus']);
         });
 
         Route::group(['prefix' => 'support', 'middleware' => 'auth:api'], function () {
