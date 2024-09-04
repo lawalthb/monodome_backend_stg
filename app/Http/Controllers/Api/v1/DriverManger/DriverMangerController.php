@@ -179,27 +179,35 @@ class DriverMangerController extends Controller
         try {
             DB::beginTransaction();
 
-            $user = User::firstOrNew(['email' => $request->input('email')]);
-            $ref_by = null;
+                 // Check if a user with the same email exists and if their role_id is 9
+            $existingUserWithRole9 = User::where('email', $request->input('email'))->where('role_id', 9)->first();
+            if ($existingUserWithRole9) {
+                return $this->error('A user with this email and role cannot be registered again.');
+            }
 
+             // Check if user with the same email exists but has a different role_id
+            $existingUser = User::where('email', $request->input('email'))->first();
+
+            // Initialize the referral user (ref_by)
+            $ref_by = null;
             if ($request->has('ref_by')) {
-                $ref_by = User::where("referral_code", $request->ref_by)->first();
+                $ref_by = User::where('referral_code', $request->input('ref_by'))->first();
             }
 
 
-            if (!$user->exists) {
+            if (!$existingUser) {
                 // User doesn't exist, so create a new user
+                $user = new User();
                 $user->full_name = $request->input('full_name');
                 $user->email = $request->input('email');
-                $user->date_of_birth = $request->input('date_of_birth');
-                $user->gender = $request->input('gender');
-                $user->ref_by = $ref_by ? $ref_by->id : null;
+                $user->ref_by = $ref_by ? $ref_by->id : null; // Set the ref_by user ID
                 $user->referral_code = $request->referral_code ?? generateReferralCode();
                 $user->address = $request->input('address');
                 $user->phone_number = $request->input('phone_number');
                 $password  = Str::random(16);
-                $user->password = $password;
+                $user->password = bcrypt($password); // Make sure to hash the password
                 $user->user_type = 'driver_manager';
+                $user->role_id = 9; // Set the role_id to 9 for driver managers
                 $user->save();
 
                 $data = [
@@ -207,14 +215,16 @@ class DriverMangerController extends Controller
                     "password" => $password,
                     "message" => "",
                 ];
-                Mail::to($user->email)->send(
-                    new SendPasswordMail($data)
-                );
-                $role = Role::where('name', 'Agent')->first();
 
+                $role = Role::where('name', 'Driver Manager')->first();
+
+                Mail::to($user->email)->send(new SendPasswordMail($data));
                 if ($role) {
                     $user->assignRole($role);
                 }
+            } else {
+                // User exists but has a different role, so you can proceed
+                $user = $existingUser; // Use the existing user
             }
 
             $driverManager = new DriverManger([
