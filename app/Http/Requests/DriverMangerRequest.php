@@ -31,9 +31,9 @@ class DriverMangerRequest extends FormRequest
             'business_name' => 'nullable|string',
             'company_name' => 'nullable|string',
             // 'country_id' => 'required|exists:countries,id',
-            'company_state' => 'required|exists:states,id',
-            'company_lga' => 'required|numeric',
-          
+            // 'company_state' => 'required|exists:states,id',
+            // 'company_lga' => 'required|numeric',
+
             // 'state_of_residence' => 'required|string',
             // 'city_of_residence' => 'required|string',
             // 'office_front_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
