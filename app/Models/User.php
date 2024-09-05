@@ -99,7 +99,8 @@ class User extends Authenticatable implements Auditable
     }
 
 
-    public function order(){
+    public function order()
+    {
 
         return $this->hasMany(Order::class);
     }
@@ -161,7 +162,7 @@ class User extends Authenticatable implements Auditable
         if ($this->imageUrl) {
             return $this->imageUrl;
         } else {
-            return 'uploads/default.jpg';
+            return 'uploads/default/user.png';
         }
     }
 }
