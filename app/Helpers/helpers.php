@@ -16,16 +16,11 @@ use Illuminate\Support\Facades\Storage;
 function unique_code($length = 13)
 {
 
-    if (function_exists("random_bytes"))
-    {
+    if (function_exists("random_bytes")) {
         $bytes = random_bytes(ceil($length / 2));
-    }
-    elseif (function_exists("openssl_random_pseudo_bytes"))
-    {
+    } elseif (function_exists("openssl_random_pseudo_bytes")) {
         $bytes = openssl_random_pseudo_bytes(ceil($length / 2));
-    }
-    else
-    {
+    } else {
         throw new Exception("no cryptographically secure random function available");
     }
     return strtoupper(substr(bin2hex($bytes), 0, $length));
@@ -67,18 +62,18 @@ function error_processor($validator)
 }
 
 function get_business_settings($name)
-    {
-        $config = null;
-            $data = Setting::where(['slug' => $name])->first();
-            if (isset($data)) {
-                $config = json_decode($data['value'], true);
-                if (is_null($config)) {
-                    $config = $data['value'];
-                }
-            }
-
-        return $config;
+{
+    $config = null;
+    $data = Setting::where(['slug' => $name])->first();
+    if (isset($data)) {
+        $config = json_decode($data['value'], true);
+        if (is_null($config)) {
+            $config = $data['value'];
+        }
     }
+
+    return $config;
+}
 
 function getOTPNumber($length = 8)
 {
@@ -89,7 +84,7 @@ function getOTPNumber($length = 8)
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
-   // return $randomString;
+    // return $randomString;
 }
 
 function getNumber($length = 8)
@@ -100,8 +95,8 @@ function getNumber($length = 8)
     for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
-    return "MO-".$randomString;
-   // return $randomString;
+    return "MO-" . $randomString;
+    // return $randomString;
 }
 
 if (!function_exists('getSlug')) {
@@ -142,7 +137,7 @@ function userBalance($userId = null)
 
 function getPublicImageFile($file)
 {
-  return asset($file);
+    return asset($file);
 }
 
 
@@ -158,8 +153,8 @@ function getPublicImageFile($file)
 
 function getImageFile($file)
 {
-  //  return asset($file);
-  return asset('storage/' . $file);
+    //  return asset($file);
+    return asset('' . $file);
 }
 
 function getVideoFile($file)
@@ -177,7 +172,7 @@ function getVideoFile($file)
             }
         } else {
             // Use storage_path to get the absolute path to the file in the public storage directory
-            $publicPath =  asset('storage/' . $file); ;//storage_path('app/public/' . $file);
+            $publicPath =  asset('storage/' . $file);; //storage_path('app/public/' . $file);
             return $publicPath;
         }
     } catch (Exception $e) {
@@ -192,23 +187,18 @@ function getUserIP()
 {
     // Get real visitor IP behind CloudFlare network
     if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
-              $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
-              $_SERVER['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+        $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+        $_SERVER['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
     }
     $client  = @$_SERVER['HTTP_CLIENT_IP'];
     $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
     $remote  = $_SERVER['REMOTE_ADDR'];
 
-    if(filter_var($client, FILTER_VALIDATE_IP))
-    {
+    if (filter_var($client, FILTER_VALIDATE_IP)) {
         $ip = $client;
-    }
-    elseif(filter_var($forward, FILTER_VALIDATE_IP))
-    {
+    } elseif (filter_var($forward, FILTER_VALIDATE_IP)) {
         $ip = $forward;
-    }
-    else
-    {
+    } else {
         $ip = $remote;
     }
 
@@ -223,47 +213,34 @@ function getBrowser($useragent)
     $u_agent = $useragent;
     $bname = 'Unknown';
     $platform = 'Unknown';
-    $version= "";
+    $version = "";
 
     //First get the platform?
     if (preg_match('/linux/i', $u_agent)) {
         $platform = 'linux';
-    }
-    elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
+    } elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
         $platform = 'mac';
-    }
-    elseif (preg_match('/windows|win32/i', $u_agent)) {
+    } elseif (preg_match('/windows|win32/i', $u_agent)) {
         $platform = 'windows';
     }
 
     // Next get the name of the useragent yes seperately and for good reason
-    if(preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent))
-    {
+    if (preg_match('/MSIE/i', $u_agent) && !preg_match('/Opera/i', $u_agent)) {
         $bname = 'Internet Explorer';
         $ub = "MSIE";
-    }
-    elseif(preg_match('/Firefox/i',$u_agent))
-    {
+    } elseif (preg_match('/Firefox/i', $u_agent)) {
         $bname = 'Mozilla Firefox';
         $ub = "Firefox";
-    }
-    elseif(preg_match('/Chrome/i',$u_agent))
-    {
+    } elseif (preg_match('/Chrome/i', $u_agent)) {
         $bname = 'Google Chrome';
         $ub = "Chrome";
-    }
-    elseif(preg_match('/Safari/i',$u_agent))
-    {
+    } elseif (preg_match('/Safari/i', $u_agent)) {
         $bname = 'Apple Safari';
         $ub = "Safari";
-    }
-    elseif(preg_match('/Opera/i',$u_agent))
-    {
+    } elseif (preg_match('/Opera/i', $u_agent)) {
         $bname = 'Opera';
         $ub = "Opera";
-    }
-    elseif(preg_match('/Netscape/i',$u_agent))
-    {
+    } elseif (preg_match('/Netscape/i', $u_agent)) {
         $bname = 'Netscape';
         $ub = "Netscape";
     }
@@ -271,7 +248,7 @@ function getBrowser($useragent)
     // finally get the correct version number
     $known = array('Version', $ub, 'other');
     $pattern = '#(?<browser>' . join('|', $known) .
-    ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+        ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
     if (!preg_match_all($pattern, $u_agent, $matches)) {
         // we have no matching number just continue
     }
@@ -281,19 +258,19 @@ function getBrowser($useragent)
     if ($i != 1) {
         //we will have two since we are not using 'other' argument yet
         //see if version is before or after the name
-        if (strripos($u_agent,"Version") < strripos($u_agent,$ub)){
-            $version= $matches['version'][0];
+        if (strripos($u_agent, "Version") < strripos($u_agent, $ub)) {
+            $version = $matches['version'][0];
+        } else {
+            $version = $matches['version'][1];
         }
-        else {
-            $version= $matches['version'][1];
-        }
-    }
-    else {
-        $version= $matches['version'][0];
+    } else {
+        $version = $matches['version'][0];
     }
 
     // check if we have a number
-    if ($version==null || $version=="") {$version="?";}
+    if ($version == null || $version == "") {
+        $version = "?";
+    }
 
     return array(
         'userAgent' => $u_agent,
@@ -305,7 +282,8 @@ function getBrowser($useragent)
 }
 
 
-function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
+function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE)
+{
     $output = NULL;
     if (filter_var($ip, FILTER_VALIDATE_IP) === FALSE) {
         $ip = $_SERVER["REMOTE_ADDR"];
@@ -459,10 +437,9 @@ function sendPhpMail($receiver_email, $receiver_name, $subject, $message)
     $headers .= "Organization: monodome\r\n";
     $headers .= "Content-Type: text/html; charset=utf-8\r\n";
     $headers .= "X-Priority: 3\r\n";
-    $headers .= "X-Mailer: PHP". phpversion() ."\r\n" ;
+    $headers .= "X-Mailer: PHP" . phpversion() . "\r\n";
 
-   @mail($receiver_email, $subject, $message, $headers);
-
+    @mail($receiver_email, $subject, $message, $headers);
 }
 
 
@@ -489,7 +466,8 @@ function generateReferralCode($length = 8)
  * @param mixed $fields The fields required for the transaction.
  * @return mixed The result of the API call.
  */
-function payStack_checkout($fields) {
+function payStack_checkout($fields)
+{
 
     $secretkey = Setting::where(['slug' => 'secretkey'])->first()->value;
 
@@ -502,25 +480,25 @@ function payStack_checkout($fields) {
     $ch = curl_init();
 
     //set the url, number of POST vars, POST data
-    curl_setopt($ch,CURLOPT_URL, $url);
-    curl_setopt($ch,CURLOPT_POST, true);
-    curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "Authorization: Bearer $secretkey",
         "Cache-Control: no-cache",
     ));
 
     //So that curl_exec returns the contents of the cURL; rather than echoing it
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
     //execute post
     $result = curl_exec($ch);
 
-   return $result  = json_decode($result);
-
+    return $result  = json_decode($result);
 }
 
-function nombaAccessToken(){
+function nombaAccessToken()
+{
 
     $AccountId = Setting::where(['slug' => 'nombaAccountID'])->first()->value;
     $client_id = Setting::where(['slug' => 'nombaClientID'])->first()->value;
@@ -539,18 +517,17 @@ function nombaAccessToken(){
 
     $result = $response->json();
 
-    if(isset($result['data']['access_token'])) {
+    if (isset($result['data']['access_token'])) {
         $accessToken = $result['data']['access_token'];
-        return ["accessToken"=>$accessToken,"accountId" => $AccountId ]; ;
+        return ["accessToken" => $accessToken, "accountId" => $AccountId];;
     }
 
     return null;
-
-
 }
 
 
-function topUpWallet($amount){
+function topUpWallet($amount)
+{
 
     $AccountId = Setting::where(['slug' => 'nombaAccountID'])->first()->value;
     $client_id = Setting::where(['slug' => 'nombaClientID'])->first()->value;
@@ -560,11 +537,11 @@ function topUpWallet($amount){
         'accountId' => $AccountId,
         'Content-Type' => 'application/json',
         'Accept' => 'application/json',
-        'Authorization' => 'Bearer '.nombaAccessToken(),
+        'Authorization' => 'Bearer ' . nombaAccessToken(),
     ])->post('https://api.nomba.com/v1/checkout/order', [
         'order' => [
             'orderReference' => Str::uuid(),
-          //  'customerId' => '762878332454',
+            //  'customerId' => '762878332454',
             'callbackUrl' => 'https://talosmart-monodone-frontend.vercel.app/customer',
             'customerEmail' => Auth::user()->email,
             'amount' => $amount,
@@ -577,7 +554,7 @@ function topUpWallet($amount){
 
     $result = $response->json();
 
-    if(isset($result['data']['checkoutLink']) && isset($result['data']['orderReference'])) {
+    if (isset($result['data']['checkoutLink']) && isset($result['data']['orderReference'])) {
         $checkoutLink = $result['data']['checkoutLink'];
         $orderReference = $result['data']['orderReference'];
 
@@ -588,8 +565,4 @@ function topUpWallet($amount){
         ];
     }
     return null;
-
-  }
-
-
-
+}
