@@ -558,7 +558,7 @@ class CompanyController extends Controller
 
         return TruckResource::collection($truck);
     }
-    // list all monodome drivers
+   
     public function available_drivers(Request $request)
     {
         $key = $request->input('search');
@@ -568,7 +568,7 @@ class CompanyController extends Controller
             $userQuery->where('full_name', 'like', "%{$key}%")
                 ->whereNull('user_created_by');
         })
-            // ->where("have_motor", "No")
+            ->where("have_motor", "No")
             ->latest()
             ->paginate($perPage);
 

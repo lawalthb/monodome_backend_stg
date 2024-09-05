@@ -571,7 +571,7 @@ class DriverMangerController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-
+//list all drivers 
     public function my_drivers(Request $request)
     {
 
@@ -582,7 +582,7 @@ class DriverMangerController extends Controller
             $userQuery->where('full_name', 'like', "%{$key}%")
                 ->where('user_created_by', auth()->id());
         })
-            ->where("have_motor", "No")
+            //->where("have_motor", "No")
             ->latest()
             ->paginate($perPage);
 
