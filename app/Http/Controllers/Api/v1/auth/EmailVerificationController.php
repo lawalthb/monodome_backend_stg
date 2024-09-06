@@ -33,7 +33,7 @@ class EmailVerificationController extends Controller
 
         // Update password
         $user = User::where("email", $request->email)->first();
-        $user->password = Hash::make($request->new_password);
+        $user->password = Hash::make($request->password);
         $user->save();
 
         return $this->success('', 'Password reset successful');
@@ -88,14 +88,15 @@ class EmailVerificationController extends Controller
 
         $user = User::where("email", $request->email)->first();
 
-        if( $user){
+        if ($user) {
             return $this->success('', 'Email Exist');
-        }else{
+        } else {
             return $this->error('', "Email address doesn't Exist", 422);
         }
     }
 
-    public function otp_verification_submit(Request $request){
+    public function otp_verification_submit(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'string'],
