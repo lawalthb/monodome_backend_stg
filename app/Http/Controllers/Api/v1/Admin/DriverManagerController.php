@@ -31,7 +31,7 @@ class DriverManagerController extends Controller
             })->orWhere('status', 'like', "%{$key}%")->orWhere('business_name', 'like', "%{$key}%");
         })
         ->withCount('user_created_by')
-      //  ->where('status','Confirmed') // Eager load the user_created_by relationship and count
+      ->where('status','Confirmed')
         ->latest()
         ->paginate($perPage);
 
