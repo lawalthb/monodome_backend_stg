@@ -36,7 +36,7 @@ class ManageUserController extends Controller
         $key = request()->input('search');
         $perPage = request()->input('per_page', 10);
 
-        $users = User::role('admin')->orWhere('full_name', 'like', "%{$key}%")->orWhere('email', 'like', "%{$key}%")->latest()->paginate($perPage);
+        $users = User::role('admin')->orWhere('full_name', 'like', "%{$key}%")->orWhere('email', 'like', "%{$key}%")->where('role_id', 2)->latest()->paginate($perPage);
 
         return UserResource::collection($users);
     }
