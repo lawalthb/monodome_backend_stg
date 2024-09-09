@@ -36,7 +36,7 @@ class ManageUserController extends Controller
         $key = request()->input('search');
         $perPage = request()->input('per_page', 10);
 
-        $users = User::role('admin')->orWhere('full_name', 'like', "%{$key}%")->orWhere('email', 'like', "%{$key}%")->where('role_id', 2)->latest()->paginate($perPage);
+        $users = User::role('admin')->where('role_id', 'like', '2')->orWhere('full_name', 'like', "%{$key}%")->orWhere('email', 'like', "%{$key}%")->latest()->paginate($perPage);
 
         return UserResource::collection($users);
     }
@@ -91,7 +91,7 @@ class ManageUserController extends Controller
         $user->save();
 
         $message = "You are now an admin at " . config('app.name') . " Thank you for Registering with " . config('app.name');
-         // $user->notify(new SendNotification($user, $message));
+        // $user->notify(new SendNotification($user, $message));
         dispatch(new SendLoginNotificationJob($user, $message));
 
 
@@ -163,7 +163,7 @@ class ManageUserController extends Controller
 
         // Notify the user about the update
         $message = "Your profile at " . config('app.name') . " has been updated.";
-         // $user->notify(new SendNotification($user, $message));
+        // $user->notify(new SendNotification($user, $message));
         dispatch(new SendLoginNotificationJob($user, $message));
 
         $data = [
@@ -189,39 +189,39 @@ class ManageUserController extends Controller
 
 
 
-    public function pending(Request $request){
+    public function pending(Request $request)
+    {
 
         $perPage = $request->input('per_page', 10);
 
-       $users = User::query();
+        $users = User::query();
 
 
-       $users = $users->whereIn('status', ['Pending','Rejected'])->latest()->paginate($perPage);
+        $users = $users->whereIn('status', ['Pending', 'Rejected'])->latest()->paginate($perPage);
 
-       return UserResource::collection($users);
-   }
+        return UserResource::collection($users);
+    }
 
     public function status(Request $request, User $user)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'status' => 'required|string|in:Pending,Confirmed,Confirmed,Rejected,Banned',
 
         ]);
         if ($user) {
 
-        $user->status = $request->status;
-        $user->save();
+            $user->status = $request->status;
+            $user->save();
 
-        return $this->success(
-            [
-                "user" => new UserResource($user),
-            ],
-            "Status updated successfully"
-        );
+            return $this->success(
+                [
+                    "user" => new UserResource($user),
+                ],
+                "Status updated successfully"
+            );
+        } else {
 
-    } else {
-
-        return response()->json(['message' => 'User not found!'], 404);
+            return response()->json(['message' => 'User not found!'], 404);
         }
     }
 
@@ -264,8 +264,8 @@ class ManageUserController extends Controller
     public function change_password(Request $request, User $user)
     {
 
-        $this->validate($request,[
-                        'password' => 'required|string|min:6|confirmed',
+        $this->validate($request, [
+            'password' => 'required|string|min:6|confirmed',
 
         ]);
         //   $user = Auth::user();
