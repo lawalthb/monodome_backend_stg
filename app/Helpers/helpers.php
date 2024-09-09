@@ -154,7 +154,7 @@ function getPublicImageFile($file)
 function getImageFile($file)
 {
     //  return asset($file);
-    return asset('' . $file);
+    return asset('storage/' . $file);
 }
 
 function getVideoFile($file)
