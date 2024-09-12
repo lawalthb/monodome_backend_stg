@@ -164,9 +164,7 @@ class AuthController extends Controller
                     $wallet->user_id = $user->id;
                     $wallet->limits = json_encode(['max_limit' => $maxWithdrawLimit, 'min_limit' => $minWithdrawLimit]);
                     $wallet->save();
-                }
-
-                else {
+                } else {
                     // Update the wallet limits if wallet already exists
                     $limits = json_decode($user->wallet->limits, true) ?? [];
                     $limits['max'] = $maxWithdrawLimit;
@@ -286,12 +284,14 @@ class AuthController extends Controller
 
     public function updateProfile(Request $request)
     {
+
         $user = auth()->user(); // Assuming you are using authentication
         // Validate the incoming request data
+
         $validatedData = $request->validate([
             'full_name' => 'required|string',
             'phone_number' => 'required|string',
-            'email' => 'required|email|unique:users,email,' . $user->id, // Ignore the current user's email
+
             'address' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Example validation for image upload
         ]);
@@ -342,7 +342,7 @@ class AuthController extends Controller
 
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
-        $user = User::where("referral_code",auth()->user()->referral_code)->paginate( $perPage);
+        $user = User::where("referral_code", auth()->user()->referral_code)->paginate($perPage);
 
         return  UserResource::collection($user);
     }
