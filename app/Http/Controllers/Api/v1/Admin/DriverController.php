@@ -121,6 +121,7 @@ class DriverController extends Controller
         $businessName = $request->input('business_name');
         $license_number = $request->input('license_number');
         $nin_number = $request->input('nin_number');
+        $phone_number = $request->input('phone_number');
         $have_motor = $request->input('have_motor');
         $type = $request->input('type');
         $status = $request->input('status');
@@ -141,6 +142,13 @@ class DriverController extends Controller
         if ($email) {
             $driver->whereHas('user', function ($userQuery) use ($email) {
                 $userQuery->where('email', 'like', "%$email%");
+            });
+        }
+
+        // Filter by 'phone' parameter
+        if ($phone_number) {
+            $driver->whereHas('user', function ($userQuery) use ($phone_number) {
+                $userQuery->where('phone_number', 'like', "%$phone_number%");
             });
         }
 
