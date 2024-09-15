@@ -26,6 +26,8 @@ class UserResource extends JsonResource
             "address" => $this->address,
             "admin_type" => $this->role,
             "status" => $this->status,
+            "isOnline" => $this->isOnline,
+            "last_online" => $this->last_online,
             "user_type" => strtolower($this->user_type),
             "profile_url" => getImageFile($this->image_path),
             "referral_code" => $this->referral_code,
