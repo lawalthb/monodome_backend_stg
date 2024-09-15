@@ -49,6 +49,7 @@ class User extends Authenticatable implements Auditable
         'password' => 'hashed',
         'location' => 'array',
         'isPremium' => 'boolean',
+        'isOnline' => 'boolean',
     ];
 
     public function plan()

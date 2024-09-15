@@ -68,6 +68,8 @@ class AuthController extends Controller
                 $user->status = "Confirmed";
             }
 
+            $user->isOnline = true;
+            $user->last_online = now();
             $user->save();
 
             // add to Bonus wallet
@@ -151,6 +153,8 @@ class AuthController extends Controller
                     $user->location = Location::get();
                 }
                 $user->user_agent = $request->header('User-Agent');
+                $user->isOnline = true;
+                $user->last_online = now();
                 $user->save();
 
                 $maxWithdrawLimit = get_business_settings('maxWithdrawLimit');

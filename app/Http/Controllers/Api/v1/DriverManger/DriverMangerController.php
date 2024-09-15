@@ -571,7 +571,7 @@ class DriverMangerController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-//list all drivers 
+//list all drivers
     public function my_drivers(Request $request)
     {
 
@@ -607,8 +607,6 @@ class DriverMangerController extends Controller
         return DriverResource::collection($drivers);
     }
 
-
-
     public function available_truck(Request $request)
     {
         $key = $request->input('search');
@@ -636,7 +634,6 @@ class DriverMangerController extends Controller
 
         return TruckResource::collection($truck);
     }
-
 
     public function assignDriverToTruck(Request $request)
     {
