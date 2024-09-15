@@ -70,6 +70,7 @@ class ManageUserController extends Controller
             'ref_by' => auth()->user()->id,
             'referral_code' => generateReferralCode(),
             'role_id' => 2,
+            'user_type' => "admin",
             'user_agent' => $request->header('User-Agent'),
             // 'location' => Location::get($request->ip()),
         ]);
