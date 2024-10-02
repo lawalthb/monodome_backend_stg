@@ -84,7 +84,6 @@ function getOTPNumber($length = 8)
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
-    // return $randomString;
 }
 
 function getNumber($length = 8)
