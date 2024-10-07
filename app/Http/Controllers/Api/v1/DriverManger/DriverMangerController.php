@@ -179,13 +179,13 @@ class DriverMangerController extends Controller
         try {
             DB::beginTransaction();
 
-                 // Check if a user with the same email exists and if their role_id is 9
+            // Check if a user with the same email exists and if their role_id is 9
             $existingUserWithRole9 = User::where('email', $request->input('email'))->where('role_id', 9)->first();
             if ($existingUserWithRole9) {
                 return $this->error('A user with this email and role cannot be registered again.');
             }
 
-             // Check if user with the same email exists but has a different role_id
+            // Check if user with the same email exists but has a different role_id
             $existingUser = User::where('email', $request->input('email'))->first();
 
             // Initialize the referral user (ref_by)
@@ -266,8 +266,8 @@ class DriverMangerController extends Controller
             'street' => 'required|string|max:255',
             'state_id' => 'required|numeric',
             'lga' => 'required|string|max:255',
-            'nin_number' => 'nullable|numeric',
-            'license_number' => 'nullable|numeric',
+            'nin_number' => 'nullable',
+            'license_number' => 'nullable',
             'have_motor' => 'required|in:Yes,No',
             'guarantors.*.full_name' => 'required|string|max:255',
             'guarantors.*.email' => 'required|email',
@@ -571,7 +571,7 @@ class DriverMangerController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-//list all drivers
+    //list all drivers
     public function my_drivers(Request $request)
     {
 
