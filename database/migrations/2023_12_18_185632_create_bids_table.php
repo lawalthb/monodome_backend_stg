@@ -21,11 +21,9 @@ return new class extends Migration
             $table->decimal('old_amount', 10, 2); //
             $table->timestamps();
 
-            // Define foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
-            // You might need to replace 'drivers' with the actual table name for drivers
         });
     }
 
