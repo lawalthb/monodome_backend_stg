@@ -156,6 +156,10 @@ class User extends Authenticatable implements Auditable
     }
 
 
+    public function employee()
+    {
+        return $this->hasOne(Employee::class, 'user_id');
+    }
 
 
     public function getImagePathAttribute()

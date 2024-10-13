@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
-    use ApiStatusTrait,FileUploadTrait;
+    use ApiStatusTrait, FileUploadTrait;
 
     public function index(Request $request)
     {
@@ -29,7 +29,7 @@ class EmployeeController extends Controller
 
 
         $employees = Employee::latest()
-        ->paginate($perPage);
+            ->paginate($perPage);
 
         return response()->json(['data' => EmployeeResource::collection($employees)], 200);
     }
@@ -62,66 +62,66 @@ class EmployeeController extends Controller
 
 
     public function search(Request $request)
-{
-    // Get query parameters from the request
-    $sort = $request->input('sort');
-    $email = $request->input('email');
-    $fullName = $request->input('full_name');
-    $department = $request->input('department');
-    $status = $request->input('status');
-    $startDate = $request->input('start_date');
-    $endDate = $request->input('end_date');
-    $date = $request->input('date');
+    {
+        // Get query parameters from the request
+        $sort = $request->input('sort');
+        $email = $request->input('email');
+        $fullName = $request->input('full_name');
+        $department = $request->input('department');
+        $status = $request->input('status');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $date = $request->input('date');
 
-    // Apply filters to the Employee query
-    $employee = Employee::query();
+        // Apply filters to the Employee query
+        $employee = Employee::query();
 
-    // Filter by 'sort' parameter
-    if ($sort) {
-        $employee->orderBy($sort);
+        // Filter by 'sort' parameter
+        if ($sort) {
+            $employee->orderBy($sort);
+        }
+
+        // Filter by 'email' parameter
+        if ($email) {
+            $employee->where('email', 'like', "%$email%");
+        }
+
+        // Filter by 'full_name' parameter
+        if ($fullName) {
+            $employee->where('full_name', 'like', "%$fullName%");
+        }
+
+        // Filter by 'department' parameter
+        if ($department) {
+            $employee->where('department', 'like', "%$department%");
+        }
+
+        // Filter by 'status' parameter
+        if ($status) {
+            $employee->where('status', $status);
+        }
+
+        // Filter by 'date' parameter (created_at date)
+        if ($date) {
+            $employee->whereDate('created_at', $date);
+        }
+
+        // Filter by date range
+        if ($startDate) {
+            $employee->whereDate('created_at', '>=', $startDate);
+        }
+
+        if ($endDate) {
+            $employee->whereDate('created_at', '<=', $endDate);
+        }
+
+        $perPage = $request->input('per_page', 10);
+
+        // Retrieve and paginate the results
+        $employee = $employee->latest()->paginate($perPage);
+
+        return EmployeeResource::collection($employee);
     }
-
-    // Filter by 'email' parameter
-    if ($email) {
-        $employee->where('email', 'like', "%$email%");
-    }
-
-    // Filter by 'full_name' parameter
-    if ($fullName) {
-        $employee->where('full_name', 'like', "%$fullName%");
-    }
-
-    // Filter by 'department' parameter
-    if ($department) {
-        $employee->where('department', 'like', "%$department%");
-    }
-
-    // Filter by 'status' parameter
-    if ($status) {
-        $employee->where('status', $status);
-    }
-
-    // Filter by 'date' parameter (created_at date)
-    if ($date) {
-        $employee->whereDate('created_at', $date);
-    }
-
-    // Filter by date range
-    if ($startDate) {
-        $employee->whereDate('created_at', '>=', $startDate);
-    }
-
-    if ($endDate) {
-        $employee->whereDate('created_at', '<=', $endDate);
-    }
-
-    $perPage = $request->input('per_page', 10);
-
-    // Retrieve and paginate the results
-    $employee = $employee->latest()->paginate($perPage);
-
-    return EmployeeResource::collection($employee);
-}
 
 
     public function update(Request $request, $id)
@@ -149,13 +149,22 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         $employee = Employee::findOrFail($id);
+
+
+        if ($employee->user) {
+            $employee->user->syncPermissions([]);
+            $employee->user->delete();
+            $employee->user->save();
+        }
+
         $employee->delete();
+        $employee->save();
 
         return response()->json(['message' => 'Employee deleted successfully'], 200);
     }
 
 
-    public function status(Request $request,$id)
+    public function status(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'status' => 'required|in:Pending,Confirmed,Approved,Rejected,Failed',
@@ -164,10 +173,10 @@ class EmployeeController extends Controller
         $employee = Employee::findOrFail($id);
         $employee->status = $request->status;
 
-        if($employee->save()){
+        if ($employee->save()) {
 
             return response()->json(['message' => 'Employee status update successfully'], 200);
-        }else{
+        } else {
 
             return response()->json(['message' => 'Unable to update Employee status'], 404);
         }
@@ -244,6 +253,34 @@ class EmployeeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "emp_id" => 'required|integer|exists:employees,id',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error('', $validator->errors()->first(), 422);
+        }
+
+        $employee = Employee::findOrFail($request->emp_id);
+
+        // Check if employee has a related user
+        if ($employee->user) {
+            // Remove all permissions from the user
+            $employee->user->syncPermissions([]);
+            $employee->user->delete();
+            $employee->user->save();
+        }
+
+        return $this->success(
+            [
+                "user" => new UserResource($employee->user),
+            ],
+            "Admin registered successfully"
+        );
+    }
+
+    public function removePermissions(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "emp_id" => 'required|integer|exists:employees,id',
             'permission_ids' => 'required|array',
         ]);
 
@@ -253,17 +290,21 @@ class EmployeeController extends Controller
 
         $employee = Employee::findOrFail($request->emp_id);
 
-        $employee->user->syncPermissions([]);
-        //$user->syncPermissions($permissions);
-        $employee->user->save();
+        // Check if employee has a related user
+        if ($employee->user) {
+            // Remove specific permissions from the user
+            $permissionsToRemove = Permission::whereIn('id', $request->permission_ids)->get();
+            $employee->user->revokePermissionTo($permissionsToRemove);
+
+            // Save the updated user record
+            $employee->user->save();
+        }
 
         return $this->success(
             [
                 "user" => new UserResource($employee->user),
             ],
-            "Admin registered successfully"
+            "Permissions removed successfully"
         );
-
     }
-
 }

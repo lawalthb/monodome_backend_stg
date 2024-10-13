@@ -135,6 +135,7 @@ Route::group(['prefix' => 'v1/admin'], function () {
             Route::post('/make-admin', [EmployeeController::class, 'makeAdmin']);
             Route::get('/search', [EmployeeController::class, 'search']);
             Route::post('/remove-admin', [EmployeeController::class, 'removeAdmin']);
+            Route::post('/remove-admin-permission', [EmployeeController::class, 'removeAdmin']);
             Route::post('/status/{id}', [EmployeeController::class, 'status']);
         });
 

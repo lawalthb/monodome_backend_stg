@@ -50,9 +50,9 @@ trait Verification
                 return false;
             }
 
-            return true; // Code is valid and not expired
+            return true; 
         } catch (\Throwable $th) {
-            return false; // An error occurred
+            return false;
         }
     }
 }

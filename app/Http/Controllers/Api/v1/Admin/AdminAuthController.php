@@ -31,7 +31,7 @@ class AdminAuthController extends Controller
     public function login(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => 'required|email|exists:users,email', // Ignore the current user's email
+            'email' => 'required|email|exists:users,email',
             'password' => 'required|string',
             'otp' => 'required|numeric',
         ]);

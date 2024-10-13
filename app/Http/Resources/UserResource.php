@@ -25,6 +25,7 @@ class UserResource extends JsonResource
             'plan' => $this->plan,
             "address" => $this->address,
             "admin_type" => $this->role,
+            "employee" => $this->when($this->employee, new EmployeeAdminResource($this->employee)),
             "status" => $this->status,
             "isOnline" => $this->isOnline,
             "last_online" => $this->last_online,
