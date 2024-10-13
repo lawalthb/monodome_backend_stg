@@ -35,6 +35,7 @@ class LoadCarClearingResource extends JsonResource
             "receiver_state" => $this->LState ? $this->LState->name : null,
             "receiver_final_dt_state" => $this->LFState ? $this->LFState->name : null,
             "loadType" => new LoadTypeResource($this->loadType),
+            "acceptable" => $this->loadBoard && $this->loadBoard->acceptable ? new UserResource($this->loadBoard->acceptable) : null,
             "document" => LoadDocumentResource::collection($this->loadDocuments),
             "receiver_name" => $this->receiver_name,
             "receiver_email" => $this->receiver_email,

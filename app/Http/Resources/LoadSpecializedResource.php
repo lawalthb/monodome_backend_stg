@@ -31,6 +31,7 @@ class LoadSpecializedResource extends JsonResource
             "total_amount" =>  $this->total_amount,
             "description" =>  $this->description,
             "document" => LoadDocumentResource::collection($this->loadDocuments),
+            "acceptable" => $this->loadBoard && $this->loadBoard->acceptable ? new UserResource($this->loadBoard->acceptable) : null,
             "user" =>  new UserResource($this->user),
             "loadType" => new LoadTypeResource($this->loadType),
             "deliver_from_country" =>  new CountryResource($this->DepCountry),

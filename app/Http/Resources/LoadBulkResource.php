@@ -58,6 +58,7 @@ class LoadBulkResource extends JsonResource
             'weight'=>$this->weight,
             'is_private'=>$this->is_private,
             'schedule_date'=>$this->schedule_date,
+            "acceptable" => $this->loadBoard && $this->loadBoard->acceptable ? new UserResource($this->loadBoard->acceptable) : null,
             "status" => $this->status,
             "loadType" => new LoadTypeResource($this->loadType),
             "document" => LoadDocumentResource::collection($this->loadDocuments),

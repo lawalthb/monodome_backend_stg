@@ -35,6 +35,7 @@ class LoadContainerResource extends JsonResource
             "deliver_to_city" => $this->DToCity ? $this->DToCity->name : null,
             "loadType" => new LoadTypeResource($this->loadType),
             "document" => LoadDocumentResource::collection($this->loadDocuments),
+            "acceptable" => $this->loadBoard && $this->loadBoard->acceptable ? new UserResource($this->loadBoard->acceptable) : null,
             "receiver_name" => $this->receiver_name,
             "receiver_email" => $this->receiver_email,
             "receiver_phone" => $this->receiver_phone,

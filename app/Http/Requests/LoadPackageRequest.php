@@ -31,7 +31,7 @@ class LoadPackageRequest extends FormRequest
             'sender_location' => 'nullable|string',
             'sender_name' => 'nullable|string|max:50',
             'sender_phone' => 'nullable|string|max:50',
-            'sender_street' => 'nullable|string|max:20',
+            'sender_street' => 'nullable|string|max:50',
             'sender_lga' => 'nullable|integer',
             'sender_apartment' => 'nullable|string|max:50',
             'sender_apartment_no' => 'nullable|string|max:50',

@@ -108,7 +108,7 @@ class User extends Authenticatable implements Auditable
 
     public function acceptedOrders()
     {
-        return $this->morphMany(Order::class, 'acceptable');
+        return $this->morphMany(LoadBoard::class, 'acceptable');
     }
 
     public function loadBulk()
