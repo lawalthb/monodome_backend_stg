@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers\Api\v1\Chat;
 
+use Validator;
 use App\Models\Chat;
 use App\Models\User;
+use App\Models\ChatRoom;
 use App\Events\ChatEvent;
 use Illuminate\Http\Request;
 use App\Traits\ApiStatusTrait;
+use App\Events\UserTypingEvent;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ChatResource;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\ChatRoomResource;
 
 class ChatController extends Controller
 {
-
     use FileUploadTrait, ApiStatusTrait;
 
     /**
@@ -23,26 +28,68 @@ class ChatController extends Controller
      */
     public function index(Request $request)
     {
-
         $request->validate([
-            'sender_id' => 'required|integer',
-            'receiver_id' => 'required|integer',
+            'chat_room_id' => 'required|integer|exists:chat_rooms,id',
         ]);
 
-        $senderID= $request->sender_id;
-        $receiverID= $request->receiver_id;
-        // $chat = Chat::where('sender_id',$request->sender_id)->where('receiver_id', $request->receiver_id)->latest()->get();
-        $chat = Chat::whereIn('sender_id',[$senderID,$receiverID])->whereIn('receiver_id',[$senderID,$receiverID])->latest()->get();
+        $chatRoomId = $request->chat_room_id;
 
-        return $this->success( ChatResource::collection($chat), 'latest chat');
+        // Ensure the authenticated user is part of the chat room
+        $chatRoom = ChatRoom::findOrFail($chatRoomId);
+        if ($chatRoom->sender_id !== Auth::id() && $chatRoom->receiver_id !== Auth::id()) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized access.'], 403);
+        }
+
+        $chats = Chat::where('chat_room_id', $chatRoomId)->orderBy('created_at', 'asc')->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $chats,
+        ]);
+    }
+     /**
+     * Get or create a chat room between two users.
+     */
+    public function getOrCreateChatRoom(Request $request)
+    {
+        $request->validate([
+            'receiver_id' => 'required|integer|exists:users,id',
+        ]);
+
+        $senderId = Auth::id();
+        $receiverId = $request->receiver_id;
+
+        // Prevent users from chatting with themselves
+        if ($senderId === $receiverId) {
+            return response()->json(['success' => false, 'message' => 'Cannot create chat with yourself.'], 400);
+        }
+
+        // Check if a chat room already exists
+        $chatRoom = ChatRoom::where(function($query) use ($senderId, $receiverId) {
+            $query->where('sender_id', $senderId)->where('receiver_id', $receiverId);
+        })->orWhere(function($query) use ($senderId, $receiverId) {
+            $query->where('sender_id', $receiverId)->where('receiver_id', $senderId);
+        })->first();
+
+        if (!$chatRoom) {
+            $chatRoom = ChatRoom::create([
+                'sender_id' => $senderId,
+                'receiver_id' => $receiverId,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'chat_room_id' => $chatRoom->id,
+            ],
+        ]);
     }
 
-    public function getMyChatUser(Request $request){
-
-        $senderId= $request->sender_id;
-        $receiverID= $request->receiver_id;
-
-        DB::statement("SET SESSION sql_mode=''");
+    public function getMyChatUser(Request $request)
+    {
+        // Fetch all users the authenticated user has chatted with
+        $senderId = Auth::id();
 
         $recentMessages = Chat::where(function ($query) use ($senderId) {
             $query->where('sender_id', $senderId)
@@ -56,7 +103,6 @@ class ChatController extends Controller
 
         return $this->getFilterRecentMessages($recentMessages, $senderId);
     }
-
 
     public function getFilterRecentMessages(Collection $recentMessages, int $senderId): array
     {
@@ -80,118 +126,142 @@ class ChatController extends Controller
         return $recentUsersWithMessage;
     }
 
+
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created chat message.
      */
     public function store(Request $request)
     {
         $request->validate([
-            'sender_id' => 'required|integer',
-            'receiver_id' => 'required|integer',
+            'chat_room_id' => 'required|integer|exists:chat_rooms,id',
+            'sender_id' => 'required|integer|exists:users,id',
+            'receiver_id' => 'required|integer|exists:users,id',
             'message' => 'required|string',
-            'file' => 'nullable|file|mimes:png,jpg,jpeg,pdf,doc,docx|max:2024', // Adjust the allowed file types as needed
+            'file' => 'nullable|file|mimes:png,jpg,jpeg,pdf,doc,docx|max:2024',
         ]);
 
-        // Extract validated data
-        $validatedData = $request->only(['sender_id', 'receiver_id', 'message']);
+        $senderId = $request->sender_id;
+        $receiverId = $request->receiver_id;
+        $chatRoomId = $request->chat_room_id;
 
-        // If a file is provided, upload it and add the file path to the data
+        if (!in_array(Auth::id(), [$senderId, $receiverId])) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized access.'], 403);
+        }
+
+        // Ensure the chat room matches the sender and receiver
+        $chatRoom = ChatRoom::findOrFail($chatRoomId);
+        if (!($chatRoom->sender_id === $senderId && $chatRoom->receiver_id === $receiverId) &&
+            !($chatRoom->sender_id === $receiverId && $chatRoom->receiver_id === $senderId)) {
+            return response()->json(['success' => false, 'message' => 'Invalid chat room.'], 400);
+        }
+
+        // Prepare data for the new chat message
+        $validatedData = [
+            'chat_room_id' => $chatRoom->id,
+            'sender_id' => $senderId,
+            'receiver_id' => $receiverId,
+            'message' => $request->message,
+            'send_by' => Auth::id(),
+        ];
+
+        // Handle file uploads if present
         if ($request->hasFile('file')) {
             $validatedData['file_path'] = $this->uploadFile('chat', $request->file('file'));
         }
 
-        // Use updateOrCreate directly with validated data
-        $chat = Chat::updateOrCreate(
-            [
-                'sender_id' => $validatedData['sender_id'],
-                'receiver_id' => $validatedData['receiver_id'],
-                'message' => $validatedData['message'],
-                'send_by' => auth()->id(),
-            ],
-            $validatedData
-        );
+        // Store the chat message
+        $chat = Chat::create($validatedData);
 
-        if ($chat) {
-            event(new ChatEvent($request->user() ,$chat));
+        // Broadcast chat event
+        event(new ChatEvent(Auth::user(), $chat));
 
-            return $this->success(new ChatResource($chat), 'Created successfully');
-        } else {
-            return $this->error('An error occurred while registering the Company.');
-        }
+        return response()->json([
+            'success' => true,
+            'data' => $chat,
+            'message' => 'Chat message sent successfully.',
+        ]);
     }
-
-
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         $chat = Chat::findOrFail($id);
 
-        if($chat->save()){
-
-            return $this->success(new ChatResource($chat), 'Single Chat successfully');
-        }else{
-            return $this->error('An error occurred while deleting the data.');
-
-        }
-
+        return $this->success(new ChatResource($chat), 'Single Chat successfully');
     }
 
     /**
      * Update the specified resource in storage.
-     */public function update(Request $request, string $id)
-{
-    $request->validate([
-        'message' => 'required|string',
-        'file' => 'nullable|file|mimes:pdf,doc,docx|min:1024', // Adjust the allowed file types and minimum size as needed
-    ]);
-
-    $chat = Chat::findOrFail($id);
-    // Update the message
-    $chat->message = $request->input('message');
-
-    // If a new file is provided, update the file path
-    if ($request->hasFile('file')) {
-        $this->validate($request, [
-            'file' => 'file|mimes:pdf,doc,docx|min:1024', // Validate the file separately
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'message' => 'required|string',
+            'file' => 'nullable|file|mimes:pdf,doc,docx|min:1024',
         ]);
 
-        // Upload the new file and update the file path
-        $chat->file_path = $this->uploadFile('chat/', $request->file('file'));
+        $chat = Chat::findOrFail($id);
+
+        $chat->message = $request->input('message');
+
+        if ($request->hasFile('file')) {
+            $chat->file_path = $this->uploadFile('chat/', $request->file('file'));
+        }
+
+        if ($chat->save()) {
+            return $this->success(new ChatResource($chat), 'Chat updated successfully');
+        } else {
+            return $this->error('An error occurred while updating the chat.');
+        }
     }
-
-    if($chat->save()){
-
-        return $this->success(new ChatResource($chat), 'Chat updated successfully');
-    }else{
-        return $this->error('An error occurred while deleting the data.');
-
-    }
-
-}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-       $chat = Chat::where('id',$id)->where("sender_id",auth()->user()->id)->delete();
+        $chat = Chat::where('id', $id)->where('sender_id', Auth::id())->delete();
 
-       if($chat){
-        return $this->success([], 'Chat Deleted');
+        if ($chat) {
+            return $this->success([], 'Chat Deleted');
+        } else {
+            return $this->error('An error occurred while deleting the chat.');
+        }
+    }
 
-       }else{
-        return $this->error('An error occurred while deleting the data.');
-       }
+    /**
+     * Show chat room and chat history
+     */
+    public function showChatRoom($id)
+    {
+        $chatRoom = ChatRoom::with('chats')->findOrFail($id);
 
+        return $this->success(new ChatRoomResource($chatRoom), 'Chat room details retrieved successfully');
+    }
 
+    /**
+     * Broadcast typing status.
+     */
+    public function userTyping(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'channel' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation Error',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        event(new UserTypingEvent(Auth::user(), $request->channel));
+
+        return response()->json(['message' => 'Typing event broadcasted'], 200);
     }
 
 
-    public function test(Request $request){
-
-
-    }
+    public function test(Request $request) {}
 }

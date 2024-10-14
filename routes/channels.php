@@ -1,29 +1,21 @@
 <?php
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
 
-/*
-|--------------------------------------------------------------------------
-| Broadcast Channels
-|--------------------------------------------------------------------------
-|
-| Here you may register all of the event broadcasting channels that your
-| application supports. The given channel authorization callbacks are
-| used to check if an authenticated user can listen to the channel.
-|
-*/
+Broadcast::channel('chat-room.{chatRoomId}', function ($user, $chatRoomId) {
 
-// Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-//     return (int) $user->id === (int) $id;
-// });
+    $chatRoom = \App\Models\ChatRoom::find($chatRoomId);
 
-Broadcast::channel('chat', function ($user) {
+    if (!$chatRoom) {
+        return false;
+    }
 
-    return true;
-    // return !is_null($user);
+    return $user->id === $chatRoom->sender_id || $user->id === $chatRoom->receiver_id;
 });
 
-Broadcast::channel('messenger.{sender}.{receiver}', function ($user) {
-    return !is_null($user);
+Broadcast::channel('messenger.{senderId}.{receiverId}', function ($user, $senderId, $receiverId) {
+
+    return $user->id === (int) $senderId || $user->id === (int) $receiverId;
 });

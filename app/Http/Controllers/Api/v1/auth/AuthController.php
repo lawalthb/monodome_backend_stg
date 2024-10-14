@@ -465,4 +465,12 @@ class AuthController extends Controller
             return $this->error(false, 'Session expired', 422);
         }
     }
+
+    public function index()
+    {
+        // Exclude the authenticated user from the list
+        $users = User::where('id', '!=', auth()->id())->get();
+
+          return  UserResource::collection($users);
+    }
 }

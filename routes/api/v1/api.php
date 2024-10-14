@@ -82,10 +82,12 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/update-password', [AuthController::class, 'updatePassword']);
         Route::post('/update-profile', [AuthController::class, 'updateProfile']);
         Route::get('/user-delete', [AuthController::class, 'delete_user']);
+        Route::get('/users', [AuthController::class, 'index']);
+
     });
 
     // customer Route
-    Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'customer', 'middleware' => 'auth:sanctum'], function () {
 
 
         Route::group(['prefix' => 'plans'], function () {
@@ -151,24 +153,31 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/load-board/accept/{loadBoard}', [LoadBoardController::class, 'accept']);
     });
 
-    Route::group(['prefix' => 'bid', 'middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'bid', 'middleware' => 'auth:sanctum'], function () {
         Route::post('/load-board/accept-bid', [LoadBoardController::class, 'acceptBidByCustomer']);
         Route::post('/load-board/accept-order', [LoadBoardController::class, 'accept']);
         Route::post('/load-board/{loadBoard}', [LoadBoardController::class, 'bidStore']);
         Route::get('/load-board/{loadBoard}', [LoadBoardController::class, 'getAllBidsByLoadBoard']);
         Route::get('/load-board/customer/{id}', [LoadBoardController::class, 'getAllBidsByOrder']);
     });
-    Route::group(['prefix' => 'chat', 'middleware' => 'auth:api'], function () {
+
+    Route::group(['prefix' => 'chat', 'middleware' => 'auth:sanctum'], function () {
 
         Route::post('/get', [ChatController::class, 'index']);
-        Route::post('/store', [ChatController::class, 'store']);
+        Route::middleware('throttle:60,1')->group(function () {
+            Route::post('/typing', [ChatController::class, 'userTyping']);
+            Route::post('/store', [ChatController::class, 'store']);
+        });
+        Route::post('/get-or-create-chat-room', [ChatController::class, 'getOrCreateChatRoom']);
+        Route::get('/users', [ChatController::class, 'getMyChatUser']);
         Route::delete('/delete/{id}', [ChatController::class, 'destroy']);
         Route::get('/show/{id}', [ChatController::class, 'show']);
+        Route::get('/showChatRoom/{id}', [ChatController::class, 'showChatRoom']);
         Route::post('/update/{id}', [ChatController::class, 'update']);
     });
 
 
-    Route::group(['prefix' => 'support', 'middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'support', 'middleware' => 'auth:sanctum'], function () {
 
         Route::get('/get', [SupportController::class, 'index']);
         //  Route::get('/get/{id}', [SupportController::class, 'index']);
@@ -182,14 +191,14 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'order/tracking'], function () {
 
         Route::get('/', [TrackingController::class, 'index']);
-        Route::post('/', [TrackingController::class, 'store'])->middleware('auth:api');
+        Route::post('/', [TrackingController::class, 'store'])->middleware('auth:sanctum');
         Route::get('/{id}', [TrackingController::class, 'show']);
-        Route::post('/{id}', [TrackingController::class, 'update'])->middleware('auth:api');
-        Route::delete('/{id}', [TrackingController::class, 'destroy'])->middleware('auth:api');
+        Route::post('/{id}', [TrackingController::class, 'update'])->middleware('auth:sanctum');
+        Route::delete('/{id}', [TrackingController::class, 'destroy'])->middleware('auth:sanctum');
     });
 
 
-    Route::group(['prefix' => 'order', 'middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'order', 'middleware' => 'auth:sanctum'], function () {
 
         //load type route
         Route::get('/', [OrderController::class, 'index']);
@@ -224,7 +233,7 @@ Route::group(['prefix' => 'v1'], function () {
         ///  Route::post('/update/{id}', [CompanyController::class, 'update']);
         //   Route::delete('/destroy/{id}', [CompanyController::class, 'destroy']);
 
-        Route::group(['middleware' => 'auth:api', 'role:Company Transport'], function () {
+        Route::group(['middleware' => 'auth:sanctum', 'role:Company Transport'], function () {
             Route::get('/', [CompanyController::class, 'index']);
 
             Route::get('/my-info', [CompanyController::class, 'my_info']);
@@ -295,7 +304,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/update/{id}', [ShippingCompanyController::class, 'update']);
         Route::delete('/destroy/{id}', [ShippingCompanyController::class, 'destroy']);
 
-        Route::group(['middleware' => 'auth:api', 'role:Shipping Company'], function () {
+        Route::group(['middleware' => 'auth:sanctum', 'role:Shipping Company'], function () {
 
             Route::post('/addUser', [ShippingCompanyController::class, 'createUser']);
             Route::get('/myUsers', [ShippingCompanyController::class, 'myUsers']);
@@ -309,7 +318,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/', [AgentController::class, 'index']);
         Route::post('/store', [AgentController::class, 'store']);
 
-        Route::group(['middleware' => 'auth:api', 'role:agent'], function () {
+        Route::group(['middleware' => 'auth:sanctum', 'role:agent'], function () {
 
             Route::get('/my-order', [AgentController::class, 'my_order']);
             Route::get('/show/{id}', [AgentController::class, 'show']);
@@ -338,14 +347,14 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::get('/', [DriverController::class, 'index']);
         Route::post('/store', [DriverController::class, 'store']);
-        
+
         Route::post('/store', [DriverController::class, 'store']);
         Route::get('/show/{id}', [DriverController::class, 'show']);
         Route::post('/update/{id}', [DriverController::class, 'update']);
         Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
         Route::get('/broadcast/{id}', [DriverController::class, 'singleBroadcast']);
 
-        Route::group(['middleware' => 'auth:api', 'role:Driver'], function () {
+        Route::group(['middleware' => 'auth:sanctum', 'role:Driver'], function () {
 
             Route::get('/request', [DriverController::class, 'pendingRequest']);
             Route::post('/request', [DriverController::class, 'acceptRequest']);
@@ -367,10 +376,10 @@ Route::group(['prefix' => 'v1'], function () {
         });
     });
 
-    Route::group(['prefix' => 'clearing-agent', 'middleware' => ['auth:api', 'role:Clearing and Forwarding Agent']], function () {
+    Route::group(['prefix' => 'clearing-agent', 'middleware' => ['auth:sanctum', 'role:Clearing and Forwarding Agent']], function () {
 
         Route::get('/order', [ClearingAgentController::class, 'my_order']);
-        Route::post('/store', [ClearingAgentController::class, 'store'])->withoutMiddleware(['auth:api', 'role:Clearing and Forwarding Agent']);
+        Route::post('/store', [ClearingAgentController::class, 'store'])->withoutMiddleware(['auth:sanctum', 'role:Clearing and Forwarding Agent']);
         Route::post('/order-assign', [LoadBoardController::class, 'orderAssign']);
         Route::post('/accept-order',  [LoadBoardController::class, 'acceptOrder']);
         Route::post('/reject-order', [LoadBoardController::class, 'rejectOrder']);
@@ -394,7 +403,7 @@ Route::group(['prefix' => 'v1'], function () {
         // Route::get('/request', [DriverMangerController::class, 'updateRequest']);
         Route::get('/request/{driverID}/{managerID}/{status}', [DriverMangerController::class, 'updateRequest']);
 
-        Route::middleware(['auth:api', 'role:Driver Manager'])->group(function () {
+        Route::middleware(['auth:sanctum', 'role:Driver Manager'])->group(function () {
             //  Route::get('/your-url', function () {
 
             Route::get('/', [DriverMangerController::class, 'index']);
@@ -435,14 +444,14 @@ Route::group(['prefix' => 'v1'], function () {
         });
     });
 
-    Route::group(['prefix' => 'transfer/nomba', 'middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'transfer/nomba', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/bank/list', [BankController::class, 'list'])->name('nomba.bank.list');
         Route::post('/bank/lookup', [BankController::class, 'lookup'])->name('nomba.bank.lookup');
         Route::post('/bank/submit', [BankController::class, 'submit'])->name('nomba.bank.submit');
     });
 
 
-    Route::group(['prefix' => 'transfer/paystack', 'middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'transfer/paystack', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/bank/list', [BankController::class, 'list'])->name('paystack.bank.list');
         Route::post('/bank/lookup', [BankController::class, 'lookup'])->name('paystack.bank.lookup');
         Route::post('/bank/submit', [BankController::class, 'submit'])->name('paystack.bank.submit');
@@ -455,11 +464,11 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/bank/verify/{reference}', [BankController::class, 'getTransferByReference'])->name('paystack.transfer.reference');
     });
 
-    Route::group(['prefix' => 'notification', 'middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'notification', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/', [NotificationController::class, 'index']);
         Route::get('/read/{id}', [NotificationController::class, 'readNotification']);
     });
-    Route::group(['prefix' => 'settings', 'middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'settings', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/', [SettingController::class, 'index']);
         Route::get('/{id}', [SettingController::class, 'show']);
     });
@@ -471,7 +480,7 @@ Route::group(['prefix' => 'v1'], function () {
     // wallet route group
 
 
-    Route::group(['prefix' => 'wallet', 'middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'wallet', 'middleware' => 'auth:sanctum'], function () {
 
         // Wallet endpoints
         Route::get('/', [WalletController::class, 'index']);
@@ -500,7 +509,7 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     //vehicle route group here
-    // Route::group(['prefix' => 'vehicle', 'middleware' => 'auth:api'], function () {
+    // Route::group(['prefix' => 'vehicle', 'middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'vehicle'], function () {
 
         // route for vehicle make
@@ -590,7 +599,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/{category}/related', [BlogController::class, 'getRelatedBlogs']);
     });
 
-    Route::group(['prefix' => 'blog', 'middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'blog', 'middleware' => 'auth:sanctum'], function () {
 
         Route::post('/', [BlogController::class, 'store']);
         Route::put('/{id}', [BlogController::class, 'update']);
