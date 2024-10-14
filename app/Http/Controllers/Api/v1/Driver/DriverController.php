@@ -200,30 +200,32 @@ class DriverController extends Controller
                 }
             }
 
-            $guarantorProfilePictures = [];
 
-            foreach ($request->input('guarantors') as $key => $guarantorData) {
-                $guarantor = new Guarantor([
-                    'full_name' => $guarantorData['full_name'],
-                    'phone_number' => $guarantorData['phone_number'],
-                    'email' => $guarantorData['email'],
-                    'street' => $guarantorData['street'],
-                    'state' => $guarantorData['state'],
-                    'lga' => $guarantorData['lga'],
-                ]);
+            if ($request->hasFile('guarantorProfilePictures')) {
+                $guarantorProfilePictures = [];
 
-                $guarantor->loadable()->associate($driver);
+                foreach ($request->input('guarantors') as $key => $guarantorData) {
+                    $guarantor = new Guarantor([
+                        'full_name' => $guarantorData['full_name'],
+                        'phone_number' => $guarantorData['phone_number'],
+                        'email' => $guarantorData['email'],
+                        'street' => $guarantorData['street'],
+                        'state' => $guarantorData['state'],
+                        'lga' => $guarantorData['lga'],
+                    ]);
 
-                $guarantorProfilePictures[] = $this->uploadFile('driver/guarantor_images', $request->file("guarantors.$key.profile_picture"));
+                    $guarantor->loadable()->associate($driver);
 
-                $driver->guarantors()->save($guarantor);
+                    $guarantorProfilePictures[] = $this->uploadFile('driver/guarantor_images', $request->file("guarantors.$key.profile_picture"));
+
+                    $driver->guarantors()->save($guarantor);
+                }
+
+                foreach ($driver->guarantors as $key => $guarantor) {
+                    $guarantor->profile_picture = $guarantorProfilePictures[$key];
+                    $guarantor->save();
+                }
             }
-
-            foreach ($driver->guarantors as $key => $guarantor) {
-                $guarantor->profile_picture = $guarantorProfilePictures[$key];
-                $guarantor->save();
-            }
-
             DB::commit();
 
             return $this->success(new DriverResource($driver), 'Driver and guarantors registered successfully');
