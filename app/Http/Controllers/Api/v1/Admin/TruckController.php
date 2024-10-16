@@ -115,81 +115,81 @@ class TruckController extends Controller
     $date = $request->input('date');
 
     // Apply filters to the Agent query
-    $driver = Driver::query();
+    $truck = Truck::query();
 
     // Filter by 'sort' parameter
     if ($sort) {
-      $driver->orderBy($sort);
+      $truck->orderBy($sort);
     }
 
     // Filter by 'email' parameter
     if ($email) {
-      $driver->whereHas('user', function ($userQuery) use ($email) {
+      $truck->whereHas('user', function ($userQuery) use ($email) {
         $userQuery->where('email', 'like', "%$email%");
       });
     }
 
     // Filter by 'phone' parameter
     if ($phone_number) {
-      $driver->whereHas('user', function ($userQuery) use ($phone_number) {
+      $truck->whereHas('user', function ($userQuery) use ($phone_number) {
         $userQuery->where('phone_number', 'like', "%$phone_number%");
       });
     }
 
     // Filter by 'business_name' parameter
     if ($businessName) {
-      $driver->where('business_name', 'like', "%$businessName%");
+      $truck->where('business_name', 'like', "%$businessName%");
     }
 
     if ($license_number) {
-      $driver->where('license_number', 'like', "%$license_number%");
+      $truck->where('license_number', 'like', "%$license_number%");
     }
 
     if ($nin_number) {
-      $driver->where('nin_number', 'like', "%$nin_number%");
+      $truck->where('nin_number', 'like', "%$nin_number%");
     }
 
     if ($have_motor) {
-      $driver->where('have_motor', 'like', "%$have_motor%");
+      $truck->where('have_motor', 'like', "%$have_motor%");
     }
 
     if ($type) {
-      $driver->where('type', 'like', "%$type%");
+      $truck->where('type', 'like', "%$type%");
     }
 
     // Filter by 'status' parameter
     if ($status) {
-      $driver->where('status', $status);
+      $truck->where('status', $status);
     }
 
     // Filter by 'full_name' parameter
     if ($fullName) {
-      $driver->whereHas('user', function ($userQuery) use ($fullName) {
+      $truck->whereHas('user', function ($userQuery) use ($fullName) {
         $userQuery->where('full_name', 'like', "%$fullName%");
       });
     }
 
     // Filter by 'date' parameter (created_at date)
     if ($date) {
-      $driver->whereDate('created_at', $date);
+      $truck->whereDate('created_at', $date);
     }
 
 
     // Filter by date range
     if ($startDate) {
-      $driver->whereDate('created_at', '>=', $startDate);
+      $truck->whereDate('created_at', '>=', $startDate);
     }
 
     if ($endDate) {
-      $driver->whereDate('created_at', '<=', $endDate);
+      $truck->whereDate('created_at', '<=', $endDate);
     }
 
     $perPage = $request->input('per_page', 10);
 
     // Retrieve and paginate the results
-    $driver = $driver->latest()->paginate($perPage);
+    $truck = $truck->latest()->paginate($perPage);
 
-    return TruckResource::collection($driver);
+    return TruckResource::collection($truck);
   }
 
 
