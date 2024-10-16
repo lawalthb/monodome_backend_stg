@@ -37,6 +37,7 @@ use App\Http\Controllers\Api\v1\Admin\ContactSubmissionController;
 use App\Http\Controllers\Api\v1\Admin\OrderPriceSettingController;
 use App\Http\Controllers\Api\v1\Admin\ContainerValuePriceController;
 use App\Http\Controllers\Api\v1\Admin\SpecializedShipmentController;
+use App\Http\Controllers\Api\v1\Admin\TruckController;
 
 Route::group(['prefix' => 'v1/admin'], function () {
 
@@ -379,6 +380,8 @@ Route::group(['prefix' => 'v1/admin'], function () {
             Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
         });
 
+
+
         // driver route group
         Route::group(['prefix' => 'driver-manager'], function () {
             Route::get('/', [DriverManagerController::class, 'index']);
@@ -403,6 +406,20 @@ Route::group(['prefix' => 'v1/admin'], function () {
             Route::get('/show/{id}', [ShippingCompanyController::class, 'show']);
             Route::post('/update/{id}', [ShippingCompanyController::class, 'update']);
             Route::delete('/destroy/{id}', [ShippingCompanyController::class, 'destroy']);
+        });
+
+
+        // driver route group
+        Route::group(['prefix' => 'truck'], function () {
+            Route::get('/', [TruckController::class, 'index']);
+            Route::post('/store', [DriverController::class, 'store']);
+            Route::post('/bulk-upload', [DriverController::class, 'bulkUpload']);
+            Route::get('/search', [TruckController::class, 'search']);
+            Route::get('/pending', [DriverController::class, 'pending']);
+            Route::post('/status/{id}', [DriverController::class, 'setStatus']);
+            Route::get('/show/{id}', [DriverController::class, 'show']);
+            Route::post('/update/{id}', [DriverController::class, 'update']);
+            Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
         });
 
 
