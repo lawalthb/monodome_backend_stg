@@ -58,8 +58,17 @@ class DriverMangerController extends Controller
         })->where("have_motor", "No")
             ->latest()
             ->paginate($perPage);
+            
+        $totalConfirmed = Driver::where('status', 'Confirmed')->count();
+        $totalPending = Driver::where('status', 'Pending')->count();
 
-        return DriverResource::collection($driver);
+
+        return DriverResource::collection($driver)->additional([
+            'counts' => [
+                'total_conformed' => $totalConfirmed,
+                'total_pending' => $totalPending,
+            ],
+        ]);
     }
 
 
