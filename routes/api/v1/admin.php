@@ -409,17 +409,12 @@ Route::group(['prefix' => 'v1/admin'], function () {
         });
 
 
-        // driver route group
+        // truck route group
         Route::group(['prefix' => 'truck'], function () {
             Route::get('/', [TruckController::class, 'index']);
-            Route::post('/store', [DriverController::class, 'store']);
-            Route::post('/bulk-upload', [DriverController::class, 'bulkUpload']);
+
             Route::get('/search', [TruckController::class, 'search']);
-            Route::get('/pending', [DriverController::class, 'pending']);
-            Route::post('/status/{id}', [DriverController::class, 'setStatus']);
-            Route::get('/show/{id}', [DriverController::class, 'show']);
-            Route::post('/update/{id}', [DriverController::class, 'update']);
-            Route::delete('/destroy/{id}', [DriverController::class, 'destroy']);
+           
         });
 
 

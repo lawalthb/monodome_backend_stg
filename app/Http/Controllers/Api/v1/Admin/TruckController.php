@@ -30,21 +30,6 @@ class TruckController extends Controller
 
     $truck = Truck::query();
 
-    foreach ($terms as $term) {
-      $truck->where(function ($query) use ($term) {
-        $query->orWhereHas('user', function ($userQuery) use ($term) {
-          $userQuery->where('email', 'like', "%$term%")
-            ->orWhere('full_name', 'like', "%$term%");
-        })
-
-
-          //  ->orWhere('status', 'like', "%$term%")
-          ->orWhereHas('state', function ($stateQuery) use ($term) {
-            $stateQuery->where('name', 'like', "%$term%");
-          });
-      });
-    }
-
     $truck = $truck->where('status', 'Confirmed')->orWhere('status', 'Pending')->latest()->paginate($perPage);
 
     return TruckResource::collection($truck);
