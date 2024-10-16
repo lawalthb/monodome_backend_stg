@@ -18,7 +18,7 @@ use App\Http\Resources\DriverMangerResource;
 class DriverManagerController extends Controller
 {
 
-    use ApiStatusTrait,FileUploadTrait;
+    use ApiStatusTrait, FileUploadTrait;
 
     public function index(Request $request)
     {
@@ -30,26 +30,35 @@ class DriverManagerController extends Controller
                 $userQuery->where('full_name', 'like', "%{$key}%");
             })->orWhere('status', 'like', "%{$key}%")->orWhere('business_name', 'like', "%{$key}%");
         })
-        ->withCount('user_created_by')
-      ->where('status','Confirmed')
-        ->latest()
-        ->paginate($perPage);
+            ->withCount('user_created_by')
+            ->where('status', 'Confirmed')
+            ->latest()
+            ->paginate($perPage);
+        $totalConfirmed = DriverManger::where('status', 'Confirmed')->count();
+        $totalPending = DriverManger::where('status', 'Pending')->count();
 
-        return DriverMangerResource::collection($drivers);
+
+        return DriverMangerResource::collection($drivers)->additional([
+            'counts' => [
+                'total_conformed' => $totalConfirmed,
+                'total_pending' => $totalPending,
+            ],
+        ]);
     }
 
 
-    public function pending(Request $request){
+    public function pending(Request $request)
+    {
 
         $perPage = $request->input('per_page', 10);
 
-       $driver = DriverManger::query();
+        $driver = DriverManger::query();
 
 
-       $driver = $driver->whereIn('status', ['Pending','Rejected'])->latest()->paginate($perPage);
+        $driver = $driver->whereIn('status', ['Pending', 'Rejected'])->latest()->paginate($perPage);
 
-       return DriverMangerResource::collection($driver);
-   }
+        return DriverMangerResource::collection($driver);
+    }
 
 
     public function search(Request $request)
@@ -66,15 +75,15 @@ class DriverManagerController extends Controller
                         ->orWhere('phone_number', 'like', "%$term%")
                         ->orWhere('full_name', 'like', "%$term%");
                 })
-                ->orWhere('street', 'like', "%$term%")
-             //   ->orWhere('have_motor', 'like', "%$term%")
-              //  ->orWhere('type', 'like', "%$term%")
-           //     ->orWhere('license_number', 'like', "%$term%")
-             //   ->orWhere('nin_number', 'like', "%$term%")
-                ->orWhere('status', 'like', "%$term%")
-                ->orWhereHas('state', function ($stateQuery) use ($term) {
-                    $stateQuery->where('name', 'like', "%$term%");
-                });
+                    ->orWhere('street', 'like', "%$term%")
+                    //   ->orWhere('have_motor', 'like', "%$term%")
+                    //  ->orWhere('type', 'like', "%$term%")
+                    //     ->orWhere('license_number', 'like', "%$term%")
+                    //   ->orWhere('nin_number', 'like', "%$term%")
+                    ->orWhere('status', 'like', "%$term%")
+                    ->orWhereHas('state', function ($stateQuery) use ($term) {
+                        $stateQuery->where('name', 'like', "%$term%");
+                    });
             });
         }
 
@@ -84,13 +93,13 @@ class DriverManagerController extends Controller
     }
 
 
-    public function show($DriverId) {
+    public function show($DriverId)
+    {
         $Driver = DriverManger::find($DriverId);
 
         if (!$Driver) {
 
             return $this->error('', 'Driver manager not found', 422);
-
         }
 
         return new DriverMangerResource($Driver);
@@ -129,11 +138,11 @@ class DriverManagerController extends Controller
                 throw new \Exception("Associated user not found for the Driver Manager with ID {$id}");
             }
 
-           DB::commit();
+            DB::commit();
 
             return $this->success(new DriverMangerResource($driverManager), 'Driver Manager and user updated successfully');
         } catch (\Exception $e) {
-           DB::rollBack();
+            DB::rollBack();
             Log::error($e->getMessage());
 
             return $this->error('An error occurred while updating the Driver Manager and user.');
@@ -148,29 +157,29 @@ class DriverManagerController extends Controller
             // Find the driver by ID
             $driver = DriverManger::with('user')->find($driverID);
 
-        if (!$driver) {
+            if (!$driver) {
                 return $this->error('', 'driver not found', 404);
             }
 
-            if ( $user = $driver->user) {
+            if ($user = $driver->user) {
                 $driver->delete();
 
                 $user->delete();
 
-            return $this->success([], 'driver and user deleted successfully');
-
-        }
+                return $this->success([], 'driver and user deleted successfully');
+            }
         } catch (\Exception $e) {
             return $this->error('', 'Unable to delete driver and user', 500);
         }
     }
 
 
-    public function setStatus(Request $request, $driverID) {
+    public function setStatus(Request $request, $driverID)
+    {
 
 
         $validator = Validator::make($request->all(), [
-            'status' => ['required', 'string','in:Pending,Confirmed,Rejected,Banned'],
+            'status' => ['required', 'string', 'in:Pending,Confirmed,Rejected,Banned'],
         ]);
 
         if ($validator->fails()) {
@@ -182,7 +191,6 @@ class DriverManagerController extends Controller
         if (!$driver) {
 
             return $this->error('', 'Driver not found', 422);
-
         }
 
         // Update the status
@@ -191,21 +199,21 @@ class DriverManagerController extends Controller
         $driver->user->save();
         $driver->save();
 
-        return $this->success(['driver'=> new DriverMangerResource($driver)], 'Driver status updated successfully');
+        return $this->success(['driver' => new DriverMangerResource($driver)], 'Driver status updated successfully');
     }
 
 
     public function bulkUpload(Request $request)
-{
-    $request->validate([
-        'file' => 'required|file|mimes:xlsx,csv,txt'
-    ]);
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,csv,txt'
+        ]);
 
-    try {
-        Excel::import(new DriverManagersImport, $request->file('file'));
-        return $this->success([], "Driver Managers imported successfully");
-    } catch (\Throwable $th) {
-        return $this->error(['error' => $th->getMessage()]);
+        try {
+            Excel::import(new DriverManagersImport, $request->file('file'));
+            return $this->success([], "Driver Managers imported successfully");
+        } catch (\Throwable $th) {
+            return $this->error(['error' => $th->getMessage()]);
+        }
     }
-}
 }
