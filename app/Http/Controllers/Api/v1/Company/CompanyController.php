@@ -558,7 +558,7 @@ class CompanyController extends Controller
 
         return TruckResource::collection($truck);
     }
-   
+
     public function available_drivers(Request $request)
     {
         $key = $request->input('search');
@@ -569,6 +569,7 @@ class CompanyController extends Controller
                 ->whereNull('user_created_by');
         })
             ->where("have_motor", "No")
+            ->where("status", "Confirmed")
             ->latest()
             ->paginate($perPage);
 
