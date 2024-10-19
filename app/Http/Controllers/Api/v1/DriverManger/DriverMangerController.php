@@ -597,7 +597,7 @@ class DriverMangerController extends Controller
 
         $drivers = Driver::whereHas('user', function ($userQuery) use ($key) {
             $userQuery->where('full_name', 'like', "%{$key}%")
-            ->where('user_created_by', '!=', 1); 
+            ->whereNull('user_created_by');
         })
             ->where("status", "Confirmed")
             ->latest()
