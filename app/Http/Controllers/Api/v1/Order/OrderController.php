@@ -170,7 +170,7 @@ class OrderController extends Controller
                     'email' => $order->user->email,
                     'amount' => $loadTotalAmount * 100,
                     "metadata" => json_encode(['id' => $order->id, 'custom_fields' => $customFields]),
-                    'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
+                    'callback_url' => 'https://stg.monodome.co/customer'
                 ];
 
                 $result = payStack_checkout($fields);
@@ -367,65 +367,64 @@ class OrderController extends Controller
 
 
     public function calculateContainer(Request $request)
-{
-    // Validate the inputs
-    $validatedData = $request->validate([
-        'load_type_id' => 'required|integer|exists:load_types,id',
-        'final' => 'required|string|in:Yes,No',
-        'state_id' => 'required_if:final,Yes|integer|exists:states,id',
-        'country_id' => 'required|integer|exists:countries,id',
-        'cars_in_container' => 'required|array|min:1',
-        'cars_in_container.*.car_model' => 'required|integer',
-        'cars_in_container.*.car_type' => 'required|integer',
-        'cars_in_container.*.year' => 'required|integer|between:1990,2024',
-        'cars_in_container.*.amount' => 'required|numeric|min:0',
-        'other_contents_in_container' => 'required|array|min:1',
-        'other_contents_in_container.*.name' => 'required|string',
-        'other_contents_in_container.*.amount' => 'required|numeric|min:0',
-    ]);
+    {
+        // Validate the inputs
+        $validatedData = $request->validate([
+            'load_type_id' => 'required|integer|exists:load_types,id',
+            'final' => 'required|string|in:Yes,No',
+            'state_id' => 'required_if:final,Yes|integer|exists:states,id',
+            'country_id' => 'required|integer|exists:countries,id',
+            'cars_in_container' => 'required|array|min:1',
+            'cars_in_container.*.car_model' => 'required|integer',
+            'cars_in_container.*.car_type' => 'required|integer',
+            'cars_in_container.*.year' => 'required|integer|between:1990,2024',
+            'cars_in_container.*.amount' => 'required|numeric|min:0',
+            'other_contents_in_container' => 'required|array|min:1',
+            'other_contents_in_container.*.name' => 'required|string',
+            'other_contents_in_container.*.amount' => 'required|numeric|min:0',
+        ]);
 
-    // Calculate the total amount of cars in the container
-    $totalCarAmount = collect($validatedData['cars_in_container'])->sum('amount');
+        // Calculate the total amount of cars in the container
+        $totalCarAmount = collect($validatedData['cars_in_container'])->sum('amount');
 
-    // Check the carsContainerValuePrice table
-    $carValuePrice = CarsContainerValuePrice::where('min', '<=', $totalCarAmount)
-        ->where('max', '>=', $totalCarAmount)
-        ->first();
+        // Check the carsContainerValuePrice table
+        $carValuePrice = CarsContainerValuePrice::where('min', '<=', $totalCarAmount)
+            ->where('max', '>=', $totalCarAmount)
+            ->first();
 
-    if (!$carValuePrice) {
-        return response()->json(['message' => 'No car value price found for the given amount.'], 404);
+        if (!$carValuePrice) {
+            return response()->json(['message' => 'No car value price found for the given amount.'], 404);
+        }
+
+        // Calculate the total amount of other contents in the container
+        $totalOtherAmount = collect($validatedData['other_contents_in_container'])->sum('amount');
+
+        // Check the otherContainerValuePrice table
+        $otherValuePrice = OtherContainerValuePrice::where('min', '<=', $totalOtherAmount)
+            ->where('max', '>=', $totalOtherAmount)
+            ->first();
+
+        if (!$otherValuePrice) {
+            return response()->json(['message' => 'No other contents value price found for the given amount.'], 404);
+        }
+
+        // Calculate the total prices
+        $carValuePriceAmount = $carValuePrice->price;
+        $otherValuePriceAmount = $otherValuePrice->price;
+
+        $total_price = $carValuePriceAmount + $otherValuePriceAmount;
+
+        // Return the calculated values along with the total amounts
+        return response()->json([
+            'success' => true,
+            'message' => 'Price calculation successful',
+            'data' => [
+                'final_price' => $total_price,
+                'total_car_amount' => $totalCarAmount,
+                'car_value_price' => $carValuePriceAmount,
+                'total_other_amount' => $totalOtherAmount,
+                'other_value_price' => $otherValuePriceAmount,
+            ],
+        ]);
     }
-
-    // Calculate the total amount of other contents in the container
-    $totalOtherAmount = collect($validatedData['other_contents_in_container'])->sum('amount');
-
-    // Check the otherContainerValuePrice table
-    $otherValuePrice = OtherContainerValuePrice::where('min', '<=', $totalOtherAmount)
-        ->where('max', '>=', $totalOtherAmount)
-        ->first();
-
-    if (!$otherValuePrice) {
-        return response()->json(['message' => 'No other contents value price found for the given amount.'], 404);
-    }
-
-    // Calculate the total prices
-    $carValuePriceAmount = $carValuePrice->price;
-    $otherValuePriceAmount = $otherValuePrice->price;
-
-    $total_price = $carValuePriceAmount + $otherValuePriceAmount;
-
-    // Return the calculated values along with the total amounts
-    return response()->json([
-        'success' => true,
-        'message' => 'Price calculation successful',
-        'data' => [
-            'final_price' => $total_price,
-            'total_car_amount' => $totalCarAmount,
-            'car_value_price' => $carValuePriceAmount,
-            'total_other_amount' => $totalOtherAmount,
-            'other_value_price' => $otherValuePriceAmount,
-        ],
-    ]);
-}
-
 }

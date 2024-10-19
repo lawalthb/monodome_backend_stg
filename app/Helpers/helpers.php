@@ -541,7 +541,7 @@ function topUpWallet($amount)
         'order' => [
             'orderReference' => Str::uuid(),
             //  'customerId' => '762878332454',
-            'callbackUrl' => 'https://talosmart-monodone-frontend.vercel.app/customer',
+            'callbackUrl' => 'https://stg.monodome.co/customer',
             'customerEmail' => Auth::user()->email,
             'amount' => $amount,
             'currency' => 'NGN',

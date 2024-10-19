@@ -597,7 +597,7 @@ class DriverMangerController extends Controller
 
         $drivers = Driver::whereHas('user', function ($userQuery) use ($key) {
             $userQuery->where('full_name', 'like', "%{$key}%")
-            ->whereNull('user_created_by');
+                ->whereNull('user_created_by');
         })
             ->where("status", "Confirmed")
             ->latest()
@@ -934,7 +934,7 @@ class DriverMangerController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/monolog/?feedback=error')->withErrors($validator);
+            return redirect()->away('https://stg.monodome.co/monolog/?feedback=error')->withErrors($validator);
         }
 
         $driver = User::find($driverId);
@@ -944,10 +944,10 @@ class DriverMangerController extends Controller
         $driver->user_created_by =  (($status == "accepted") ? $manager->id : null);
 
         if ($driver->save()) {
-            return redirect()->away("https://talosmart-monodone-frontend.vercel.app/monolog/?feedback=$status");
+            return redirect()->away("https://stg.monodome.co/monolog/?feedback=$status");
         } else {
             // Handle the case where the save operation fails
-            return redirect()->away('https://talosmart-monodone-frontend.vercel.app/monolog/?feedback=error')->withErrors(['message' => 'Failed to update user']);
+            return redirect()->away('https://stg.monodome.co/monolog/?feedback=error')->withErrors(['message' => 'Failed to update user']);
         }
     }
 
