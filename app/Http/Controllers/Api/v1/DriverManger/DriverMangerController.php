@@ -595,14 +595,14 @@ class DriverMangerController extends Controller
         $key = $request->input('search');
         $perPage = $request->input('per_page', 10);
 
-        $drivers = Driver::with('user')->get();
-        // ->whereHas('user', function ($userQuery) use ($key) {
-        //     $userQuery->where('full_name', 'like', "%{$key}%")
-        //               ->whereNull('user_created_by');
-        // })
-        // ->where("have_motor", "No")
-        // ->latest()
-        // ->paginate($perPage);
+        $drivers = Driver::whereHas('user', function ($userQuery) use ($key) {
+            $userQuery->where('full_name', 'like', "%{$key}%")
+                ->where('user_created_by' != 1);
+        })
+            //  ->where("have_motor", "No")
+            ->where("status", "Confirmed")
+            ->latest()
+            ->paginate($perPage);
 
         return DriverResource::collection($drivers);
     }
