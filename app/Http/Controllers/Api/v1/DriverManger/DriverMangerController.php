@@ -597,9 +597,8 @@ class DriverMangerController extends Controller
 
         $drivers = Driver::whereHas('user', function ($userQuery) use ($key) {
             $userQuery->where('full_name', 'like', "%{$key}%")
-                ->where('user_created_by' != 1);
+            ->where('user_created_by', '!=', 1); 
         })
-            //  ->where("have_motor", "No")
             ->where("status", "Confirmed")
             ->latest()
             ->paginate($perPage);
