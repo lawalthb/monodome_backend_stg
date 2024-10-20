@@ -159,8 +159,6 @@ Route::group(['prefix' => 'v1/admin'], function () {
 
             Route::get('/{plan_id}/export-users', [PlanController::class, 'exportUsersByPlan']);
 
-
-
         });
 
         //for orders
