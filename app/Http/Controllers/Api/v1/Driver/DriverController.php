@@ -373,7 +373,7 @@ class DriverController extends Controller
                 $loadBoards->status = "Pending";
 
                 if ($loadBoards->save()) {
-                    //   $loadBoards->order->driver_id = null;
+                      $loadBoards->order->driver_id = null;
                     //    $loadBoards->order->accepted = "No";
                     //   $loadBoards->order->acceptable_id = null;
                     //  $loadBoards->order->acceptable_type = null;
@@ -382,8 +382,10 @@ class DriverController extends Controller
                     $loadBoards->order->save();
 
                     $message = "You have rejected this load with " . $loadBoards->order->order_no .
-                        " to delivery FROM: " . $loadBoards->order->loadable->sender_location . ", TO: " . $loadBoards->order->loadable->receiver_location;
-                    $driver->user->notify(new SendNotification($driver->user, $message));
+                    " to delivery FROM: " . $loadBoards->order->loadable->sender_location . ", TO: " . $loadBoards->order->loadable->receiver_location;
+
+                auth()->user()->notify(new SendNotification(auth()->user(), $message));
+
                 }
 
                 return new OrderResource($loadBoards->order);

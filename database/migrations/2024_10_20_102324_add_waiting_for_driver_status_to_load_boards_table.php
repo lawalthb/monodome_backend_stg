@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('load_boards', function (Blueprint $table) {
-            $table->enum('status', ['pending', 'processing', 'on_transit', 'delivered', 'rejected', 'delayed', 'waiting_for_driver'])->default('pending')->change();
-
+            // Change enum to string to avoid issues with DBAL
+            $table->string('status', 30)->default('pending')->change(); // Use string instead of enum
         });
     }
 
@@ -23,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('load_boards', function (Blueprint $table) {
+            // Revert back to the original enum if needed
             $table->enum('status', ['pending', 'processing', 'on_transit', 'delivered', 'rejected', 'delayed'])->default('pending')->change();
-
         });
     }
 };

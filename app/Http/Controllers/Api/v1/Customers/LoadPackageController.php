@@ -87,7 +87,7 @@ class LoadPackageController extends Controller
                 'email' => $order->user->email,
                 'amount' => $order->amount * 100,
                 "metadata"  => json_encode(['id' => $order->id, 'custom_fields' => $customFields]),
-                'callback_url' => 'https://talosmart-monodone-frontend.vercel.app/customer'
+                'callback_url' => env('FE_APP_URL').'/customer'
             ];
 
             // call the paystack api
