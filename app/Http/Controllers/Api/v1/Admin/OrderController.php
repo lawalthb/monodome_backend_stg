@@ -248,11 +248,16 @@ public function  approveOrderStatus(Request $request)
         return response()->json(['errors' => $validator->errors()], 422);
     }
 
-    $order = Order::where("order_no",$request->order_no)->first();
+    $order_no = $request->order_no;
+
+    $order = Order::where("order_no",$order_no)->first();
 
     $order->admin_approve = $request->admin_approve;
 
     if($order->save()){
+        $loadBoard = LoadBoard::where("order_no",$order_no )->first();
+        $loadBoard->status = 'waiting_for_driver';
+        $loadBoard->save();
 
     $order->user->notify(new SendNotification($order->user, 'Your order status has approved by admin '.$request->payment_status.' '));
 
@@ -300,8 +305,6 @@ public function paymentOrderStatus(Request $request)
 
 }
 
-
-
 public function loadBoardOrderStatus(Request $request)
 {
 
@@ -315,7 +318,7 @@ public function loadBoardOrderStatus(Request $request)
         return response()->json(['errors' => $validator->errors()], 422);
     }
 
-    $loadBoard = LoadBoard::where("order_no",$request->order_no)->first();
+    $loadBoard = LoadBoard::where(column: "order_no",value:$request->order_no)->first();
 
     $loadBoard->status = $request->status;
     $loadBoard->status_comment = $request->status_comment;

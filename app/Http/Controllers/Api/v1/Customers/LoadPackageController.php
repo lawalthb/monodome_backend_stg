@@ -67,24 +67,14 @@ class LoadPackageController extends Controller
     public function delivery_fee(Request $request, Order $order)
     {
 
-        //     return  $LoadBoard
-        //   return  $loadable = $LoadBoard->loadable;
-
         $order->fee += $request->increase_amount;
         $order->amount += $request->increase_amount;
 
         if ($order->save()) {
 
-            // Log::info("Save delivery_fee",$LoadBoard->delivery_fee);
-            // Log::info("Save total_amount",$LoadBoard->total_amount);
-
             $order->loadable->delivery_fee = $order->fee;
             $order->loadable->total_amount = $order->amount;
             $order->loadable->save();
-
-            Log::info($order->amount * 100);
-            Log::info($order->id);
-
 
             $customFields = [
                 [
@@ -97,9 +87,8 @@ class LoadPackageController extends Controller
                 'email' => $order->user->email,
                 'amount' => $order->amount * 100,
                 "metadata"  => json_encode(['id' => $order->id, 'custom_fields' => $customFields]),
-                'callback_url' => 'https://stg.monodome.co/customer'
+                'callback_url' => env('FE_APP_URL').'/customer'
             ];
-
 
             // call the paystack api
             $result = payStack_checkout($fields);
@@ -146,7 +135,7 @@ class LoadPackageController extends Controller
                     'payment_status' => "Pending",
                 ]);
             } else {
-                $order = $loadPackage->order; // If an order already exists, use the existing one
+                $order = $loadPackage->order;
             }
 
             // Handle document uploads (if any)

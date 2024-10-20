@@ -130,6 +130,16 @@ class OrderController extends Controller
             $order->loadable()->associate($load);
             event(new LoadTypeCreated($load));
 
+            $securityPin = getOTPNumber(6);
+
+            // Update the order with the security pin
+            $order->security_pin =  $securityPin;
+            $order->save();
+
+            // Send notification with security pin
+            $order->user->notify(new SendNotification($order->user, 'Your order has been placed successfully! Use this security pin to receive your package: ' . $securityPin));
+
+
             // Payment for wallet goes here
             if ($request->payment_type == "wallet" && $order->save()) {
                 $order->payment_type = 'wallet';
@@ -170,7 +180,7 @@ class OrderController extends Controller
                     'email' => $order->user->email,
                     'amount' => $loadTotalAmount * 100,
                     "metadata" => json_encode(['id' => $order->id, 'custom_fields' => $customFields]),
-                    'callback_url' => 'https://stg.monodome.co/customer'
+                    'callback_url' => env('FE_APP_URL') . '/customer'
                 ];
 
                 $result = payStack_checkout($fields);
@@ -427,4 +437,60 @@ class OrderController extends Controller
             ],
         ]);
     }
+
+    public function validateOrderPin(Request $request)
+    {
+        $request->validate([
+            'order_no' => 'required|string',
+            'pin' => 'required|numeric',
+        ]);
+
+        $orderNo = $request->input('order_no');
+        $pin = $request->input('pin');
+
+        // Find the order by order_no
+        $order = Order::where('order_no', $orderNo)->first();
+
+        if (!$order) {
+            return $this->error('Order not found', 404);
+        }
+
+        // Validate the pin
+        if ($order->security_pin === $pin) {
+
+            $loadBoard = LoadBoard::where('order_no', $orderNo)->first();
+
+            if (!$loadBoard) {
+                return $this->error('LoadBoard entry not found', 404);
+            }
+
+            $loadBoard->status = 'delivered';
+            $loadBoard->save();
+
+                 // Send notification to the user after delivery confirmation
+        $order->user->notify(new SendNotification($order->user, 'Your order has been successfully delivered!'));
+
+
+
+            return $this->success('Pin validation successful');
+        } else {
+            return $this->error('Invalid pin', 400);
+        }
+    }
+
+    public function getPinByOrderNo(Request $request)
+{
+    $orderNo = $request->input('order_no');
+
+    // Find the order by order_no
+    $order = Order::where('order_no', $orderNo)->first();
+
+    if (!$order) {
+        return $this->error('Order not found', 404);
+    }
+
+    // Return the security pin
+    return $this->success(['security_pin' => $order->security_pin], 'Security pin retrieved successfully');
+}
+
 }

@@ -204,6 +204,8 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/', [OrderController::class, 'index']);
         Route::post('/', [OrderController::class, 'store']);
         Route::post('/cancel', [OrderController::class, 'cancelOrder']);
+        Route::post('/validate-order-pin', [OrderController::class, 'validateOrderPin']);
+        Route::post('/get-order-pin', [OrderController::class, 'getPinByOrderNo']);
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::post('/{id}', [OrderController::class, 'update']);
         Route::delete('/{id}', [OrderController::class, 'destroy']);
@@ -355,7 +357,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/broadcast/{id}', [DriverController::class, 'singleBroadcast']);
 
         Route::group(['middleware' => 'auth:sanctum', 'role:Driver'], function () {
-
             Route::get('/request', [DriverController::class, 'pendingRequest']);
             Route::post('/request', [DriverController::class, 'acceptRequest']);
             Route::get('/broadcast', [DriverController::class, 'broadcast']);
@@ -369,9 +370,8 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/upload-photo/{order_no}', [DriverController::class, 'upload_photo']);
 
             Route::post('/payment-status/status', [DriverController::class, 'paymentOrderStatus']);
-            Route::post('/loadBoard-order/status', [DriverController::class, 'loadBoardOrderStatus']);
+            Route::post('/loadboard-order/status', [DriverController::class, 'loadBoardOrderStatus']);
             //Route::post('/approve-order/status', [DriverController::class, 'approveOrderStatus']);
-
 
         });
     });
@@ -387,7 +387,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/order-reassign', [LoadBoardController::class, 'orderReAssign']);
         Route::get('/broadcast', [ClearingAgentController::class, 'broadcast']);
         Route::post('/payment-status/status', [LoadBoardController::class, 'paymentOrderStatus']);
-        Route::post('/loadBoard-order/status', [LoadBoardController::class, 'loadBoardOrderStatus']);
+        Route::post('/loadboard-order/status', [LoadBoardController::class, 'loadBoardOrderStatus']);
         Route::get('/broadcast/{id}', [ClearingAgentController::class, 'singleBroadcast']);
 
 

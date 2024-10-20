@@ -152,8 +152,13 @@ function getPublicImageFile($file)
 
 function getImageFile($file)
 {
-    //  return asset($file);
-    return asset('storage/' . $file);
+    if($file =='default.jpg'){
+
+        return asset($file);
+    }else{
+
+        return asset('storage/' . $file);
+    }
 }
 
 function getVideoFile($file)
@@ -541,7 +546,7 @@ function topUpWallet($amount)
         'order' => [
             'orderReference' => Str::uuid(),
             //  'customerId' => '762878332454',
-            'callbackUrl' => 'https://stg.monodome.co/customer',
+            'callbackUrl' => env('FE_APP_URL').'/customer',
             'customerEmail' => Auth::user()->email,
             'amount' => $amount,
             'currency' => 'NGN',

@@ -257,7 +257,10 @@ class ChatController extends Controller
             ], 422);
         }
 
-        event(new UserTypingEvent(Auth::user(), $request->channel));
+        // event(new UserTypingEvent(Auth::user(), $request->channel))->toOthers();
+
+        broadcast(new UserTypingEvent(Auth::user(), $request->channel))->toOthers();
+
 
         return response()->json(['message' => 'Typing event broadcasted'], 200);
     }

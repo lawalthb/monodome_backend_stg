@@ -922,7 +922,6 @@ class DriverMangerController extends Controller
 
         return response()->json(['message' => 'Request sent successfully.']);
     }
-
     public function updateRequest(Request $request, $driverId, $managerId, $status)
     {
         $validator = Validator::make([
@@ -934,22 +933,23 @@ class DriverMangerController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->away('https://stg.monodome.co/monolog/?feedback=error')->withErrors($validator);
+            return redirect()->away(env('FE_APP_URL') . "/monolog/?feedback=error")->withErrors($validator);
         }
 
         $driver = User::find($driverId);
         $manager = User::find($managerId);
 
         $driver->manager_request = (($status == "accepted") ? 0 : 1);
-        $driver->user_created_by =  (($status == "accepted") ? $manager->id : null);
+        $driver->user_created_by = (($status == "accepted") ? $manager->id : null);
 
         if ($driver->save()) {
-            return redirect()->away("https://stg.monodome.co/monolog/?feedback=$status");
+            return redirect()->away(env('FE_APP_URL') . "/monolog/?feedback=$status");
         } else {
             // Handle the case where the save operation fails
-            return redirect()->away('https://stg.monodome.co/monolog/?feedback=error')->withErrors(['message' => 'Failed to update user']);
+            return redirect()->away(env('FE_APP_URL') . "/monolog/?feedback=error")->withErrors(['message' => 'Failed to update user']);
         }
     }
+
 
 
     public function deleteUserAndDriver(Request $request)
