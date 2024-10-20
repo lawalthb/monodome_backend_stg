@@ -170,7 +170,7 @@ Route::group(['prefix' => 'v1/admin'], function () {
             Route::post('/payment-status/status', [OrderController::class, 'paymentOrderStatus']);
             Route::post('/payment-status/approve-refund-Order', [OrderController::class, 'approveRefundOrder']);
             Route::post('/approve-order/status', [OrderController::class, 'approveOrderStatus']);
-            Route::post('/loadBoard-order/status', [OrderController::class, 'loadBoardOrderStatus']);
+            Route::post('/loadboard-order/status', [OrderController::class, 'loadBoardOrderStatus']);
         });
         Route::group(['prefix' => 'transactions'], function () {
             Route::get('/', [OrderController::class, 'all_transactions']);
@@ -412,7 +412,7 @@ Route::group(['prefix' => 'v1/admin'], function () {
             Route::get('/', [TruckController::class, 'index']);
 
             Route::get('/search', [TruckController::class, 'search']);
-           
+
         });
 
 

@@ -565,13 +565,15 @@ class DriverController extends Controller
         $validator = Validator::make($request->all(), [
             'status' => 'required|in:pending,on_transit,delivered,rejected,delayed',
             'order_no' => 'required|string|exists:load_boards,order_no',
-            'status_comment' => 'nullable|string'
+            'status_comment' => 'nullable|string',
+            'estimated_delivery' => 'nullable|date_format:Y-m-d H:i:s', // Accepting estimated delivery time
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        // Retrieve the loadBoard entry by order_no and acceptable_id (auth user)
         $loadBoard = LoadBoard::where("order_no", $request->order_no)
             ->where('acceptable_id', auth()->id())
             ->first();
@@ -586,15 +588,27 @@ class DriverController extends Controller
             return response()->json(['error' => 'Order already delivered, contact admin if any issues'], 404);
         }
 
+        // Update status and status comment
         $loadBoard->status = $request->status;
         $loadBoard->status_comment = $request->status_comment;
 
+        // Check if the driver has provided an estimated delivery date and update it
+        if ($request->has('estimated_delivery')) {
+            $order = Order::where('order_no', $request->order_no)->first();
+            if ($order) {
+                $order->estimated_delivery = $request->estimated_delivery;
+                $order->save();
+            }
+        }
+
         if ($loadBoard->save()) {
 
+            // Process payment splits if order is delivered
             if ($loadBoard->order->driver && $request->status == 'delivered') {
                 $this->processPaymentSplits($loadBoard);
             }
 
+            // Notify user about the status change
             $loadBoard->user->notify(new SendNotification($loadBoard->user, 'Your order status has been changed to: ' . $request->status));
 
             return response()->json([

@@ -458,7 +458,6 @@ class OrderController extends Controller
         // Validate the pin
         if ($order->security_pin === $pin) {
 
-
             $loadBoard = LoadBoard::where('order_no', $orderNo)->first();
 
             if (!$loadBoard) {
@@ -467,6 +466,11 @@ class OrderController extends Controller
 
             $loadBoard->status = 'delivered';
             $loadBoard->save();
+
+                 // Send notification to the user after delivery confirmation
+        $order->user->notify(new SendNotification($order->user, 'Your order has been successfully delivered!'));
+
+
 
             return $this->success('Pin validation successful');
         } else {

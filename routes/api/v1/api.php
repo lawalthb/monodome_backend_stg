@@ -370,9 +370,8 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/upload-photo/{order_no}', [DriverController::class, 'upload_photo']);
 
             Route::post('/payment-status/status', [DriverController::class, 'paymentOrderStatus']);
-            Route::post('/loadBoard-order/status', [DriverController::class, 'loadBoardOrderStatus']);
+            Route::post('/loadboard-order/status', [DriverController::class, 'loadBoardOrderStatus']);
             //Route::post('/approve-order/status', [DriverController::class, 'approveOrderStatus']);
-
 
         });
     });
@@ -388,7 +387,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/order-reassign', [LoadBoardController::class, 'orderReAssign']);
         Route::get('/broadcast', [ClearingAgentController::class, 'broadcast']);
         Route::post('/payment-status/status', [LoadBoardController::class, 'paymentOrderStatus']);
-        Route::post('/loadBoard-order/status', [LoadBoardController::class, 'loadBoardOrderStatus']);
+        Route::post('/loadboard-order/status', [LoadBoardController::class, 'loadBoardOrderStatus']);
         Route::get('/broadcast/{id}', [ClearingAgentController::class, 'singleBroadcast']);
 
 
