@@ -152,8 +152,13 @@ function getPublicImageFile($file)
 
 function getImageFile($file)
 {
-    //  return asset($file);
-    return asset('storage/' . $file);
+    if($file =='default.jpg'){
+
+        return asset($file);
+    }else{
+
+        return asset('storage/' . $file);
+    }
 }
 
 function getVideoFile($file)
