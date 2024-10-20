@@ -36,7 +36,7 @@ class LoadBoardResource extends JsonResource
             "status" => $this->status,
             "order" => new OrderResource($this->order),
             "accept_driver" => $this->acceptable,
-            "accept_truck" => new TruckResource(Truck::where("driver_user_id",$this->acceptable_id)->first()) ?? null,
+            "accept_truck" => new TruckResource(Truck::where("driver_user_id",$this->acceptable_id)->whereNotNull('driver_user_id')->first()) ?? null,
             // "accept_user" => $this->acceptableResource(),
             "package" => $this->loadableResource(),
             "user" => new UserResource($this->user),

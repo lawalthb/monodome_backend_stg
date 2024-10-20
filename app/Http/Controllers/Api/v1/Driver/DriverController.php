@@ -286,7 +286,7 @@ class DriverController extends Controller
 
             $user = auth()->user();
             $request->validate([
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Example validation for image upload
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
             // Handle image upload if provided
