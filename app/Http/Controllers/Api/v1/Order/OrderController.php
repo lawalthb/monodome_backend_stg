@@ -130,6 +130,16 @@ class OrderController extends Controller
             $order->loadable()->associate($load);
             event(new LoadTypeCreated($load));
 
+            $securityPin = getOTPNumber(6);
+
+            // Update the order with the security pin
+            $order->security_pin =  $securityPin;
+            $order->save();
+
+             // Send notification with security pin
+            $order->user->notify(new SendNotification($order->user, 'Your order has been placed successfully! Use this security pin to receive your package: ' . $securityPin));
+
+
             // Payment for wallet goes here
             if ($request->payment_type == "wallet" && $order->save()) {
                 $order->payment_type = 'wallet';
