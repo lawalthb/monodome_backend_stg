@@ -136,7 +136,7 @@ class OrderController extends Controller
             $order->security_pin =  $securityPin;
             $order->save();
 
-             // Send notification with security pin
+            // Send notification with security pin
             $order->user->notify(new SendNotification($order->user, 'Your order has been placed successfully! Use this security pin to receive your package: ' . $securityPin));
 
 
@@ -180,7 +180,7 @@ class OrderController extends Controller
                     'email' => $order->user->email,
                     'amount' => $loadTotalAmount * 100,
                     "metadata" => json_encode(['id' => $order->id, 'custom_fields' => $customFields]),
-                    'callback_url' => env('FE_APP_URL').'/customer'
+                    'callback_url' => env('FE_APP_URL') . '/customer'
                 ];
 
                 $result = payStack_checkout($fields);
@@ -377,65 +377,116 @@ class OrderController extends Controller
 
 
     public function calculateContainer(Request $request)
+    {
+        // Validate the inputs
+        $validatedData = $request->validate([
+            'load_type_id' => 'required|integer|exists:load_types,id',
+            'final' => 'required|string|in:Yes,No',
+            'state_id' => 'required_if:final,Yes|integer|exists:states,id',
+            'country_id' => 'required|integer|exists:countries,id',
+            'cars_in_container' => 'required|array|min:1',
+            'cars_in_container.*.car_model' => 'required|integer',
+            'cars_in_container.*.car_type' => 'required|integer',
+            'cars_in_container.*.year' => 'required|integer|between:1990,2024',
+            'cars_in_container.*.amount' => 'required|numeric|min:0',
+            'other_contents_in_container' => 'required|array|min:1',
+            'other_contents_in_container.*.name' => 'required|string',
+            'other_contents_in_container.*.amount' => 'required|numeric|min:0',
+        ]);
+
+        // Calculate the total amount of cars in the container
+        $totalCarAmount = collect($validatedData['cars_in_container'])->sum('amount');
+
+        // Check the carsContainerValuePrice table
+        $carValuePrice = CarsContainerValuePrice::where('min', '<=', $totalCarAmount)
+            ->where('max', '>=', $totalCarAmount)
+            ->first();
+
+        if (!$carValuePrice) {
+            return response()->json(['message' => 'No car value price found for the given amount.'], 404);
+        }
+
+        // Calculate the total amount of other contents in the container
+        $totalOtherAmount = collect($validatedData['other_contents_in_container'])->sum('amount');
+
+        // Check the otherContainerValuePrice table
+        $otherValuePrice = OtherContainerValuePrice::where('min', '<=', $totalOtherAmount)
+            ->where('max', '>=', $totalOtherAmount)
+            ->first();
+
+        if (!$otherValuePrice) {
+            return response()->json(['message' => 'No other contents value price found for the given amount.'], 404);
+        }
+
+        // Calculate the total prices
+        $carValuePriceAmount = $carValuePrice->price;
+        $otherValuePriceAmount = $otherValuePrice->price;
+
+        $total_price = $carValuePriceAmount + $otherValuePriceAmount;
+
+        // Return the calculated values along with the total amounts
+        return response()->json([
+            'success' => true,
+            'message' => 'Price calculation successful',
+            'data' => [
+                'final_price' => $total_price,
+                'total_car_amount' => $totalCarAmount,
+                'car_value_price' => $carValuePriceAmount,
+                'total_other_amount' => $totalOtherAmount,
+                'other_value_price' => $otherValuePriceAmount,
+            ],
+        ]);
+    }
+
+    public function validateOrderPin(Request $request)
+    {
+        $request->validate([
+            'order_no' => 'required|string',
+            'pin' => 'required|numeric',
+        ]);
+
+        $orderNo = $request->input('order_no');
+        $pin = $request->input('pin');
+
+        // Find the order by order_no
+        $order = Order::where('order_no', $orderNo)->first();
+
+        if (!$order) {
+            return $this->error('Order not found', 404);
+        }
+
+        // Validate the pin
+        if ($order->security_pin === $pin) {
+
+
+            $loadBoard = LoadBoard::where('order_no', $orderNo)->first();
+
+            if (!$loadBoard) {
+                return $this->error('LoadBoard entry not found', 404);
+            }
+
+            $loadBoard->status = 'delivered';
+            $loadBoard->save();
+
+            return $this->success('Pin validation successful');
+        } else {
+            return $this->error('Invalid pin', 400);
+        }
+    }
+
+    public function getPinByOrderNo(Request $request)
 {
-    // Validate the inputs
-    $validatedData = $request->validate([
-        'load_type_id' => 'required|integer|exists:load_types,id',
-        'final' => 'required|string|in:Yes,No',
-        'state_id' => 'required_if:final,Yes|integer|exists:states,id',
-        'country_id' => 'required|integer|exists:countries,id',
-        'cars_in_container' => 'required|array|min:1',
-        'cars_in_container.*.car_model' => 'required|integer',
-        'cars_in_container.*.car_type' => 'required|integer',
-        'cars_in_container.*.year' => 'required|integer|between:1990,2024',
-        'cars_in_container.*.amount' => 'required|numeric|min:0',
-        'other_contents_in_container' => 'required|array|min:1',
-        'other_contents_in_container.*.name' => 'required|string',
-        'other_contents_in_container.*.amount' => 'required|numeric|min:0',
-    ]);
+    $orderNo = $request->input('order_no');
 
-    // Calculate the total amount of cars in the container
-    $totalCarAmount = collect($validatedData['cars_in_container'])->sum('amount');
+    // Find the order by order_no
+    $order = Order::where('order_no', $orderNo)->first();
 
-    // Check the carsContainerValuePrice table
-    $carValuePrice = CarsContainerValuePrice::where('min', '<=', $totalCarAmount)
-        ->where('max', '>=', $totalCarAmount)
-        ->first();
-
-    if (!$carValuePrice) {
-        return response()->json(['message' => 'No car value price found for the given amount.'], 404);
+    if (!$order) {
+        return $this->error('Order not found', 404);
     }
 
-    // Calculate the total amount of other contents in the container
-    $totalOtherAmount = collect($validatedData['other_contents_in_container'])->sum('amount');
-
-    // Check the otherContainerValuePrice table
-    $otherValuePrice = OtherContainerValuePrice::where('min', '<=', $totalOtherAmount)
-        ->where('max', '>=', $totalOtherAmount)
-        ->first();
-
-    if (!$otherValuePrice) {
-        return response()->json(['message' => 'No other contents value price found for the given amount.'], 404);
-    }
-
-    // Calculate the total prices
-    $carValuePriceAmount = $carValuePrice->price;
-    $otherValuePriceAmount = $otherValuePrice->price;
-
-    $total_price = $carValuePriceAmount + $otherValuePriceAmount;
-
-    // Return the calculated values along with the total amounts
-    return response()->json([
-        'success' => true,
-        'message' => 'Price calculation successful',
-        'data' => [
-            'final_price' => $total_price,
-            'total_car_amount' => $totalCarAmount,
-            'car_value_price' => $carValuePriceAmount,
-            'total_other_amount' => $totalOtherAmount,
-            'other_value_price' => $otherValuePriceAmount,
-        ],
-    ]);
+    // Return the security pin
+    return $this->success(['security_pin' => $order->security_pin], 'Security pin retrieved successfully');
 }
 
 }
