@@ -317,13 +317,26 @@ class ManageUserController extends Controller
      */
     public function getTotalUsersByReferrer($userId, Request $request)
     {
-        // Fetch users referred by the given user
-        $users = User::where('ref_by', $userId)->paginate(10);
+        $perPage = $request->query('per_page', 10);
+        $search = $request->query('search', '');
 
-        // Optionally, you can customize the pagination size via the query string
-        // $perPage = $request->query('per_page', 10);
-        // $users = User::where('ref_by', $userId)->paginate($perPage);
+        // Fetch users referred by the given user with optional search filter
+        $query = User::where('ref_by', $userId);
 
+        // Apply search filter if provided
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('full_name', 'LIKE', "%{$search}%")
+                  ->orWhere('email', 'LIKE', "%{$search}%")
+                  ->orWhere('referral_code', 'LIKE', "%{$search}%")
+                  ->orWhere('phone_number', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // Paginate the result
+        $users = $query->paginate($perPage);
+
+        // Return the paginated response
         return response()->json([
             'total_user' => $users->total(),
             'current_page' => $users->currentPage(),
@@ -332,6 +345,7 @@ class ManageUserController extends Controller
             'users' => $users->items(),
         ]);
     }
+
 
     /**
      * Get the top referrer based on the number of users referred.
