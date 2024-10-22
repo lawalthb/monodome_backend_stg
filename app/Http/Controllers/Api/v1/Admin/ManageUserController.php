@@ -298,15 +298,37 @@ class ManageUserController extends Controller
     }
 
 
-    public function getUsersWithReferrers()
+    public function getUsersWithReferrers(Request $request)
     {
-        // Retrieve users with their number of referrers
-        $users = User::whereNotNull('ref_by')
-            ->withCount('referrers')
-            ->get();
+        $perPage = $request->query('per_page', 10);
+        $search = $request->query('search', '');
 
-        return response()->json($users);
+        $query = User::whereNotNull('ref_by')
+            ->withCount('referrers');
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('full_name', 'LIKE', "%{$search}%")
+                  ->orWhere('email', 'LIKE', "%{$search}%")
+                  ->orWhere('referral_code', 'LIKE', "%{$search}%")
+                  ->orWhere('date_of_birth', 'LIKE', "%{$search}%")
+                  ->orWhere('phone_number', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // Paginate the result
+        $users = $query->paginate($perPage);
+
+        // Return paginated response
+        return response()->json([
+            'total_users' => $users->total(),
+            'current_page' => $users->currentPage(),
+            'last_page' => $users->lastPage(),
+            'per_page' => $users->perPage(),
+            'users' => $users->items(),
+        ]);
     }
+
 
 
     /**
